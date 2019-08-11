@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+	monitoring="autodetect" dynamicConfig="true">
+	<diskStore path="d:\temp\" />
+
+	<transactionManagerLookup
+		class="net.sf.ehcache.transaction.manager.DefaultTransactionManagerLookup"
+		properties="" propertySeparator=":" />
+
+	<!-- <cacheManagerEventListenerFactory class="" properties="" /> -->
+	<!-- 默认缓存 -->
+	<defaultCache maxElementsInMemory="1" eternal="true"
+		overflowToDisk="true" diskSpoolBufferSizeMB="10" maxElementsOnDisk="1000000"
+		diskPersistent="true" memoryStoreEvictionPolicy="LRU">
+	</defaultCache>
+
+	<!-- <cache name="sampleCache1" maxElementsInMemory="0" maxElementsOnDisk="1000"
+		eternal="false" overflowToDisk="true" diskSpoolBufferSizeMB="20" timeToIdleSeconds="300"
+		timeToLiveSeconds="600" memoryStoreEvictionPolicy="LFU" /> -->
+
+	<cache name="submitProcessInst" maxElementsInMemory="1" eternal="true"
+		overflowToDisk="true" diskSpoolBufferSizeMB="10" maxElementsOnDisk="1000000"
+		diskPersistent="true" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" />
+		<!-- 比一般配置多了这个 -->
+		<bootstrapCacheLoaderFactory
+			class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" />
+	</cache>
+</ehcache>
