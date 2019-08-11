@@ -1,3 +1,8 @@
+##### rabbitframework3.1版本说明:
+	1、版本优化升级，所有版本升级到3.1
+	2、security框架代码优化，修改token取值方式，由原来的参数获取改成head获取。
+
+	
 ##### rabbitframework3.0版本说明:
 	1、版本优化升级。
 	2、security新增redissoncache缓存工程

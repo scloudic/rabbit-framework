@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.rabbitframework.commons.utils.StringUtils;
 
 public class SimpleWebSessionManager extends SimpleSessionManager implements WebSessionManager {
-	private static final Logger log = LoggerFactory.getLogger(SimpleWebSessionManager.class);
-	public static final String DEFAULT_TOKEN = "token";
+	private static final Logger logger = LoggerFactory.getLogger(SimpleWebSessionManager.class);
+	public static final String DEFAULT_TOKEN = "x-http-token";
 	private boolean tokenEnabled;
 	private Cookie sessionIdCookie;
 	private boolean sessionIdCookieEnabled;
@@ -126,7 +126,7 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		String idString = currentId.toString();
 		cookie.setValue(idString);
 		cookie.saveTo(request, response);
-		log.trace("Set session ID cookie for session with id {}", idString);
+		logger.trace("Set session ID cookie for session with id {}", idString);
 	}
 
 	private void removeSessionIdCookie(HttpServletRequest request, HttpServletResponse response) {
@@ -135,11 +135,12 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 
 	private String getSessionIdCookieValue(ServletRequest request, ServletResponse response) {
 		if (!isSessionIdCookieEnabled()) {
-			log.debug("Session ID cookie is disabled - session id will not be acquired from a request cookie.");
+			logger.debug("Session ID cookie is disabled - session id will not be acquired from a request cookie.");
 			return null;
 		}
 		if (!(request instanceof HttpServletRequest)) {
-			log.debug("Current request is not an HttpServletRequest - cannot get session ID cookie.  Returning null.");
+			logger.debug(
+					"Current request is not an HttpServletRequest - cannot get session ID cookie.  Returning null.");
 			return null;
 		}
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -152,7 +153,9 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		if (isTokenEnabled()) {
 			// 优先于从token中取值
 			if (StringUtils.isNotBlank(getTokenName())) {
-				id = request.getParameter(getTokenName());
+				HttpServletRequest httpRequest = (HttpServletRequest) request;
+				id = httpRequest.getHeader(getTokenName());
+				logger.debug("head-token:" + id);
 			}
 		}
 		if (StringUtils.isBlank(id)) {
@@ -194,13 +197,6 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		}
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		String value = request.getParameter(paramName);
-		// if (StringUtils.isBlank(value)) {
-		// value = request.getParameter(getTokenName());
-		// }
-		// 如果value为空从head中获取
-		// if (value == null) {
-		// value = request.getHeader(getTokenName());
-		// }
 		return value;
 	}
 
@@ -246,7 +242,7 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		super.onStart(session, context);
 
 		if (!WebUtils.isHttp(context)) {
-			log.debug("SessionContext argument is not HTTP compatible or does not have an HTTP request/response "
+			logger.debug("SessionContext argument is not HTTP compatible or does not have an HTTP request/response "
 					+ "pair. No session ID cookie will be set.");
 			return;
 
@@ -260,7 +256,7 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 				storeSessionId(sessionId, request, response);
 			}
 		} else {
-			log.debug("Session ID cookie is disabled.  No cookie has been set for new session with id {}",
+			logger.debug("Session ID cookie is disabled.  No cookie has been set for new session with id {}",
 					session.getId());
 		}
 
@@ -301,10 +297,10 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 			request.removeAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID);
 		}
 		if (WebUtils.isHttp(key)) {
-			log.debug("Referenced session was invalid.  Removing session ID cookie.");
+			logger.debug("Referenced session was invalid.  Removing session ID cookie.");
 			removeSessionIdCookie(WebUtils.getHttpRequest(key), WebUtils.getHttpResponse(key));
 		} else {
-			log.debug("SessionKey argument is not HTTP compatible or does not have an HTTP request/response "
+			logger.debug("SessionKey argument is not HTTP compatible or does not have an HTTP request/response "
 					+ "pair. Session ID cookie will not be removed due to invalidated session.");
 		}
 	}
@@ -315,10 +311,10 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		if (WebUtils.isHttp(key)) {
 			HttpServletRequest request = WebUtils.getHttpRequest(key);
 			HttpServletResponse response = WebUtils.getHttpResponse(key);
-			log.debug("Session has been stopped (subject logout or explicit stop).  Removing session ID cookie.");
+			logger.debug("Session has been stopped (subject logout or explicit stop).  Removing session ID cookie.");
 			removeSessionIdCookie(request, response);
 		} else {
-			log.debug("SessionKey argument is not HTTP compatible or does not have an HTTP request/response "
+			logger.debug("SessionKey argument is not HTTP compatible or does not have an HTTP request/response "
 					+ "pair. Session ID cookie will not be removed due to stopped session.");
 		}
 	}

@@ -1,5 +1,5 @@
 ### rabbitframework整合框架
-rabbitframework框架利用第三方开源框架以及对maven的依赖而整合的基础框架，能够快速搭建项目环境，封装项目中常用到的框架(如:权限框架、数据库框架)及公共类的封装等，后续将在实践中进行积累包装提取慢慢形成一套方便于项目开发的基础框架。目前框架主要划分为以下模块：
+rabbitframework框架是为解决对项目环境快速搭建、基础框架统一而形成的一套整体的技术框架方案，目前框架主要划分为以下模块：
 
 一、rabbitframework-commons:公共模块，包括对xml解释，反射机制通用类。
 
@@ -25,5 +25,3 @@ rabbitframework框架利用第三方开源框架以及对maven的依赖而整合
 四、rabbitframework-web:web-rest框架，集成[jersey2](https://github.com/jersey/jersey)框架，
 
 五、rabbitframework-generator:代码生成器模块,代码生成器通过使用配置和freemarker模板来完成,核心代码将数据库中的表结构转换为实体对象。根据配置信息将实体对象传入模板中,最终生成代码文件。目前默认模板在template/目录中，模板也可以自定义,其模板格式可以查看示例。
-
-六、示例:[learningExample](https://github.com/xuegongzi/learningExample)

@@ -21,12 +21,11 @@ public class StatusCode {
     public static final int FAIL = -1;
     /* 数据验证错误 */
     public static final int SC_VALID_ERROR = -2;
+    /*缓存错误*/
     public static final int SC_CACHE_ERROR = -3;
-	
     /*重定向*/
     public static final int SC_TEMPORARY_REDIRECT = 307;
-
-
+    
     /**
      * Status code (400) indicating the request sent by the client was
      * syntactically incorrect.
