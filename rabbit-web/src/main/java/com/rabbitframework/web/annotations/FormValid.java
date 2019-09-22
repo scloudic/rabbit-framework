@@ -7,9 +7,10 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 public @interface FormValid {
-    String type() default "ajax";
-
-    String fieldFilter() default "";
-
-
+	/**
+	 * 字段过滤,过滤不要验证的字段
+	 * 
+	 * @return
+	 */
+	String fieldFilter() default "";
 }
