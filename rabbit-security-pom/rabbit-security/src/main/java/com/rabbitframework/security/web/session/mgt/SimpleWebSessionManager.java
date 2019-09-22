@@ -153,9 +153,8 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		if (isTokenEnabled()) {
 			// 优先于从token中取值
 			if (StringUtils.isNotBlank(getTokenName())) {
-				HttpServletRequest httpRequest = (HttpServletRequest) request;
-				id = httpRequest.getParameter(getTokenName());
-				logger.debug("head-token:" + id);
+				id = request.getParameter(getTokenName());
+				logger.debug("token:" + id);
 			}
 		}
 		if (StringUtils.isBlank(id)) {
