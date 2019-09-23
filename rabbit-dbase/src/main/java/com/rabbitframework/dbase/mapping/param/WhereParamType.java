@@ -1,4 +1,5 @@
 package com.rabbitframework.dbase.mapping.param;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,10 @@ public class WhereParamType {
 	public WhereParamType() {
 		oredCriteria = new ArrayList<Criteria>();
 		params = new HashMap<String, Object>();
+	}
+
+	public boolean isParamsValid() {
+		return params.size() > 0;
 	}
 
 	public List<Criteria> getOredCriteria() {
