@@ -20,6 +20,9 @@ public class WhereParamType {
         oredCriteria = new ArrayList<Criteria>();
         params = new HashMap<String, Object>();
     }
+    public boolean isParamsValid() {
+        return params.size() > 0;
+    }
 
     public List<Criteria> getOredCriteria() {
         return oredCriteria;
