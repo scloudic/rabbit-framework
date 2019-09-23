@@ -14,7 +14,6 @@ public class WhereParamType {
     protected List<Criteria> oredCriteria;
     protected Map<String, Object> params;
     protected String orderby = null;
-    protected String condition = null;
 
     public WhereParamType() {
         oredCriteria = new ArrayList<Criteria>();
@@ -90,13 +89,5 @@ public class WhereParamType {
 
     public String getOrderby() {
         return orderby;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getCondition() {
-        return condition;
     }
 }
