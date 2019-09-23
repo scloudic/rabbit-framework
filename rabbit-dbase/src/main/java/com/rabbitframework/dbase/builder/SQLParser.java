@@ -60,7 +60,8 @@ public class SQLParser {
 				this.sqlValue = sqlValueSrc + " " + where + " ";
 			}
 			String orderBy = "<if test=\"orderby != null\" > order by ${orderby} </if>";
-			this.sqlValue = this.sqlValue + orderBy;
+			String defineCondition = "<if test=\"defCondition\" > ${defineCondition} </if>";
+			this.sqlValue = this.sqlValue + defineCondition + orderBy;
 		} else {
 			this.sqlValue = sqlValueSrc;
 		}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.rabbitframework.commons.utils.StringUtils;
+
 /**
  * 数据库参数组合实例类 提供对数据库条件解析的接口 oredCriteria条件集体合，一般情况下使用createCriteria()方法
  * 特殊情况下，调用createCriteria(criteria)或addCreateCriteria()方法
@@ -16,6 +18,7 @@ public class WhereParamType {
 	protected List<Criteria> oredCriteria;
 	protected Map<String, Object> params;
 	protected String orderby = null;
+	protected String defineCondition = null;
 
 	public WhereParamType() {
 		oredCriteria = new ArrayList<Criteria>();
@@ -24,6 +27,10 @@ public class WhereParamType {
 
 	public boolean isParamsValid() {
 		return params.size() > 0;
+	}
+
+	public boolean isDefCondition() {
+		return StringUtils.isNotBlank(defineCondition);
 	}
 
 	public List<Criteria> getOredCriteria() {
@@ -92,5 +99,13 @@ public class WhereParamType {
 
 	public String getOrderby() {
 		return orderby;
+	}
+
+	public void setDefineCondition(String defineCondition) {
+		this.defineCondition = defineCondition;
+	}
+
+	public String getDefineCondition() {
+		return defineCondition;
 	}
 }
