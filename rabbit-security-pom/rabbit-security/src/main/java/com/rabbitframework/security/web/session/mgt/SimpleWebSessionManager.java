@@ -28,7 +28,7 @@ import com.rabbitframework.commons.utils.StringUtils;
 
 public class SimpleWebSessionManager extends SimpleSessionManager implements WebSessionManager {
 	private static final Logger logger = LoggerFactory.getLogger(SimpleWebSessionManager.class);
-	public static final String DEFAULT_TOKEN = "token";
+	public static final String DEFAULT_TOKEN = "Authorization";
 	private boolean tokenEnabled;
 	private Cookie sessionIdCookie;
 	private boolean sessionIdCookieEnabled;
@@ -153,7 +153,8 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
 		if (isTokenEnabled()) {
 			// 优先于从token中取值
 			if (StringUtils.isNotBlank(getTokenName())) {
-				id = request.getParameter(getTokenName());
+				HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+				id = httpServletRequest.getHeader(getTokenName());
 				logger.debug("token:" + id);
 			}
 		}
