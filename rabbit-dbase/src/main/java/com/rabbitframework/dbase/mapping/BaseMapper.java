@@ -111,4 +111,13 @@ public interface BaseMapper<T> {
 	 */
 	@Select("select * from @{T} where 1=1 ")
 	List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
+
+	/**
+	 * 分页查询数据
+	 * 
+	 * @param rowBounds
+	 * @return
+	 */
+	@Select("select * from @{T} where 1=1 ")
+	List<T> selectEntityPage(RowBounds rowBounds);
 }
