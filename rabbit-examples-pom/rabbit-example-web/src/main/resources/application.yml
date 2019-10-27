@@ -1,0 +1,8 @@
+spring:
+  #全局加载配置
+  messages:
+    basename: messages/globalMessages
+rabbit:
+  web:
+    rest-packages: com.rabbitframework.example.web.rest
+    application-path: webExample

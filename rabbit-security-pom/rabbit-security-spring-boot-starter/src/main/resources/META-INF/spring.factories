@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+   com.rabbitframework.security.springboot.configure.SecurityAutoConfiguration,\
+   com.rabbitframework.security.springboot.configure.SecurityAutoFilterConfiguration,\
+   com.rabbitframework.security.springboot.configure.LifecycleAutoConfiguration

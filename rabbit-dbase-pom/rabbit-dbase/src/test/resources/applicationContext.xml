@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	<!-- <context:component-scan base-package="com.rabbitfragmework.**.service.impl,com.rabbitfragmework.**.mapper" 
+		/> -->
+	<context:component-scan base-package="com.rabbitfragmework.**.service.impl" />
+	<context:property-placeholder location="classpath*:c3p0.properties" />
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${c3p0.driverClassName}" />
+		<property name="jdbcUrl" value="${c3p0.url}" />
+		<property name="user" value="${c3p0.username}" />
+		<property name="password" value="${c3p0.password}" />
+		<property name="checkoutTimeout" value="${c3p0.checkoutTimeout}" />
+		<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />
+		<property name="initialPoolSize" value="${c3p0.initialPoolSize}" />
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}" />
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+		<property name="minPoolSize" value="${c3p0.minPoolSize}" />
+		<property name="maxStatements" value="${c3p0.maxStatements}" />
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+	</bean>
+
+	<bean id="dataSourcebean" class="com.rabbitframework.dbase.dataaccess.DataSourceBean">
+		<property name="dialect" value="mysql" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="dataSourceFactory"
+		class="com.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
+
+	<bean id="rabbitDbaseFactory" class="com.rabbitframework.dbase.spring.RabbitDbaseFactoryBean">
+		<!-- <property name="configLocation" value="classpath:jade-config.xml"></property> -->
+		<property name="entityPackages" value="com.rabbitfragmework.**.test.model"></property>
+		<property name="mapperPackages" value="com.rabbitfragmework.**.test.mapper"></property>
+		<property name="dataSourceFactory" ref="dataSourceFactory"></property>
+		<property name="dataSourceMap">
+			<map>
+				<entry key="default" value-ref="dataSourcebean"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean class="com.rabbitframework.dbase.spring.MapperScannerConfigurer">
+		<!-- <property name="annotationClass" value="org.springframework.stereotype.Repository" 
+			/> -->
+		<property name="basePackage" value="com.rabbitfragmework.**.test.mapper" />
+		<property name="rabbitDbaseFactoryBeanName" value="rabbitDbaseFactory" />
+	</bean>
+
+	<!-- <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource"></property> </bean> <tx:annotation-driven 
+		transaction-manager="transactionManager" proxy-target-class="true" /> -->
+	<aop:aspectj-autoproxy expose-proxy="true" />
+</beans>
