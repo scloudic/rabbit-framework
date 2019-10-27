@@ -11,7 +11,7 @@ import java.util.Random;
  * </p>
  * 根据{@link GeneratorType}匹配生成id
  */
-public class OrderIdGenerator implements UIdGenerator {
+public class UIdGeneratorImpl implements UIdGenerator {
     /**
      * 开始时间截 (2019-08-06)
      */
@@ -86,7 +86,7 @@ public class OrderIdGenerator implements UIdGenerator {
 
     private String dateFormat = "yyyyMMddHHMMssSSS";
 
-    public OrderIdGenerator() {
+    public UIdGeneratorImpl() {
         this.workerId = 1;
         this.dataCenterId = 0;
         this.twepoch = 1565020800000L;
@@ -98,7 +98,7 @@ public class OrderIdGenerator implements UIdGenerator {
      * @param workerId     工作ID (0~31)
      * @param dataCenterId 数据中心ID (0~31)
      */
-    public OrderIdGenerator(long workerId, long dataCenterId) {
+    public UIdGeneratorImpl(long workerId, long dataCenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(
                     String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
@@ -241,7 +241,7 @@ public class OrderIdGenerator implements UIdGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        OrderIdGenerator idWorker = new OrderIdGenerator(1, 1);
+        UIdGeneratorImpl idWorker = new UIdGeneratorImpl(1, 1);
         for (int i = 0; i < 5; i++) {
             String id = idWorker.nextId(GeneratorType.SNOWFLAKE);
             System.out.println(id + "," + id.length());
