@@ -13,7 +13,7 @@
     <modules>
         <module>rabbit-commons</module>
         <module>rabbit-security-pom</module>
-        <module>rabbit-dbase-pom</module>
+        <module>rabbit-jade-pom</module>
         <module>rabbit-web-pom</module>
         <module>rabbit-generator</module>
     </modules>
@@ -47,7 +47,7 @@
             </dependency>
             <dependency>
                 <groupId>com.rabbitframework</groupId>
-                <artifactId>rabbit-dbase</artifactId>
+                <artifactId>rabbit-jade</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

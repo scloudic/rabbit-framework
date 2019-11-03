@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rabbitframework.jade.springboot.configure.RabbitJadeAutoConfiguration,\
+  com.rabbitframework.jade.springboot.configure.MapperScannerAutoConfiguration
