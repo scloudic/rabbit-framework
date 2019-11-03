@@ -34,6 +34,10 @@ public class ServletContextHelper implements ServletContextAware, ApplicationCon
 		return applicationContext.getBean(id);
 	}
 
+	public static <T> T getBean(Class<T> clazz) {
+		return applicationContext.getBean(clazz);
+	}
+
 	public static String getMessage(String key) {
 		return getMessage(key, Locale.CHINA);
 	}
