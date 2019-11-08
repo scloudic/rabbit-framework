@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<properties resource="c3p0.properties">
+		<!-- <property name="" value=""></property> -->
+	</properties>
+	<!-- <plugins> <plugin interceptor=""></plugin> </plugins> -->
+	<!-- <caches>
+		<cache name="defaultCache" class="com.rabbitframework.dbase.cache.impl.EhcacheCache">
+		</cache>
+	</caches> -->
+	<dataAccess>
+		<dataSourceFactory
+			class="com.rabbitframework.jbatis.dataaccess.datasource.SimpleDataSourceFactory" />
+		<dataSources>
+			<dataSource name="simple" dialect="mysql"
+				class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<property name="driverClass" value="${c3p0.driverClassName}" />
+				<property name="jdbcUrl" value="${c3p0.url}" />
+				<property name="user" value="${c3p0.username}" />
+				<property name="password" value="${c3p0.password}" />
+				<property name="checkoutTimeout" value="${c3p0.checkoutTimeout}" />
+				<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />
+				<property name="initialPoolSize" value="${c3p0.initialPoolSize}" />
+				<property name="maxIdleTime" value="${c3p0.maxIdleTime}" />
+				<property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+				<property name="minPoolSize" value="${c3p0.minPoolSize}" />
+				<property name="maxStatements" value="${c3p0.maxStatements}" />
+				<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+			</dataSource>
+		</dataSources>
+	</dataAccess>
+	<entitys>
+		<entity class="com.rabbitfragmework.jbatis.test.model.TestUser"></entity>
+		<!-- <package name=""></package> -->
+	</entitys>
+	<mappers>
+		<mapper class="com.rabbitfragmework.jbatis.test.mapper.TestUserMapper"></mapper>
+		<!-- <package name=""></package> -->
+	</mappers>
+</configuration>
