@@ -8,8 +8,8 @@ import java.io.IOException;
 
 @SpringBootApplication
 @MapperScan("com.rabbitframework.**.test.mapper")
-public class ApplicationJadeMain {
+public class ApplicationJbatisMain {
     public static void main(String[] args) throws IOException {
-        SpringApplication.run(ApplicationJadeMain.class, args);
+        SpringApplication.run(ApplicationJbatisMain.class, args);
     }
 }

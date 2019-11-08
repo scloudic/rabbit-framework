@@ -1,7 +1,7 @@
 ### rabbit-framework整合框架
 rabbit-framework框架是为解决对项目环境快速搭建、基础框架统一而形成的一套整体的技术框架方案，目前框架主要划分为以下模块：
 
-一、rabbit-dbase:数据库ORM模块,主要实现以下功能：
+一、rabbit-jbatis:数据库ORM模块,主要实现以下功能：
 
 	1、全sql的注释方式；
 	

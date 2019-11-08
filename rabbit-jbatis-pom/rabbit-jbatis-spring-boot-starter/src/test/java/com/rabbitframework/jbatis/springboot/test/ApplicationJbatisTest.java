@@ -13,9 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = ApplicationJadeMain.class)
-public class ApplicationJadeTest {
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationJadeTest.class);
+@SpringBootTest(classes = ApplicationJbatisMain.class)
+public class ApplicationJbatisTest {
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationJbatisTest.class);
     @Autowired
     private TestUserService testUserService;
 

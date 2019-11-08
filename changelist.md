@@ -7,7 +7,7 @@
 	6、security库，新增rabbit-security-spring-boot-starter库，支持springboot,同时默认session保存到redis当中。
 	7、web库，新增rabbit-web-spring-boot-starter库，支持springboot
 	8、该版本不兼容3.1版本，部分接口更改.
-	9、重新构建，去除dbase模块，改为jade模块
+	9、重新构建，去除dbase模块，改为jbatis模块
 	
 ##### rabbitframework3.1版本说明:
 	1、版本优化升级，所有版本升级到3.1
