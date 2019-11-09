@@ -57,6 +57,7 @@ public class RabbitJbatisProperties {
     public static class DataSourceProperties {
         private String className;
         private String dialect = "mysql";
+        private boolean transaction = true;
         private Map<String, Object> params = new HashMap<String, Object>();
 
         public void setDialect(String dialect) {
@@ -81,6 +82,14 @@ public class RabbitJbatisProperties {
 
         public void setParams(Map<String, Object> params) {
             this.params = params;
+        }
+
+        public void setTransaction(boolean transaction) {
+            this.transaction = transaction;
+        }
+
+        public boolean isTransaction() {
+            return transaction;
         }
     }
 

@@ -115,13 +115,17 @@ public class RabbitJbatisAutoConfiguration {
     public void registerTransactionManagement(ConfigurableApplicationContext applicationContext) {
         BeanDefinitionRegistry registry = (BeanDefinitionRegistry) applicationContext.getBeanFactory();
         Map<String, String> dataSourceBeans = rabbitJadeProperties.getDataSourceBeans();
+        Map<String, RabbitJbatisProperties.DataSourceProperties> dataSources = rabbitJadeProperties.getDataSources();
         dataSourceBeans.forEach((k, v) -> {
-            DataSource dataSource = (DataSource) applicationContext.getBean(v);
-            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DataSourceTransactionManager.class);
-            beanDefinitionBuilder.addPropertyValue("dataSource", dataSource);
-            BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
-            registry.registerBeanDefinition(v + "Tx", beanDefinition);
-            // registry.registerBeanDefinition("transactionManager", beanDefinition);
+            RabbitJbatisProperties.DataSourceProperties dataSourceProperties = dataSources.get(v);
+            //数据库开启事务
+            if (dataSourceProperties.isTransaction()) {
+                DataSource dataSource = (DataSource) applicationContext.getBean(v);
+                BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(DataSourceTransactionManager.class);
+                beanDefinitionBuilder.addPropertyValue("dataSource", dataSource);
+                BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
+                registry.registerBeanDefinition(v + "Tx", beanDefinition);
+            }
         });
     }
 }
