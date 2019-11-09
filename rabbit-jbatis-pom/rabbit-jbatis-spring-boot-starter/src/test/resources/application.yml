@@ -1,8 +1,9 @@
 rabbit:
-  jade:
+  jbatis:
     data-sources:
       datasource1:
         dialect: mysql
+        transaction: true
         class-name: com.alibaba.druid.pool.DruidDataSource
         params:
           username: root
