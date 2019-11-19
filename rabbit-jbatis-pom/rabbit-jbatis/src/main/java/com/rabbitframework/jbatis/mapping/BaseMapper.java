@@ -16,108 +16,101 @@ import com.rabbitframework.jbatis.mapping.param.WhereParamType;
  * @date: 2017-07-16 下午12:50
  */
 public interface BaseMapper<T> {
-	/**
-	 * 插入一条记录
-	 *
-	 * @param entity
-	 * @return
-	 */
-	@Insert
-	Integer insertByEntity(T entity);
+    /**
+     * 插入一条记录
+     *
+     * @param entity
+     * @return
+     */
+    @Insert
+    Integer insertByEntity(T entity);
 
-	/**
-	 * 根据主键删除一条记录
-	 *
-	 * @param id
-	 * @return
-	 */
-	@Delete("delete from @{T} where @{entityId}=#{id}")
-	Integer deleteById(Serializable id);
+    /**
+     * 根据主键删除一条记录
+     *
+     * @param id
+     * @return
+     */
+    @Delete("delete from @{T} where @{entityId}=#{id}")
+    Integer deleteById(Serializable id);
 
-	/**
-	 * 根据参数条件{@link WhereParamType }删除数据
-	 *
-	 * @param paramType
-	 *            {@link WhereParamType}
-	 * @return
-	 */
-	@Delete("delete from @{T} where 1=1 ")
-	Integer deleteByParams(WhereParamType paramType);
+    /**
+     * 根据参数条件{@link WhereParamType }删除数据
+     *
+     * @param paramType {@link WhereParamType}
+     * @return
+     */
+    @Delete("delete from @{T} where 1=1 ")
+    Integer deleteByParams(WhereParamType paramType);
 
-	/**
-	 * 修改一条记录
-	 *
-	 * @param entity
-	 * @return
-	 */
-	@Update
-	Integer updateByEntity(T entity);
+    /**
+     * 修改一条记录
+     *
+     * @param entity
+     * @return
+     */
+    @Update
+    Integer updateByEntity(T entity);
 
-	/**
-	 * 根据主键查询对象
-	 *
-	 * @param id
-	 * @return
-	 */
-	@Select("select * from @{T} where @{entityId}=#{id}")
-	T selectById(Serializable id);
+    /**
+     * 根据主键查询对象
+     *
+     * @param id
+     * @return
+     */
+    @Select("select * from @{T} where @{entityId}=#{id}")
+    T selectById(Serializable id);
 
-	/**
-	 * 根据参数查询数据
-	 *
-	 * @param paramType
-	 *            {@link WhereParamType}
-	 * @return
-	 */
-	@Select("select * from @{T} where 1=1 ")
-	List<T> selectByParams(WhereParamType paramType);
+    /**
+     * 根据参数查询数据
+     *
+     * @param paramType {@link WhereParamType}
+     * @return
+     */
+    @Select("select * from @{T} where 1=1 ")
+    List<T> selectByParams(WhereParamType paramType);
 
-	/**
-	 * 根据参数获取总数
-	 *
-	 * @param paramType
-	 *            {@link WhereParamType}
-	 * @return
-	 */
-	@Select("select count(1) from @{T} where 1=1 ")
-	long selectCountByParams(WhereParamType paramType);
+    /**
+     * 根据参数获取总数
+     *
+     * @param paramType {@link WhereParamType}
+     * @return
+     */
+    @Select("select count(1) from @{T} where 1=1 ")
+    long selectCountByParams(WhereParamType paramType);
 
-	/**
-	 * 获取总数
-	 *
-	 * @param paramType
-	 *            {@link WhereParamType}
-	 * @return
-	 */
-	@Select("select count(1) from @{T} ")
-	long selectCount();
+    /**
+     * 获取总数
+     *
+     * @return
+     */
+    @Select("select count(1) from @{T} ")
+    long selectCount();
 
-	/**
-	 * 查询所有的数据
-	 *
-	 * @return
-	 */
-	@Select("select * from @{T} ")
-	List<T> selectEntityAll();
+    /**
+     * 查询所有的数据
+     *
+     * @return
+     */
+    @Select("select * from @{T} ")
+    List<T> selectEntityAll();
 
-	/**
-	 * 根据参数查询数据,并分页显示
-	 *
-	 * @param paramType
-	 *            {@link WhereParamType}
-	 * @param rowBounds
-	 *            {@link RowBounds}
-	 * @return
-	 */
-	@Select("select * from @{T} where 1=1 ")
-	List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
+    /**
+     * 根据参数查询数据,并分页显示
+     *
+     * @param paramType {@link WhereParamType}
+     * @param rowBounds {@link RowBounds}
+     * @return
+     */
+    @Select("select * from @{T} where 1=1 ")
+    List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
 
-	/**
-	 * 分页查询数据
-	 * 
-	 * @param rowBounds
-	 * @return
-	 */
-	@Select("select * from @{T} where 1=1 ")
-	List<T> selectEntityPage(RowBounds rowBounds);
+    /**
+     * 分页查询数据
+     *
+     * @param rowBounds
+     * @return
+     */
+    @Select("select * from @{T} where 1=1 ")
+    List<T> selectEntityPage(RowBounds rowBounds);
 }
