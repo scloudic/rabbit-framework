@@ -4,8 +4,8 @@ package ${packageName};
 <#if (modelPackage??) && (modelPackage != "")>
 import ${modelPackage}.${entity.objectName};
 </#if>
-import com.rabbitframework.dbase.mapping.BaseMapper;
-import com.rabbitframework.dbase.annontations.Mapper;
+import com.rabbitframework.jbatis.mapping.BaseMapper;
+import com.rabbitframework.jbatis.annontations.Mapper;
 /**
 * database table ${entity.tableName} mapper interface
 **/

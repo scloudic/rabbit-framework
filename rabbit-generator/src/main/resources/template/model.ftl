@@ -4,7 +4,7 @@ package ${packageName};
 <#list entity.importPackage as importPackage>
 import ${importPackage};
 </#list>
-import com.rabbitframework.dbase.annontations.*;
+import com.rabbitframework.jbatis.annontations.*;
 import java.io.Serializable;
 
 /**
