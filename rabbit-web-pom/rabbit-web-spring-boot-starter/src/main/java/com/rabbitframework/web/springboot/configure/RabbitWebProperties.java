@@ -14,6 +14,7 @@ public class RabbitWebProperties {
     private Type type = Type.SERVLET;
     private Filter filter = new Filter();
     private Servlet servlet = new Servlet();
+    private boolean requestLog = false;
     /**
      * Init parameters to pass to Jersey through the servlet or filter.
      */
@@ -86,6 +87,14 @@ public class RabbitWebProperties {
 
     public void setServlet(Servlet servlet) {
         this.servlet = servlet;
+    }
+
+    public boolean isRequestLog() {
+        return requestLog;
+    }
+
+    public void setRequestLog(boolean requestLog) {
+        this.requestLog = requestLog;
     }
 
     public enum Type {

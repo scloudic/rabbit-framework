@@ -5,6 +5,9 @@ import com.rabbitframework.web.annotations.NoProvider;
 import com.rabbitframework.web.mvc.freemarker.FreemarkerMvcFeature;
 import com.rabbitframework.web.resources.DefaultApplicationConfig;
 import com.rabbitframework.web.spring.aop.FormSubmitValidInterceptor;
+import com.rabbitframework.web.spring.aop.LogArgsInterceptor;
+import com.rabbitframework.web.spring.aop.LogInterceptor;
+import com.rabbitframework.web.spring.aop.NotLogInterceptor;
 import com.rabbitframework.web.utils.ServletContextHelper;
 import com.tjzq.commons.utils.ClassUtils;
 import com.tjzq.commons.utils.StringUtils;
@@ -83,6 +86,20 @@ public class RabbitWebAutoConfiguration {
         FormSubmitValidInterceptor formSubmitValidInterceptor = new FormSubmitValidInterceptor();
         return formSubmitValidInterceptor;
     }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public LogInterceptor logInterceptor() {
+        boolean requestLog = rabbitWebProperties.isRequestLog();
+        LogInterceptor logInterceptor = null;
+        if (requestLog) {
+            logInterceptor = new LogArgsInterceptor();
+        } else {
+            logInterceptor = new NotLogInterceptor();
+        }
+        return logInterceptor;
+    }
+
 
     @Bean
     @ConditionalOnMissingBean
