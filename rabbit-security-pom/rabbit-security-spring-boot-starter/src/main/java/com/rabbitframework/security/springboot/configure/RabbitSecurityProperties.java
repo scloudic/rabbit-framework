@@ -11,10 +11,11 @@ public class RabbitSecurityProperties {
     public static final String RABBIT_WEB_PREFIX = "rabbit.security";
     private String loginUrl = "/user/toLogin";
     private String unauthorizedUrl = "/user/unauthorized";
-    private String filterUrls = "/images/**,/lib/**,/res/**";
+    private String filterUrls = "/images/**,/lib/**,/res/**,/static/**";
     private Map<String, String> filterChainDefinitions;
     private String sessionDaoKeyPrefix = "rabbit_session";
     private Integer cacheSessionExpire = 604800;
+    private Integer otherCacheExpire = 600;
     private List<String> realmBeanNames = new ArrayList<String>();
 
     public List<String> getRealmBeanNames() {
@@ -63,6 +64,14 @@ public class RabbitSecurityProperties {
 
     public void setFilterUrls(String filterUrls) {
         this.filterUrls = filterUrls;
+    }
+
+    public void setOtherCacheExpire(Integer otherCacheExpire) {
+        this.otherCacheExpire = otherCacheExpire;
+    }
+
+    public Integer getOtherCacheExpire() {
+        return otherCacheExpire;
     }
 
     public Map<String, String> getFilterChainDefinitions() {
