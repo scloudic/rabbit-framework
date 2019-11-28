@@ -20,9 +20,9 @@ public class MapperScannerAutoConfiguration implements ImportBeanDefinitionRegis
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
         Map<String, Object> annotationAttributes = importingClassMetadata
                 .getAnnotationAttributes(MapperScan.class.getName());
-        String basePackages = (String) annotationAttributes.get("basePackages");
+        String[] basePackages = (String[]) annotationAttributes.get("basePackages");
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(MapperScannerConfigurer.class);
-        builder.addPropertyValue("basePackage", basePackages);
+        builder.addPropertyValue("basePackages", basePackages);
         builder.addPropertyValue("rabbitJbatisFactoryBeanName", "rabbitJbatisFactory");
         registry.registerBeanDefinition("rabbitJbatisMapperScannerConfigurer", builder.getRawBeanDefinition());
     }

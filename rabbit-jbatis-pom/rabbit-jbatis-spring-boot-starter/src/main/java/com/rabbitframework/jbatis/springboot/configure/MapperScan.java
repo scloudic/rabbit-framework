@@ -10,8 +10,8 @@ import java.lang.annotation.*;
 public @interface MapperScan {
 
     @AliasFor("basePackages")
-    String value() default "";
+    String[] value() default {};
 
     @AliasFor("value")
-    String basePackages() default "";
+    String[] basePackages() default {};
 }

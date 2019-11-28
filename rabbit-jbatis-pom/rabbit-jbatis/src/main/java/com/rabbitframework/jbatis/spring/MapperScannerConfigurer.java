@@ -40,7 +40,7 @@ public class MapperScannerConfigurer implements
         BeanDefinitionRegistryPostProcessor, InitializingBean,
         ApplicationContextAware, BeanNameAware {
 
-    private String basePackage;
+    private String basePackages;
 
     private String rabbitJbatisFactoryBeanName;
 
@@ -56,8 +56,8 @@ public class MapperScannerConfigurer implements
 
     }
 
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
+    public void setBasePackages(String basePackages) {
+        this.basePackages = basePackages;
     }
 
     public void setRabbitJbatisFactoryBeanName(String rabbitJbatisFactoryBeanName) {
@@ -86,7 +86,7 @@ public class MapperScannerConfigurer implements
     }
 
     public void afterPropertiesSet() throws Exception {
-        notNull(this.basePackage, "Property 'basePackage' is required");
+        notNull(this.basePackages, "Property 'basePackages' is required");
     }
 
     public void postProcessBeanFactory(
@@ -104,8 +104,7 @@ public class MapperScannerConfigurer implements
         scanner.setResourceLoader(this.applicationContext);
         scanner.setBeanNameGenerator(this.nameGenerator);
         scanner.registerFilters();
-        scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage,
-                ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
+        scanner.scan(this.basePackages);
     }
 
     private void processPropertyPlaceHolders() {
@@ -126,7 +125,7 @@ public class MapperScannerConfigurer implements
 
             PropertyValues values = mapperScannerBean.getPropertyValues();
 
-            this.basePackage = updatePropertyValue("basePackage", values);
+            this.basePackages = updatePropertyValue("basePackages", values);
             this.rabbitJbatisFactoryBeanName = updatePropertyValue(
                     "rabbitJbatisFactoryBeanName", values);
         }
