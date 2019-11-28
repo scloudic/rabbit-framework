@@ -7,8 +7,8 @@ rabbit:
         class-name: com.alibaba.druid.pool.DruidDataSource
         params:
           username: root
-          password:
-          url: jdbc:mysql://47.92.131.197:3360/syscenter?zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+          password: test.liangjy168
+          url: jdbc:mysql://47.92.131.197:6633/syscenter?zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
           #配置初始化大小、最小、最大
           initialSize: 1
           minIdle: 1

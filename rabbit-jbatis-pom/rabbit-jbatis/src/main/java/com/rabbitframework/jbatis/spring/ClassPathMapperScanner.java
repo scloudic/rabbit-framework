@@ -77,7 +77,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
 
                 boolean explicitFactoryUsed = false;
                 if (StringUtils.hasText(this.rabbitJbatisFactoryBeanName)) {
-                    definition.getPropertyValues().add("rabbitJadeFactory",
+                    definition.getPropertyValues().add("rabbitJbatisFactory",
                             new RuntimeBeanReference(this.rabbitJbatisFactoryBeanName));
                     explicitFactoryUsed = true;
                 }

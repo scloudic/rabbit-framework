@@ -19,8 +19,8 @@ import com.rabbitframework.jbatis.RabbitJbatisFactory;
  *
  * <pre class="code">
  * {@code
- *   <bean id="baseMapper" class="com.rabbitframework.jade.spring.MapperFactoryBean" abstract="true" lazy-init="true">
- *     <property name="rabbitJadeFactory" ref="rabbitJadeFactory" />
+ *   <bean id="baseMapper" class="com.rabbitframework.jbatis.spring.MapperFactoryBean" abstract="true" lazy-init="true">
+ *     <property name="rabbitJbatisFactory" ref="rabbitJbatisFactory" />
  *   </bean>
  *
  *   <bean id="oneMapper" parent="baseMapper">
@@ -41,8 +41,8 @@ public class MapperFactoryBean<T> implements FactoryBean<T>, InitializingBean {
     private Class<T> mapperInterface;
     private SqlDataAccess sqlDataAccess;
 
-    public void setRabbitJadeFactory(RabbitJbatisFactory rabbitJadeFactory) {
-        this.sqlDataAccess = rabbitJadeFactory.openSqlDataAccess();
+    public void setRabbitJbatisFactory(RabbitJbatisFactory rabbitJbatisFactory) {
+        this.sqlDataAccess = rabbitJbatisFactory.openSqlDataAccess();
     }
 
     public void setMapperInterface(Class<T> mapperInterface) {

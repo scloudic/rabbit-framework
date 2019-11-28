@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = RabbitJbatisProperties.RABBIT_JADE_PREFIX)
+@ConfigurationProperties(prefix = RabbitJbatisProperties.RABBIT_JBATIS_PREFIX)
 public class RabbitJbatisProperties {
-    public static final String RABBIT_JADE_PREFIX = "rabbit.jbatis";
+    public static final String RABBIT_JBATIS_PREFIX = "rabbit.jbatis";
     private DataSourceFactoryType dataSourceFactoryType = DataSourceFactoryType.SIMPLE;
     private String entityPackages;
     private String mapperPackages;

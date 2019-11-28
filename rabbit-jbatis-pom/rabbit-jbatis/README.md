@@ -83,8 +83,8 @@ dbase说明：
 </bean>
 <bean id="dataSourceFactory"
 	class="com.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
-<bean id="rabbitDbaseFactory" class="com.rabbitframework.dbase.spring.RabbitDbaseFactoryBean">
-	<!-- <property name="configLocation" value="classpath:jade-config.xml"></property> -->
+<bean id="rabbitDbaseFactory" class="com.rabbitframework.jbatis.spring.RabbitDbaseFactoryBean">
+	<!-- <property name="configLocation" value="classpath:jbatis-config.xml"></property> -->
 	<property name="entityPackages" value="com.rabbitfragmework.**.test.model"></property>
 	<property name="mapperPackages" value="com.rabbitfragmework.**.test.mapper"></property>
 	<property name="dataSourceFactory" ref="dataSourceFactory"></property>

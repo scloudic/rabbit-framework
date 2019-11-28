@@ -36,7 +36,7 @@
 		class="com.rabbitframework.jbatis.dataaccess.datasource.SimpleDataSourceFactory" />
 
 	<bean id="rabbitDbaseFactory" class="com.rabbitframework.jbatis.spring.RabbitJbatisFactoryBean">
-		<!-- <property name="configLocation" value="classpath:jade-config.xml"></property> -->
+		<!-- <property name="configLocation" value="classpath:jbatis-config.xml"></property> -->
 		<property name="entityPackages" value="com.rabbitfragmework.**.test.model"></property>
 		<property name="mapperPackages" value="com.rabbitfragmework.**.test.mapper"></property>
 		<property name="dataSourceFactory" ref="dataSourceFactory"></property>

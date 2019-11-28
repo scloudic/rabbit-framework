@@ -29,7 +29,7 @@ import static org.springframework.util.Assert.notNull;
  *
  * <pre class="code">
  * {@code
- *   <bean class="com.rabbitframework.jade.spring.MapperScannerConfigurer">
+ *   <bean class="com.rabbitframework.jbatis.spring.MapperScannerConfigurer">
  *       <property name="basePackage" value="org.mybatis.spring.sample.mapper" />
  *       <property name="rabbitJbatisFactoryBeanName" value="rabbitJbatisFactory" />
  *   </bean>
