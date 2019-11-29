@@ -68,6 +68,16 @@ public class RabbitSecurityUtils {
         return subject.isAuthenticated();
     }
 
+    /**
+     * 获取sessionId
+     *
+     * @return
+     */
+    public static String getSessionId() {
+        Subject subject = SecurityUtils.getSubject();
+        return subject.getSession().getId().toString();
+    }
+
     public static boolean login(SecurityLoginToken token) {
         // 如果当前已登陆,先退出登陆
         SecurityUser securityUser = getSecurityUser();
