@@ -43,8 +43,8 @@ public class RabbitSecurityUtils {
      * @param loginPwd
      * @return
      */
-    public static void userLogin(String loginName, String loginPwd) {
-        login(loginName, loginPwd, false);
+    public static boolean userLogin(String loginName, String loginPwd) {
+        return login(loginName, loginPwd, false);
     }
 
     /**
