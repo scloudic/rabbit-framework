@@ -63,6 +63,6 @@ public class SecurityUser implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return userName;
+		return userId;
 	}
 }
