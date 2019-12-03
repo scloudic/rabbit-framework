@@ -46,26 +46,23 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
 			WebApplicationException webException = ((WebApplicationException) e);
 			Response response = webException.getResponse();
 			int status = response.getStatus();
-			String message = webException.getMessage();
-			PrintWriter printWriter = null;
-			try {
-				Writer writer = new StringWriter();
-				printWriter = new PrintWriter(writer);
-				webException.printStackTrace(printWriter);
-				message = writer.toString();
-			} finally {
-				IOUtils.closeQuietly(printWriter);
-			}
+			/// String message = webException.getMessage();
+			// PrintWriter printWriter = null;
+			// try {
+			// Writer writer = new StringWriter();
+			// printWriter = new PrintWriter(writer);
+			// webException.printStackTrace(printWriter);
+			// message = writer.toString();
+			// } finally {
+			// IOUtils.closeQuietly(printWriter);
+			// }
 			dataJsonResponse.setStatus(StatusCode.FAIL);
-			if (StringUtils.isBlank(message)) {
-				message = ServletContextHelper.getMessage("fail");
-			}
-			dataJsonResponse.setMessage(message);
+			dataJsonResponse.setMessage(ServletContextHelper.getMessage("request.error"));
 			return ResponseUtils.getResponse(status, JsonUtils.toJsonString(dataJsonResponse));
 		}
 
 		if (!(e instanceof RabbitFrameworkException)) {
-			currException = new UnKnowException(ServletContextHelper.getMessage("fail"), e);
+			currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
 		}
 
 		RabbitFrameworkException rException = (RabbitFrameworkException) currException;
