@@ -4,7 +4,8 @@ import com.rabbitframework.commons.utils.StatusCode;
 
 public class ServiceException extends RabbitFrameworkException {
 	private static final long serialVersionUID = 8714902911973669718L;
-	private static final int status = StatusCode.SC_INTERNAL_SERVER_ERROR;
+	private static final int DEFAULT_STATUS = StatusCode.SC_INTERNAL_SERVER_ERROR;
+	private int status = DEFAULT_STATUS;
 
 	public ServiceException() {
 		super();
@@ -22,6 +23,10 @@ public class ServiceException extends RabbitFrameworkException {
 
 	public ServiceException(Throwable cause) {
 		super(cause);
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Override
