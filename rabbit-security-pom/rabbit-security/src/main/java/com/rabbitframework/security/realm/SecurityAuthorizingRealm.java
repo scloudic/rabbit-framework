@@ -10,6 +10,8 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 授权realm
@@ -18,6 +20,7 @@ import org.apache.shiro.util.StringUtils;
  * @date: 16/5/20 下午1:52
  */
 public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityAuthorizingRealm.class);
     private static final String DEFAULT_CACHE_KEY_PREFIX = "security_realm_key:";
     protected String cacheKeyPrefix = DEFAULT_CACHE_KEY_PREFIX;
     private String authc_key = "authc:";
@@ -32,25 +35,30 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Object userObject = getAvailablePrincipal(principals);
         if (userObject == null) {
-            throw new BizException("未登录");
+            throw new BizException("not.login");
         }
         SecurityUser securityUser = (SecurityUser) userObject;
-        return doGetAuthorizationInfo(securityUser);
+        return executeGetAuthorizationInfo(securityUser);
     }
 
     /**
-     * 获取权限信息,在配有缓存时只调用一次
+     * 执行权限操作，获取权限信息,在配有缓存时只调用一次
      *
      * @param securityUser
      * @return
      */
-    protected abstract AuthorizationInfo doGetAuthorizationInfo(SecurityUser securityUser);
+    protected abstract AuthorizationInfo executeGetAuthorizationInfo(SecurityUser securityUser);
 
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        SecurityLoginToken securityLoginToken = (SecurityLoginToken) token;
-        return doGetAuthenticationInfo(securityLoginToken);
+        if (token instanceof SecurityLoginToken) {
+            SecurityLoginToken securityLoginToken = (SecurityLoginToken) token;
+            return executeGetAuthenticationInfo(securityLoginToken);
+        } else {
+            logger.warn("token not instanceof SecurityLoginToken," + token);
+            return null;
+        }
     }
 
     /**
@@ -59,7 +67,7 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
      * @param securityLoginToken
      * @return
      */
-    protected abstract AuthenticationInfo doGetAuthenticationInfo(SecurityLoginToken securityLoginToken);
+    protected abstract AuthenticationInfo executeGetAuthenticationInfo(SecurityLoginToken securityLoginToken);
 
     @Override
     protected Object getAuthenticationCacheKey(PrincipalCollection principals) {

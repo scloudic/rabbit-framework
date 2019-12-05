@@ -1,6 +1,8 @@
 package com.rabbitframework.security.springboot.configure.test.realm;
 
+import com.rabbitframework.security.SecurityUser;
 import com.rabbitframework.security.realm.SecurityAuthorizingRealm;
+import com.rabbitframework.security.realm.SecurityLoginToken;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -26,27 +28,24 @@ public class EmptyTestSecurityRealm extends SecurityAuthorizingRealm {
     }
 
     /**
-     * 授权认证，在配有缓存时只调用一次
+     * 获取权限信息,在配有缓存时只调用一次
      *
-     * @param principals the primary identifying principals of the AuthorizationInfo that should be retrieved.
+     * @param securityUser
      * @return
      */
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        logger.debug("AuthorizationInfo:" + getName());
+    protected AuthorizationInfo executeGetAuthorizationInfo(SecurityUser securityUser) {
         return null;
     }
 
     /**
-     * 登陆认证，登录时调用
+     * 执行登陆操作，获取登陆信息
      *
-     * @param token the authentication token containing the user's principal and credentials.
+     * @param securityLoginToken
      * @return
-     * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        logger.debug("AuthenticationInfo:" + getName());
+    protected AuthenticationInfo executeGetAuthenticationInfo(SecurityLoginToken securityLoginToken) {
         return null;
     }
 }
