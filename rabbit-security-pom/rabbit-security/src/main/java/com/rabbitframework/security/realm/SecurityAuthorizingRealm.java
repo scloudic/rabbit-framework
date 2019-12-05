@@ -1,6 +1,10 @@
 package com.rabbitframework.security.realm;
 
+import com.rabbitframework.commons.exceptions.BizException;
 import com.rabbitframework.security.SecurityUser;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -23,6 +27,39 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
         super();
         setName("securityRealm");
     }
+
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        Object userObject = getAvailablePrincipal(principals);
+        if (userObject == null) {
+            throw new BizException("未登录");
+        }
+        SecurityUser securityUser = (SecurityUser) userObject;
+        return doGetAuthorizationInfo(securityUser);
+    }
+
+    /**
+     * 获取权限信息,在配有缓存时只调用一次
+     *
+     * @param securityUser
+     * @return
+     */
+    protected abstract AuthorizationInfo doGetAuthorizationInfo(SecurityUser securityUser);
+
+
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        SecurityLoginToken securityLoginToken = (SecurityLoginToken) token;
+        return doGetAuthenticationInfo(securityLoginToken);
+    }
+
+    /**
+     * 执行登陆操作，获取登陆信息
+     *
+     * @param securityLoginToken
+     * @return
+     */
+    protected abstract AuthenticationInfo doGetAuthenticationInfo(SecurityLoginToken securityLoginToken);
 
     @Override
     protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
