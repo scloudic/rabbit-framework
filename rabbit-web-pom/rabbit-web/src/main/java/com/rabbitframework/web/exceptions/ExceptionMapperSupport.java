@@ -32,63 +32,65 @@ import com.tjzq.commons.utils.StringUtils;
  */
 @Provider
 public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
-	private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
-	@Context
-	private HttpServletRequest request;
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
+    @Context
+    private HttpServletRequest request;
 
-	@Override
-	public Response toResponse(Exception e) {
-		logger.error(e.getMessage(), e);
-		int httpStatus = HttpServletResponse.SC_OK;
-		DataJsonResponse dataJsonResponse = new DataJsonResponse();
-		Exception currException = e;
-		if (e instanceof WebApplicationException) {
-			WebApplicationException webException = ((WebApplicationException) e);
-			Response response = webException.getResponse();
-			int status = response.getStatus();
-			/// String message = webException.getMessage();
-			// PrintWriter printWriter = null;
-			// try {
-			// Writer writer = new StringWriter();
-			// printWriter = new PrintWriter(writer);
-			// webException.printStackTrace(printWriter);
-			// message = writer.toString();
-			// } finally {
-			// IOUtils.closeQuietly(printWriter);
-			// }
-			dataJsonResponse.setStatus(StatusCode.FAIL);
-			dataJsonResponse.setMessage(ServletContextHelper.getMessage("request.error"));
-			return ResponseUtils.getResponse(status, JsonUtils.toJsonString(dataJsonResponse));
-		}
+    @Override
+    public Response toResponse(Exception e) {
+        logger.error(e.getMessage(), e);
+        int httpStatus = HttpServletResponse.SC_OK;
+        DataJsonResponse dataJsonResponse = new DataJsonResponse();
+        Exception currException = e;
+        if (e instanceof WebApplicationException) {
+            WebApplicationException webException = ((WebApplicationException) e);
+            Response response = webException.getResponse();
+            int status = response.getStatus();
+            /// String message = webException.getMessage();
+            // PrintWriter printWriter = null;
+            // try {
+            // Writer writer = new StringWriter();
+            // printWriter = new PrintWriter(writer);
+            // webException.printStackTrace(printWriter);
+            // message = writer.toString();
+            // } finally {
+            // IOUtils.closeQuietly(printWriter);
+            // }
+            dataJsonResponse.setStatus(StatusCode.FAIL);
+            dataJsonResponse.setMessage(ServletContextHelper.getMessage("request.error"));
+            return ResponseUtils.getResponse(status, JsonUtils.toJsonString(dataJsonResponse));
+        }
 
-		if (!(e instanceof RabbitFrameworkException)) {
-			currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
-		}
+        if (e.getCause() instanceof RabbitFrameworkException) {
+            currException = (RabbitFrameworkException) e.getCause();
+        } else if (!(e instanceof RabbitFrameworkException)) {
+            currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
+        }
 
-		RabbitFrameworkException rException = (RabbitFrameworkException) currException;
-		String message = ServletContextHelper.getMessage(rException.getMessage());
-		if (StringUtils.isBlank(message)) {
-			message = rException.getMessage();
-		}
-		dataJsonResponse.setMessage(message);
-		int status = rException.getStatus();
-		int resultStatus = status;
-		switch (status) {
-		case StatusCode.SC_INTERNAL_SERVER_ERROR:
-			httpStatus = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-			break;
-		case StatusCode.SC_UNAUTHORIZED:
-			httpStatus = HttpServletResponse.SC_UNAUTHORIZED;
-			break;
-		case StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED:
-			httpStatus = HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED;
-			break;
-		}
-		dataJsonResponse.setStatus(resultStatus);
-		if (StringUtils.isBlank(message)) {
-			message = ServletContextHelper.getMessage("fail");
-		}
-		dataJsonResponse.setMessage(message);
-		return ResponseUtils.getResponse(httpStatus, dataJsonResponse.toJson());
-	}
+        RabbitFrameworkException rException = (RabbitFrameworkException) currException;
+        String message = ServletContextHelper.getMessage(rException.getMessage());
+        if (StringUtils.isBlank(message)) {
+            message = rException.getMessage();
+        }
+        dataJsonResponse.setMessage(message);
+        int status = rException.getStatus();
+        int resultStatus = status;
+        switch (status) {
+            case StatusCode.SC_INTERNAL_SERVER_ERROR:
+                httpStatus = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+                break;
+            case StatusCode.SC_UNAUTHORIZED:
+                httpStatus = HttpServletResponse.SC_UNAUTHORIZED;
+                break;
+            case StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED:
+                httpStatus = HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED;
+                break;
+        }
+        dataJsonResponse.setStatus(resultStatus);
+        if (StringUtils.isBlank(message)) {
+            message = ServletContextHelper.getMessage("fail");
+        }
+        dataJsonResponse.setMessage(message);
+        return ResponseUtils.getResponse(httpStatus, dataJsonResponse.toJson());
+    }
 }

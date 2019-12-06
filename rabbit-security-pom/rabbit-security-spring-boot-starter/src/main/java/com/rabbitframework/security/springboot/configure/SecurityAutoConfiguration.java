@@ -5,6 +5,7 @@ import com.rabbitframework.security.cache.redisson.RedisManager;
 import com.rabbitframework.security.cache.redisson.RedisManagerImpl;
 import com.rabbitframework.security.cache.redisson.RedisSessionDAO;
 import com.rabbitframework.security.realm.SecurityAuthorizingRealm;
+import com.rabbitframework.security.spring.interceptor.SecurityAuthorizationAttributeSourceAdvisor;
 import com.rabbitframework.security.web.mgt.SimpleWebSecurityManager;
 import com.rabbitframework.security.web.session.mgt.SimpleWebSessionManager;
 import com.tjzq.redisson.springboot.configure.RedissonAutoConfiguration;
@@ -32,101 +33,102 @@ import java.util.List;
  * @author justin.liang
  */
 @Configuration
-@AutoConfigureAfter({ RedissonAutoConfiguration.class, LifecycleAutoConfiguration.class })
+@AutoConfigureAfter({RedissonAutoConfiguration.class, LifecycleAutoConfiguration.class})
 @EnableConfigurationProperties(RabbitSecurityProperties.class)
 public class SecurityAutoConfiguration {
-	private static final Logger logger = LoggerFactory.getLogger(SecurityAutoConfiguration.class);
-	private final RabbitSecurityProperties rabbitSecurityProperties;
-	@Autowired
-	private RedissonClient redissonClient;
-	private ApplicationContext applicationContext;
+    private static final Logger logger = LoggerFactory.getLogger(SecurityAutoConfiguration.class);
+    private final RabbitSecurityProperties rabbitSecurityProperties;
+    @Autowired
+    private RedissonClient redissonClient;
+    private ApplicationContext applicationContext;
 
-	public SecurityAutoConfiguration(ApplicationContext applicationContext,
-			RabbitSecurityProperties rabbitSecurityProperties) {
-		this.applicationContext = applicationContext;
-		this.rabbitSecurityProperties = rabbitSecurityProperties;
-	}
+    public SecurityAutoConfiguration(ApplicationContext applicationContext,
+                                     RabbitSecurityProperties rabbitSecurityProperties) {
+        this.applicationContext = applicationContext;
+        this.rabbitSecurityProperties = rabbitSecurityProperties;
+    }
 
-	@Bean("securityManager")
-	@ConditionalOnMissingBean
-	protected SecurityManager securityManager() {
-		List<String> realmsList = rabbitSecurityProperties.getRealmBeanNames();
-		if (realmsList.size() == 0) {
-			logger.error("realmPackages is null");
-			throw new RuntimeException("realmPackages is null");
-		}
-		List<Realm> realms = new ArrayList<Realm>();
-		realmsList.forEach((name) -> {
-			SecurityAuthorizingRealm securityAuthorizingRealm = (SecurityAuthorizingRealm) applicationContext
-					.getBean(name);
-			realms.add(securityAuthorizingRealm);
-		});
-		SimpleWebSecurityManager simpleWebSecurityManager = new SimpleWebSecurityManager();
-		simpleWebSecurityManager.setSessionManager(securityWebSessionManager());
-		simpleWebSecurityManager.setCacheManager(rabbitRedisCacheManager());
-		simpleWebSecurityManager.setRealms(realms);
-		return simpleWebSecurityManager;
-	}
+    @Bean("securityManager")
+    @ConditionalOnMissingBean
+    protected SecurityManager securityManager() {
+        List<String> realmsList = rabbitSecurityProperties.getRealmBeanNames();
+        if (realmsList.size() == 0) {
+            logger.error("realmPackages is null");
+            throw new RuntimeException("realmPackages is null");
+        }
+        List<Realm> realms = new ArrayList<Realm>();
+        realmsList.forEach((name) -> {
+            SecurityAuthorizingRealm securityAuthorizingRealm = (SecurityAuthorizingRealm) applicationContext
+                    .getBean(name);
+            realms.add(securityAuthorizingRealm);
+        });
+        SimpleWebSecurityManager simpleWebSecurityManager = new SimpleWebSecurityManager();
+        simpleWebSecurityManager.setSessionManager(securityWebSessionManager());
+        simpleWebSecurityManager.setCacheManager(rabbitRedisCacheManager());
+        simpleWebSecurityManager.setRealms(realms);
+        return simpleWebSecurityManager;
+    }
 
-	@Bean("securityWebSessionManager")
-	@ConditionalOnMissingBean
-	@DependsOn(value = { "redisSessionDAO" })
-	protected SimpleWebSessionManager securityWebSessionManager() {
-		SimpleWebSessionManager simpleWebSessionManager = new SimpleWebSessionManager();
-		simpleWebSessionManager.setCacheManager(rabbitRedisCacheManager());
-		simpleWebSessionManager.setSessionDAO(redisSessionDAO());
-		return simpleWebSessionManager;
-	}
+    @Bean("securityWebSessionManager")
+    @ConditionalOnMissingBean
+    @DependsOn(value = {"redisSessionDAO"})
+    protected SimpleWebSessionManager securityWebSessionManager() {
+        SimpleWebSessionManager simpleWebSessionManager = new SimpleWebSessionManager();
+        simpleWebSessionManager.setCacheManager(rabbitRedisCacheManager());
+        simpleWebSessionManager.setSessionDAO(redisSessionDAO());
+        return simpleWebSessionManager;
+    }
 
-	/**
-	 * 缓存管理器
-	 *
-	 * @return
-	 */
-	@Bean("rabbitRedisCacheManager")
-	@ConditionalOnMissingBean
-	protected RedisCacheManager rabbitRedisCacheManager() {
-		RedisCacheManager redisCacheManager = new RedisCacheManager();
-		redisCacheManager.setRedisManager(redisManager());
-		Integer sessionExpire = rabbitSecurityProperties.getCacheSessionExpire();
-		redisCacheManager.setSessionExpire(sessionExpire.intValue());
-		redisCacheManager.setOtherExpire(rabbitSecurityProperties.getOtherCacheExpire().intValue());
-		return redisCacheManager;
-	}
+    /**
+     * 缓存管理器
+     *
+     * @return
+     */
+    @Bean("rabbitRedisCacheManager")
+    @ConditionalOnMissingBean
+    protected RedisCacheManager rabbitRedisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        Integer sessionExpire = rabbitSecurityProperties.getCacheSessionExpire();
+        redisCacheManager.setSessionExpire(sessionExpire.intValue());
+        redisCacheManager.setOtherExpire(rabbitSecurityProperties.getOtherCacheExpire().intValue());
+        return redisCacheManager;
+    }
 
-	/**
-	 * redis管理实现类
-	 *
-	 * @return
-	 */
-	@Bean("redisManager")
-	@ConditionalOnMissingBean
-	protected RedisManager redisManager() {
-		RedisManagerImpl redisManager = new RedisManagerImpl();
-		redisManager.setRedissonClient(redissonClient);
-		return redisManager;
-	}
+    /**
+     * redis管理实现类
+     *
+     * @return
+     */
+    @Bean("redisManager")
+    @ConditionalOnMissingBean
+    protected RedisManager redisManager() {
+        RedisManagerImpl redisManager = new RedisManagerImpl();
+        redisManager.setRedissonClient(redissonClient);
+        return redisManager;
+    }
 
-	/**
-	 * sessionDao初始化实例
-	 *
-	 * @return
-	 */
-	@Bean("redisSessionDAO")
-	@ConditionalOnMissingBean
-	protected RedisSessionDAO redisSessionDAO() {
-		RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-		String keyPrefix = rabbitSecurityProperties.getSessionDaoKeyPrefix();
-		redisSessionDAO.setKeyPrefix(keyPrefix + ":");
-		redisSessionDAO.setCacheManager(rabbitRedisCacheManager());
-		return redisSessionDAO;
-	}
+    /**
+     * sessionDao初始化实例
+     *
+     * @return
+     */
+    @Bean("redisSessionDAO")
+    @ConditionalOnMissingBean
+    protected RedisSessionDAO redisSessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        String keyPrefix = rabbitSecurityProperties.getSessionDaoKeyPrefix();
+        redisSessionDAO.setKeyPrefix(keyPrefix + ":");
+        redisSessionDAO.setCacheManager(rabbitRedisCacheManager());
+        return redisSessionDAO;
+    }
 
-	@Bean
-	@ConditionalOnMissingBean
-	protected AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
-		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
-		return authorizationAttributeSourceAdvisor;
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    protected SecurityAuthorizationAttributeSourceAdvisor securityAuthorizationAttributeSourceAdvisor() {
+        SecurityAuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor =
+                new SecurityAuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
+        return authorizationAttributeSourceAdvisor;
+    }
 }
