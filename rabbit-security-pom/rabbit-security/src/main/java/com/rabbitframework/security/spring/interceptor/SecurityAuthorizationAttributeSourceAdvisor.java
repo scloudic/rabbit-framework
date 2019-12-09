@@ -1,6 +1,9 @@
 package com.rabbitframework.security.spring.interceptor;
 
+import com.rabbitframework.security.authz.annotation.Roles;
 import com.rabbitframework.security.authz.annotation.UriPermissions;
+import com.rabbitframework.security.authz.annotation.UserAuthentication;
+import org.apache.shiro.authz.Permission;
 import org.apache.shiro.mgt.SecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +24,10 @@ public class SecurityAuthorizationAttributeSourceAdvisor extends StaticMethodMat
 
     private static final Logger log = LoggerFactory.getLogger(SecurityAuthorizationAttributeSourceAdvisor.class);
 
-    //    private static final Class<? extends Annotation>[] AUTHZ_ANNOTATION_CLASSES =
-//            new Class[]{
-//                    RequiresPermissions.class, RequiresRoles.class,
-//                    RequiresUser.class, RequiresGuest.class, RequiresAuthentication.class
-//            };
     private static final Class<? extends Annotation>[] AUTHZ_ANNOTATION_CLASSES =
             new Class[]{
-                    UriPermissions.class};
+                    UriPermissions.class, Permission.class, Roles.class,
+                    UriPermissions.class, UserAuthentication.class};
     protected SecurityManager securityManager = null;
 
     /**
@@ -45,7 +44,7 @@ public class SecurityAuthorizationAttributeSourceAdvisor extends StaticMethodMat
     public void setSecurityManager(org.apache.shiro.mgt.SecurityManager securityManager) {
         this.securityManager = securityManager;
     }
-    
+
     public boolean matches(Method method, Class targetClass) {
         Method m = method;
 

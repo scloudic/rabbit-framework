@@ -27,6 +27,6 @@ public class AuthzException extends RabbitFrameworkException {
     }
     @Override
     public int getStatus() {
-        return 0;
+        return status;
     }
 }
