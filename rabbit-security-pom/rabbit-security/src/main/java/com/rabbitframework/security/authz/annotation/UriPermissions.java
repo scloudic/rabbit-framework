@@ -7,12 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * uri权限控制
- * 
- * @author justin.liang
  *
+ * @author justin.liang
  */
-@Target({ ElementType.TYPE, ElementType.METHOD })
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequiresUriPermissions {
-	String[] value();
+public @interface UriPermissions {
 }

@@ -60,11 +60,13 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
             dataJsonResponse.setMessage(ServletContextHelper.getMessage("request.error"));
             return ResponseUtils.getResponse(status, JsonUtils.toJsonString(dataJsonResponse));
         }
-
-        if (e.getCause() instanceof RabbitFrameworkException) {
-            currException = (RabbitFrameworkException) e.getCause();
-        } else if (!(e instanceof RabbitFrameworkException)) {
-            currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
+        if (!(e instanceof RabbitFrameworkException)) {
+            Throwable throwable = e.getCause();
+            if (throwable != null && (throwable instanceof RabbitFrameworkException)) {
+                currException = (RabbitFrameworkException) e.getCause();
+            } else {
+                currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
+            }
         }
 
         RabbitFrameworkException rException = (RabbitFrameworkException) currException;
