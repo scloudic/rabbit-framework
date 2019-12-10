@@ -33,7 +33,7 @@ import com.rabbitframework.security.web.servlet.AbstractSecurityFilter;
  * in Spring-based web applications for defining the master Shiro Filter.
  * <h4>Usage</h4> Declare a DelegatingFilterProxy in {@code web.xml}, matching
  * the filter name to the bean id:
- * 
+ *
  * <pre>
  * &lt;filter&gt;
  *   &lt;filter-name&gt;<b>shiroFilter</b>&lt;/filter-name&gt;
@@ -44,16 +44,16 @@ import com.rabbitframework.security.web.servlet.AbstractSecurityFilter;
  *   &lt;/init-param&gt;
  * &lt;/filter&gt;
  * </pre>
- * 
+ *
  * Then, in your spring XML file that defines your web ApplicationContext:
- * 
+ *
  * <pre>
  * &lt;bean id="<b>shiroFilter</b>" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"&gt;
  *    &lt;property name="securityManager" ref="securityManager"/&gt;
  *    &lt;!-- other properties as necessary ... --&gt;
  * &lt;/bean&gt;
  * </pre>
- * 
+ *
  * <h4>Filter Auto-Discovery</h4> While there is a
  * {@link #setFilters(java.util.Map) filters} property that allows you to assign
  * a filter beans to the 'pool' of filters available when defining
@@ -77,7 +77,7 @@ import com.rabbitframework.security.web.servlet.AbstractSecurityFilter;
  *    &lt;/property&gt;
  * &lt;/bean&gt;
  * </pre>
- * 
+ *
  * <h4>Global Property Values</h4> Most Shiro servlet Filter implementations
  * exist for defining custom Filter {@link #setFilterChainDefinitions(String)
  * chain definitions}. Most implementations subclass one of the
@@ -105,7 +105,7 @@ import com.rabbitframework.security.web.servlet.AbstractSecurityFilter;
  *
  * see org.springframework.web.filter.DelegatingFilterProxy
  * DelegatingFilterProxy
- * 
+ *
  * @since 1.0
  */
 public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor {
@@ -305,13 +305,13 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
 	 * <p/>
 	 * For example, just defining this bean in a web Spring XML application
 	 * context:
-	 * 
+	 *
 	 * <pre>
 	 * &lt;bean id=&quot;myFilter&quot; class=&quot;com.class.that.implements.javax.servlet.Filter&quot;&gt;
 	 * ...
 	 * &lt;/bean&gt;
 	 * </pre>
-	 * 
+	 *
 	 * Will automatically place that bean into this Filters map under the key '
 	 * <b>myFilter</b>'.
 	 *
@@ -409,7 +409,7 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
 	 * <code>{@link org.apache.shiro.web.servlet.AbstractShiroFilter}.class</code>
 	 *
 	 * @return <code>
-	 *         
+	 *
 	{@link org.apache.shiro.web.servlet.AbstractShiroFilter}.class</code>
 	 */
 	public Class getObjectType() {

@@ -1,6 +1,7 @@
 package com.rabbitframework.security.springboot.configure;
 
 import com.rabbitframework.security.spring.web.SecurityFilterFactoryBean;
+import com.tjzq.commons.utils.StringUtils;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import java.util.Map;
 
 @Configuration
 @EnableConfigurationProperties(RabbitSecurityProperties.class)
@@ -38,13 +40,19 @@ public class SecurityAutoFilterConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    protected SecurityFilterFactoryBean rabbitSecurityFilterFactoryBean() {
+    protected SecurityFilterFactoryBean rabbitSecurityFilterFactoryBean() throws Exception {
         SecurityFilterFactoryBean securityFilterFactoryBean = new SecurityFilterFactoryBean();
         securityFilterFactoryBean.setSecurityManager(securityManager);
         securityFilterFactoryBean.setLoginUrl(rabbitSecurityProperties.getLoginUrl());
         securityFilterFactoryBean.setUnauthorizedUrl(rabbitSecurityProperties.getUnauthorizedUrl());
         securityFilterFactoryBean.setFilterUrls(rabbitSecurityProperties.getFilterUrls());
-        securityFilterFactoryBean.setFilterChainDefinitionMap(rabbitSecurityProperties.getFilterChainDefinitions());
+        Map<String, String> filterChainDefinitions = rabbitSecurityProperties.getFilterChainDefinitions();
+        String value = filterChainDefinitions.get("all");
+        if (StringUtils.isNotBlank(value)) {
+            filterChainDefinitions.put("/**", value);
+            filterChainDefinitions.remove("all");
+        }
+        securityFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitions);
         return securityFilterFactoryBean;
     }
 
