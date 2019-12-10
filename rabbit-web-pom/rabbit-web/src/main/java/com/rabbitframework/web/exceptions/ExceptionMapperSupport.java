@@ -84,9 +84,9 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
             case StatusCode.SC_UNAUTHORIZED:
                 httpStatus = HttpServletResponse.SC_UNAUTHORIZED;
                 break;
-            case StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED:
-                httpStatus = HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED;
-                break;
+//            case StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED:
+//                httpStatus = HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED;
+//                break;
         }
         dataJsonResponse.setStatus(resultStatus);
         if (StringUtils.isBlank(message)) {

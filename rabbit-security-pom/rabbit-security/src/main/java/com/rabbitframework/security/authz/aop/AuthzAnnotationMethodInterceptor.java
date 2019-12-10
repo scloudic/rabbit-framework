@@ -1,5 +1,6 @@
 package com.rabbitframework.security.authz.aop;
 
+import com.rabbitframework.commons.exceptions.AuthcException;
 import com.rabbitframework.commons.exceptions.AuthzException;
 import com.rabbitframework.security.authz.handler.AuthzAnnotationHandler;
 import org.apache.shiro.aop.AnnotationMethodInterceptor;
@@ -32,7 +33,13 @@ public class AuthzAnnotationMethodInterceptor extends AnnotationMethodIntercepto
             ((AuthzAnnotationHandler) getHandler()).assertAuthorized(getAnnotation(mi), mi);
         } catch (Exception ae) {
             logger.warn(ae.getMessage() + ",Not authorized to invoke method: " + mi.getMethod());
-            throw new AuthorizationException(new AuthzException("authz.fail"));
+            Throwable throwable = ae.getCause();
+            if (throwable instanceof AuthcException) {
+                AuthcException authcException = (AuthcException) throwable;
+                throw new AuthorizationException(authcException);
+            } else {
+                throw new AuthorizationException(new AuthzException("authz.fail"));
+            }
         }
     }
 }

@@ -47,10 +47,12 @@ public class SecurityAutoFilterConfiguration {
         securityFilterFactoryBean.setUnauthorizedUrl(rabbitSecurityProperties.getUnauthorizedUrl());
         securityFilterFactoryBean.setFilterUrls(rabbitSecurityProperties.getFilterUrls());
         Map<String, String> filterChainDefinitions = rabbitSecurityProperties.getFilterChainDefinitions();
-        String value = filterChainDefinitions.get("all");
-        if (StringUtils.isNotBlank(value)) {
-            filterChainDefinitions.put("/**", value);
-            filterChainDefinitions.remove("all");
+        if (filterChainDefinitions != null) {
+            String value = filterChainDefinitions.get("all");
+            if (StringUtils.isNotBlank(value)) {
+                filterChainDefinitions.put("/**", value);
+                filterChainDefinitions.remove("all");
+            }
         }
         securityFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitions);
         return securityFilterFactoryBean;
