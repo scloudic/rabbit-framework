@@ -9,8 +9,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = RabbitSecurityProperties.RABBIT_WEB_PREFIX)
 public class RabbitSecurityProperties {
     public static final String RABBIT_WEB_PREFIX = "rabbit.security";
-    private String loginUrl = "/user/toLogin";
-    private String unauthorizedUrl = "/user/unauthorized";
+    private String loginUrl = "";
+    private String unauthorizedUrl = "";
     private String filterUrls = "/images/**,/lib/**,/res/**,/static/**";
     private Map<String, String> filterChainDefinitions;
     private String sessionDaoKeyPrefix = "rabbit_session";

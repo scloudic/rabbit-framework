@@ -9,6 +9,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.util.StringUtils;
+import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -22,28 +24,18 @@ import com.tjzq.commons.utils.JsonUtils;
  * @author justin.liang
  */
 public class FormAuthcFilter extends FormAuthenticationFilter {
-	private static final Logger logger = LoggerFactory.getLogger(FormAuthcFilter.class);
-
-	@Override
-	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		PrintWriter printWriter = null;
-		try {
-			HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
-			httpServletResponse.setContentType("text/json; charset=utf-8");
-			Map<String, Object> json = new HashMap<String, Object>();
-			json.put("status", HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED);
-			json.put("message", "Authentication fail");
-			printWriter = httpServletResponse.getWriter();
-			printWriter.write(JsonUtils.toJsonString(json));
-		} finally {
-			try {
-				if (printWriter != null) {
-					printWriter.close();
-				}
-				response.flushBuffer();
-			} catch (IOException e) {
-				logger.warn(e.getMessage(), e);
-			}
-		}
-	}
+    @Override
+    protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
+        String loginUrl = getLoginUrl();
+        HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
+        httpServletResponse.setContentType("text/json; charset=utf-8");
+        if (StringUtils.hasText(loginUrl) && (!AccessControlFilter.DEFAULT_LOGIN_URL.equals(loginUrl))) {
+            saveRequestAndRedirectToLogin(request, response);
+        } else {
+            Map<String, Object> json = new HashMap<String, Object>();
+            json.put("status", HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED);
+            json.put("message", "Authentication fail");
+            httpServletResponse.sendError(HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED, JsonUtils.toJsonString(json));
+        }
+    }
 }
