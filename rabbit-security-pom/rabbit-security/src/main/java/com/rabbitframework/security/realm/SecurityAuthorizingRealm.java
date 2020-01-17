@@ -71,7 +71,7 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
 
     @Override
     protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
-        String prefix = cacheKeyPrefix + authc_key;
+        String prefix = getCacheKeyPrefix() + authc_key;
         return getCacheKey(prefix, principals);
     }
 
@@ -96,12 +96,12 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
 
     @Override
     protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
-        String prefix = cacheKeyPrefix + authz_key;
+        String prefix = getCacheKeyPrefix() + authz_key;
         return getCacheKey(prefix, principals);
     }
 
     public void cleanAuthorizationCache(String userId) {
-        String prefix = cacheKeyPrefix + authz_key + userId;
+        String prefix = getCacheKeyPrefix() + authz_key + userId;
         Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
         if (cache != null) {
             cache.remove(prefix);
@@ -109,7 +109,7 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     }
 
     public AuthorizationInfo getAuthoriztionInfo(String userId) {
-        String prefix = cacheKeyPrefix + authz_key + userId;
+        String prefix = getCacheKeyPrefix() + authz_key + userId;
         Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
         AuthorizationInfo authorizationInfo = cache.get(prefix);
         return authorizationInfo;

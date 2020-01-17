@@ -4,6 +4,7 @@ import com.rabbitframework.security.cache.redisson.RedisCacheManager;
 import com.rabbitframework.security.cache.redisson.RedisManager;
 import com.rabbitframework.security.cache.redisson.RedisManagerImpl;
 import com.rabbitframework.security.cache.redisson.RedisSessionDAO;
+import com.rabbitframework.security.realm.EmptyRealm;
 import com.rabbitframework.security.realm.SecurityAuthorizingRealm;
 import com.rabbitframework.security.spring.interceptor.SecurityAuthorizationAttributeSourceAdvisor;
 import com.rabbitframework.security.web.mgt.SimpleWebSecurityManager;
@@ -52,16 +53,16 @@ public class SecurityAutoConfiguration {
     @ConditionalOnMissingBean
     protected SecurityManager securityManager() {
         List<String> realmsList = rabbitSecurityProperties.getRealmBeanNames();
-        if (realmsList.size() == 0) {
-            logger.error("realmPackages is null");
-            throw new RuntimeException("realmPackages is null");
-        }
         List<Realm> realms = new ArrayList<Realm>();
-        realmsList.forEach((name) -> {
-            SecurityAuthorizingRealm securityAuthorizingRealm = (SecurityAuthorizingRealm) applicationContext
-                    .getBean(name);
-            realms.add(securityAuthorizingRealm);
-        });
+        if (realmsList.size() == 0) {
+            realms.add(new EmptyRealm());
+        } else {
+            realmsList.forEach((name) -> {
+                SecurityAuthorizingRealm securityAuthorizingRealm = (SecurityAuthorizingRealm) applicationContext
+                        .getBean(name);
+                realms.add(securityAuthorizingRealm);
+            });
+        }
         SimpleWebSecurityManager simpleWebSecurityManager = new SimpleWebSecurityManager();
         simpleWebSecurityManager.setSessionManager(securityWebSessionManager());
         simpleWebSecurityManager.setCacheManager(rabbitRedisCacheManager());
