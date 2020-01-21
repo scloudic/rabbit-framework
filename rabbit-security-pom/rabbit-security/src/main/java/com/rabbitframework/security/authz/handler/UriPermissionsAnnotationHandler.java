@@ -1,8 +1,10 @@
 package com.rabbitframework.security.authz.handler;
 
+import com.rabbitframework.commons.exceptions.AuthcException;
 import com.rabbitframework.security.authz.annotation.UriPermissions;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,11 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
 
     @Override
     public void assertAuthorized(Annotation a, MethodInvocation mi) throws AuthorizationException {
+        Subject subject = getSubject();
+        //优先判断权限
+        if (!subject.isAuthenticated()) {
+            throw new AuthorizationException(new AuthcException("authc.fail"));
+        }
         Object[] objects = mi.getArguments();
         ServletRequest request = null;
         for (Object object : objects) {
@@ -37,7 +44,7 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
         if (logger.isDebugEnabled()) {
             logger.debug("requestUrl:" + requestUri);
         }
-        getSubject().checkPermission(requestUri);
+        subject.checkPermission(requestUri);
     }
 
     protected String getPathWithinApplication(ServletRequest request) {

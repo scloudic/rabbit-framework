@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * uri权限控制
+ * uri权限控制,优先判断登陆拦截
  *
  * @author justin.liang
  */
