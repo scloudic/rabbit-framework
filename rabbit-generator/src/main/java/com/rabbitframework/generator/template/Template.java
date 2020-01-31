@@ -70,6 +70,7 @@ public class Template {
             String packageName = (String) params.get(Constants.PACKAGE_NAME_KEY);
             File directory = getDirectory(outPath, packageName);
             File targetFile = new File(directory, outfileName);
+            logger.debug("generator file path:" + targetFile.getAbsolutePath());
             fos = new FileOutputStream(targetFile, false);
             osw = new OutputStreamWriter(fos, Constants.ENCODING);
             template.process(params, osw);
@@ -89,7 +90,7 @@ public class Template {
             }
         }
     }
-    
+
     public File getDirectory(String targetProject, String targetPackage) {
         File project = new File(targetProject);
         if (!project.isDirectory()) {
