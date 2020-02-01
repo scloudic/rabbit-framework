@@ -1,10 +1,12 @@
 package com.rabbitframework.jbatis.mapping.param;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.rabbitframework.jbatis.annontations.Column;
 import com.rabbitframework.jbatis.reflect.MetaObject;
 import com.rabbitframework.jbatis.reflect.SystemMetaObject;
 import com.tjzq.commons.utils.StringUtils;
@@ -139,9 +141,14 @@ public class WhereParamType {
             throw new NullPointerException("object is null");
         }
         MetaObject metaObject = SystemMetaObject.forObject(value);
-        String[] getterNames = metaObject.getGetterNames();
-        for (String getterName : getterNames) {
-            params.put(getterName, metaObject.getValue(getterName));
+        Field[] fields = value.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            String property = field.getName();
+            Column column = field.getAnnotation(Column.class);
+            if (column == null) {
+                continue;
+            }
+            params.put(property, metaObject.getValue(property));
         }
     }
 }

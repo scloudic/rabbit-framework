@@ -28,12 +28,12 @@ public class EntityRegistry {
 	public void addEntity(Class<?> entity) {
 		Table entityAnnotation = entity.getAnnotation(Table.class);
 		if (entityAnnotation != null) {
-			addEntitytMap(parseBuilder.parseEntity(entity));
+			addEntityMap(parseBuilder.parseEntity(entity));
 		}
 
 	}
 
-	public void addEntitytMap(EntityMap entityMap) {
+	public void addEntityMap(EntityMap entityMap) {
 		if (entityMap != null) {
 			entityMaps.put(entityMap.getId(), entityMap);
 		}
