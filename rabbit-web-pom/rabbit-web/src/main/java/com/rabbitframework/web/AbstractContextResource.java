@@ -1,4 +1,5 @@
 package com.rabbitframework.web;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 
@@ -13,136 +14,102 @@ import com.rabbitframework.web.utils.ServletContextHelper;
  * @author: justin.liang
  */
 public abstract class AbstractContextResource extends RabbitContextResource {
-	public String getMessage(String messageKey) {
-		return ServletContextHelper.getMessage(messageKey);
-	}
+    public String getMessage(String messageKey) {
+        return ServletContextHelper.getMessage(messageKey);
+    }
 
-	public String getMessage(String messageKey, Object... args) {
-		return ServletContextHelper.getMessage(messageKey, args);
-	}
+    public String getMessage(String messageKey, Object... args) {
+        return ServletContextHelper.getMessage(messageKey, args);
+    }
 
-	public String getMessage(HttpServletRequest request, String messageKey) {
-		return ServletContextHelper.getMessage(messageKey, request.getLocale());
-	}
+    public String getMessage(HttpServletRequest request, String messageKey) {
+        return ServletContextHelper.getMessage(messageKey, request.getLocale());
+    }
 
-	public Response getSimpleResponse(boolean result) {
-		return getSimpleResponse(result, null);
-	}
+    public Response getSimpleResponse(boolean result) {
+        return getSimpleResponse(result, null);
+    }
 
-	public Response getSimpleResponse(boolean result, Object data) {
-		return getSimpleResponse(result, data, false);
-	}
+    public Response getSimpleResponse(boolean result, Object data) {
+        return getSimpleResponse(result, data, true);
+    }
 
-	/**
-	 * 获取Response返回信息
-	 * 
-	 * @param result
-	 * @param data
-	 * @param dataNoNull
-	 *            json串忽略空值
-	 * @return
-	 */
-	public Response getSimpleResponse(boolean result, Object data, boolean dataNoNull) {
-		DataJsonResponse dataJsonResponse = new DataJsonResponse();
-		if (data != null) {
-			dataJsonResponse.setData(data);
-		}
-		dataJsonResponse.setStatus(StatusCode.FAIL);
-		dataJsonResponse.setMessage(getMessage("fail"));
-		if (result) {
-			dataJsonResponse.setStatus(StatusCode.SC_OK);
-			dataJsonResponse.setMessage(getMessage("success"));
-		}
-		String dataJson = dataJsonResponse.toJson();
-		if (dataNoNull) {
-			dataJson = dataJsonResponse.toJsonNoNull();
-		}
-		// logger.debug(getClass().getName() + "=>" + dataJson);
-		return ResponseUtils.ok(dataJson);
-	}
+    /**
+     * 获取Response返回信息
+     *
+     * @param result
+     * @param data
+     * @param isNullToEmpty 是否空字段值转换
+     * @return
+     */
+    public Response getSimpleResponse(boolean result, Object data, boolean isNullToEmpty) {
+        DataJsonResponse dataJsonResponse = new DataJsonResponse();
+        if (data != null) {
+            dataJsonResponse.setData(data);
+        }
+        dataJsonResponse.setStatus(StatusCode.FAIL);
+        dataJsonResponse.setMessage(getMessage("fail"));
+        if (result) {
+            dataJsonResponse.setStatus(StatusCode.SC_OK);
+            dataJsonResponse.setMessage(getMessage("success"));
+        }
 
-	public Response getSimpleResponse(boolean result, String key, Object data) {
-		DataJsonResponse dataJsonResponse = new DataJsonResponse();
-		if (result) {
-			dataJsonResponse.setStatus(StatusCode.SC_OK);
-			dataJsonResponse.setMessage(getMessage("success"));
-			if (data != null) {
-				dataJsonResponse.setData(key, data);
-			}
-			String dataJson = dataJsonResponse.toJsonNoNull();
-			// logger.debug(getClass().getName() + "=>" + dataJson);
-			return ResponseUtils.ok(dataJson);
-		}
-		dataJsonResponse.setStatus(StatusCode.FAIL);
-		dataJsonResponse.setMessage(getMessage("fail"));
-		String dataJson = dataJsonResponse.toJsonNoNull();
-		// logger.debug(getClass().getName() + "=>" + dataJson);
-		return ResponseUtils.ok(dataJson);
+        String dataJson = dataJsonResponse.toJson(isNullToEmpty);
+        // logger.debug(getClass().getName() + "=>" + dataJson);
+        return ResponseUtils.ok(dataJson);
+    }
 
-	}
+    /**
+     * 根据参数返回结果集
+     *
+     * @param result：是否成功
+     * @param data:返回数据
+     * @param isNullToEmpty 是否空字段值转换
+     * @return
+     */
+    public Response getResponse(boolean result, Object data, boolean isNullToEmpty) {
+        DataJsonResponse dataJsonResponse = new DataJsonResponse();
+        dataJsonResponse.setStatus(StatusCode.FAIL);
+        dataJsonResponse.setMessage(getMessage("fail"));
+        if (result) {
+            dataJsonResponse.setStatus(StatusCode.SC_OK);
+            dataJsonResponse.setMessage(getMessage("success"));
+        }
+        if (null != data) {
+            dataJsonResponse.setData(data);
+        }
+        String dataJson = dataJsonResponse.toJson(isNullToEmpty);
+        // logger.debug(getClass().getName() + "-getResponse() =>" + dataJson);
+        return ResponseUtils.ok(dataJson);
+    }
 
-	/**
-	 * 根据参数返回结果集
-	 *
-	 * @param result：是否成功s
-	 * @param data:返回数据
-	 * @param dateNotNull
-	 *            数据是否去掉空值
-	 * @return
-	 */
-	public Response getResponse(boolean result, Object data, boolean dataNoNull) {
-		DataJsonResponse dataJsonResponse = new DataJsonResponse();
-		dataJsonResponse.setStatus(StatusCode.FAIL);
-		dataJsonResponse.setMessage(getMessage("fail"));
-		if (result) {
-			dataJsonResponse.setStatus(StatusCode.SC_OK);
-			dataJsonResponse.setMessage(getMessage("success"));
-		}
-		if (null != data) {
-			dataJsonResponse.setData(data);
-		}
-		String dataJson = dataJsonResponse.toJson();
-		if (dataNoNull) {
-			dataJson = dataJsonResponse.toJsonNoNull();
-		}
-		// logger.debug(getClass().getName() + "-getResponse() =>" + dataJson);
-		return ResponseUtils.ok(dataJson);
-	}
+    public Response getResponse(boolean status, String message, Object data) {
+        int statusInt = status ? StatusCode.SC_OK : StatusCode.FAIL;
+        return getResponse(statusInt, message, data);
+    }
 
-	public Response getResponse(boolean status, String message, Object data) {
-		int statusInt = status ? StatusCode.SC_OK : StatusCode.FAIL;
-		return getResponse(statusInt, message, data);
-	}
+    public Response getResponse(int status, String message, Object data) {
+        return getResponse(status, message, data, false);
+    }
 
-	public Response getResponse(int status, String message, Object data) {
-		return getResponse(status, message, data, false);
-	}
-
-	/**
-	 * 获取返回信息
-	 *
-	 * @param status
-	 *            返回状态
-	 * @param message
-	 *            返回消息
-	 * @param data
-	 *            接收数据
-	 * @param dataNotNull
-	 *            是否去掉为空数据
-	 * @return
-	 */
-	public Response getResponse(int status, String message, Object data, boolean dataNoNull) {
-		DataJsonResponse dataJsonResponse = new DataJsonResponse();
-		if (data != null) {
-			dataJsonResponse.setData(data);
-		}
-		dataJsonResponse.setStatus(status);
-		dataJsonResponse.setMessage(message);
-		String value = dataJsonResponse.toJson();
-		if (dataNoNull) {
-			value = dataJsonResponse.toJsonNoNull();
-		}
-		// logger.debug(getClass().getName() + "=>" + value);
-		return ResponseUtils.ok(value);
-	}
+    /**
+     * 获取返回信息
+     *
+     * @param status        返回状态
+     * @param message       返回消息
+     * @param data          接收数据
+     * @param isNullToEmpty 是否空字段值转换
+     * @return
+     */
+    public Response getResponse(int status, String message, Object data, boolean isNullToEmpty) {
+        DataJsonResponse dataJsonResponse = new DataJsonResponse();
+        if (data != null) {
+            dataJsonResponse.setData(data);
+        }
+        dataJsonResponse.setStatus(status);
+        dataJsonResponse.setMessage(message);
+        String value = dataJsonResponse.toJson(isNullToEmpty);
+        // logger.debug(getClass().getName() + "=>" + value);
+        return ResponseUtils.ok(value);
+    }
 }

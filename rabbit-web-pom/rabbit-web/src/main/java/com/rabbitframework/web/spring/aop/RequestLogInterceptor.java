@@ -66,7 +66,7 @@ public class RequestLogInterceptor {
 			LogInfo logInfo = new LogInfo();
 			logInfo.setMethodName(methodName);
 			logInfo.setValue(paramsValue);
-			String jsonValue = JsonUtils.nullConvertToJsonStr(logInfo);
+			String jsonValue = JsonUtils.toJsonStringNullConvert(logInfo);
 			logger.debug("requestPath:" + path.value() + ",value:" + jsonValue);
 		} catch (Exception e) {
 			logger.warn("get logInfo fail");
