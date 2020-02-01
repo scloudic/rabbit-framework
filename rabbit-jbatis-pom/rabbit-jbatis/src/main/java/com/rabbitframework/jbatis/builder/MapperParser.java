@@ -80,19 +80,19 @@ public class MapperParser {
                 }
             }
             String mapperInterfaceName = mapperInterface.getName();
-            logger.trace("mapper className:" + mapperInterfaceName);
+            logger.debug("mapper className:" + mapperInterfaceName);
             Mapper mapperAnnotation = mapperInterface.getAnnotation(Mapper.class);
             String catalog = mapperAnnotation.catalog();
             String resource = mapperInterface.toString();
             assistant.setCatalog(catalog);
-            Field[] fields = mapperInterface.getFields();
-            int fieldsLength = fields.length;
-            for (int i = 0; i < fieldsLength; i++) {
-                Field field = fields[i];
-                String fieldName = field.getName();
-                String obj = field.get(field.getType()).toString();
-                properties.setProperty(fieldName, obj);
-            }
+//            Field[] fields = mapperInterface.getFields();
+//            int fieldsLength = fields.length;
+//            for (int i = 0; i < fieldsLength; i++) {
+//                Field field = fields[i];
+//                String fieldName = field.getName();
+//                String obj = field.get(field.getType()).toString();
+//                properties.setProperty(fieldName, obj);
+//            }
             if (!configuration.isMapperLoaded(resource)) {
                 configuration.addLoadedMapper(resource);
                 Method[] methods = mapperInterface.getMethods();
@@ -116,12 +116,12 @@ public class MapperParser {
     private void parseMapperStatement(Method method) {
         final String mappedStatementId = mapperInterface.getName() + "." + method.getName(); // 声明ID
         Class<?> parameterType = getParameterType(method);
-        if (parameterType != null && "Object".equals(parameterType.getSimpleName())) {
-            Type[] types = method.getGenericParameterTypes();
-            if ("T".equals(types[0].getTypeName())) {
-                parameterType = this.genericMapper;
-            }
-        }
+//        if (parameterType != null && "Object".equals(parameterType.getSimpleName())) {
+//            Type[] types = method.getGenericParameterTypes();
+//            if ("T".equals(types[0].getTypeName())) {
+//                parameterType = this.genericMapper;
+//            }
+//        }
         LanguageDriver languageDriver = configuration.getLanguageDriver();
         SQLParser sqlParser = getSQLParserByAnnotations(method, parameterType);
         if (sqlParser == null)
@@ -254,7 +254,7 @@ public class MapperParser {
 
             SQLParser sqlParser = null;
             if (sqlCommendType != null) {
-                sqlParser = new SQLParser(method, sqlValue, sqlCommendType, paramType, configuration);
+                sqlParser = new SQLParser(method, sqlValue, sqlCommendType, paramType, configuration, genericMapper);
             }
             return sqlParser;
         } catch (Exception e) {

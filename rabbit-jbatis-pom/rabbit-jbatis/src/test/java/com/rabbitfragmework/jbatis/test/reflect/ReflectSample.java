@@ -28,7 +28,7 @@ public class ReflectSample {
 		// }
 		// }
 		for (Method method : methods) {
-			if (method.getName().equals("batchUpdate")) {
+			if (method.getName().equals("insertByEntity")) {
 				Type[] parameters = method.getGenericParameterTypes();
 				Type parameter = parameters[0];
 				System.out.println(parameter);

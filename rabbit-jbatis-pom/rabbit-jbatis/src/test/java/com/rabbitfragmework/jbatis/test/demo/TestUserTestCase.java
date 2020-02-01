@@ -28,7 +28,8 @@ public class TestUserTestCase extends DataAccessTestCase {
     public void insertTestUser() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
         TestUser testUser = new TestUser();
-        testUser.setTestName("testAuto");
+//        testUser.setId(22L);
+        testUser.setTestName("testAuto2");
         int result = testMapper.insertByEntity(testUser);
         System.out.println(result);
         System.out.println(testUser.getId());
@@ -52,7 +53,7 @@ public class TestUserTestCase extends DataAccessTestCase {
     @Test
     public void updateTestUserById() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        int result = testMapper.updateTest(14L, "updateName");
+        int result = testMapper.updateTest(22, "updateName");
         System.out.println("result:" + result);
     }
 
@@ -60,9 +61,22 @@ public class TestUserTestCase extends DataAccessTestCase {
     public void updateTestByUser() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
         TestUser testUser = new TestUser();
-        testUser.setId(13L);
-        testUser.setTestName("testAutoupdate");
+        testUser.setId(23L);
+        testUser.setTestName("updateTestByUser");
         testMapper.updateByEntity(testUser);
+    }
+
+    @Test
+    public void updateParams() {
+        TestUserMapper testMapper = getMapper(TestUserMapper.class);
+        TestUser testUser = new TestUser();
+//        testUser.setId(13L);
+        testUser.setTestName("updateParams");
+        WhereParamType whereParamType = new WhereParamType();
+        whereParamType.generateParams(testUser);
+        Criteria criteria = whereParamType.createCriteria();
+        criteria.andFieldIsEqualTo("id", 24);
+        testMapper.updateByParams(whereParamType);
     }
 
     @Test

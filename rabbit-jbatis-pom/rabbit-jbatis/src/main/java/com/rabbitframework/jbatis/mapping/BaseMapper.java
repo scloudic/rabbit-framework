@@ -53,6 +53,15 @@ public interface BaseMapper<T> {
     Integer updateByEntity(T entity);
 
     /**
+     * 根据参数 {@link WhereParamType} 修改数据
+     *
+     * @param paramType
+     * @return
+     */
+    @Update
+    Integer updateByParams(WhereParamType paramType);
+
+    /**
      * 根据主键查询对象
      *
      * @param id
