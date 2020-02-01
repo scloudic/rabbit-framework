@@ -80,7 +80,7 @@ public class FormSubmitValidInterceptor {
 		if (fieldErrors.size() > 0) {
 			DataJsonResponse result = new DataJsonResponse();
 			result.setStatus(StatusCode.SC_VALID_ERROR);
-			result.setMessage(JsonUtils.toJsonString(fieldErrors));
+			result.setMessage(JsonUtils.toJson(fieldErrors));
 			// result.setMessage(ServletContextHelper.getMessage("fail"));
 			// result.setData(fieldErrors);
 			String resultJson = result.toJson();

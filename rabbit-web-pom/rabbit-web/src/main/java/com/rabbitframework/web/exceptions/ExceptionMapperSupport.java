@@ -1,21 +1,5 @@
 package com.rabbitframework.web.exceptions;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.rabbitframework.commons.exceptions.RabbitFrameworkException;
 import com.rabbitframework.commons.exceptions.UnKnowException;
 import com.rabbitframework.commons.utils.StatusCode;
@@ -24,6 +8,16 @@ import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
 import com.tjzq.commons.utils.JsonUtils;
 import com.tjzq.commons.utils.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  * 统一异常处理
@@ -58,7 +52,7 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
             // }
             dataJsonResponse.setStatus(StatusCode.FAIL);
             dataJsonResponse.setMessage(ServletContextHelper.getMessage("request.error"));
-            return ResponseUtils.getResponse(status, JsonUtils.toJsonString(dataJsonResponse));
+            return ResponseUtils.getResponse(status, JsonUtils.toJson(dataJsonResponse));
         }
         if (!(e instanceof RabbitFrameworkException)) {
             Throwable throwable = e.getCause();

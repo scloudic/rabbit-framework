@@ -36,7 +36,7 @@ public abstract class SecurityAuthorizationFilter extends AuthorizationFilter {
                     json.put("status", HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED);
                     json.put("message", "authc.fail");
                     printWriter = httpServletResponse.getWriter();
-                    printWriter.write(JsonUtils.toJsonString(json));
+                    printWriter.write(JsonUtils.toJson(json));
                 }
             } else {
                 String unauthorizedUrl = getUnauthorizedUrl();
@@ -47,7 +47,7 @@ public abstract class SecurityAuthorizationFilter extends AuthorizationFilter {
                     json.put("status", HttpServletResponse.SC_UNAUTHORIZED);
                     json.put("message", "authz.fail");
                     printWriter = httpServletResponse.getWriter();
-                    printWriter.write(JsonUtils.toJsonString(json));
+                    printWriter.write(JsonUtils.toJson(json));
                 }
             }
         } finally {

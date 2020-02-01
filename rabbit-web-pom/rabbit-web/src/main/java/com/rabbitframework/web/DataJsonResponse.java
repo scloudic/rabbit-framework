@@ -77,10 +77,10 @@ public class DataJsonResponse {
             json.put("data", data);
         }
         if (isNullToEmpty) {
-            return JsonUtils.toJsonString(json, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullNumberAsZero,
+            return JsonUtils.toJson(json, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullNumberAsZero,
                     SerializerFeature.WriteNullListAsEmpty, SerializerFeature.WriteNullStringAsEmpty,
                     SerializerFeature.WriteNullBooleanAsFalse, SerializerFeature.BrowserCompatible, SerializerFeature.SkipTransientField);
         }
-        return JsonUtils.toJsonString(json, SerializerFeature.BrowserCompatible, SerializerFeature.SkipTransientField);
+        return JsonUtils.toJson(json, SerializerFeature.BrowserCompatible, SerializerFeature.SkipTransientField);
     }
 }
