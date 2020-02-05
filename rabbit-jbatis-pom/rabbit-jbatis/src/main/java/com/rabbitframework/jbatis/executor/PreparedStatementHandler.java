@@ -1,5 +1,21 @@
 package com.rabbitframework.jbatis.executor;
 
+import com.rabbitframework.jbatis.dataaccess.JdbcTemplateHolder;
+import com.rabbitframework.jbatis.dataaccess.KeyGenerator;
+import com.rabbitframework.jbatis.log.ConnectionLogger;
+import com.rabbitframework.jbatis.mapping.BoundSql;
+import com.rabbitframework.jbatis.mapping.GenerationType;
+import com.rabbitframework.jbatis.mapping.MappedStatement;
+import com.rabbitframework.jbatis.mapping.SqlCommendType;
+import com.rabbitframework.jbatis.reflect.MetaObject;
+import org.apache.commons.lang.ClassUtils;
+import org.slf4j.Logger;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.KeyHolder;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -7,34 +23,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rabbitframework.jbatis.dataaccess.JdbcTemplateHolder;
-import com.rabbitframework.jbatis.dataaccess.KeyGenerator;
-import org.apache.commons.lang.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.InterruptibleBatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ParameterDisposer;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.RowMapperResultSetExtractor;
-import org.springframework.jdbc.core.SqlProvider;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.JdbcUtils;
-import org.springframework.jdbc.support.KeyHolder;
-
-import com.rabbitframework.jbatis.log.ConnectionLogger;
-import com.rabbitframework.jbatis.mapping.BoundSql;
-import com.rabbitframework.jbatis.mapping.GenerationType;
-import com.rabbitframework.jbatis.mapping.MappedStatement;
-import com.rabbitframework.jbatis.mapping.SqlCommendType;
-import com.rabbitframework.jbatis.reflect.MetaObject;
-
 public class PreparedStatementHandler implements StatementHandler {
-    private Logger logger = LoggerFactory.getLogger(PreparedStatementHandler.class);
+    private Logger logger;
     private MappedStatement mappedStatement;
     private Object[] parameterObject;
     private BoundSql[] boundSql;

@@ -4,7 +4,6 @@ import com.rabbitframework.commons.utils.StatusCode;
 import com.rabbitframework.web.resources.RabbitContextResource;
 import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
@@ -14,7 +13,6 @@ import javax.ws.rs.core.Response;
  *
  * @author: justin.liang
  */
-@Slf4j
 public abstract class AbstractContextResource extends RabbitContextResource {
     public String getMessage(String messageKey) {
         return ServletContextHelper.getMessage(messageKey);
@@ -55,9 +53,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
             dataJsonResponse.setStatus(StatusCode.SC_OK);
             dataJsonResponse.setMessage(getMessage("success"));
         }
-
         String dataJson = dataJsonResponse.toJson(isNullToEmpty);
-        log.debug(getClass().getName() + ",response data =>" + dataJson);
         return ResponseUtils.ok(dataJson);
     }
 
@@ -81,7 +77,6 @@ public abstract class AbstractContextResource extends RabbitContextResource {
             dataJsonResponse.setData(data);
         }
         String dataJson = dataJsonResponse.toJson(isNullToEmpty);
-        log.debug(getClass().getName() + ",response data =>" + dataJson);
         return ResponseUtils.ok(dataJson);
     }
 
@@ -111,7 +106,6 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         dataJsonResponse.setStatus(status);
         dataJsonResponse.setMessage(message);
         String value = dataJsonResponse.toJson(isNullToEmpty);
-        log.debug(getClass().getName() + ",response data =>" + value);
         return ResponseUtils.ok(value);
     }
 }
