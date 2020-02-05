@@ -1,18 +1,20 @@
 package com.rabbitframework.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Response;
-
 import com.rabbitframework.commons.utils.StatusCode;
 import com.rabbitframework.web.resources.RabbitContextResource;
 import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 
 /**
  * rest抽象接口类
  *
  * @author: justin.liang
  */
+@Slf4j
 public abstract class AbstractContextResource extends RabbitContextResource {
     public String getMessage(String messageKey) {
         return ServletContextHelper.getMessage(messageKey);
@@ -55,7 +57,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         }
 
         String dataJson = dataJsonResponse.toJson(isNullToEmpty);
-        // logger.debug(getClass().getName() + "=>" + dataJson);
+        log.debug(getClass().getName() + ",response data =>" + dataJson);
         return ResponseUtils.ok(dataJson);
     }
 
@@ -79,7 +81,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
             dataJsonResponse.setData(data);
         }
         String dataJson = dataJsonResponse.toJson(isNullToEmpty);
-        // logger.debug(getClass().getName() + "-getResponse() =>" + dataJson);
+        log.debug(getClass().getName() + ",response data =>" + dataJson);
         return ResponseUtils.ok(dataJson);
     }
 
@@ -109,7 +111,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         dataJsonResponse.setStatus(status);
         dataJsonResponse.setMessage(message);
         String value = dataJsonResponse.toJson(isNullToEmpty);
-        // logger.debug(getClass().getName() + "=>" + value);
+        log.debug(getClass().getName() + ",response data =>" + value);
         return ResponseUtils.ok(value);
     }
 }

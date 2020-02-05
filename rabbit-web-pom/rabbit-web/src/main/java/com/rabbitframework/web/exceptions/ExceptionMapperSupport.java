@@ -8,8 +8,7 @@ import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
 import com.tjzq.commons.utils.JsonUtils;
 import com.tjzq.commons.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +24,14 @@ import javax.ws.rs.ext.Provider;
  * @author justin.liang
  */
 @Provider
+@Slf4j
 public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
     @Context
     private HttpServletRequest request;
 
     @Override
     public Response toResponse(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         int httpStatus = HttpServletResponse.SC_OK;
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
         Exception currException = e;
