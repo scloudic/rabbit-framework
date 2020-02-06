@@ -19,6 +19,7 @@ import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
 import com.tjzq.commons.utils.JsonUtils;
 import com.tjzq.commons.utils.StringUtils;
+
 /**
  * 统一异常处理
  *
@@ -26,13 +27,13 @@ import com.tjzq.commons.utils.StringUtils;
  */
 @Provider
 public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
-	private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
     @Context
     private HttpServletRequest request;
 
     @Override
     public Response toResponse(Exception e) {
-    	logger.error(e.getMessage(), e);
+        logger.error(e.getMessage(), e);
         int httpStatus = HttpServletResponse.SC_OK;
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
         Exception currException = e;
