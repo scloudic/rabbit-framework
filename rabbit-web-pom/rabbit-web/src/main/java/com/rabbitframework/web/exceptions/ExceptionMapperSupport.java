@@ -19,16 +19,12 @@ import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
 import com.tjzq.commons.utils.JsonUtils;
 import com.tjzq.commons.utils.StringUtils;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 统一异常处理
  *
  * @author justin.liang
  */
 @Provider
-@Slf4j
 public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
     @Context
