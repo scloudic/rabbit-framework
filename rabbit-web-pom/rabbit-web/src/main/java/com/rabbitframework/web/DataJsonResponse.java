@@ -76,11 +76,6 @@ public class DataJsonResponse {
         if (data != null && !json.containsKey("data")) {
             json.put("data", data);
         }
-        if (isNullToEmpty) {
-            return JsonUtils.toJson(json, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullNumberAsZero,
-                    SerializerFeature.WriteNullListAsEmpty, SerializerFeature.WriteNullStringAsEmpty,
-                    SerializerFeature.WriteNullBooleanAsFalse, SerializerFeature.BrowserCompatible, SerializerFeature.SkipTransientField);
-        }
-        return JsonUtils.toJson(json, SerializerFeature.BrowserCompatible, SerializerFeature.SkipTransientField);
+        return JsonUtils.toJson(json, isNullToEmpty);
     }
 }

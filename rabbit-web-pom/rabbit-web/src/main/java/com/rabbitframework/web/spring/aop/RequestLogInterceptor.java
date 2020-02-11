@@ -37,17 +37,18 @@ public class RequestLogInterceptor {
     public Object doInterceptor(ProceedingJoinPoint pjp) throws Throwable {
         try {
             Object[] args = pjp.getArgs();
-            if (args == null || args.length == 0) {
-                return pjp.proceed();
-            }
             Signature signature = pjp.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
             Method method = methodSignature.getMethod();
             Path path = method.getAnnotation(Path.class);
+            Path clazzPath = method.getDeclaringClass().getAnnotation(Path.class);
             String methodName = method.getDeclaringClass() + "." + method.getName();
             Map<String, Object> paramsValue = new HashMap<String, Object>();
             Parameter[] parameters = method.getParameters();
-            int parameterLength = parameters.length;
+            int parameterLength = 0;
+            if (parameters == null) {
+                parameterLength = parameters.length;
+            }
             for (int i = 0; i < parameterLength; i++) {
                 Parameter parameter = parameters[i];
                 Annotation[] annotations = parameter.getAnnotations();
@@ -67,10 +68,11 @@ public class RequestLogInterceptor {
             String jsonValue = JsonUtils.toJson(logInfo);
             StringBuilder sb = new StringBuilder();
             sb.append("[REQUEST]=>{");
-            sb.append("requestPath:" + path.value() + ",value:" + jsonValue + "}");
-            logger.debug(sb.toString());
+            sb.append("requestPath:" + clazzPath.value() + "/" + path.value() + ",value:" + jsonValue + "}");
+            String result = sb.toString();
+            logger.debug(result);
         } catch (Exception e) {
-            logger.warn("get logInfo fail");
+            logger.warn("get logInfo fail:" + e.getMessage());
         }
         return pjp.proceed();
     }
