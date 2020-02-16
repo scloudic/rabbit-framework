@@ -23,7 +23,6 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(SecurityAuthorizingRealm.class);
     private static final String DEFAULT_CACHE_KEY_PREFIX = "security_realm_key:";
     protected String cacheKeyPrefix = DEFAULT_CACHE_KEY_PREFIX;
-    private String authc_key = "authc:";
     private String authz_key = "authz:";
 
     public SecurityAuthorizingRealm() {
@@ -68,13 +67,7 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
      * @return
      */
     protected abstract AuthenticationInfo executeGetAuthenticationInfo(SecurityLoginToken securityLoginToken);
-
-    @Override
-    protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
-        String prefix = getCacheKeyPrefix() + authc_key;
-        return getCacheKey(prefix, principals);
-    }
-
+    
     protected Object getCacheKey(String prefix, PrincipalCollection principals) {
         Object userObject = getAvailablePrincipal(principals);
         if (userObject == null) {
