@@ -7,6 +7,10 @@ import com.rabbitframework.web.utils.ServletContextHelper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * rest抽象接口类
@@ -137,4 +141,18 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return ipAddress;
     }
 
+    public String getHeader(HttpServletRequest request, String key) {
+        return request.getHeader(key);
+    }
+
+    public List<Map<String, String>> getHeader(HttpServletRequest request, List<String> keys) {
+        List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+        for (String key : keys) {
+            String value = getHeader(request, key);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put(key, value);
+            resultList.add(map);
+        }
+        return resultList;
+    }
 }
