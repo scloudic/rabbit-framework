@@ -1,5 +1,5 @@
-### rabbit-framework整合框架
-rabbit-framework框架是为解决对项目环境快速搭建、基础框架统一而形成的一套整体的技术框架方案，目前框架主要划分为以下模块：
+### rabbit-framework
+rabbit-framework框架是为解决对项目环境快速搭建、统一基础框架而形成的一套整体的技术框架方案，目前框架主要划分为以下模块：
 
 一、rabbit-jbatis:数据库ORM模块,主要实现以下功能：
 
@@ -11,7 +11,7 @@ rabbit-framework框架是为解决对项目环境快速搭建、基础框架统�
 	
 	4、支持多数据源功能，读写自动识别，多数据源事务可集成jta事务控制；
 	
-	5、支持创建表、分表分库(通过拦截器功能实现)；
+	5、支持创建表、分表分库;
 
 二、rabbit-security:权限框架,对[shiro_1.3.2](https://github.com/apache/shiro/)进行扩展,主要扩展项如下：
 
@@ -26,3 +26,5 @@ rabbit-framework框架是为解决对项目环境快速搭建、基础框架统�
 四、rabbit-generator:代码生成器模块,代码生成器通过使用配置和freemarker模板来完成,核心代码将数据库中的表结构转换为实体对象。根据配置信息将实体对象传入模板中,最终生成代码文件。目前默认模板在template/目录中，模板也可以自定义,其模板格式可以查看示例。
 
 五、rabbit-commons模块，公共通用相关类
+
+六、集成spring-boot,支持微服务架构
