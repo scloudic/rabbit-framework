@@ -36,6 +36,15 @@ public class RabbitSecurityUtils {
         return null;
     }
 
+
+    public String getUserId() {
+        SecurityUser securityUser = getSecurityUser();
+        if (securityUser != null) {
+            return securityUser.getUserId();
+        }
+        return "";
+    }
+
     /**
      * 安全登陆,默认不记住我,返回的参数有三种状态具体可以看{@code RabbitSecurityUtils.SecurityStatus}
      *

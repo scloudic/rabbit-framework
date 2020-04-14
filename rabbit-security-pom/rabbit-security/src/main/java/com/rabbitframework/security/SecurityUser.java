@@ -1,13 +1,10 @@
 package com.rabbitframework.security;
 
-import com.tjzq.commons.utils.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class SecurityUser implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
-    private String id;
     private String userName;
     private String realName;
     private String userId;
@@ -37,21 +34,8 @@ public class SecurityUser implements java.io.Serializable {
     }
 
     public SecurityUser(String userId, String loginName) {
-        this(userId, userId, loginName);
-    }
-
-    public SecurityUser(String id, String userId, String loginName) {
-        this.id = id;
         this.userId = userId;
         this.loginName = loginName;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getUserName() {
@@ -67,9 +51,6 @@ public class SecurityUser implements java.io.Serializable {
     }
 
     public void setUserId(String userId) {
-        if (StringUtils.isBlank(id)) {
-            this.id = userId;
-        }
         this.userId = userId;
     }
 
@@ -91,9 +72,6 @@ public class SecurityUser implements java.io.Serializable {
 
     @Override
     public String toString() {
-        if (StringUtils.isBlank(id)) {
-            return userId;
-        }
-        return id;
+        return userId;
     }
 }
