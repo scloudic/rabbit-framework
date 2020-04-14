@@ -37,7 +37,7 @@ public class RabbitSecurityUtils {
     }
 
 
-    public String getUserId() {
+    public static String getUserId() {
         SecurityUser securityUser = getSecurityUser();
         if (securityUser != null) {
             return securityUser.getUserId();
