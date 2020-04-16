@@ -8,6 +8,7 @@ public class SecurityUser implements java.io.Serializable {
     private String userName;
     private String realName;
     private String userId;
+    private String avatarPath;
     private String loginName;
     private Map<String, Object> other;
 
@@ -68,6 +69,14 @@ public class SecurityUser implements java.io.Serializable {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
     @Override
