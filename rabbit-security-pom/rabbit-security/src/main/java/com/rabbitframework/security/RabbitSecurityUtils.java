@@ -3,6 +3,7 @@ package com.rabbitframework.security;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,8 +84,12 @@ public class RabbitSecurityUtils {
      * @return
      */
     public static String getSessionId() {
+        return getSession().getId().toString();
+    }
+
+    public static Session getSession() {
         Subject subject = SecurityUtils.getSubject();
-        return subject.getSession().getId().toString();
+        return subject.getSession();
     }
 
     public static boolean login(SecurityLoginToken token) {
