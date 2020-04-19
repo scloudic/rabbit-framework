@@ -96,7 +96,7 @@ public class WhereParamType {
     }
 
     /**
-     * 默认为desc排序
+     * 传入orderBy字段,默认为desc排序
      *
      * @param orderby
      */
@@ -104,8 +104,17 @@ public class WhereParamType {
         setOrderby(orderby, OrderByType.DESC);
     }
 
-    public void setOrderby(String orderby, OrderByType type) {
-        switch (type) {
+    /**
+     * 传入orderBy字段,如果orderByType为空，默认为desc排序
+     *
+     * @param orderby
+     * @param orderByType
+     */
+    public void setOrderby(String orderby, OrderByType orderByType) {
+        if (orderByType == null) {
+            orderByType = OrderByType.DESC;
+        }
+        switch (orderByType) {
             case ASC:
                 this.orderby = orderby + " asc";
                 break;
