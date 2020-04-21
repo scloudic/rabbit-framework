@@ -15,10 +15,4 @@
 			<artifactId>tjzq-commons</artifactId>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>oss-nexus</id>
-			<url>http://maven.scloudic.com/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
 </project>
