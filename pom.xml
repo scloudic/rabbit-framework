@@ -83,7 +83,7 @@
 	<repositories>
 		<repository>
 			<id>oss-nexus</id>
-			<url>http://maven.scloudic.com/nexus/content/groups/public/</url>
+			<url>http://maven.scloudic.com/content/groups/public/</url>
 		</repository>
 	</repositories>
 </project>
