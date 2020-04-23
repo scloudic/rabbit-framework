@@ -46,7 +46,7 @@ public class RequestLogInterceptor {
             Map<String, Object> paramsValue = new HashMap<String, Object>();
             Parameter[] parameters = method.getParameters();
             int parameterLength = 0;
-            if (parameters == null) {
+            if (parameters != null) {
                 parameterLength = parameters.length;
             }
             for (int i = 0; i < parameterLength; i++) {
