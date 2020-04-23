@@ -1,27 +1,15 @@
 package com.rabbitframework.jbatis.spring;
 
+import static org.springframework.util.Assert.notNull;
+
 import org.springframework.beans.BeansException;
-import org.springframework.beans.PropertyValue;
-import org.springframework.beans.PropertyValues;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.PropertyResourceConfigurer;
-import org.springframework.beans.factory.config.TypedStringValue;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.BeanNameGenerator;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.util.StringUtils;
-
-import java.util.Map;
-
-import static org.springframework.util.Assert.notNull;
 
 /**
  * * Configuration sample:
@@ -36,120 +24,55 @@ import static org.springframework.util.Assert.notNull;
  * }
  * </pre>
  */
-public class MapperScannerConfigurer implements
-        BeanDefinitionRegistryPostProcessor, InitializingBean,
-        ApplicationContextAware, BeanNameAware {
+public class MapperScannerConfigurer
+		implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware {
 
-    private String basePackages;
+	private String basePackages[];
 
-    private String rabbitJbatisFactoryBeanName;
+	private String rabbitJbatisFactoryBeanName;
 
-    private ApplicationContext applicationContext;
+	private ApplicationContext applicationContext;
 
-    private String beanName;
+	private BeanNameGenerator nameGenerator;
 
-    private boolean processPropertyPlaceHolders;
+	public MapperScannerConfigurer() {
 
-    private BeanNameGenerator nameGenerator;
+	}
 
-    public MapperScannerConfigurer() {
+	public void setBasePackages(String[] basePackages) {
+		this.basePackages = basePackages;
+	}
 
-    }
+	public void setRabbitJbatisFactoryBeanName(String rabbitJbatisFactoryBeanName) {
+		this.rabbitJbatisFactoryBeanName = rabbitJbatisFactoryBeanName;
+	}
 
-    public void setBasePackages(String basePackages) {
-        this.basePackages = basePackages;
-    }
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
-    public void setRabbitJbatisFactoryBeanName(String rabbitJbatisFactoryBeanName) {
-        this.rabbitJbatisFactoryBeanName = rabbitJbatisFactoryBeanName;
-    }
+	public BeanNameGenerator getNameGenerator() {
+		return nameGenerator;
+	}
 
-    public void setProcessPropertyPlaceHolders(
-            boolean processPropertyPlaceHolders) {
-        this.processPropertyPlaceHolders = processPropertyPlaceHolders;
-    }
+	public void setNameGenerator(BeanNameGenerator nameGenerator) {
+		this.nameGenerator = nameGenerator;
+	}
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+	public void afterPropertiesSet() throws Exception {
+		notNull(this.basePackages, "Property 'basePackages' is required");
+	}
 
-    public void setBeanName(String name) {
-        this.beanName = name;
-    }
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+		// left intentionally blank
+	}
 
-    public BeanNameGenerator getNameGenerator() {
-        return nameGenerator;
-    }
-
-    public void setNameGenerator(BeanNameGenerator nameGenerator) {
-        this.nameGenerator = nameGenerator;
-    }
-
-    public void afterPropertiesSet() throws Exception {
-        notNull(this.basePackages, "Property 'basePackages' is required");
-    }
-
-    public void postProcessBeanFactory(
-            ConfigurableListableBeanFactory beanFactory) {
-        // left intentionally blank
-    }
-
-    public void postProcessBeanDefinitionRegistry(
-            BeanDefinitionRegistry registry) throws BeansException {
-        if (this.processPropertyPlaceHolders) {
-            processPropertyPlaceHolders();
-        }
-        ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
-        scanner.setRabbitJbatisFactoryBeanName(this.rabbitJbatisFactoryBeanName);
-        scanner.setResourceLoader(this.applicationContext);
-        scanner.setBeanNameGenerator(this.nameGenerator);
-        scanner.registerFilters();
-        scanner.scan(this.basePackages);
-    }
-
-    private void processPropertyPlaceHolders() {
-        Map<String, PropertyResourceConfigurer> prcs = applicationContext
-                .getBeansOfType(PropertyResourceConfigurer.class);
-
-        if (!prcs.isEmpty()
-                && applicationContext instanceof GenericApplicationContext) {
-            BeanDefinition mapperScannerBean = ((GenericApplicationContext) applicationContext)
-                    .getBeanFactory().getBeanDefinition(beanName);
-
-            DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
-            factory.registerBeanDefinition(beanName, mapperScannerBean);
-
-            for (PropertyResourceConfigurer prc : prcs.values()) {
-                prc.postProcessBeanFactory(factory);
-            }
-
-            PropertyValues values = mapperScannerBean.getPropertyValues();
-
-            this.basePackages = updatePropertyValue("basePackages", values);
-            this.rabbitJbatisFactoryBeanName = updatePropertyValue(
-                    "rabbitJbatisFactoryBeanName", values);
-        }
-    }
-
-    private String updatePropertyValue(String propertyName,
-                                       PropertyValues values) {
-        PropertyValue property = values.getPropertyValue(propertyName);
-
-        if (property == null) {
-            return null;
-        }
-
-        Object value = property.getValue();
-
-        if (value == null) {
-            return null;
-        } else if (value instanceof String) {
-            return value.toString();
-        } else if (value instanceof TypedStringValue) {
-            return ((TypedStringValue) value).getValue();
-        } else {
-            return null;
-        }
-    }
-
+	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+		ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+		scanner.setRabbitJbatisFactoryBeanName(this.rabbitJbatisFactoryBeanName);
+		scanner.setResourceLoader(this.applicationContext);
+		scanner.setBeanNameGenerator(this.nameGenerator);
+		scanner.registerFilters();
+		scanner.scan(this.basePackages);
+	}
 }
