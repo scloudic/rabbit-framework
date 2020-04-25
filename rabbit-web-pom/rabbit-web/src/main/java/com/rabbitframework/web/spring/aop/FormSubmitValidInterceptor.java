@@ -19,6 +19,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,6 +119,12 @@ public class FormSubmitValidInterceptor {
 					map.put(queryParam.value(), notBlank);
 				}
 				break;
+			}
+			if (annotation instanceof FormDataParam) {
+				FormDataParam formDataParam = (FormDataParam) annotation;
+				if (notBlank != null && StringUtils.isBlank(resultValue)) {
+					map.put(formDataParam.value(), notBlank);
+				}
 			}
 		}
 		return name;
