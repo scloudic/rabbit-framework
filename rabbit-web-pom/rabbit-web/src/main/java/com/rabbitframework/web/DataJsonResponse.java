@@ -73,9 +73,19 @@ public class DataJsonResponse {
      * @return
      */
     public String toJson(boolean isNullToEmpty) {
+        return toJson(isNullToEmpty, true);
+    }
+
+    /**
+     * 根据参数将对象转换为json字符串
+     *
+     * @param isNullToEmpty 是否转换空字段值
+     * @return
+     */
+    public String toJson(boolean isNullToEmpty, boolean isSkipTransientField) {
         if (data != null && !json.containsKey("data")) {
             json.put("data", data);
         }
-        return JsonUtils.toJson(json, isNullToEmpty);
+        return JsonUtils.toJson(json, isNullToEmpty, isSkipTransientField);
     }
 }

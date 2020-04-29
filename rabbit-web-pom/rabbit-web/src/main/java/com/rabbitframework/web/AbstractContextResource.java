@@ -4,6 +4,7 @@ import com.rabbitframework.commons.utils.StatusCode;
 import com.rabbitframework.web.resources.RabbitContextResource;
 import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
+import com.tjzq.commons.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
@@ -35,7 +36,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
     }
 
     public Response getSimpleResponse(boolean result, Object data) {
-        return getSimpleResponse(result, data, true);
+        return getSimpleResponse(result, data, true, true);
     }
 
     /**
@@ -46,7 +47,8 @@ public abstract class AbstractContextResource extends RabbitContextResource {
      * @param isNullToEmpty 是否空字段值转换
      * @return
      */
-    public Response getSimpleResponse(boolean result, Object data, boolean isNullToEmpty) {
+    public Response getSimpleResponse(boolean result, Object data,
+                                      boolean isNullToEmpty, boolean isSkipTransientField) {
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
         if (data != null) {
             dataJsonResponse.setData(data);
@@ -57,40 +59,17 @@ public abstract class AbstractContextResource extends RabbitContextResource {
             dataJsonResponse.setStatus(StatusCode.SC_OK);
             dataJsonResponse.setMessage(getMessage("success"));
         }
-        String dataJson = dataJsonResponse.toJson(isNullToEmpty);
-        return ResponseUtils.ok(dataJson);
-    }
-
-    /**
-     * 根据参数返回结果集
-     *
-     * @param result：是否成功
-     * @param data:返回数据
-     * @param isNullToEmpty 是否空字段值转换
-     * @return
-     */
-    public Response getResponse(boolean result, Object data, boolean isNullToEmpty) {
-        DataJsonResponse dataJsonResponse = new DataJsonResponse();
-        dataJsonResponse.setStatus(StatusCode.FAIL);
-        dataJsonResponse.setMessage(getMessage("fail"));
-        if (result) {
-            dataJsonResponse.setStatus(StatusCode.SC_OK);
-            dataJsonResponse.setMessage(getMessage("success"));
-        }
-        if (null != data) {
-            dataJsonResponse.setData(data);
-        }
-        String dataJson = dataJsonResponse.toJson(isNullToEmpty);
+        String dataJson = dataJsonResponse.toJson(isNullToEmpty, isSkipTransientField);
         return ResponseUtils.ok(dataJson);
     }
 
     public Response getResponse(boolean status, String message, Object data) {
         int statusInt = status ? StatusCode.SC_OK : StatusCode.FAIL;
-        return getResponse(statusInt, message, data);
+        return getResponse(statusInt, message, data, true);
     }
 
-    public Response getResponse(int status, String message, Object data) {
-        return getResponse(status, message, data, false);
+    public Response getResponse(int status, String message, Object data, boolean isNullToEmpty) {
+        return getResponse(status, message, data, isNullToEmpty, true);
     }
 
     /**
@@ -100,16 +79,25 @@ public abstract class AbstractContextResource extends RabbitContextResource {
      * @param message       返回消息
      * @param data          接收数据
      * @param isNullToEmpty 是否空字段值转换
+     * @param isNullToEmpty
      * @return
      */
-    public Response getResponse(int status, String message, Object data, boolean isNullToEmpty) {
+    public Response getResponse(int status, String message, Object data,
+                                boolean isNullToEmpty,
+                                boolean isSkipTransientField) {
+        if (StringUtils.isBlank(message)) {
+            message = getMessage("success");
+            if (status != StatusCode.SC_OK) {
+                message = getMessage("fail");
+            }
+        }
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
         if (data != null) {
             dataJsonResponse.setData(data);
         }
         dataJsonResponse.setStatus(status);
         dataJsonResponse.setMessage(message);
-        String value = dataJsonResponse.toJson(isNullToEmpty);
+        String value = dataJsonResponse.toJson(isNullToEmpty, isSkipTransientField);
         return ResponseUtils.ok(value);
     }
 
