@@ -11,12 +11,16 @@ public class EntityMapping {
     private List<EntityProperty> entityProperties;
     private List<EntityProperty> idProperties;
     private List<EntityProperty> columnProperties;
+    private String dialect;
 
     public static class Builder {
         EntityMapping entityMapping = new EntityMapping();
 
-        public Builder(String tableName, String objectName, List<EntityProperty> entityProperties) {
+        public Builder(String tableName, String objectName,
+                       List<EntityProperty> entityProperties,
+                       String dialect) {
             entityMapping.tableName = tableName;
+            entityMapping.dialect = dialect.toLowerCase();
             entityMapping.objectName = objectName;
             entityMapping.entityProperties = entityProperties;
         }
@@ -28,6 +32,14 @@ public class EntityMapping {
             for (EntityProperty entityProperty : entityMapping.entityProperties) {
                 if (entityProperty.isPrimaryKey()) {
                     entityMapping.idProperties.add(entityProperty);
+                    if (entityProperty.isAutoincrement()) {
+                        if ("oracle".equalsIgnoreCase(entityMapping.dialect)) {
+                            packages.add("com.rabbitframework.jbatis.mapping.GenerationType");
+                        }
+                    } else {
+                        packages.add("com.rabbitframework.jbatis.mapping.GenerationType");
+                    }
+
                 } else {
                     entityMapping.columnProperties.add(entityProperty);
                 }
@@ -36,6 +48,7 @@ public class EntityMapping {
                     packages.add(javaType.getFullName());
                 }
             }
+
             entityMapping.idProperties = Collections.unmodifiableList(entityMapping.idProperties);
             entityMapping.columnProperties = Collections.unmodifiableList(entityMapping.columnProperties);
             entityMapping.importPackage = new ArrayList<String>(packages);
@@ -67,5 +80,9 @@ public class EntityMapping {
 
     public List<EntityProperty> getEntityProperties() {
         return entityProperties;
+    }
+
+    public String getDialect() {
+        return dialect;
     }
 }

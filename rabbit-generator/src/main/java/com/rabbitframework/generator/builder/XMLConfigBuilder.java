@@ -103,6 +103,7 @@ public class XMLConfigBuilder extends BaseBuilder {
         JdbcConnectionInfo jdbcConnectionInfo = new JdbcConnectionInfo();
         Properties variables = configuration.getVariables();
         String driverClass = jdbcConnection.getStringAttribute("driverClass");
+        String dialect = jdbcConnection.getStringAttribute("dialect", "mysql");
         String catalog = jdbcConnection.getStringAttribute("catalog");
         String connectionURL = jdbcConnection.getStringAttribute("connectionURL");
         String userName = jdbcConnection.getStringAttribute("userName");
@@ -115,6 +116,7 @@ public class XMLConfigBuilder extends BaseBuilder {
         password = PropertyParser.parseDollar(password, variables);
         jdbcConnectionInfo.setCatalog(catalog);
         jdbcConnectionInfo.setConnectionURL(connectionURL);
+        jdbcConnectionInfo.setDialect(dialect);
         jdbcConnectionInfo.setUserName(userName);
         jdbcConnectionInfo.setPassword(password);
         jdbcConnectionInfo.setDriverClass(driverClass);

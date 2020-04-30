@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <properties resource="jdbc.properties">
-        <property name="test" value="generator"/>
         <property name="modelPackage" value="com.test"/>
     </properties>
 
     <jdbcConnection driverClass="${jdbc.driverClassName}" catalog="${catalog}"
                     connectionURL="${jdbc.url}" userName="${jdbc.username}"
-                    password="${jdbc.password}">
+                    password="${jdbc.password}" dialect="mysql">
         <!--<property name="other" value="demo"/>-->
     </jdbcConnection>
 

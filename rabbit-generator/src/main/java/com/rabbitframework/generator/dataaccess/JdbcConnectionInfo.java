@@ -9,6 +9,7 @@ public class JdbcConnectionInfo {
     private String userName;
     private String password;
     private Properties properties;
+    private String dialect;
 
     public JdbcConnectionInfo() {
         properties = new Properties();
@@ -60,5 +61,13 @@ public class JdbcConnectionInfo {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setDialect(String dialect) {
+        this.dialect = dialect;
+    }
+
+    public String getDialect() {
+        return dialect;
     }
 }

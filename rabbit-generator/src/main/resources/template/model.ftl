@@ -26,7 +26,13 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
     * <p/>
     * description:${idProperties.remarks} 
     */
+    <#if entity.dialect?contains("oracle") && idProperties.autoincrement==true>
+    @ID(keyType = GenerationType.SEQUENCE)
+    <#elseif idProperties.autoincrement==true>
     @ID
+    <#else>
+    @ID(keyType = GenerationType.MANUAL)
+    </#if>
     private ${idProperties.javaType.shortName} ${idProperties.javaProperty};
     
 </#list>

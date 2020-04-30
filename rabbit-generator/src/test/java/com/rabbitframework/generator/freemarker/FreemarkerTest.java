@@ -39,9 +39,9 @@ public class FreemarkerTest {
     public void simple() {
         try {
             Template template = configuration.getTemplate("simple.ftl");
-            Map map = new HashMap();
-            map.put("pageSize","盒");
-            map.put("page","11");
+            Map<String,Object> map = new HashMap();
+            map.put("dialect","mysql");
+            map.put("autoincrement",false);
             template.process(map, new OutputStreamWriter(System.out));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

@@ -22,6 +22,7 @@ public class EntityProperty {
     protected String defaultValue;
     private String getterMethodName;
     private String setterMethodName;
+    private boolean autoincrement;
 
     public boolean isPrimaryKey() {
         return primaryKey;
@@ -169,5 +170,13 @@ public class EntityProperty {
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public void setAutoincrement(boolean autoincrement) {
+        this.autoincrement = autoincrement;
+    }
+
+    public boolean isAutoincrement() {
+        return autoincrement;
     }
 }
