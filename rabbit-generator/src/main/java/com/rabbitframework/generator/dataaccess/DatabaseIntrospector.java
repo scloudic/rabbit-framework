@@ -109,9 +109,10 @@ public class DatabaseIntrospector {
 
     public Map<String, EntityProperty> getColumns(String tableName) {
         ResultSet resultSet = null;
+        String catalog = configuration.getJdbcConnectionInfo().getCatalog();
         Map<String, EntityProperty> entityPropertyMap = new HashMap<String, EntityProperty>();
         try {
-            resultSet = databaseMetaData.getColumns(null, null, tableName, "%");
+            resultSet = databaseMetaData.getColumns(catalog, null, tableName, "%");
             while (resultSet.next()) {
                 EntityProperty tableColumn = new EntityProperty();
                 int jdbcType = resultSet.getInt("DATA_TYPE");
