@@ -1,6 +1,6 @@
 ##### rabbitframework3.2版本说明:
 	1、版本优化升级，所有版本升级到3.2
-	2、升级rabbit-web中jersey2版本1.29.1
+	2、升级rabbit-web中jersey2版本2.30.1
 	3、去掉rabbit-security-rediscache模块
 	4、新增rabbitweb-spring-boot-starter模块,支持spring boot
 	5、security模块去掉cas插件,后续集成buji-pac4j

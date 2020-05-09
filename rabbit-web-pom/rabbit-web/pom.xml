@@ -57,7 +57,7 @@
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-mvc-jsp</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>org.glassfish.jersey.ext</groupId> <artifactId>jersey-mvc-freemarker</artifactId> 
+		<!-- <dependency> <groupId>org.glassfish.jersey.ext</groupId> <artifactId>jersey-mvc-freemarker</artifactId>
 			</dependency> -->
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
@@ -66,10 +66,10 @@
 
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
-			<artifactId>jersey-spring4</artifactId>
+			<artifactId>jersey-spring5</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>org.glassfish.jersey.media</groupId> <artifactId>jersey-media-json-jackson</artifactId> 
+		<!-- <dependency> <groupId>org.glassfish.jersey.media</groupId> <artifactId>jersey-media-json-jackson</artifactId>
 			</dependency> -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -83,9 +83,9 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-validator-cdi</artifactId> 
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-validator-cdi</artifactId>
 			</dependency> -->
-		<!-- <dependency> <groupId>javax.ws.rs</groupId> <artifactId>javax.ws.rs-api</artifactId> 
+		<!-- <dependency> <groupId>javax.ws.rs</groupId> <artifactId>javax.ws.rs-api</artifactId>
 			</dependency> -->
 		<dependency>
 			<groupId>org.freemarker</groupId>
