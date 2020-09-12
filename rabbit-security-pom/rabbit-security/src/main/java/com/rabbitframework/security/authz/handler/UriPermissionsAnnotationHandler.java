@@ -24,11 +24,6 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
 
     @Override
     public void assertAuthorized(Annotation a, MethodInvocation mi) throws AuthorizationException {
-        Subject subject = getSubject();
-        //优先判断权限
-        if (!subject.isAuthenticated()) {
-            throw new AuthorizationException(new AuthcException("authc.fail"));
-        }
         Object[] objects = mi.getArguments();
         ServletRequest request = null;
         for (Object object : objects) {
@@ -43,6 +38,11 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
         String requestUri = getPathWithinApplication(request);
         if (logger.isDebugEnabled()) {
             logger.debug("requestUrl:" + requestUri);
+        }
+        Subject subject = getSubject();
+        //优先判断权限
+        if (!subject.isAuthenticated()) {
+            throw new AuthorizationException(new AuthcException("authc.fail"));
         }
         subject.checkPermission(requestUri);
     }
