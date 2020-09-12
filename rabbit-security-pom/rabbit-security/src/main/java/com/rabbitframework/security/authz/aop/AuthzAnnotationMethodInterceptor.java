@@ -32,7 +32,7 @@ public class AuthzAnnotationMethodInterceptor extends AnnotationMethodIntercepto
         try {
             ((AuthzAnnotationHandler) getHandler()).assertAuthorized(getAnnotation(mi), mi);
         } catch (Exception ae) {
-            logger.warn(ae.getMessage() + ",Not authorized to invoke method: " + mi.getMethod());
+            logger.error(ae.getMessage() + ",Not authorized to invoke method: " + mi.getMethod());
             Throwable throwable = ae.getCause();
             if (throwable instanceof AuthcException) {
                 AuthcException authcException = (AuthcException) throwable;
