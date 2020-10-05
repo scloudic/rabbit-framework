@@ -17,7 +17,7 @@ public class StatusCode {
     public static final int SC_PROXY_AUTHENTICATION_REQUIRED = 407;
     /* 500 服务器内部错误 */
     public static final int SC_INTERNAL_SERVER_ERROR = 500;
-    /* 后台逻辑错误 */
+    /* 逻辑错误 */
     public static final int FAIL = -1;
     /* 数据验证错误 */
     public static final int SC_VALID_ERROR = -2;
