@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
@@ -47,14 +48,17 @@ public class SecurityAutoFilterConfiguration {
         securityFilterFactoryBean.setUnauthorizedUrl(rabbitSecurityProperties.getUnauthorizedUrl());
         securityFilterFactoryBean.setFilterUrls(rabbitSecurityProperties.getFilterUrls());
         Map<String, String> filterChainDefinitions = rabbitSecurityProperties.getFilterChainDefinitions();
-        if (filterChainDefinitions != null) {
-            String value = filterChainDefinitions.get("all");
-            if (StringUtils.isNotBlank(value)) {
-                filterChainDefinitions.put("/**", value);
-                filterChainDefinitions.remove("all");
+        Map<String, String> filterChainDefinitionMap = null;
+        if (filterChainDefinitions != null && filterChainDefinitions.size() > 0) {
+            filterChainDefinitionMap = new HashMap<String, String>();
+            for (Map.Entry<String, String> entry : filterChainDefinitions.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                key = key.substring(key.indexOf("[") + 1, key.lastIndexOf("]"));
+                filterChainDefinitionMap.put(key, value);
             }
         }
-        securityFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitions);
+        securityFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return securityFilterFactoryBean;
     }
 
