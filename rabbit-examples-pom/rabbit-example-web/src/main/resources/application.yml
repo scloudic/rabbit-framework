@@ -6,6 +6,6 @@ rabbit:
   web:
     rest-packages: com.rabbitframework.example.web.rest
     application-path: webExample
-    server:
+    #server:
     #  servlet:
     #    context-path: /example
