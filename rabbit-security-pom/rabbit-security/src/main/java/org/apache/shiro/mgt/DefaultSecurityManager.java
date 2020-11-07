@@ -129,7 +129,7 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
      * implementation is a {@link DefaultSubjectDAO}.
      *
      * @return the {@code SubjectDAO} responsible for persisting Subject state, typically used after login or when an
-     *         Subject identity is discovered (eg after RememberMe services).
+     * Subject identity is discovered (eg after RememberMe services).
      * @see DefaultSubjectDAO
      * @since 1.2
      */
@@ -170,7 +170,7 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
      * @param info     the {@code AuthenticationInfo} of a newly authenticated user.
      * @param existing the existing {@code Subject} instance that initiated the authentication attempt
      * @return the {@code Subject} instance that represents the context and session data for the newly
-     *         authenticated subject.
+     * authenticated subject.
      */
     protected Subject createSubject(AuthenticationToken token, AuthenticationInfo info, Subject existing) {
         SubjectContext context = createSubjectContext();
@@ -444,8 +444,8 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
                 context.setSession(session);
             }
         } catch (InvalidSessionException e) {
-            log.debug("Resolved SubjectContext context session is invalid.  Ignoring and creating an anonymous " +
-                    "(session-less) Subject instance.", e);
+            log.warn("Resolved SubjectContext context session is invalid.  Ignoring and creating an anonymous " +
+                    "(session-less) Subject instance.", e.getMessage());
         }
         return context;
     }
