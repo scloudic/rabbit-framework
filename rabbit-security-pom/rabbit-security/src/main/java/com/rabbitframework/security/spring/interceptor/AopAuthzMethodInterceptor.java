@@ -23,6 +23,7 @@ public class AopAuthzMethodInterceptor
         interceptors.add(new UriPermissionsAnnotationMethodInterceptor());
         interceptors.add(new PermissionAnnotationMethodInterceptor(resolver));
         interceptors.add(new UserAuthenticatedAnnotationMethodInterceptor(resolver));
+        interceptors.add(new NoAccessInterceptor(resolver));
         setMethodInterceptors(interceptors);
     }
 
