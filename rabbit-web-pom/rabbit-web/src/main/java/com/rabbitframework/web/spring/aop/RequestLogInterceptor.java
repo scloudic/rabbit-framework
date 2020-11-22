@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,6 +100,11 @@ public class RequestLogInterceptor {
             if (annotation instanceof PathParam) {
                 PathParam pathParam = (PathParam) annotation;
                 name = pathParam.value();
+                break;
+            }
+            if (annotation instanceof FormDataParam) {
+                FormDataParam formDataParam = (FormDataParam) annotation;
+                name = formDataParam.value();
                 break;
             }
         }
