@@ -8,12 +8,12 @@ import org.apache.shiro.web.servlet.SimpleCookie;
  * @author: justin
  * @date: 2019-06-29 11:14
  */
-public class WebCookie extends SimpleCookie {
-    public WebCookie() {
+public class SecurityWebCookie extends SimpleCookie {
+    public SecurityWebCookie() {
         super();
     }
 
-    public WebCookie(String name) {
+    public SecurityWebCookie(String name) {
         super(name);
     }
 }

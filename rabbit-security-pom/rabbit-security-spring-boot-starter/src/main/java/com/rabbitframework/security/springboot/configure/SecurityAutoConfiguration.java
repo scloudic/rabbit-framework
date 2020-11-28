@@ -8,11 +8,12 @@ import com.rabbitframework.security.realm.EmptyRealm;
 import com.rabbitframework.security.realm.SecurityAuthorizingRealm;
 import com.rabbitframework.security.spring.interceptor.SecurityAuthorizationAttributeSourceAdvisor;
 import com.rabbitframework.security.web.mgt.SimpleWebSecurityManager;
+import com.rabbitframework.security.web.servlet.SecurityWebCookie;
 import com.rabbitframework.security.web.session.mgt.SimpleWebSessionManager;
+import com.tjzq.commons.utils.StringUtils;
 import com.tjzq.redisson.springboot.configure.RedissonAutoConfiguration;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,41 @@ public class SecurityAutoConfiguration {
         SimpleWebSessionManager simpleWebSessionManager = new SimpleWebSessionManager();
         simpleWebSessionManager.setCacheManager(rabbitRedisCacheManager());
         simpleWebSessionManager.setSessionDAO(redisSessionDAO());
+        simpleWebSessionManager.setSessionIdCookie(securityWebCookie());
         return simpleWebSessionManager;
+    }
+
+    @Bean("securityWebCookie")
+    @ConditionalOnMissingBean
+    protected SecurityWebCookie securityWebCookie() {
+        SecurityWebCookie securityWebCookie = new SecurityWebCookie();
+        CookieProperties cookieProperties = rabbitSecurityProperties.getCookie();
+        if (cookieProperties != null) {
+            setCookie(cookieProperties, securityWebCookie);
+        }
+        return securityWebCookie;
+    }
+
+    private void setCookie(CookieProperties cookieProperties, SecurityWebCookie securityWebCookie) {
+        securityWebCookie.setHttpOnly(cookieProperties.isHttpOnly());
+        securityWebCookie.setMaxAge(cookieProperties.getMaxAge());
+        securityWebCookie.setSecure(cookieProperties.isSecure());
+        securityWebCookie.setVersion(cookieProperties.getVersion());
+        if (StringUtils.isNotBlank(cookieProperties.getName())) {
+            securityWebCookie.setName(cookieProperties.getName());
+        }
+        if (StringUtils.isNotBlank(cookieProperties.getValue())) {
+            securityWebCookie.setName(cookieProperties.getValue());
+        }
+        if (StringUtils.isNotBlank(cookieProperties.getComment())) {
+            securityWebCookie.setName(cookieProperties.getComment());
+        }
+        if (StringUtils.isNotBlank(cookieProperties.getDomain())) {
+            securityWebCookie.setName(cookieProperties.getDomain());
+        }
+        if (StringUtils.isNotBlank(cookieProperties.getPath())) {
+            securityWebCookie.setName(cookieProperties.getPath());
+        }
     }
 
     /**

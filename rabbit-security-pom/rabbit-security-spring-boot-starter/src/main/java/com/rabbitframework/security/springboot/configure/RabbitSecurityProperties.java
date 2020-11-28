@@ -13,6 +13,7 @@ public class RabbitSecurityProperties {
     private String unauthorizedUrl = "";
     private String filterUrls = "/images/**,/lib/**,/res/**,/static/**";
     private Map<String, String> filterChainDefinitions;
+    private CookieProperties cookie = null;
     private String sessionDaoKeyPrefix = "rabbit_session";
     private Integer cacheSessionExpire = 604800;
     private Integer otherCacheExpire = 600;
@@ -80,5 +81,13 @@ public class RabbitSecurityProperties {
 
     public void setFilterChainDefinitions(Map<String, String> filterChainDefinitions) {
         this.filterChainDefinitions = filterChainDefinitions;
+    }
+
+    public CookieProperties getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(CookieProperties cookie) {
+        this.cookie = cookie;
     }
 }
