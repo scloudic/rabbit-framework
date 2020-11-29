@@ -98,20 +98,18 @@ public class SecurityAutoConfiguration {
         securityWebCookie.setMaxAge(cookieProperties.getMaxAge());
         securityWebCookie.setSecure(cookieProperties.isSecure());
         securityWebCookie.setVersion(cookieProperties.getVersion());
-        if (StringUtils.isNotBlank(cookieProperties.getName())) {
-            securityWebCookie.setName(cookieProperties.getName());
-        }
+        securityWebCookie.setName(cookieProperties.getName());
         if (StringUtils.isNotBlank(cookieProperties.getValue())) {
-            securityWebCookie.setName(cookieProperties.getValue());
+            securityWebCookie.setValue(cookieProperties.getValue());
         }
         if (StringUtils.isNotBlank(cookieProperties.getComment())) {
-            securityWebCookie.setName(cookieProperties.getComment());
+            securityWebCookie.setComment(cookieProperties.getComment());
         }
         if (StringUtils.isNotBlank(cookieProperties.getDomain())) {
-            securityWebCookie.setName(cookieProperties.getDomain());
+            securityWebCookie.setDomain(cookieProperties.getDomain());
         }
         if (StringUtils.isNotBlank(cookieProperties.getPath())) {
-            securityWebCookie.setName(cookieProperties.getPath());
+            securityWebCookie.setPath(cookieProperties.getPath());
         }
     }
 
