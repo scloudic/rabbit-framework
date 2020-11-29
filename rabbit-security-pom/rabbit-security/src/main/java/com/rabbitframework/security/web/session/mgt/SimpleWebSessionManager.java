@@ -163,23 +163,25 @@ public class SimpleWebSessionManager extends SimpleSessionManager implements Web
         if (StringUtils.isNotBlank(id)) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
                     ShiroHttpServletRequest.COOKIE_SESSION_ID_SOURCE);
-        } else {
-            id = getUriParamValue(request, ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
-            if (StringUtils.isBlank(id)) {
-                // not a URI path segment parameter, try the query parameters:
-                String name = getSessionIdName();
-                id = request.getParameter(name);
-                if (StringUtils.isBlank(id)) {
-                    // try lowercase:
-                    id = request.getParameter(name.toLowerCase());
-                }
-            }
-
-            if (StringUtils.isNotBlank(id)) {
-                request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
-                        ShiroHttpServletRequest.URL_SESSION_ID_SOURCE);
-            }
         }
+        //去掉通过参数获取sessionId
+//        else {
+//            id = getUriParamValue(request, ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+//            if (StringUtils.isBlank(id)) {
+//                // not a URI path segment parameter, try the query parameters:
+//                String name = getSessionIdName();
+//                id = request.getParameter(name);
+//                if (StringUtils.isBlank(id)) {
+//                    // try lowercase:
+//                    id = request.getParameter(name.toLowerCase());
+//                }
+//            }
+//
+//            if (StringUtils.isNotBlank(id)) {
+//                request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
+//                        ShiroHttpServletRequest.URL_SESSION_ID_SOURCE);
+//            }
+//        }
         if (StringUtils.isNotBlank(id)) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, id);
             // automatically mark it valid here. If it is invalid, the

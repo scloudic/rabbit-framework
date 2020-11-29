@@ -81,6 +81,7 @@ public class SecurityAutoConfiguration {
         simpleWebSessionManager.setSessionIdCookie(securityWebCookie());
         simpleWebSessionManager.setTokenEnabled(rabbitSecurityProperties.isTokenEnabled());
         simpleWebSessionManager.setTokenName(rabbitSecurityProperties.getTokenName());
+        simpleWebSessionManager.setSessionIdCookieEnabled(rabbitSecurityProperties.isSessionIdCookieEnabled());
         return simpleWebSessionManager;
     }
 

@@ -15,6 +15,7 @@ public class RabbitSecurityProperties {
     private Map<String, String> filterChainDefinitions;
     private CookieProperties cookie = null;
     private boolean tokenEnabled = true;
+    private boolean sessionIdCookieEnabled = true;
     private String tokenName = "Authorization";
     private String sessionDaoKeyPrefix = "rabbit_session";
     private Integer cacheSessionExpire = 604800;
@@ -107,5 +108,13 @@ public class RabbitSecurityProperties {
 
     public void setTokenName(String tokenName) {
         this.tokenName = tokenName;
+    }
+
+    public void setSessionIdCookieEnabled(boolean sessionIdCookieEnabled) {
+        this.sessionIdCookieEnabled = sessionIdCookieEnabled;
+    }
+
+    public boolean isSessionIdCookieEnabled() {
+        return sessionIdCookieEnabled;
     }
 }
