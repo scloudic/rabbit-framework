@@ -3,7 +3,7 @@ package com.rabbitframework.security.springboot.configure;
 import org.apache.shiro.web.servlet.SimpleCookie;
 
 public class CookieProperties {
-    private String name;
+    private String name = "rabbit";
     private String value;
     private String comment;
     private String domain;
