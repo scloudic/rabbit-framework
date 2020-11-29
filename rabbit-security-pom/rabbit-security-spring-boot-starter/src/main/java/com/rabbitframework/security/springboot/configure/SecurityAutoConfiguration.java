@@ -79,6 +79,8 @@ public class SecurityAutoConfiguration {
         simpleWebSessionManager.setCacheManager(rabbitRedisCacheManager());
         simpleWebSessionManager.setSessionDAO(redisSessionDAO());
         simpleWebSessionManager.setSessionIdCookie(securityWebCookie());
+        simpleWebSessionManager.setTokenEnabled(rabbitSecurityProperties.isTokenEnabled());
+        simpleWebSessionManager.setTokenName(rabbitSecurityProperties.getTokenName());
         return simpleWebSessionManager;
     }
 
