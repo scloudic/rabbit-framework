@@ -19,9 +19,9 @@
 	</modules>
 	<properties>
 		<javax.ws.rs-api>2.1</javax.ws.rs-api>
-		<tjzq-commons.version>1.0</tjzq-commons.version>
-		<tjzq-cache.version>1.0</tjzq-cache.version>
-		<tjzq-redisson.version>1.0</tjzq-redisson.version>
+		<tjzq-commons.version>1.1</tjzq-commons.version>
+		<tjzq-cache.version>1.1</tjzq-cache.version>
+		<tjzq-redisson.version>1.1</tjzq-redisson.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
