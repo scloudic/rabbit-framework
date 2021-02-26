@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <properties resource="jdbc.properties">
-        <property name="modelPackage" value="com.test"/>
     </properties>
 
     <jdbcConnection driverClass="${jdbc.driverClassName}" catalog="${catalog}"
@@ -10,11 +9,16 @@
         <!--<property name="other" value="demo"/>-->
     </jdbcConnection>
 
-    <generators>
-        <generator templatePath="template/model.ftl" targetPackage="com.test"
-                   targetProject="genpath" fileSuffix="" extension=".java"/>
-        <generator templatePath="template/mapper.ftl" targetPackage="com.test"
-                   targetProject="genpath" fileSuffix="Mapper" extension=".java"/>
+    <generators parentPackage="com.test" targetPath="genpath"
+                entity="entity" mapper="mapper" service="service">
+        <!--        <generator templatePath="template/model.ftl" targetPackage="com.test"-->
+        <!--                   targetProject="genpath" fileSuffix="" extension=".java"/>-->
+        <!--        <generator templatePath="template/mapper.ftl" targetPackage="com.test"-->
+        <!--                   targetProject="genpath" fileSuffix="Mapper" extension=".java"/>-->
+        <!--        <generator templatePath="template/service.ftl" targetPackage="com.test.service"-->
+        <!--                   targetProject="genpath" fileSuffix="Service" extension=".java"/>-->
+        <!--        <generator templatePath="template/serviceImpl.ftl" targetPackage="com.test.service.impl"-->
+        <!--                   targetProject="genpath" fileSuffix="ServiceImpl" refMapperSuffix="Mapper" extension=".java"/>-->
     </generators>
     <!--type分为：all:所有表，assign:指定表名,
     逻辑说明：
@@ -22,6 +26,6 @@
     2、如果类型为assign,先解析table元素,如果没有将类型更改为all
     3、默认类型为all-->
     <tables type="assign">
-        <table tableName="test_user" objectName="TestUser"/>
+        <table tableName="area_info" objectName="AreaInfo"/>
     </tables>
 </configuration>

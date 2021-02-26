@@ -131,22 +131,43 @@ public class XMLConfigBuilder extends BaseBuilder {
             return;
         }
         Template template = new Template();
-        List<XNode> xnode = generators.evalNodes("generator");
-        for (XNode cXnode : xnode) {
-            JavaModeGenerate javaModeGenerate = new JavaModeGenerate();
-            String templatePath = cXnode.getStringAttribute("templatePath");
-            String targetPackage = cXnode.getStringAttribute("targetPackage");
-            String targetProject = cXnode.getStringAttribute("targetProject");
-            String fileSuffix = cXnode.getStringAttribute("fileSuffix");
-            String extension = cXnode.getStringAttribute("extension", ".java");
-            javaModeGenerate.setTargetPackage(targetPackage);
-            javaModeGenerate.setTargetProject(targetProject);
-            javaModeGenerate.setTemplatePath(templatePath);
-            javaModeGenerate.setFileSuffix(fileSuffix);
-            javaModeGenerate.setExtension(extension);
-            template.put(javaModeGenerate);
+        String parentPackage = generators.getStringAttribute("parentPackage");
+        String targetPath = generators.getStringAttribute("targetPath");
+        String service = generators.getStringAttribute("service", "");
+        String entity = generators.getStringAttribute("entity", "entity");
+        String mapper = generators.getStringAttribute("mapper", "mapper");
+        String fileSuffix = "";
+        template.put(getJavaModeGenerate(parentPackage + "." + entity, targetPath,
+                "template/model.ftl", parentPackage, service, mapper, entity, fileSuffix));
+
+        fileSuffix = mapper.substring(0, 1).toUpperCase() + mapper.substring(1);
+        template.put(getJavaModeGenerate(parentPackage + "." + mapper, targetPath,
+                "template/mapper.ftl", parentPackage, service, mapper, entity, fileSuffix));
+
+        if (StringUtils.isNotBlank(service)) {
+            fileSuffix = service.substring(0, 1).toUpperCase() + service.substring(1);
+            template.put(getJavaModeGenerate(parentPackage + "." + service, targetPath,
+                    "template/service.ftl", parentPackage, service, mapper, entity, fileSuffix));
+            template.put(getJavaModeGenerate(parentPackage + "." + service + ".impl", targetPath,
+                    "template/serviceImpl.ftl", parentPackage, service, mapper, entity, fileSuffix + "Impl"));
         }
         configuration.setTemplate(template);
+    }
+
+    private JavaModeGenerate getJavaModeGenerate(String targetPackage, String targetPath,
+                                                 String templatePath, String parentPackage,
+                                                 String serviceSuffix, String mapperSuffix, String entitySuffix, String fileSuffix) {
+        JavaModeGenerate javaModeGenerate = new JavaModeGenerate();
+        javaModeGenerate.setTargetPackage(targetPackage);
+        javaModeGenerate.setTargetProject(targetPath);
+        javaModeGenerate.setTemplatePath(templatePath);
+        javaModeGenerate.setMapperSuffix(mapperSuffix);
+        javaModeGenerate.setServiceSuffix(serviceSuffix);
+        javaModeGenerate.setEntitySuffix(entitySuffix);
+        javaModeGenerate.setExtension(".java");
+        javaModeGenerate.setParentPackage(parentPackage);
+        javaModeGenerate.setFileSuffix(fileSuffix);
+        return javaModeGenerate;
     }
 
     private void tablesElement(XNode tables) {

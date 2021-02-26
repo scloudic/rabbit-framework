@@ -1,4 +1,4 @@
-<#if packageName??>
+<#if parentPackage??>
 package ${packageName};
 </#if>
 <#list entity.importPackage as importPackage>
@@ -22,9 +22,9 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
 
 <#list entity.idProperties as idProperties>
     /**
-    * This field corresponds to the database column ${entity.tableName}.${idProperties.columnName} 
+    * This field corresponds to the database column ${entity.tableName}.${idProperties.columnName}
     * <p/>
-    * description:${idProperties.remarks} 
+    * description:${idProperties.remarks}
     */
     <#if entity.dialect?contains("oracle") && idProperties.autoincrement==true>
     @ID(keyType = GenerationType.SEQUENCE)
@@ -34,13 +34,13 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
     @ID(keyType = GenerationType.MANUAL)
     </#if>
     private ${idProperties.javaType.shortName} ${idProperties.javaProperty};
-    
+
 </#list>
 <#list entity.columnProperties as columnProperties>
     /**
     * This field corresponds to the database column ${entity.tableName}.${columnProperties.columnName}
     * <p/>
-    * description:${columnProperties.remarks} 
+    * description:${columnProperties.remarks}
     */
     @Column
     private ${columnProperties.javaType.shortName} ${columnProperties.javaProperty};

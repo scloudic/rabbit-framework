@@ -1,28 +1,24 @@
-package com.rabbitframework.jbatis.mapping;
+package com.rabbitframework.jbatis.service;
+
+import com.rabbitframework.jbatis.annontations.Update;
+import com.rabbitframework.jbatis.mapping.RowBounds;
+import com.rabbitframework.jbatis.mapping.param.WhereParamType;
 
 import java.io.Serializable;
 import java.util.List;
 
-import com.rabbitframework.jbatis.annontations.Delete;
-import com.rabbitframework.jbatis.annontations.Insert;
-import com.rabbitframework.jbatis.annontations.Select;
-import com.rabbitframework.jbatis.annontations.Update;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
-
 /**
- * mapper基类接口
+ * 服务层通用接口类
  *
- * @author: justin
- * @date: 2017-07-16 下午12:50
+ * @param <T>
  */
-public interface BaseMapper<T> {
+public interface IService<T> {
     /**
      * 插入一条记录
      *
      * @param entity
      * @return
      */
-    @Insert
     Integer insertByEntity(T entity);
 
     /**
@@ -31,7 +27,6 @@ public interface BaseMapper<T> {
      * @param id
      * @return
      */
-    @Delete("delete from @{T} where @{entityId}=#{id}")
     Integer deleteById(Serializable id);
 
     /**
@@ -40,7 +35,6 @@ public interface BaseMapper<T> {
      * @param paramType {@link WhereParamType}
      * @return
      */
-    @Delete("delete from @{T} where 1=1 ")
     Integer deleteByParams(WhereParamType paramType);
 
     /**
@@ -49,7 +43,6 @@ public interface BaseMapper<T> {
      * @param entity
      * @return
      */
-    @Update
     Integer updateByEntity(T entity);
 
     /**
@@ -67,7 +60,6 @@ public interface BaseMapper<T> {
      * @param id
      * @return
      */
-    @Select("select * from @{T} where @{entityId}=#{id}")
     T selectById(Serializable id);
 
     /**
@@ -76,7 +68,6 @@ public interface BaseMapper<T> {
      * @param paramType {@link WhereParamType}
      * @return
      */
-    @Select("select * from @{T} where 1=1 ")
     List<T> selectByParams(WhereParamType paramType);
 
     /**
@@ -85,7 +76,6 @@ public interface BaseMapper<T> {
      * @param paramType {@link WhereParamType}
      * @return
      */
-    @Select("select count(1) from @{T} where 1=1 ")
     Long selectCountByParams(WhereParamType paramType);
 
     /**
@@ -93,7 +83,6 @@ public interface BaseMapper<T> {
      *
      * @return
      */
-    @Select("select count(1) from @{T} ")
     Long selectCount();
 
     /**
@@ -101,7 +90,6 @@ public interface BaseMapper<T> {
      *
      * @return
      */
-    @Select("select * from @{T} ")
     List<T> selectEntityAll();
 
     /**
@@ -111,7 +99,6 @@ public interface BaseMapper<T> {
      * @param rowBounds {@link RowBounds}
      * @return
      */
-    @Select("select * from @{T} where 1=1 ")
     List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
 
     /**
@@ -120,6 +107,5 @@ public interface BaseMapper<T> {
      * @param rowBounds
      * @return
      */
-    @Select("select * from @{T} where 1=1 ")
     List<T> selectEntityPage(RowBounds rowBounds);
 }
