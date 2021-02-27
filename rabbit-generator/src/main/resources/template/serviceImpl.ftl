@@ -10,6 +10,6 @@ import com.rabbitframework.jbatis.service.IServiceImpl;
 @Component
 public class ${entity.objectName}${fileSuffix} extends IServiceImpl<${entity.objectName}${mapperSuffix?cap_first},${entity.objectName}> implements ${entity.objectName}${serviceSuffix?cap_first} {
     @Autowired
-    private ${entity.objectName}${mapperSuffix?cap_first} ${entity.objectName}${mapperSuffix?uncap_first};
+    private ${entity.objectName}${mapperSuffix?cap_first} ${entity.objectName?uncap_first}${mapperSuffix?cap_first};
 }
 
