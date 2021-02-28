@@ -61,6 +61,9 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
         this.${mColumnProperties.javaProperty} = ${mColumnProperties.javaProperty};
     }
 
+    <#if mColumnProperties.javaProperty?contains("delStatus")>
+    @Transient
+    </#if>
     public ${mColumnProperties.javaType.shortName} ${mColumnProperties.getterMethodName}() {
         return ${mColumnProperties.javaProperty};
     }

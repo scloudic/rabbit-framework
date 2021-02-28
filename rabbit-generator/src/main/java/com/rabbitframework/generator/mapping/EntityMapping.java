@@ -12,6 +12,7 @@ public class EntityMapping {
     private List<EntityProperty> idProperties;
     private List<EntityProperty> columnProperties;
     private String dialect;
+    private boolean delStatus = false;
 
     public static class Builder {
         EntityMapping entityMapping = new EntityMapping();
@@ -42,6 +43,10 @@ public class EntityMapping {
 
                 } else {
                     entityMapping.columnProperties.add(entityProperty);
+                }
+                if ("del_status".equals(entityProperty.getColumnName()) && entityMapping.delStatus == false) {
+                    entityMapping.delStatus = true;
+                    packages.add("java.beans.Transient");
                 }
                 FullyQualifiedJavaType javaType = entityProperty.getJavaType();
                 if (!javaType.isPrimitive()) {
@@ -84,5 +89,9 @@ public class EntityMapping {
 
     public String getDialect() {
         return dialect;
+    }
+
+    public boolean isDelStatus() {
+        return delStatus;
     }
 }
