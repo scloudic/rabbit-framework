@@ -15,10 +15,9 @@ import java.util.List;
  * @param <M>
  * @param <T>
  */
-public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
-    @Autowired
-    protected M baseMapper;
+public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
 
+    public abstract M getBaseMapper();
     /**
      * 插入一条记录
      *
@@ -28,7 +27,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer insertByEntity(T entity) {
-        return baseMapper.insertByEntity(entity);
+        return getBaseMapper().insertByEntity(entity);
     }
 
     /**
@@ -40,7 +39,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer deleteById(Serializable id) {
-        return baseMapper.deleteById(id);
+        return getBaseMapper().deleteById(id);
     }
 
     /**
@@ -52,7 +51,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer deleteByParams(WhereParamType paramType) {
-        return baseMapper.deleteByParams(paramType);
+        return getBaseMapper().deleteByParams(paramType);
     }
 
     /**
@@ -64,7 +63,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateByEntity(T entity) {
-        return baseMapper.updateByEntity(entity);
+        return getBaseMapper().updateByEntity(entity);
     }
 
     /**
@@ -76,7 +75,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateByParams(WhereParamType paramType) {
-        return baseMapper.updateByParams(paramType);
+        return getBaseMapper().updateByParams(paramType);
     }
 
     /**
@@ -87,7 +86,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public T selectById(Serializable id) {
-        return baseMapper.selectById(id);
+        return getBaseMapper().selectById(id);
     }
 
     /**
@@ -98,7 +97,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public List<T> selectByParams(WhereParamType paramType) {
-        return baseMapper.selectByParams(paramType);
+        return getBaseMapper().selectByParams(paramType);
     }
 
     /**
@@ -109,7 +108,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public Long selectCountByParams(WhereParamType paramType) {
-        return baseMapper.selectCountByParams(paramType);
+        return getBaseMapper().selectCountByParams(paramType);
     }
 
     /**
@@ -119,7 +118,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public Long selectCount() {
-        return baseMapper.selectCount();
+        return getBaseMapper().selectCount();
     }
 
     /**
@@ -129,7 +128,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public List<T> selectEntityAll() {
-        return baseMapper.selectEntityAll();
+        return getBaseMapper().selectEntityAll();
     }
 
     /**
@@ -141,7 +140,7 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds) {
-        return baseMapper.selectPageByParams(paramType, rowBounds);
+        return getBaseMapper().selectPageByParams(paramType, rowBounds);
     }
 
     /**
@@ -152,6 +151,6 @@ public class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
      */
     @Override
     public List<T> selectEntityPage(RowBounds rowBounds) {
-        return baseMapper.selectEntityPage(rowBounds);
+        return getBaseMapper().selectEntityPage(rowBounds);
     }
 }
