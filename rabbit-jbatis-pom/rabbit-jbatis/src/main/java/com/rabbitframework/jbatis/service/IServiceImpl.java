@@ -3,8 +3,6 @@ package com.rabbitframework.jbatis.service;
 import com.rabbitframework.jbatis.mapping.BaseMapper;
 import com.rabbitframework.jbatis.mapping.RowBounds;
 import com.rabbitframework.jbatis.mapping.param.WhereParamType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,7 +22,6 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
      * @param entity
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer insertByEntity(T entity) {
         return getBaseMapper().insertByEntity(entity);
@@ -36,7 +33,6 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
      * @param id
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer deleteById(Serializable id) {
         return getBaseMapper().deleteById(id);
@@ -48,7 +44,6 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
      * @param paramType {@link WhereParamType}
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer deleteByParams(WhereParamType paramType) {
         return getBaseMapper().deleteByParams(paramType);
@@ -60,7 +55,6 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
      * @param entity
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateByEntity(T entity) {
         return getBaseMapper().updateByEntity(entity);
@@ -72,7 +66,6 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
      * @param paramType
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateByParams(WhereParamType paramType) {
         return getBaseMapper().updateByParams(paramType);
