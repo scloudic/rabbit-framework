@@ -142,6 +142,7 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
         Session session = getSessionByUserId(keyPrefix + userId);
         if (session == null) {
             logger.warn("获取缓存session为空,该用户可能已清除");
+            return;
         }
         cache.remove(keyPrefix + userId);
         cache.remove(keyPrefix + session.getId());
