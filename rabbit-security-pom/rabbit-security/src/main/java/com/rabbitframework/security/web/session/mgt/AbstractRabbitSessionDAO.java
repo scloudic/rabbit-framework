@@ -20,9 +20,6 @@ public abstract class AbstractRabbitSessionDAO extends AbstractSessionDAO {
                 .getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
         if (existingPrincipals == null || CollectionUtils.isEmpty(existingPrincipals)) {
             Serializable sessionId = session.getId();
-            if (sessionId == null) {
-                sessionId = "null";
-            }
             logger.error("PrincipalCollection is null,update sessionId is " + sessionId);
             return;
         }

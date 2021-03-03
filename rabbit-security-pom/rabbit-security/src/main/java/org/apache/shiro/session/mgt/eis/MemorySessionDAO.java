@@ -104,4 +104,16 @@ public class MemorySessionDAO extends AbstractSessionDAO {
         }
     }
 
+    /**
+     * 删除用户所有session信息
+     *
+     * @param userId
+     * @param keyPrefix
+     * @throws UnknownSessionException
+     */
+    @Override
+    public void doDelete(String userId, String keyPrefix) throws UnknownSessionException {
+
+    }
+
 }

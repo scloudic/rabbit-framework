@@ -20,6 +20,7 @@ package org.apache.shiro.session.mgt;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionException;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 
 /**
  * A SessionManager manages the creation, maintenance, and clean-up of all application
@@ -58,4 +59,8 @@ public interface SessionManager {
      * @since 1.0
      */
     Session getSession(SessionKey key) throws SessionException;
+
+    SessionDAO getSessionDAO();
+
+
 }

@@ -111,4 +111,11 @@ public interface SecurityManager extends Authenticator, Authorizer, SessionManag
      */
     Subject createSubject(SubjectContext context);
 
+    /**
+     * Returns this security manager's internal delegate {@link SessionManager SessionManager}.
+     *
+     * @return this security manager's internal delegate {@link SessionManager SessionManager}.
+     */
+    SessionManager getSessionManager();
+
 }

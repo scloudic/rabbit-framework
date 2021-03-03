@@ -23,6 +23,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.MapCache;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.UnknownSessionException;
 
 import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -77,6 +78,18 @@ public class EnterpriseCacheSessionDAO extends CachingSessionDAO {
     }
 
     protected void doDelete(Session session) {
+        //does nothing - parent class removes from cache.
+    }
+
+    /**
+     * 删除用户所有session信息
+     *
+     * @param userId
+     * @param keyPrefix
+     * @throws UnknownSessionException
+     */
+    @Override
+    public void doDelete(String userId, String keyPrefix) throws UnknownSessionException {
         //does nothing - parent class removes from cache.
     }
 }

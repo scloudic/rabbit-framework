@@ -27,6 +27,7 @@ import org.apache.shiro.session.mgt.DefaultSessionContext;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.SubjectContext;
@@ -611,5 +612,10 @@ public class DefaultSecurityManager extends SessionsSecurityManager {
             }
         }
         return null;
+    }
+
+    @Override
+    public SessionDAO getSessionDAO() {
+        return getSessionManager().getSessionDAO();
     }
 }

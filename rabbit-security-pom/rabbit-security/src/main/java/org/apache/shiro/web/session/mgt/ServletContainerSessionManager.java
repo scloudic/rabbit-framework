@@ -23,6 +23,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionException;
 import org.apache.shiro.session.mgt.SessionContext;
 import org.apache.shiro.session.mgt.SessionKey;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.web.session.HttpServletSession;
 import org.apache.shiro.web.util.WebUtils;
 
@@ -48,8 +49,8 @@ import javax.servlet.http.HttpSession;
  * instead.  The {@code DefaultWebSessionManager} supports both traditional web-based access as well as non web-based
  * clients.
  *
- * @since 0.9
  * @see DefaultWebSessionManager
+ * @since 0.9
  */
 public class ServletContainerSessionManager implements WebSessionManager {
 
@@ -80,6 +81,11 @@ public class ServletContainerSessionManager implements WebSessionManager {
         }
 
         return session;
+    }
+
+    @Override
+    public SessionDAO getSessionDAO() {
+        return null;
     }
 
     private String getHost(SessionContext context) {
@@ -126,7 +132,7 @@ public class ServletContainerSessionManager implements WebSessionManager {
      * @return {@code true} always
      * @since 1.2
      */
-	public boolean isServletContainerSessions() {
-		return true;
-	}
+    public boolean isServletContainerSessions() {
+        return true;
+    }
 }

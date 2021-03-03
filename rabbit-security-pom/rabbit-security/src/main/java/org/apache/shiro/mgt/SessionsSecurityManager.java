@@ -93,6 +93,7 @@ public abstract class SessionsSecurityManager extends AuthorizingSecurityManager
      * @return this security manager's internal delegate {@link SessionManager SessionManager}.
      * @see #setSessionManager(org.apache.shiro.session.mgt.SessionManager) setSessionManager
      */
+    @Override
     public SessionManager getSessionManager() {
         return this.sessionManager;
     }
