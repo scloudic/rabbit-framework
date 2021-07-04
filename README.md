@@ -38,4 +38,5 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
 
 六、rabbit-cache:集成redis缓存
 
+七、maven仓库：依赖[root pom](https://gitee.com/scloudic/tjzq-root-pom)
 
