@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>com.rabbitframework</groupId>
-            <artifactId>rabbit-redisson</artifactId>
+            <artifactId>rabbit-security-redisson-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
