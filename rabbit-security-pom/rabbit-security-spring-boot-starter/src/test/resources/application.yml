@@ -1,0 +1,23 @@
+rabbit:
+  security:
+    filter-chain-definitions:
+      /userdetail/**: authc
+      /imMedicalRecord/**: authc
+      /payOrder/**: authc
+      /prescription/**: authc
+      /follow/updateFollow: authc
+    #默认值
+    filter-urls: /images/**,/lib/**,/res/**,/static/**
+    #默认值
+    unauthorized-url: /user/unauthorized
+    #session缓存过期时间,单位:毫秒,默认值
+    cache-session-expire: 604800
+    #默认值
+    login-url: /user/toLogin
+    #sessionDao保存到redis的前缀 默认值
+    session-dao-key-prefix: rabbit_session
+    #realm名称，指spring的组件名
+    realm-bean-names:
+      - emptyTestSecurityRealm
+    #其它缓存时间,单位：毫秒,默认值
+    other-cache-expire: 600

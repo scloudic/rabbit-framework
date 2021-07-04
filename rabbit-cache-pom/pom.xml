@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.rabbitframework</groupId>
+		<artifactId>rabbit-framework</artifactId>
+		<version>3.3.2.RELEASE</version>
+	</parent>
+	<artifactId>rabbit-cache-pom</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>rabbit-jedis</module>
+		<module>rabbit-redisson</module>
+		<module>rabbit-redisson-spring-boot-starter</module>
+	</modules>
+</project>
