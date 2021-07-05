@@ -25,7 +25,6 @@
         <dependency>
             <groupId>com.rabbitframework</groupId>
             <artifactId>rabbit-core</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>
