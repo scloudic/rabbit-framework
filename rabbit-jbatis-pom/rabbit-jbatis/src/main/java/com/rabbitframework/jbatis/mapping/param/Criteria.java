@@ -2,11 +2,7 @@ package com.rabbitframework.jbatis.mapping.param;
 
 import com.rabbitframework.jbatis.mapping.lambda.SFunction;
 import com.rabbitframework.jbatis.mapping.lambda.SFunctionUtils;
-import com.rabbitframework.core.utils.StringUtils;
 
-import java.beans.Introspector;
-import java.lang.invoke.SerializedLambda;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -273,28 +269,28 @@ public class Criteria {
         return this;
     }
 
-    public <T> Criteria andIn(SFunction<T, ?> fn, List<T> values) {
+    public <T> Criteria andIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" and " + fieldName + " in", values);
         return this;
     }
 
-    public <T> Criteria orIn(SFunction<T, ?> fn, List<T> values) {
+    public <T> Criteria orIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" or " + fieldName + " in", values);
         return this;
     }
 
-    public <T> Criteria andNotIn(SFunction<T, ?> fn, List<T> values) {
+    public <T> Criteria andNotIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" and " + fieldName + " not in", values);
         return this;
     }
 
-    public <T> Criteria orNotIn(SFunction<T, ?> fn, List<T> values) {
+    public <T> Criteria orNotIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" or " + fieldName + " not in", values);
@@ -562,25 +558,25 @@ public class Criteria {
         return this;
     }
 
-    public <T> Criteria andIn(String fieldName, List<T> values) {
+    public Criteria andIn(String fieldName, List<?> values) {
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" and " + fieldName + " in", values);
         return this;
     }
 
-    public <T> Criteria orIn(String fieldName, List<T> values) {
+    public Criteria orIn(String fieldName, List<?> values) {
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" or " + fieldName + " in", values);
         return this;
     }
 
-    public <T> Criteria andNotIn(String fieldName, List<T> values) {
+    public Criteria andNotIn(String fieldName, List<?> values) {
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" and " + fieldName + " not in", values);
         return this;
     }
 
-    public <T> Criteria orNotIn(String fieldName, List<T> values) {
+    public Criteria orNotIn(String fieldName, List<?> values) {
         if (valueIsNotNullOrEmpty(values))
             addCriterion(" or " + fieldName + " not in", values);
         return this;
