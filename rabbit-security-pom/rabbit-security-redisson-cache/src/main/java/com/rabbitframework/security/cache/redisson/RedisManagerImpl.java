@@ -8,10 +8,12 @@ import java.util.concurrent.TimeUnit;
 import org.redisson.api.RBinaryStream;
 import org.redisson.api.RKeys;
 import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RedisManagerImpl implements RedisManager {
+    private static final Logger logger = LoggerFactory.getLogger(RedisManagerImpl.class);
     private RedissonClient redissonClient;
-
     public void setRedissonClient(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
@@ -56,7 +58,8 @@ public class RedisManagerImpl implements RedisManager {
     public void del(String key) {
         try {
             RBinaryStream binaryStream = redissonClient.getBinaryStream(key);
-            binaryStream.delete();
+            boolean result = binaryStream.delete();
+            logger.debug("del [" + key + "],result=" + result);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
