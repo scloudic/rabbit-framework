@@ -34,6 +34,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
     2、XML解析方封装
     3、OkHttp的封装
     4、监听通知服务
+    5、集成easyExcel
    
 
 六、rabbit-cache:集成redis缓存
