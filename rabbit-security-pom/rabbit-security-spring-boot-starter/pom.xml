@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.rabbitframework</groupId>
         <artifactId>rabbit-security-pom</artifactId>
-        <version>3.2</version>
+        <version>3.3.2.RELEASE</version>
     </parent>
     <artifactId>rabbit-security-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
@@ -18,12 +18,16 @@
             <artifactId>rabbit-security-redisson-cache</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.rabbitframework</groupId>
+            <artifactId>rabbit-core-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.tjzq</groupId>
-            <artifactId>tjzq-redisson-spring-boot-starter</artifactId>
+            <groupId>com.rabbitframework</groupId>
+            <artifactId>rabbit-security-redisson-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
@@ -41,37 +45,5 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shiro</groupId>-->
-<!--            <artifactId>shiro-spring-boot-web-starter</artifactId>-->
-<!--            <version>1.4.1</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-autoconfigure</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.hibernate.validator</groupId>-->
-<!--                    <artifactId>hibernate-validator</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter-web</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.shiro</groupId>-->
-<!--                    <artifactId>shiro-spring-boot-starter</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-starter</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.shiro</groupId>-->
-<!--            <artifactId>shiro-spring</artifactId>-->
-<!--            <version>1.4.1</version>-->
-<!--        </dependency>-->
     </dependencies>
 </project>

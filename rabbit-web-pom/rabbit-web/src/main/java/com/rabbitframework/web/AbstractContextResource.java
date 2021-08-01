@@ -1,10 +1,10 @@
 package com.rabbitframework.web;
 
-import com.rabbitframework.commons.utils.StatusCode;
+import com.rabbitframework.core.utils.StatusCode;
 import com.rabbitframework.web.resources.RabbitContextResource;
 import com.rabbitframework.web.utils.ResponseUtils;
 import com.rabbitframework.web.utils.ServletContextHelper;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
@@ -39,6 +39,11 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return getSimpleResponse(result, data, true, true);
     }
 
+
+    public Response getSimpleResponse(boolean result, Object data, boolean isNullToEmpty) {
+        return getSimpleResponse(result, data, isNullToEmpty, true);
+    }
+
     /**
      * 获取Response返回信息
      *
@@ -53,18 +58,22 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         if (data != null) {
             dataJsonResponse.setData(data);
         }
-        dataJsonResponse.setStatus(StatusCode.FAIL);
+        dataJsonResponse.setStatus(StatusCode.FAIL.getValue());
         dataJsonResponse.setMessage(getMessage("fail"));
         if (result) {
-            dataJsonResponse.setStatus(StatusCode.SC_OK);
+            dataJsonResponse.setStatus(StatusCode.SC_OK.getValue());
             dataJsonResponse.setMessage(getMessage("success"));
         }
         String dataJson = dataJsonResponse.toJson(isNullToEmpty, isSkipTransientField);
         return ResponseUtils.ok(dataJson);
     }
 
+    public Response getResponse(int status, String message) {
+        return getResponse(status, message, null, true);
+    }
+
     public Response getResponse(boolean status, String message, Object data) {
-        int statusInt = status ? StatusCode.SC_OK : StatusCode.FAIL;
+        int statusInt = status ? StatusCode.SC_OK.getValue() : StatusCode.FAIL.getValue();
         return getResponse(statusInt, message, data, true);
     }
 
@@ -87,7 +96,7 @@ public abstract class AbstractContextResource extends RabbitContextResource {
                                 boolean isSkipTransientField) {
         if (StringUtils.isBlank(message)) {
             message = getMessage("success");
-            if (status != StatusCode.SC_OK) {
+            if (status != StatusCode.SC_OK.getValue()) {
                 message = getMessage("fail");
             }
         }
@@ -99,34 +108,6 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         dataJsonResponse.setMessage(message);
         String value = dataJsonResponse.toJson(isNullToEmpty, isSkipTransientField);
         return ResponseUtils.ok(value);
-    }
-
-    /**
-     * 获取ip地址
-     *
-     * @param request
-     * @return
-     */
-    public String getIpAddr(HttpServletRequest request) {
-        String ipAddress = request.getHeader("x-forwarded-for");
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
-            ipAddress = request.getHeader("Proxy-Client-IP");
-        }
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
-            ipAddress = request.getHeader("WL-Proxy-Client-IP");
-        }
-
-        if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
-            ipAddress = request.getRemoteAddr();
-        }
-
-        //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-        if (ipAddress != null && ipAddress.length() > 15) { //"***.***.***.***".length() = 15
-            if (ipAddress.indexOf(",") > 0) {
-                ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
-            }
-        }
-        return ipAddress;
     }
 
     public String getHeader(HttpServletRequest request, String key) {

@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.rabbitframework.generator.template.JavaModeGenerate;
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 import junit.framework.TestCase;
 

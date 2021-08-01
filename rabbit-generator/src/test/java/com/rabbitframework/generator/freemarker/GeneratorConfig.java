@@ -12,8 +12,8 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tjzq.commons.org.springframework.io.Resource;
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.springframework.io.Resource;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;

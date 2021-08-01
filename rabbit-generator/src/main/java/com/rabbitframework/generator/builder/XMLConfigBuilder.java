@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.rabbitframework.core.xmlparser.XNode;
+import com.rabbitframework.core.xmlparser.XPathParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,11 +15,9 @@ import com.rabbitframework.generator.dataaccess.JdbcConnectionInfo;
 import com.rabbitframework.generator.exceptions.BuilderException;
 import com.rabbitframework.generator.template.JavaModeGenerate;
 import com.rabbitframework.generator.template.Template;
-import com.tjzq.commons.propertytoken.PropertyParser;
-import com.tjzq.commons.utils.ResourceUtils;
-import com.tjzq.commons.utils.StringUtils;
-import com.tjzq.commons.xmlparser.XNode;
-import com.tjzq.commons.xmlparser.XPathParser;
+import com.rabbitframework.core.propertytoken.PropertyParser;
+import com.rabbitframework.core.utils.ResourceUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 public class XMLConfigBuilder extends BaseBuilder {
     private static final Logger logger = LoggerFactory.getLogger(XMLConfigBuilder.class);

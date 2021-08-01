@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.rabbitframework</groupId>
         <artifactId>rabbit-security-pom</artifactId>
-        <version>3.2</version>
+        <version>3.3.2.RELEASE</version>
     </parent>
     <artifactId>rabbit-security</artifactId>
     <packaging>jar</packaging>
@@ -43,11 +43,19 @@
         </dependency>
         <dependency>
             <groupId>com.rabbitframework</groupId>
-            <artifactId>rabbit-commons</artifactId>
+            <artifactId>rabbit-core</artifactId>
         </dependency>
-       <!--  <dependency>
+        <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-cas</artifactId>
-        </dependency> -->
+            <artifactId>shiro-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.shiro</groupId>-->
+<!--            <artifactId>shiro-spring</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

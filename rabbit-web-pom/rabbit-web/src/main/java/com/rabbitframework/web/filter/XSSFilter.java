@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.rabbitframework.web.filter.sensitive.WordFilter;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 @Provider
 @PreMatching

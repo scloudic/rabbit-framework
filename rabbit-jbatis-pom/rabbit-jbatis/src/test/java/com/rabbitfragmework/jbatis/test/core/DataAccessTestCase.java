@@ -6,7 +6,7 @@ import java.io.Reader;
 import com.rabbitframework.jbatis.RabbitJbatisFactory;
 import com.rabbitframework.jbatis.RabbitJbatisFactoryBuilder;
 import com.rabbitframework.jbatis.dataaccess.SqlDataAccess;
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 public class DataAccessTestCase extends AbstractDbaseTestCase {
 	private SqlDataAccess sqlDataAccess;

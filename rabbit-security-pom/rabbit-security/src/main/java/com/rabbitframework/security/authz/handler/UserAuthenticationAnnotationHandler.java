@@ -1,10 +1,9 @@
 package com.rabbitframework.security.authz.handler;
 
-import com.rabbitframework.commons.exceptions.AuthcException;
-import com.rabbitframework.commons.exceptions.AuthzException;
 import com.rabbitframework.security.authz.annotation.UserAuthentication;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ public class UserAuthenticationAnnotationHandler extends AuthzAnnotationHandler 
     public void assertAuthorized(Annotation a, MethodInvocation mi) throws AuthorizationException {
         if (a instanceof UserAuthentication && !getSubject().isAuthenticated()) {
             logger.warn("The current Subject is not authenticated.  Access denied.");
-            throw new AuthorizationException(new AuthcException("authc.fail"));
+            throw new UnauthenticatedException("authc.fail");
         }
     }
 }

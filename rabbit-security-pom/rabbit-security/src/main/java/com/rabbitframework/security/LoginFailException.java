@@ -1,7 +1,7 @@
 package com.rabbitframework.security;
 
-import com.rabbitframework.commons.exceptions.RabbitFrameworkException;
-import com.rabbitframework.commons.utils.StatusCode;
+import com.rabbitframework.core.exceptions.RabbitFrameworkException;
+import com.rabbitframework.core.utils.StatusCode;
 
 /**
  * 登陆失败异常
@@ -10,26 +10,26 @@ import com.rabbitframework.commons.utils.StatusCode;
  * @date: 2019-06-29 10:29
  */
 public class LoginFailException extends RabbitFrameworkException {
-	private int status = StatusCode.FAIL;
+    private StatusCode status = StatusCode.SC_LOGIN_ERROR;
 
-	public LoginFailException() {
-		super();
-	}
+    public LoginFailException() {
+        super();
+    }
 
-	public LoginFailException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public LoginFailException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public LoginFailException(String message) {
-		super(message);
-	}
+    public LoginFailException(String message) {
+        super(message);
+    }
 
-	public LoginFailException(Throwable cause) {
-		super(cause);
-	}
+    public LoginFailException(Throwable cause) {
+        super(cause);
+    }
 
-	@Override
-	public int getStatus() {
-		return status;
-	}
+    @Override
+    public StatusCode getStatus() {
+        return status;
+    }
 }

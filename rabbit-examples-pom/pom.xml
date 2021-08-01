@@ -4,8 +4,8 @@
 	<parent>
 		<groupId>com.rabbitframework</groupId>
 		<artifactId>rabbit-framework</artifactId>
-		<version>3.2</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>3.3.2.RELEASE</version>
+<!--		<relativePath>../pom.xml</relativePath>-->
 	</parent>
 	<artifactId>rabbit-examples-pom</artifactId>
 	<packaging>pom</packaging>

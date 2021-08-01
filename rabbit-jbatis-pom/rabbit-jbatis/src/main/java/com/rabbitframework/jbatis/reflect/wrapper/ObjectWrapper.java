@@ -3,8 +3,8 @@ package com.rabbitframework.jbatis.reflect.wrapper;
 import java.util.List;
 
 import com.rabbitframework.jbatis.reflect.MetaObject;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
-import com.tjzq.commons.reflect.property.PropertyTokenizer;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.reflect.property.PropertyTokenizer;
 
 
 public interface ObjectWrapper {

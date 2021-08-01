@@ -24,7 +24,7 @@ import com.rabbitframework.jbatis.RabbitJbatisFactory;
 import com.rabbitframework.jbatis.RabbitJbatisFactoryBuilder;
 import com.rabbitframework.jbatis.cache.Cache;
 import com.rabbitframework.jbatis.dataaccess.datasource.DataSourceFactory;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 public class RabbitJbatisFactoryBean
         implements FactoryBean<RabbitJbatisFactory>, InitializingBean, ApplicationListener<ApplicationEvent> {
@@ -36,6 +36,7 @@ public class RabbitJbatisFactoryBean
     private DataSourceFactory dataSourceFactory;
     private Map<String, DataSourceBean> dataSourceMap;
     private Map<String, Cache> cacheMap;
+    private Map<String, String> mapperPackageMap;
     private String entityPackages;
     private String mapperPackages;
     private boolean failFast;
@@ -50,6 +51,10 @@ public class RabbitJbatisFactoryBean
 
     public void setConfigurationProperties(Properties configurationProperties) {
         this.configurationProperties = configurationProperties;
+    }
+
+    public void setMapperPackageMap(Map<String, String> mapperPackageMap) {
+        this.mapperPackageMap = mapperPackageMap;
     }
 
     public void setCacheMap(Map<String, Cache> cacheMap) {
@@ -129,10 +134,22 @@ public class RabbitJbatisFactoryBean
         }
         environment.setDataSourceFactory(dataSourceFactory);
         configuration.setEnvironment(environment);
-        String[] entityPackageNames = StringUtils.tokenizeToStringArray(entityPackages);
-        configuration.addEntitys(entityPackageNames);
-        String[] mapperPackageNames = StringUtils.tokenizeToStringArray(mapperPackages);
-        configuration.addMappers(mapperPackageNames);
+        if (StringUtils.isNotBlank(entityPackages)) {
+            String[] entityPackageNames = StringUtils.tokenizeToStringArray(entityPackages);
+            configuration.addEntitys(entityPackageNames);
+        }
+        if (StringUtils.isNotBlank(mapperPackages)) {
+            String[] mapperPackageNames = StringUtils.tokenizeToStringArray(mapperPackages);
+            configuration.addMappers(mapperPackageNames, "");
+        }
+        if (mapperPackageMap != null) {
+            for (Map.Entry<String, String> entry : mapperPackageMap.entrySet()) {
+                String catalog = entry.getKey();
+                String mapperPackages = entry.getValue();
+                String[] mapperPackageNames = StringUtils.tokenizeToStringArray(mapperPackages);
+                configuration.addMappers(mapperPackageNames, catalog);
+            }
+        }
         configuration.addCaches(cacheMap);
         return rabbitJbatisFactoryBuilder.build(configuration);
     }

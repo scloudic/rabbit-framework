@@ -23,7 +23,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
     private RedisManager cache;
     public String keyPrefix = "security_cache:";
-    private int expire = 0;
+    private long expire = 0L;
 
     /**
      * 通过一个JedisManager实例构造RedisCache
@@ -35,7 +35,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
         this.cache = cache;
     }
 
-    public RedisCache(RedisManager cache, int expire) {
+    public RedisCache(RedisManager cache, long expire) {
         this(cache);
         this.expire = expire;
     }
@@ -161,11 +161,11 @@ public class RedisCache<K, V> implements Cache<K, V> {
         }
     }
 
-    public int getExpire() {
+    public long getExpire() {
         return expire;
     }
 
-    public void setExpire(int expire) {
+    public void setExpire(long expire) {
         this.expire = expire;
     }
 }

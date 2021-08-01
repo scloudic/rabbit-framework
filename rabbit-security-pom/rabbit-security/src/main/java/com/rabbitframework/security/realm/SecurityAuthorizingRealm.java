@@ -1,10 +1,10 @@
 package com.rabbitframework.security.realm;
 
-import com.rabbitframework.commons.exceptions.BizException;
-import com.rabbitframework.security.RabbitSecurityUtils;
-import com.rabbitframework.security.SecurityUser;
+import com.rabbitframework.core.exceptions.BizException;
 import com.rabbitframework.security.SecurityUtils;
+import com.rabbitframework.security.SecurityUser;
 import com.rabbitframework.security.web.mgt.SimpleWebSecurityManager;
+import com.rabbitframework.security.web.session.AbstractSecuritySessionDAO;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,13 +12,13 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
 
 /**
  * 授权realm
@@ -108,7 +108,7 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
         }
     }
 
-    public AuthorizationInfo getAuthoriztionInfo(String userId) {
+    public AuthorizationInfo getAuthorizationInfo(String userId) {
         String prefix = getCacheKeyPrefix() + authz_key + userId;
         Cache<Object, AuthorizationInfo> cache = getAuthorizationCache();
         AuthorizationInfo authorizationInfo = cache.get(prefix);
@@ -123,8 +123,19 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
      */
     public void cleanSession(String userId, String keyPrefix) {
         SecurityManager securityManager = SecurityUtils.getSecurityManager();
-        SessionManager sessionManager = securityManager.getSessionManager();
-        sessionManager.getSessionDAO().doDelete(userId, keyPrefix);
+        if (securityManager instanceof SimpleWebSecurityManager) {
+            SimpleWebSecurityManager manager = (SimpleWebSecurityManager) securityManager;
+            SessionManager sessionManager = manager.getSessionManager();
+            if (securityManager instanceof DefaultSessionManager) {
+                DefaultSessionManager defaultSessionManager = (DefaultSessionManager) sessionManager;
+                SessionDAO sessionDAO = defaultSessionManager.getSessionDAO();
+                if (sessionDAO instanceof AbstractSecuritySessionDAO) {
+                    AbstractSecuritySessionDAO abstractSecuritySessionDAO = (AbstractSecuritySessionDAO) sessionDAO;
+                    abstractSecuritySessionDAO.doDelete(userId, keyPrefix);
+                }
+            }
+
+        }
     }
 
     public void setCacheKeyPrefix(String cacheKeyPrefix) {

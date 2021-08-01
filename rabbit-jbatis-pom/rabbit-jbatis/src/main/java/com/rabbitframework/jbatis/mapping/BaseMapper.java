@@ -7,7 +7,7 @@ import com.rabbitframework.jbatis.annontations.Delete;
 import com.rabbitframework.jbatis.annontations.Insert;
 import com.rabbitframework.jbatis.annontations.Select;
 import com.rabbitframework.jbatis.annontations.Update;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 
 /**
  * mapper基类接口
@@ -35,13 +35,13 @@ public interface BaseMapper<T> {
     Integer deleteById(Serializable id);
 
     /**
-     * 根据参数条件{@link WhereParamType }删除数据
+     * 根据参数条件{@link Where }删除数据
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
     @Delete("delete from @{T} where 1=1 ")
-    Integer deleteByParams(WhereParamType paramType);
+    Integer deleteByParams(Where where);
 
     /**
      * 修改一条记录
@@ -53,13 +53,13 @@ public interface BaseMapper<T> {
     Integer updateByEntity(T entity);
 
     /**
-     * 根据参数 {@link WhereParamType} 修改数据
+     * 根据参数 {@link Where} 修改数据
      *
-     * @param paramType
+     * @param where
      * @return
      */
     @Update
-    Integer updateByParams(WhereParamType paramType);
+    Integer updateByParams(Where where);
 
     /**
      * 根据主键查询对象
@@ -71,22 +71,31 @@ public interface BaseMapper<T> {
     T selectById(Serializable id);
 
     /**
-     * 根据参数查询数据
+     * 根据参数获取唯一对象
      *
-     * @param paramType {@link WhereParamType}
+     * @param where
      * @return
      */
-    @Select("select * from @{T} where 1=1 ")
-    List<T> selectByParams(WhereParamType paramType);
+    @Select("select ${showColumns} from @{T} where 1=1 ")
+    T selectOneByParams(Where where);
+
+    /**
+     * 根据参数查询数据
+     *
+     * @param where {@link Where}
+     * @return
+     */
+    @Select("select ${showColumns} from @{T} where 1=1 ")
+    List<T> selectByParams(Where where);
 
     /**
      * 根据参数获取总数
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
     @Select("select count(1) from @{T} where 1=1 ")
-    Long selectCountByParams(WhereParamType paramType);
+    Long selectCountByParams(Where where);
 
     /**
      * 获取总数
@@ -107,12 +116,12 @@ public interface BaseMapper<T> {
     /**
      * 根据参数查询数据,并分页显示
      *
-     * @param paramType {@link WhereParamType}
+     * @param where     {@link Where}
      * @param rowBounds {@link RowBounds}
      * @return
      */
-    @Select("select * from @{T} where 1=1 ")
-    List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
+    @Select("select ${showColumns} from @{T} where 1=1 ")
+    List<T> selectPageByParams(Where where, RowBounds rowBounds);
 
     /**
      * 分页查询数据

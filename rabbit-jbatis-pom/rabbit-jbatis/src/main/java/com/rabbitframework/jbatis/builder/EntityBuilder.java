@@ -11,7 +11,7 @@ import com.rabbitframework.jbatis.mapping.EntityMap;
 import com.rabbitframework.jbatis.mapping.EntityProperty;
 import com.rabbitframework.jbatis.mapping.GenerationType;
 import com.rabbitframework.jbatis.reflect.MetaClass;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * 实体类解析

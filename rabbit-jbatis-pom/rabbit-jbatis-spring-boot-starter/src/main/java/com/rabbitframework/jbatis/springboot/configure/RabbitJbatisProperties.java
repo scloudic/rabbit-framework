@@ -11,6 +11,7 @@ public class RabbitJbatisProperties {
     private DataSourceFactoryType dataSourceFactoryType = DataSourceFactoryType.SIMPLE;
     private String entityPackages;
     private String mapperPackages;
+    private Map<String, String> mapperPackageMap;
     private Map<String, DataSourceProperties> dataSources = new HashMap<String, DataSourceProperties>();
     private Map<String, String> dataSourceBeans = new HashMap<String, String>();
 
@@ -91,6 +92,14 @@ public class RabbitJbatisProperties {
         public boolean isTransaction() {
             return transaction;
         }
+    }
+
+    public Map<String, String> getMapperPackageMap() {
+        return mapperPackageMap;
+    }
+
+    public void setMapperPackageMap(Map<String, String> mapperPackageMap) {
+        this.mapperPackageMap = mapperPackageMap;
     }
 
     public enum DataSourceFactoryType {

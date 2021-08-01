@@ -5,7 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import com.rabbitframework.jbatis.mapping.BaseMapper;
-import com.tjzq.commons.utils.ReflectUtils;
+import com.rabbitframework.core.utils.ReflectUtils;
 
 public class ReflectSample {
 	public static void main(String[] args) throws Exception {

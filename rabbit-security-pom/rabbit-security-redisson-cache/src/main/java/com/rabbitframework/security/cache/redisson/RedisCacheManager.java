@@ -20,9 +20,9 @@ public class RedisCacheManager implements CacheManager {
     private final ConcurrentMap<String, Cache> caches = new ConcurrentHashMap<String, Cache>();
     private RedisManager redisManager;
     // session的缓存时间默认3600秒即一小时
-    private int sessionExpire = 3600;
+    private long sessionExpire = 3600L * 1000;
     // 其它的缓存时间,默认600秒即10分钟
-    private int otherExpire = 600;
+    private long otherExpire = 600L * 1000;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -31,7 +31,7 @@ public class RedisCacheManager implements CacheManager {
         synchronized (this) {
             Cache<K, V> cache = caches.get(name);
             if (cache == null) {
-                int expire = otherExpire;
+                long expire = otherExpire;
                 if (RedisSessionDAO.ACTIVE_SESSION_CACHE_NAME.equals(name)) {
                     expire = sessionExpire;
                 }
@@ -54,15 +54,15 @@ public class RedisCacheManager implements CacheManager {
         this.otherExpire = otherExpire;
     }
 
-    public int getOtherExpire() {
+    public long getOtherExpire() {
         return otherExpire;
     }
 
-    public void setSessionExpire(int sessionExpire) {
+    public void setSessionExpire(long sessionExpire) {
         this.sessionExpire = sessionExpire;
     }
 
-    public int getSessionExpire() {
+    public long getSessionExpire() {
         return sessionExpire;
     }
 }

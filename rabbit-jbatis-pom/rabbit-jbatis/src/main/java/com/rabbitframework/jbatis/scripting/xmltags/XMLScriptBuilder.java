@@ -13,8 +13,8 @@ import com.rabbitframework.jbatis.scripting.SqlSource;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.tjzq.commons.xmlparser.XNode;
-import com.tjzq.commons.xmlparser.XPathParser;
+import com.rabbitframework.core.xmlparser.XNode;
+import com.rabbitframework.core.xmlparser.XPathParser;
 
 /**
  * SQL脚本动态生成

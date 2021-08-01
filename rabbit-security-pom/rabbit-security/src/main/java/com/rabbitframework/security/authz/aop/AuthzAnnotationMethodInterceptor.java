@@ -1,12 +1,13 @@
 package com.rabbitframework.security.authz.aop;
 
-import com.rabbitframework.commons.exceptions.AuthcException;
-import com.rabbitframework.commons.exceptions.AuthzException;
+import com.rabbitframework.core.exceptions.AuthcException;
+import com.rabbitframework.core.exceptions.AuthzException;
 import com.rabbitframework.security.authz.handler.AuthzAnnotationHandler;
 import org.apache.shiro.aop.AnnotationMethodInterceptor;
 import org.apache.shiro.aop.AnnotationResolver;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +34,10 @@ public class AuthzAnnotationMethodInterceptor extends AnnotationMethodIntercepto
             ((AuthzAnnotationHandler) getHandler()).assertAuthorized(getAnnotation(mi), mi);
         } catch (Exception ae) {
             logger.error(ae.getMessage() + ",Not authorized to invoke method: " + mi.getMethod());
-            Throwable throwable = ae.getCause();
-            if (throwable instanceof AuthcException) {
-                AuthcException authcException = (AuthcException) throwable;
-                throw new AuthorizationException(authcException);
+            if (ae instanceof UnauthenticatedException) {
+                throw new AuthcException("authc.fail");
             } else {
-                throw new AuthorizationException(new AuthzException("authz.fail"));
+                throw new AuthzException("authz.fail");
             }
         }
     }

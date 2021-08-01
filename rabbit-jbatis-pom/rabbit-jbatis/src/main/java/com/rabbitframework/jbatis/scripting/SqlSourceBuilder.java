@@ -9,8 +9,8 @@ import com.rabbitframework.jbatis.builder.Configuration;
 import com.rabbitframework.jbatis.mapping.ParameterMapping;
 import com.rabbitframework.jbatis.reflect.MetaClass;
 import com.rabbitframework.jbatis.reflect.MetaObject;
-import com.tjzq.commons.propertytoken.GenericTokenParser;
-import com.tjzq.commons.propertytoken.TokenHandler;
+import com.rabbitframework.core.propertytoken.GenericTokenParser;
+import com.rabbitframework.core.propertytoken.TokenHandler;
 
 public class SqlSourceBuilder extends BaseBuilder {
     public SqlSourceBuilder(Configuration configuration) {

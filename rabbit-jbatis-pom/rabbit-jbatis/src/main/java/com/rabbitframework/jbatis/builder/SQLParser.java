@@ -1,8 +1,6 @@
 package com.rabbitframework.jbatis.builder;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -10,16 +8,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.rabbitframework.jbatis.annontations.Insert;
-import com.rabbitframework.jbatis.annontations.Update;
 import com.rabbitframework.jbatis.mapping.EntityMap;
 import com.rabbitframework.jbatis.mapping.EntityProperty;
 import com.rabbitframework.jbatis.mapping.GenerationType;
 import com.rabbitframework.jbatis.mapping.SqlCommendType;
 import com.rabbitframework.jbatis.mapping.binding.EntityRegistry;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
-import com.tjzq.commons.propertytoken.PropertyParser;
-import com.tjzq.commons.utils.ReflectUtils;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.jbatis.mapping.param.Where;
+import com.rabbitframework.core.propertytoken.PropertyParser;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * sql脚本解析生成
@@ -42,7 +38,7 @@ public class SQLParser {
             Insert insert = method.getAnnotation(Insert.class);
             batchUpdate = insert.batch();
             getInsertSql(sqlValueSrc, configuration, genericMapper);
-        } else if (sqlCommendType == SqlCommendType.SELECT && paramType == WhereParamType.class) {
+        } else if (sqlCommendType == SqlCommendType.SELECT && paramType == Where.class) {
             String where = getSearchSql();
             Pattern pattern = Pattern.compile("\\$\\$\\{(.*?)\\}");
             Matcher matcher = pattern.matcher(sqlValueSrc);
@@ -57,7 +53,7 @@ public class SQLParser {
             } else {
                 this.sqlValue = sqlValueSrc + " " + where + " ";
             }
-            String orderBy = "<if test=\"orderby != null\" > order by ${orderby} </if>";
+            String orderBy = "<if test=\"orderBy != null\" > order by ${orderBy} </if>";
             String defineCondition = "<if test=\"defCondition\" > ${defineCondition} </if>";
             this.sqlValue = this.sqlValue + defineCondition + orderBy;
         } else if (sqlCommendType == SqlCommendType.UPDATE) {
@@ -66,9 +62,9 @@ public class SQLParser {
             this.sqlValue = sqlValueSrc;
         }
         /**
-         * 在修改或删除时增加{@link WhereParamType} 做为参数传递
+         * 在修改或删除时增加{@link Where} 做为参数传递
          **/
-        if (paramType == WhereParamType.class
+        if (paramType == Where.class
                 && (sqlCommendType == SqlCommendType.DELETE || sqlCommendType == SqlCommendType.UPDATE)) {
             this.sqlValue = this.sqlValue + " " + getSearchSql() + " ";
         }
@@ -87,14 +83,14 @@ public class SQLParser {
     }
 
     private String getSearchSql() {
-        return "<where>" + "<foreach collection=\"oredCriteria\" item=\"criteria\" separator=\"or\" >"
-                + "<if test=\"criteria.valid\" >" + "<trim prefix=\"(\" suffix=\")\" prefixOverrides=\"and\" >"
+        return "<where>" + "<foreach collection=\"oredCriteria\" item=\"criteria\" separator=\" and \" >"
+                + "<if test=\"criteria.valid\" >" + "<trim prefix=\"(\" suffix=\")\" prefixOverrides=\"and|or\" >"
                 + "<foreach collection=\"criteria.criteria\" item=\"criterion\" >" + "<choose>"
-                + "<when test=\"criterion.noValue\" >" + " and ${criterion.condition}" + "</when>"
-                + "<when test=\"criterion.singleValue\" >" + " and ${criterion.condition} #{criterion.value}"
+                + "<when test=\"criterion.noValue\" >" + " ${criterion.condition}" + "</when>"
+                + "<when test=\"criterion.singleValue\" >" + "${criterion.condition} #{criterion.value}"
                 + "</when>" + "<when test=\"criterion.betweenValue\" >"
-                + " and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}" + "</when>"
-                + "<when test=\"criterion.listValue\" >" + " and ${criterion.condition}"
+                + " ${criterion.condition} #{criterion.value} and #{criterion.secondValue}" + "</when>"
+                + "<when test=\"criterion.listValue\" >" + " ${criterion.condition}"
                 + "<foreach collection=\"criterion.value\" item=\"listItem\" open=\"(\" close=\")\" separator=\",\" >"
                 + "#{listItem}" + "</foreach>" + "</when>" + "</choose>" + "</foreach>" + "</trim>" + "</if>"
                 + "</foreach>" + "</where>";
@@ -107,11 +103,11 @@ public class SQLParser {
             String paramTypeName = genericMapper.getName();
             boolean isEntity = entityRegistry.hasEntityMap(paramTypeName);
             if (!isEntity) {
-                throw new NullPointerException("sql is null");
+                throw new NullPointerException("entity not include,the entity name is:" + paramTypeName);
             }
             EntityMap entityMap = entityRegistry.getEntityMap(paramTypeName);
-            if (paramType == WhereParamType.class) {
-                this.sqlValue = getUpdateSqlByWhereParamsType(entityMap);
+            if (paramType == Where.class) {
+                this.sqlValue = getUpdateSqlByWhere(entityMap);
             } else {
                 this.paramType = genericMapper;
                 this.sqlValue = getUpdateSql(entityMap);
@@ -127,7 +123,7 @@ public class SQLParser {
             String paramTypeName = paramType.getName();
             boolean isEntity = entityRegistry.hasEntityMap(paramTypeName);
             if (!isEntity) {
-                throw new NullPointerException("sql is null");
+                throw new NullPointerException("entity not include,the entity name is:" + paramTypeName);
             }
             EntityMap entityMap = entityRegistry.getEntityMap(paramTypeName);
             if (isBatchUpdate()) {
@@ -138,18 +134,11 @@ public class SQLParser {
         }
     }
 
-//    private void setParamType(Method method) {
-//        Type[] parameters = method.getGenericParameterTypes();
-//        Type parameter = parameters[0];
-//        Type[] t = ((ParameterizedType) parameter).getActualTypeArguments();
-//        paramType = ReflectUtils.getGenericClassByType(t[0]);
-//    }
-
     public Class<?> getParamType() {
         return paramType;
     }
 
-    private String getUpdateSqlByWhereParamsType(EntityMap entityMap) {
+    private String getUpdateSqlByWhere(EntityMap entityMap) {
         StringBuilder sbPrefix = new StringBuilder();
         List<EntityProperty> propertyMapping = entityMap.getColumnProperties();
         sbPrefix.append("update ");

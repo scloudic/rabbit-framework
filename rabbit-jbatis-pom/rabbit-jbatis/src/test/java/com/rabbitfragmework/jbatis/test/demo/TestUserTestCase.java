@@ -5,7 +5,7 @@ import com.rabbitfragmework.jbatis.test.mapper.TestUserMapper;
 import com.rabbitfragmework.jbatis.test.model.TestUser;
 import com.rabbitframework.jbatis.mapping.RowBounds;
 import com.rabbitframework.jbatis.mapping.param.Criteria;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TestUserTestCase extends DataAccessTestCase {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
         TestUser testUser = new TestUser();
 //        testUser.setId(22L);
-        testUser.setTestName("testAuto2");
+        testUser.setTestName("test1");
         int result = testMapper.insertByEntity(testUser);
         System.out.println(result);
         System.out.println(testUser.getId());
@@ -53,7 +53,7 @@ public class TestUserTestCase extends DataAccessTestCase {
     @Test
     public void updateTestUserById() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        int result = testMapper.updateTest(22, "updateName");
+        int result = testMapper.updateTest(5, "updateName");
         System.out.println("result:" + result);
     }
 
@@ -61,22 +61,9 @@ public class TestUserTestCase extends DataAccessTestCase {
     public void updateTestByUser() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
         TestUser testUser = new TestUser();
-        testUser.setId(23L);
+        testUser.setId(6L);
         testUser.setTestName("updateTestByUser");
         testMapper.updateByEntity(testUser);
-    }
-
-    @Test
-    public void updateParams() {
-        TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        TestUser testUser = new TestUser();
-//        testUser.setId(13L);
-        testUser.setTestName("updateParams");
-        WhereParamType whereParamType = new WhereParamType();
-        whereParamType.generateParams(testUser);
-        Criteria criteria = whereParamType.createCriteria();
-        criteria.andFieldIsEqualTo("id", 24);
-        testMapper.updateByParams(whereParamType);
     }
 
     @Test
@@ -110,9 +97,9 @@ public class TestUserTestCase extends DataAccessTestCase {
     @Test
     public void deleteTestUserByWhereParams() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        WhereParamType whereParamType = new WhereParamType();
+        Where whereParamType = new Where();
         Criteria criteria = whereParamType.createCriteria();
-        criteria.andFieldIsEqualTo("id", 14);
+        criteria.andEqual("id", 14);
         int result = testMapper.deleteByParams(whereParamType);
         System.out.println("result:" + result);
     }
@@ -128,19 +115,23 @@ public class TestUserTestCase extends DataAccessTestCase {
     @Test
     public void selectTestUserByParamType() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        WhereParamType paramType = new WhereParamType();
-        paramType.createCriteria().andFieldIsEqualTo("id", 6);
+        Where paramType = new Where("test_name");
+        paramType.createCriteria().andEqual("id", 6);
         List<TestUser> testUsers = testMapper.selectByParams(paramType);
         for (TestUser testUser : testUsers) {
-            logger.info(testUser.getTestName());
+            logger.info("aaa:" + testUser.getTestName());
         }
     }
 
     @Test
     public void selectPageByParams() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        WhereParamType paramType = new WhereParamType();
-        paramType.createCriteria().andFieldIsEqualTo("id", 13L);
+        Where paramType = new Where();
+        paramType.createCriteria()
+                .orEqual("id", 13L)
+                .orEqual("test_name", "1");
+        paramType.addCreateCriteria()
+                .andEqual("id", 1L).andEqual("test_name", "333");
         List<TestUser> testUsers = testMapper.selectPageByParams(paramType, new RowBounds());
         for (TestUser testUser : testUsers) {
             System.out.println(testUser.getTestName());
@@ -175,12 +166,13 @@ public class TestUserTestCase extends DataAccessTestCase {
     @Test
     public void updateTestUserByWhereParam() {
         TestUserMapper testMapper = getMapper(TestUserMapper.class);
-        WhereParamType paramType = new WhereParamType();
+        Where paramType = new Where();
         List<Object> list = new ArrayList<Object>();
         list.add(1L);
-        paramType.createCriteria().andFieldIdIn("id", list);
-        paramType.put("testName", "updateTestName1");
-        int a = testMapper.updateTestUserByWhereParam(paramType);
+        paramType.createCriteria().andIn("id", list);
+        paramType.putProperty(TestUser::getAge, 20);
+        paramType.putProperty(TestUser::getTestName,"test");
+        int a = testMapper.updateByParams(paramType);
         System.out.println("dd:" + a);
     }
 }

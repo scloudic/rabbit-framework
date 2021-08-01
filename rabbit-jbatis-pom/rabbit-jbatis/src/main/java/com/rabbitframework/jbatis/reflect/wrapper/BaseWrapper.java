@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.rabbitframework.jbatis.reflect.MetaObject;
 import com.rabbitframework.jbatis.reflect.ReflectionException;
-import com.tjzq.commons.reflect.property.PropertyTokenizer;
+import com.rabbitframework.core.reflect.property.PropertyTokenizer;
 
 /**
  * 对象封装基类

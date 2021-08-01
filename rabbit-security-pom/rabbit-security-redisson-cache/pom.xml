@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.rabbitframework</groupId>
         <artifactId>rabbit-security-pom</artifactId>
-        <version>3.2</version>
+        <version>3.3.2.RELEASE</version>
     </parent>
     <artifactId>rabbit-security-redisson-cache</artifactId>
     <packaging>jar</packaging>
@@ -14,8 +14,8 @@
             <artifactId>rabbit-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.tjzq</groupId>
-            <artifactId>tjzq-redisson</artifactId>
+            <groupId>com.rabbitframework</groupId>
+            <artifactId>rabbit-redisson</artifactId>
         </dependency>
     </dependencies>
 </project>

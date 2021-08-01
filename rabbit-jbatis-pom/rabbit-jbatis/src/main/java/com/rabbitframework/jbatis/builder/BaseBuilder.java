@@ -1,6 +1,6 @@
 package com.rabbitframework.jbatis.builder;
 
-import com.tjzq.commons.utils.ClassUtils;
+import com.rabbitframework.core.utils.ClassUtils;
 
 public abstract class BaseBuilder {
 	protected final Configuration configuration;

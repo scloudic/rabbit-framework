@@ -39,9 +39,9 @@ import com.rabbitframework.jbatis.mapping.RowBounds;
 import com.rabbitframework.jbatis.mapping.SqlCommendType;
 import com.rabbitframework.jbatis.mapping.binding.EntityRegistry;
 import com.rabbitframework.jbatis.mapping.rowmapper.RowMapperUtil;
-import com.tjzq.commons.propertytoken.PropertyParser;
-import com.tjzq.commons.utils.ReflectUtils;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.propertytoken.PropertyParser;
+import com.rabbitframework.core.utils.ReflectUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * Mapper解析类
@@ -69,7 +69,7 @@ public class MapperParser {
     /**
      * mapper接口注解解析
      */
-    public void parse() {
+    public void parse(String catalog) {
         try {
             Class clazz = getGenericMapper(mapperInterface);
             if (clazz != null) {
@@ -82,17 +82,11 @@ public class MapperParser {
             String mapperInterfaceName = mapperInterface.getName();
             logger.debug("mapper className:" + mapperInterfaceName);
             Mapper mapperAnnotation = mapperInterface.getAnnotation(Mapper.class);
-            String catalog = mapperAnnotation.catalog();
+            if (StringUtils.isBlank(catalog)) {
+                catalog = mapperAnnotation.catalog();
+            }
             String resource = mapperInterface.toString();
             assistant.setCatalog(catalog);
-//            Field[] fields = mapperInterface.getFields();
-//            int fieldsLength = fields.length;
-//            for (int i = 0; i < fieldsLength; i++) {
-//                Field field = fields[i];
-//                String fieldName = field.getName();
-//                String obj = field.get(field.getType()).toString();
-//                properties.setProperty(fieldName, obj);
-//            }
             if (!configuration.isMapperLoaded(resource)) {
                 configuration.addLoadedMapper(resource);
                 Method[] methods = mapperInterface.getMethods();

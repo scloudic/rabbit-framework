@@ -6,10 +6,10 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-import com.tjzq.commons.reflect.invoker.GetFieldInvoker;
-import com.tjzq.commons.reflect.invoker.Invoker;
-import com.tjzq.commons.reflect.invoker.MethodInvoker;
-import com.tjzq.commons.reflect.property.PropertyTokenizer;
+import com.rabbitframework.core.reflect.invoker.GetFieldInvoker;
+import com.rabbitframework.core.reflect.invoker.Invoker;
+import com.rabbitframework.core.reflect.invoker.MethodInvoker;
+import com.rabbitframework.core.reflect.property.PropertyTokenizer;
 
 public class MetaClass {
 

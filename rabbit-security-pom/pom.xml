@@ -4,14 +4,13 @@
     <parent>
         <groupId>com.rabbitframework</groupId>
         <artifactId>rabbit-framework</artifactId>
-        <version>3.2</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>3.3.2.RELEASE</version>
     </parent>
     <artifactId>rabbit-security-pom</artifactId>
     <packaging>pom</packaging>
     <properties>
         <cas-client-core.version>3.2.2</cas-client-core.version>
-        <shiro.version>1.3.2</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
     </properties>
     <modules>
         <module>rabbit-security</module>
@@ -30,6 +29,21 @@
                 <artifactId>shiro-cas</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-web</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.shiro</groupId>-->
+<!--                <artifactId>shiro-spring</artifactId>-->
+<!--                <version>${shiro.version}</version>-->
+<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 </project>

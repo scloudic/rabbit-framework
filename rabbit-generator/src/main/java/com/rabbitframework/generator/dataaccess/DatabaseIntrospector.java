@@ -21,7 +21,7 @@ import com.rabbitframework.generator.mapping.EntityMapping;
 import com.rabbitframework.generator.mapping.EntityProperty;
 import com.rabbitframework.generator.mapping.type.FullyQualifiedJavaType;
 import com.rabbitframework.generator.mapping.type.JavaTypeResolver;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 public class DatabaseIntrospector {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseIntrospector.class);

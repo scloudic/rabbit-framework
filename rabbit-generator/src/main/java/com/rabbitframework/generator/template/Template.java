@@ -15,8 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import com.rabbitframework.generator.exceptions.GeneratorException;
 import com.rabbitframework.generator.utils.Constants;
-import com.tjzq.commons.org.springframework.io.Resource;
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.springframework.io.Resource;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;

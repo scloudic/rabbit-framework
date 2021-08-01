@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.rabbitframework.jbatis.dataaccess.dialect.Dialect;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * 主从数据源配置,所有写操作使用master,读操作使用slave 允许有多master/salve,使用

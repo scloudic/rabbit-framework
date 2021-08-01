@@ -2,10 +2,10 @@ package com.rabbitframework.generator.mapping;
 
 import java.sql.Types;
 
+import com.rabbitframework.core.utils.StringUtils;
 import com.rabbitframework.generator.mapping.type.FullyQualifiedJavaType;
 import com.rabbitframework.generator.mapping.type.Jdbc4Types;
 import com.rabbitframework.generator.utils.JavaBeanUtils;
-import com.tjzq.commons.utils.StringUtils;
 
 public class EntityProperty {
     private String columnName;

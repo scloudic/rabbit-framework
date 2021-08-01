@@ -4,25 +4,25 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import com.rabbitframework.security.SecurityUser;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.CacheManagerAware;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.apache.shiro.util.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.rabbitframework.security.web.session.mgt.AbstractRabbitSessionDAO;
+import com.rabbitframework.security.web.session.AbstractSecuritySessionDAO;
 
-public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheManagerAware {
+public class RedisSessionDAO extends AbstractSecuritySessionDAO implements CacheManagerAware {
     private static Logger logger = LoggerFactory.getLogger(RedisSessionDAO.class);
     public static final String ACTIVE_SESSION_CACHE_NAME = "security-activeSessionCache";
     private CacheManager cacheManager;
     private String keyPrefix = "session:";
+    private boolean singleUser = true;
     private RedisCache<String, Session> activeSessions = null;
 
     @Override
@@ -37,18 +37,15 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
             return;
         }
         cache.remove(getKey(session.getId()));
-        String userId = null;
-        PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        if (principalCollection == null || CollectionUtils.isEmpty(principalCollection)) {
-            //忽略
-        } else {
-            SecurityUser securityUser = (SecurityUser) principalCollection.getPrimaryPrincipal();
-            userId = securityUser.getUserId();
-            logger.debug("打印用户信息主键：" + userId);
-            cache.remove(getKey(userId));
+        if (isSingleUser()) {
+            PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            if (principalCollection != null && principalCollection.isEmpty()) {
+                SecurityUser securityUser = (SecurityUser) principalCollection.getPrimaryPrincipal();
+                String userId = securityUser.getUserId();
+                cache.remove(getKey(userId));
+            }
         }
     }
-
 
     @Override
     public Collection<Session> getActiveSessions() {
@@ -71,17 +68,21 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
             logger.warn("cache is null");
             return;
         }
-        session.setTimeout(cache.getExpire() * 1000);
+        session.setTimeout(cache.getExpire());
         cache.put(getKey(session.getId()), session);
         //同时以用户主键保存session信息以便于后期删除
         PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        if (principalCollection == null || CollectionUtils.isEmpty(principalCollection)) {
-            //忽略
-        } else {
-            SecurityUser securityUser = (SecurityUser) principalCollection.getPrimaryPrincipal();
-            String userId = securityUser.getUserId();
-            logger.debug("打印用户信息主键：" + userId);
-            cache.put(getKey(userId), session);
+        if (principalCollection != null && !principalCollection.isEmpty()) {
+            if (singleUser) {
+                SecurityUser securityUser = (SecurityUser) principalCollection.getPrimaryPrincipal();
+                String userId = securityUser.getUserId();
+                Session userSession = getSessionByUserId(getKey(userId));
+                if (userSession != null) {
+                    delete(userSession);
+                }
+                cache.put(getKey(userId), session);
+            }
+
         }
     }
 
@@ -101,7 +102,17 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
 
     @Override
     public void doUpdate(Session session) throws UnknownSessionException {
-        doSave(session);
+        if (session == null || session.getId() == null) {
+            logger.error("session or session id is null");
+            return;
+        }
+        RedisCache<String, Session> cache = getActiveSessionsCacheLazy();
+        if (cache == null) {
+            logger.warn("cache is null");
+            return;
+        }
+        session.setTimeout(cache.getExpire());
+        cache.put(getKey(session.getId()), session);
     }
 
     private Session getSessionByUserId(String userId) {
@@ -125,6 +136,9 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
      */
     @Override
     public void doDelete(String userId, String keyPrefix) throws UnknownSessionException {
+        if (!isSingleUser()) {
+            logger.warn("没有多用户存储数据");
+        }
         logger.debug("执行清除用户session操作");
         if (keyPrefix == null) {
             keyPrefix = "";
@@ -174,6 +188,14 @@ public class RedisSessionDAO extends AbstractRabbitSessionDAO implements CacheMa
 
     public void setKeyPrefix(String keyPrefix) {
         this.keyPrefix = keyPrefix;
+    }
+
+    public boolean isSingleUser() {
+        return singleUser;
+    }
+
+    public void setSingleUser(boolean singleUser) {
+        this.singleUser = singleUser;
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.rabbitframework.security.authz.handler;
 
-import com.rabbitframework.commons.exceptions.AuthcException;
 import com.rabbitframework.security.authz.annotation.Permissions;
-import org.apache.shiro.aop.AnnotationHandler;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.subject.Subject;
 
@@ -28,9 +27,9 @@ public class PermissionAnnotationHandler extends AuthzAnnotationHandler {
         Permissions rpAnnotation = (Permissions) a;
         String[] perms = getAnnotationValue(a);
         Subject subject = getSubject();
-        //优先判断权限
+        //优先判断是否登录
         if (!subject.isAuthenticated()) {
-            throw new AuthorizationException(new AuthcException("authc.fail"));
+            throw new UnauthenticatedException("authc.fail");
         }
         if (perms.length == 1) {
             subject.checkPermission(perms[0]);

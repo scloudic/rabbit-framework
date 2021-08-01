@@ -1,6 +1,7 @@
 package com.rabbitframework.security.authz.annotation;
 
 import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,7 +2,7 @@ package com.rabbitframework.jbatis.service;
 
 import com.rabbitframework.jbatis.mapping.BaseMapper;
 import com.rabbitframework.jbatis.mapping.RowBounds;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
 public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
 
     public abstract M getBaseMapper();
+
     /**
      * 插入一条记录
      *
@@ -39,14 +40,14 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     }
 
     /**
-     * 根据参数条件{@link WhereParamType }删除数据
+     * 根据参数条件{@link Where }删除数据
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
     @Override
-    public Integer deleteByParams(WhereParamType paramType) {
-        return getBaseMapper().deleteByParams(paramType);
+    public Integer deleteByParams(Where where) {
+        return getBaseMapper().deleteByParams(where);
     }
 
     /**
@@ -61,14 +62,14 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     }
 
     /**
-     * 根据参数 {@link WhereParamType} 修改数据
+     * 根据参数 {@link Where} 修改数据
      *
-     * @param paramType
+     * @param where
      * @return
      */
     @Override
-    public Integer updateByParams(WhereParamType paramType) {
-        return getBaseMapper().updateByParams(paramType);
+    public Integer updateByParams(Where where) {
+        return getBaseMapper().updateByParams(where);
     }
 
     /**
@@ -85,23 +86,23 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     /**
      * 根据参数查询数据
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
     @Override
-    public List<T> selectByParams(WhereParamType paramType) {
-        return getBaseMapper().selectByParams(paramType);
+    public List<T> selectByParams(Where where) {
+        return getBaseMapper().selectByParams(where);
     }
 
     /**
      * 根据参数获取总数
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
     @Override
-    public Long selectCountByParams(WhereParamType paramType) {
-        return getBaseMapper().selectCountByParams(paramType);
+    public Long selectCountByParams(Where where) {
+        return getBaseMapper().selectCountByParams(where);
     }
 
     /**
@@ -127,13 +128,13 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     /**
      * 根据参数查询数据,并分页显示
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @param rowBounds {@link RowBounds}
      * @return
      */
     @Override
-    public List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds) {
-        return getBaseMapper().selectPageByParams(paramType, rowBounds);
+    public List<T> selectPageByParams(Where where, RowBounds rowBounds) {
+        return getBaseMapper().selectPageByParams(where, rowBounds);
     }
 
     /**
@@ -145,5 +146,16 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     @Override
     public List<T> selectEntityPage(RowBounds rowBounds) {
         return getBaseMapper().selectEntityPage(rowBounds);
+    }
+
+    /**
+     * 根据参数获取唯一对象
+     *
+     * @param where
+     * @return
+     */
+    @Override
+    public T selectOneByParams(Where where) {
+        return getBaseMapper().selectOneByParams(where);
     }
 }

@@ -2,7 +2,7 @@ package com.rabbitframework.jbatis.service;
 
 import com.rabbitframework.jbatis.annontations.Update;
 import com.rabbitframework.jbatis.mapping.RowBounds;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 
 import java.io.Serializable;
 import java.util.List;
@@ -30,12 +30,12 @@ public interface IService<T> {
     Integer deleteById(Serializable id);
 
     /**
-     * 根据参数条件{@link WhereParamType }删除数据
+     * 根据参数条件{@link Where }删除数据
      *
-     * @param paramType {@link WhereParamType}
+     * @param paramType {@link Where}
      * @return
      */
-    Integer deleteByParams(WhereParamType paramType);
+    Integer deleteByParams(Where paramType);
 
     /**
      * 修改一条记录
@@ -46,13 +46,13 @@ public interface IService<T> {
     Integer updateByEntity(T entity);
 
     /**
-     * 根据参数 {@link WhereParamType} 修改数据
+     * 根据参数 {@link Where} 修改数据
      *
-     * @param paramType
+     * @param where
      * @return
      */
     @Update
-    Integer updateByParams(WhereParamType paramType);
+    Integer updateByParams(Where where);
 
     /**
      * 根据主键查询对象
@@ -65,18 +65,18 @@ public interface IService<T> {
     /**
      * 根据参数查询数据
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
-    List<T> selectByParams(WhereParamType paramType);
+    List<T> selectByParams(Where where);
 
     /**
      * 根据参数获取总数
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @return
      */
-    Long selectCountByParams(WhereParamType paramType);
+    Long selectCountByParams(Where where);
 
     /**
      * 获取总数
@@ -95,11 +95,11 @@ public interface IService<T> {
     /**
      * 根据参数查询数据,并分页显示
      *
-     * @param paramType {@link WhereParamType}
+     * @param where {@link Where}
      * @param rowBounds {@link RowBounds}
      * @return
      */
-    List<T> selectPageByParams(WhereParamType paramType, RowBounds rowBounds);
+    List<T> selectPageByParams(Where where, RowBounds rowBounds);
 
     /**
      * 分页查询数据
@@ -108,4 +108,12 @@ public interface IService<T> {
      * @return
      */
     List<T> selectEntityPage(RowBounds rowBounds);
+
+    /**
+     * 根据参数获取唯一对象
+     *
+     * @param where
+     * @return
+     */
+    T selectOneByParams(Where where);
 }

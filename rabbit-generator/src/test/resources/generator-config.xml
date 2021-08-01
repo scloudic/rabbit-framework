@@ -9,7 +9,7 @@
         <!--<property name="other" value="demo"/>-->
     </jdbcConnection>
 
-    <generators parentPackage="com.test" targetPath="genpath"
+    <generators parentPackage="com.test" targetPath="genPath"
                 entity="entity" mapper="mapper" service="service">
         <!--        <generator templatePath="template/model.ftl" targetPackage="com.test"-->
         <!--                   targetProject="genpath" fileSuffix="" extension=".java"/>-->
@@ -26,6 +26,6 @@
     2、如果类型为assign,先解析table元素,如果没有将类型更改为all
     3、默认类型为all-->
     <tables type="assign">
-        <table tableName="area_info" objectName="AreaInfo"/>
+        <table tableName="test_user" objectName="TestUser"/>
     </tables>
 </configuration>

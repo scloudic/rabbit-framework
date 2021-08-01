@@ -4,7 +4,7 @@ import com.rabbitframework.jbatis.RabbitJbatisFactory;
 import com.rabbitframework.jbatis.dataaccess.DataSourceBean;
 import com.rabbitframework.jbatis.dataaccess.datasource.*;
 import com.rabbitframework.jbatis.spring.RabbitJbatisFactoryBean;
-import com.tjzq.commons.utils.ClassUtils;
+import com.rabbitframework.core.utils.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.BeanDefinition;

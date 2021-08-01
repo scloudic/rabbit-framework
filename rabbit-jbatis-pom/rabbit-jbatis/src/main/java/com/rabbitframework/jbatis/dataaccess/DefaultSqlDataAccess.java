@@ -14,7 +14,7 @@ import com.rabbitframework.jbatis.executor.Executor;
 import com.rabbitframework.jbatis.mapping.MappedStatement;
 import com.rabbitframework.jbatis.mapping.RowBounds;
 import com.rabbitframework.jbatis.reflect.MetaObject;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
 
 public class DefaultSqlDataAccess implements SqlDataAccess {
     private Configuration configuration;

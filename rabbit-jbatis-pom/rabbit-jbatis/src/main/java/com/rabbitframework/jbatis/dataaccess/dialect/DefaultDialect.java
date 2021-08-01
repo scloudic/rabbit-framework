@@ -2,7 +2,7 @@ package com.rabbitframework.jbatis.dataaccess.dialect;
 
 import java.util.Locale;
 
-import com.tjzq.commons.utils.ClassUtils;
+import com.rabbitframework.core.utils.ClassUtils;
 
 /**
  * @author: justin.liang

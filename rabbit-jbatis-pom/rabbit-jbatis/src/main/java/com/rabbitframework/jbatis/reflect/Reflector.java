@@ -14,11 +14,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.tjzq.commons.reflect.invoker.GetFieldInvoker;
-import com.tjzq.commons.reflect.invoker.Invoker;
-import com.tjzq.commons.reflect.invoker.MethodInvoker;
-import com.tjzq.commons.reflect.invoker.SetFieldInvoker;
-import com.tjzq.commons.reflect.property.PropertyNamer;
+import com.rabbitframework.core.reflect.invoker.GetFieldInvoker;
+import com.rabbitframework.core.reflect.invoker.Invoker;
+import com.rabbitframework.core.reflect.invoker.MethodInvoker;
+import com.rabbitframework.core.reflect.invoker.SetFieldInvoker;
+import com.rabbitframework.core.reflect.property.PropertyNamer;
 
 public class Reflector {
 

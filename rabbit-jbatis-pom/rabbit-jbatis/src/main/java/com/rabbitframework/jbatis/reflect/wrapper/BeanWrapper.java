@@ -21,9 +21,9 @@ import com.rabbitframework.jbatis.reflect.MetaClass;
 import com.rabbitframework.jbatis.reflect.MetaObject;
 import com.rabbitframework.jbatis.reflect.ReflectionException;
 import com.rabbitframework.jbatis.reflect.SystemMetaObject;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
-import com.tjzq.commons.reflect.invoker.Invoker;
-import com.tjzq.commons.reflect.property.PropertyTokenizer;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.reflect.invoker.Invoker;
+import com.rabbitframework.core.reflect.property.PropertyTokenizer;
 
 /**
  * 对象封装Bean的实现类

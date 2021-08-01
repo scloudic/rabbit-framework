@@ -1,9 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "rabbit.web.freemarker-path",
-      "type": "java.lang.String",
-      "sourceType": "com.rabbitframework.web.springboot.configure.RabbitWebProperties"
-    }
-  ]
-}

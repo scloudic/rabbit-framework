@@ -1,9 +1,9 @@
 package com.rabbitframework.security.authz.handler;
 
-import com.rabbitframework.commons.exceptions.AuthcException;
 import com.rabbitframework.security.authz.annotation.UriPermissions;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
@@ -33,6 +33,7 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
             }
         }
         if (request == null) {
+            logger.warn("request is null");
             throw new AuthorizationException("request is null");
         }
         String requestUri = getPathWithinApplication(request);
@@ -42,7 +43,7 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
         Subject subject = getSubject();
         //优先判断权限
         if (!subject.isAuthenticated()) {
-            throw new AuthorizationException(new AuthcException("authc.fail"));
+            throw new UnauthenticatedException("authc.fail");
         }
         subject.checkPermission(requestUri);
     }

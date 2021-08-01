@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.rabbitframework.jbatis.builder.Configuration;
 import com.rabbitframework.jbatis.builder.XMLConfigBuilder;
 import com.rabbitframework.jbatis.mapping.EntityMap;
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 import junit.framework.TestCase;
 

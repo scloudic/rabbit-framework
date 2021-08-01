@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 public class RabbitGeneratorTest {
     private static final Logger logger = LoggerFactory.getLogger(RabbitGeneratorTest.class);

@@ -51,7 +51,7 @@ public class MapperParserTest {
     public void testMapperParser() {
         Configuration configuration = new Configuration();
         MapperParser mapperParser = new MapperParser(configuration, TestUserMapper.class);
-        mapperParser.parse();
+        mapperParser.parse("");
         Collection<MappedStatement> mappedStatements = configuration.getMappedStatements();
         logger.debug("mappedStatements.size():" + mappedStatements.size());
         Iterator<MappedStatement> mappedStatementIterator = mappedStatements.iterator();

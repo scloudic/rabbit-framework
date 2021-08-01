@@ -5,7 +5,7 @@ import java.util.Properties;
 import com.rabbitframework.jbatis.exceptions.BindingException;
 import com.rabbitframework.jbatis.reflect.MetaObject;
 import com.rabbitframework.jbatis.reflect.SystemMetaObject;
-import com.tjzq.commons.propertytoken.PropertyParser;
+import com.rabbitframework.core.propertytoken.PropertyParser;
 
 public class PropertiesConvert {
 	public static void setProperties(Properties properties, Object metaData,

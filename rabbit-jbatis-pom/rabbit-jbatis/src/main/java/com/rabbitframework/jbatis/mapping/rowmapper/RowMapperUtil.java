@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 
-import com.tjzq.commons.utils.ReflectUtils;
+import com.rabbitframework.core.utils.ReflectUtils;
 
 public class RowMapperUtil {
     @SuppressWarnings({"rawtypes", "unchecked"})

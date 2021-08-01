@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.rabbitframework</groupId>
 		<artifactId>rabbit-examples-pom</artifactId>
-		<version>3.2</version>
+		<version>3.3.2.RELEASE</version>
 	</parent>
 	<artifactId>rabbit-example-web</artifactId>
 	<!--此处如果使用用外部tomcat服务器 应为war -->
@@ -16,13 +16,22 @@
 		<dependency>
 			<groupId>com.rabbitframework</groupId>
 			<artifactId>rabbit-web-spring-boot-starter</artifactId>
-			<version>${project.version}</version>
+			<version>${parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitframework</groupId>
+			<artifactId>rabbit-security-spring-boot-starter</artifactId>
+			<version>${parent.version}</version>
 		</dependency>
 		<!--如果使用外部tomcat服务器，生命周期为provided -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitframework</groupId>
+			<artifactId>rabbit-redisson-spring-boot-starter</artifactId>
 		</dependency>
 		<!--<dependency> -->
 		<!--<groupId>javax.servlet</groupId> -->

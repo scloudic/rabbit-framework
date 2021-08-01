@@ -9,7 +9,7 @@ import com.rabbitframework.jbatis.dataaccess.DataSourceBean;
 import com.rabbitframework.jbatis.dataaccess.dialect.DefaultDialect;
 import com.rabbitframework.jbatis.dataaccess.dialect.Dialect;
 import com.rabbitframework.jbatis.mapping.MappedStatement;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * 多数据源配置,根据{@link Mapper}中的 catalog中的名称来确定

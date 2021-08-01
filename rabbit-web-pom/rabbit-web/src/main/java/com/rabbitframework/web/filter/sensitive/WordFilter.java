@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.tjzq.commons.utils.ResourceUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
 
 /**
  * 创建一个FilterSet，枚举了0~65535的所有char是否是某个敏感词开头的状态

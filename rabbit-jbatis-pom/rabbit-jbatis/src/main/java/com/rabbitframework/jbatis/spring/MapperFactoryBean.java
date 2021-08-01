@@ -59,7 +59,7 @@ public class MapperFactoryBean<T> implements FactoryBean<T>, InitializingBean {
         Configuration configuration = sqlDataAccess.getConfiguration();
         if (!configuration.hasMapper(this.mapperInterface)) {
             try {
-                configuration.addMapper(this.mapperInterface);
+                configuration.addMapper(this.mapperInterface, null);
             } catch (Throwable t) {
                 logger.error("Error while adding the mapper '"
                         + this.mapperInterface + "' to configuration.", t);

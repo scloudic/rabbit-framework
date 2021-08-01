@@ -1,7 +1,7 @@
 package com.rabbitframework.jbatis.reflect;
 
-import com.tjzq.commons.reflect.factory.DefaultObjectFactory;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.reflect.factory.DefaultObjectFactory;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
 
 public class SystemMetaObject {
 

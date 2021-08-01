@@ -20,8 +20,8 @@ import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import com.tjzq.commons.utils.ClassUtils;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.ClassUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 /**
  * This class assumes that classes are cached elsewhere for performance reasons,

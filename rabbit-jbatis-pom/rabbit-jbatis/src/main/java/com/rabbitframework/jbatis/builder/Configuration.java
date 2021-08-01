@@ -32,9 +32,9 @@ import com.rabbitframework.jbatis.executor.SimpleExecutor;
 import com.rabbitframework.jbatis.executor.StatementHandler;
 import com.rabbitframework.jbatis.mapping.binding.EntityRegistry;
 import com.rabbitframework.jbatis.mapping.binding.MapperRegistry;
-import com.tjzq.commons.reflect.factory.DefaultObjectFactory;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
-import com.tjzq.commons.utils.ClassUtils;
+import com.rabbitframework.core.reflect.factory.DefaultObjectFactory;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.utils.ClassUtils;
 
 /**
  * Dbase初始化类,启动时加载
@@ -123,19 +123,19 @@ public class Configuration {
         }
     }
 
-    public void addMappers(String[] packageNames) {
+    public void addMappers(String[] packageNames, String catalog) {
         List<Class<?>> clazzes = ClassUtils.getClassNamePackage(packageNames);
         for (Class<?> clazz : clazzes) {
-            addMapper(clazz);
+            addMapper(clazz, catalog);
         }
     }
 
-    public <T> void addMapper(Class<T> mapperInteface) {
+    public <T> void addMapper(Class<T> mapperInteface, String catalog) {
         Mapper mapperAnnotation = mapperInteface.getAnnotation(Mapper.class);
         if (null == mapperAnnotation) {
             logger.warn(mapperInteface + " haven't @Mapper annotation");
         } else {
-            getMapperRegistry().addMapper(mapperInteface);
+            getMapperRegistry().addMapper(mapperInteface, catalog);
         }
     }
 

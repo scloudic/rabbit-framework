@@ -1,7 +1,7 @@
 package com.rabbitframework.web.spring.aop;
 
-import com.tjzq.commons.utils.JsonUtils;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.JsonUtils;
+import com.rabbitframework.core.utils.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -42,7 +42,7 @@ public class RequestLogInterceptor {
             MethodSignature methodSignature = (MethodSignature) signature;
             Method method = methodSignature.getMethod();
             Path path = method.getAnnotation(Path.class);
-            Path clazzPath = method.getDeclaringClass().getAnnotation(Path.class);
+            //   Path clazzPath = method.getDeclaringClass().getAnnotation(Path.class);
             String methodName = method.getDeclaringClass() + "." + method.getName();
             Map<String, Object> paramsValue = new HashMap<String, Object>();
             Parameter[] parameters = method.getParameters();
@@ -69,9 +69,13 @@ public class RequestLogInterceptor {
             String jsonValue = JsonUtils.toJson(logInfo);
             StringBuilder sb = new StringBuilder();
             sb.append("[REQUEST]=>{");
-            sb.append("requestPath:" + clazzPath.value() + "/" + path.value() + ",value:" + jsonValue + "}");
+            String slash = "";
+            if (StringUtils.isBlank(path.value()) || path.value().charAt(0) != '/') {
+                slash = "/";
+            }
+            sb.append("requestPath:" + slash + path.value() + ",value:" + jsonValue + "}");
             String result = sb.toString();
-            logger.debug(result);
+            logger.info(result);
         } catch (Exception e) {
             logger.warn("get logInfo fail:" + e.getMessage());
         }

@@ -1,10 +1,10 @@
 package com.rabbitframework.security.spring.interceptor;
 
 import com.rabbitframework.security.authz.aop.*;
+import com.rabbitframework.security.spring.aop.SpringAnnotationResolver;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.shiro.aop.AnnotationResolver;
-import org.apache.shiro.spring.aop.SpringAnnotationResolver;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

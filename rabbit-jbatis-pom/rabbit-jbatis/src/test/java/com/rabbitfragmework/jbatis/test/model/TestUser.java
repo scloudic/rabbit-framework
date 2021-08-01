@@ -13,9 +13,16 @@ public class TestUser implements java.io.Serializable {
     private Long id;
     @Column
     private String testName;
-
     @Column
-    private Date age;
+    private Integer age;
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
@@ -31,14 +38,6 @@ public class TestUser implements java.io.Serializable {
 
     public void setTestName(String testName) {
         this.testName = testName;
-    }
-
-    public void setAge(Date age) {
-        this.age = age;
-    }
-
-    public Date getAge() {
-        return age;
     }
 
 }

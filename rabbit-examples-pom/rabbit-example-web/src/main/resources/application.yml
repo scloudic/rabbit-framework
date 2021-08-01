@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /webExample
 spring:
   #全局加载配置
   messages:
@@ -5,7 +8,22 @@ spring:
 rabbit:
   web:
     rest-packages: com.rabbitframework.example.web.rest
-    application-path: webExample
-    #server:
-    #  servlet:
-    #    context-path: /example
+    request-log: true
+    template-variable-path: com.rabbitframework.example.template
+    freemarker-path: /freemarker
+  security:
+    cookie:
+      name: example
+      path: /
+    sessionIdCookieEnabled: true
+    tokenEnabled: true
+      #filter-chain-definitions:
+    # uriPerms: /freemarker/*
+    session-dao-key-prefix: example_session_test
+    realm-bean-names:
+      - exampleRealm
+#    session-type: local
+#    cache-type: redis
+  commons:
+    front-black: true
+    page404: false

@@ -3,7 +3,7 @@ package com.rabbitframework.web.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

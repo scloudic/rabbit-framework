@@ -3,7 +3,7 @@ package com.rabbitframework.jbatis.springboot.test.mapper;
 import com.rabbitframework.jbatis.annontations.*;
 import com.rabbitframework.jbatis.mapping.BaseMapper;
 import com.rabbitframework.jbatis.mapping.RowBounds;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 import com.rabbitframework.jbatis.springboot.test.model.TestUser;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     public int updateTestUserByParamType(@Param("testName") String testName, @Param("ids") Object obj);
 
     @Update("update test_user set test_name=#{params.testName} where 1=1 ")
-    public int updateTestUserByWhereParam(WhereParamType whereParamType);
+    public int updateTestUserByWhereParam(Where whereParamType);
 
     @Insert(batch = true)
     public int batchInsert(List<TestUser> testUsers);

@@ -1,7 +1,7 @@
 package com.rabbitframework.jbatis.dataaccess;
 
 import com.rabbitframework.jbatis.mapping.GenerationType;
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 public class KeyGenerator {
     private GenerationType generationType;

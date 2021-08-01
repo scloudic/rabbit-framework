@@ -8,8 +8,8 @@ import com.rabbitframework.jbatis.reflect.wrapper.BeanWrapper;
 import com.rabbitframework.jbatis.reflect.wrapper.CollectionWrapper;
 import com.rabbitframework.jbatis.reflect.wrapper.MapWrapper;
 import com.rabbitframework.jbatis.reflect.wrapper.ObjectWrapper;
-import com.tjzq.commons.reflect.factory.ObjectFactory;
-import com.tjzq.commons.reflect.property.PropertyTokenizer;
+import com.rabbitframework.core.reflect.factory.ObjectFactory;
+import com.rabbitframework.core.reflect.property.PropertyTokenizer;
 
 public class MetaObject {
 

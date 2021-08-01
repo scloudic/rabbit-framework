@@ -14,7 +14,7 @@ import com.rabbitframework.jbatis.annontations.Select;
 import com.rabbitframework.jbatis.annontations.Update;
 import com.rabbitframework.jbatis.mapping.BaseMapper;
 import com.rabbitframework.jbatis.mapping.RowBounds;
-import com.rabbitframework.jbatis.mapping.param.WhereParamType;
+import com.rabbitframework.jbatis.mapping.param.Where;
 
 @Mapper
 public interface TestUserMapper extends BaseMapper<TestUser> {
@@ -41,7 +41,7 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     public int updateTestUserByParamType(@Param("testName") String testName, @Param("ids") Object obj);
 
     @Update("update test_user set test_name=#{params.testName} where 1=1 ")
-    public int updateTestUserByWhereParam(WhereParamType whereParamType);
+    public int updateTestUserByWhereParam(Where whereParamType);
 
     @Insert(batch = true)
     public int bacthInsert(List<TestUser> testUsers);

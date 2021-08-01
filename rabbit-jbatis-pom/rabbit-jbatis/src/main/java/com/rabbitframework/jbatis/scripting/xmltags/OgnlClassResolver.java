@@ -3,7 +3,7 @@ package com.rabbitframework.jbatis.scripting.xmltags;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.tjzq.commons.utils.ClassUtils;
+import com.rabbitframework.core.utils.ClassUtils;
 
 import ognl.ClassResolver;
 

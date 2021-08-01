@@ -17,11 +17,11 @@ import org.slf4j.LoggerFactory;
 import com.rabbitframework.jbatis.cache.Cache;
 import com.rabbitframework.jbatis.cache.CacheBuilder;
 import com.rabbitframework.jbatis.dataaccess.datasource.DataSourceFactory;
-import com.tjzq.commons.utils.ClassUtils;
-import com.tjzq.commons.utils.ResourceUtils;
-import com.tjzq.commons.utils.StringUtils;
-import com.tjzq.commons.xmlparser.XNode;
-import com.tjzq.commons.xmlparser.XPathParser;
+import com.rabbitframework.core.utils.ClassUtils;
+import com.rabbitframework.core.utils.ResourceUtils;
+import com.rabbitframework.core.utils.StringUtils;
+import com.rabbitframework.core.xmlparser.XNode;
+import com.rabbitframework.core.xmlparser.XPathParser;
 
 /**
  * 构建启动xml初始化
@@ -206,14 +206,14 @@ public class XMLConfigBuilder extends BaseBuilder {
 			for (XNode xNode : packageNodes) {
 				String packageName = xNode.getStringAttribute("name");
 				String[] packageNames = StringUtils.tokenizeToStringArray(packageName);
-				configuration.addMappers(packageNames);
+				configuration.addMappers(packageNames,"");
 			}
 
 			List<XNode> mapperNodes = context.evalNodes("mapper");
 			for (XNode xNode : mapperNodes) {
 				String mapperClass = xNode.getStringAttribute("class");
 				Class<?> mapperInteface = ClassUtils.classForName(mapperClass);
-				configuration.addMapper(mapperInteface);
+				configuration.addMapper(mapperInteface,"");
 			}
 		}
 	}

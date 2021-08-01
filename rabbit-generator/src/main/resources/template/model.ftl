@@ -13,12 +13,7 @@ import java.io.Serializable;
 @Table
 public class ${entity.objectName}${fileSuffix} implements Serializable {
 	private static final long serialVersionUID = 1L;
-<#list entity.idProperties as idProperties>
-	public static final String ${idProperties.columnName?upper_case} = "${idProperties.columnName}";
-</#list>
-<#list entity.columnProperties as columnProperties>
-	public static final String ${columnProperties.columnName?upper_case} = "${columnProperties.columnName}";
-</#list>
+    public static final String FIELDS = " <#list entity.idProperties as idProperties><#if idProperties_index!=0>,</#if>${idProperties.columnName}</#list><#list entity.columnProperties as columnProperties><#if columnProperties.columnName?contains("active_status")==false && columnProperties.columnName?contains("del_status")==false>,${columnProperties.columnName}</#if></#list> ";
 
 <#list entity.idProperties as idProperties>
     /**

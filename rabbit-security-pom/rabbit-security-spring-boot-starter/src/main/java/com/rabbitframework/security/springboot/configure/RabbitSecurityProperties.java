@@ -6,20 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@ConfigurationProperties(prefix = RabbitSecurityProperties.RABBIT_WEB_PREFIX)
+@ConfigurationProperties(prefix = RabbitSecurityProperties.RABBIT_SECURITY_PREFIX)
 public class RabbitSecurityProperties {
-    public static final String RABBIT_WEB_PREFIX = "rabbit.security";
-    private String loginUrl = "";
-    private String unauthorizedUrl = "";
-    private String filterUrls = "/images/**,/lib/**,/res/**,/static/**";
+    public static final String RABBIT_SECURITY_PREFIX = "rabbit.security";
+    private String filterUrls = "/(static|css|img|images|lib|res)/.*";
     private Map<String, String> filterChainDefinitions;
+    //如果使用servlet此配置无效
     private CookieProperties cookie = null;
     private boolean tokenEnabled = true;
     private boolean sessionIdCookieEnabled = true;
     private String tokenName = "Authorization";
     private String sessionDaoKeyPrefix = "rabbit_session";
-    private Integer cacheSessionExpire = 604800;
-    private Integer otherCacheExpire = 600;
+    private SessionType sessionType = SessionType.local;
+    private Long cacheSessionExpire = 604800L * 1000;
+    private Long otherCacheExpire = 600L * 1000;
+    private CacheType cacheType = CacheType.redis;
+    private boolean singleUser = false;
+    //是否开启session验证定时任务
+    private boolean sessionValidationSchedulerEnabled = false;
     private List<String> realmBeanNames = new ArrayList<String>();
 
     public List<String> getRealmBeanNames() {
@@ -30,11 +34,11 @@ public class RabbitSecurityProperties {
         this.realmBeanNames = realmBeanNames;
     }
 
-    public Integer getCacheSessionExpire() {
+    public Long getCacheSessionExpire() {
         return cacheSessionExpire;
     }
 
-    public void setCacheSessionExpire(Integer cacheSessionExpire) {
+    public void setCacheSessionExpire(Long cacheSessionExpire) {
         this.cacheSessionExpire = cacheSessionExpire;
     }
 
@@ -46,22 +50,6 @@ public class RabbitSecurityProperties {
         this.sessionDaoKeyPrefix = sessionDaoKeyPrefix;
     }
 
-    public String getLoginUrl() {
-        return loginUrl;
-    }
-
-    public void setLoginUrl(String loginUrl) {
-        this.loginUrl = loginUrl;
-    }
-
-    public String getUnauthorizedUrl() {
-        return unauthorizedUrl;
-    }
-
-    public void setUnauthorizedUrl(String unauthorizedUrl) {
-        this.unauthorizedUrl = unauthorizedUrl;
-    }
-
     public String getFilterUrls() {
         return filterUrls;
     }
@@ -70,11 +58,11 @@ public class RabbitSecurityProperties {
         this.filterUrls = filterUrls;
     }
 
-    public void setOtherCacheExpire(Integer otherCacheExpire) {
+    public void setOtherCacheExpire(Long otherCacheExpire) {
         this.otherCacheExpire = otherCacheExpire;
     }
 
-    public Integer getOtherCacheExpire() {
+    public Long getOtherCacheExpire() {
         return otherCacheExpire;
     }
 
@@ -116,5 +104,53 @@ public class RabbitSecurityProperties {
 
     public boolean isSessionIdCookieEnabled() {
         return sessionIdCookieEnabled;
+    }
+
+    public SessionType getSessionType() {
+        return sessionType;
+    }
+
+    public void setSessionType(SessionType sessionType) {
+        this.sessionType = sessionType;
+    }
+
+    public CacheType getCacheType() {
+        return cacheType;
+    }
+
+    public void setCacheType(CacheType cacheType) {
+        this.cacheType = cacheType;
+    }
+
+
+    public boolean isSessionValidationSchedulerEnabled() {
+        return sessionValidationSchedulerEnabled;
+    }
+
+    public void setSessionValidationSchedulerEnabled(boolean sessionValidationSchedulerEnabled) {
+        this.sessionValidationSchedulerEnabled = sessionValidationSchedulerEnabled;
+    }
+
+    public boolean isSingleUser() {
+        return singleUser;
+    }
+
+    public void setSingleUser(boolean singleUser) {
+        this.singleUser = singleUser;
+    }
+
+    /**
+     * session管理类型
+     * local:本地默认session
+     * servlet: 容器session
+     *
+     * @since 3.3.1
+     */
+    public enum SessionType {
+        local, servlet
+    }
+
+    public enum CacheType {
+        memory, redis
     }
 }

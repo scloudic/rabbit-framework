@@ -1,9 +1,9 @@
 package com.rabbitframework.security.authz.handler;
 
-import com.rabbitframework.commons.exceptions.AuthcException;
 import com.rabbitframework.security.authz.annotation.Roles;
 import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.subject.Subject;
 
@@ -19,9 +19,9 @@ public class RoleAnnotationHandler extends AuthzAnnotationHandler {
     @Override
     public void assertAuthorized(Annotation a, MethodInvocation mi) throws AuthorizationException {
         Subject subject = getSubject();
-        //优先判断权限
+        //优先判断是否登录
         if (!subject.isAuthenticated()) {
-            throw new AuthorizationException(new AuthcException("authc.fail"));
+            throw new UnauthenticatedException("authc.fail");
         }
         if (!(a instanceof Roles))
             return;

@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.rabbitframework.jbatis.builder.Configuration;
 import com.rabbitframework.jbatis.scripting.DynamicContext;
-import com.tjzq.commons.propertytoken.GenericTokenParser;
-import com.tjzq.commons.propertytoken.TokenHandler;
+import com.rabbitframework.core.propertytoken.GenericTokenParser;
+import com.rabbitframework.core.propertytoken.TokenHandler;
 
 /**
  * forEach节点

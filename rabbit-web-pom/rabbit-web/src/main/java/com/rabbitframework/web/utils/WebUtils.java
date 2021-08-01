@@ -2,7 +2,7 @@ package com.rabbitframework.web.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.tjzq.commons.utils.StringUtils;
+import com.rabbitframework.core.utils.StringUtils;
 
 public class WebUtils {
 	/**

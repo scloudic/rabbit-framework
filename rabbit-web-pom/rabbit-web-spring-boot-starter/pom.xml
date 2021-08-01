@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.rabbitframework</groupId>
         <artifactId>rabbit-web-pom</artifactId>
-        <version>3.2</version>
+        <version>3.3.2.RELEASE</version>
     </parent>
     <artifactId>rabbit-web-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
@@ -21,6 +21,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-jersey</artifactId>-->
+<!--            <version>2.3.7.RELEASE</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -29,9 +34,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.rabbitframework</groupId>
+            <artifactId>rabbit-core-spring-boot-starter</artifactId>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 </project>
