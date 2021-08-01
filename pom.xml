@@ -497,7 +497,13 @@
             <dependency>
                 <groupId>com.rabbitframework</groupId>
                 <artifactId>rabbit-web</artifactId>
-                <version>${project.version}</version>
+                <version>${rabbit-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rabbitframework</groupId>
+                <artifactId>rabbit-generator</artifactId>
+                <version>${rabbit-framework.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.rabbitframework</groupId>
