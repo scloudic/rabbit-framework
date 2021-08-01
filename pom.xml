@@ -530,6 +530,11 @@
                 <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.rabbitframework</groupId>
+                <artifactId>rabbit-security-spring-boot-starter</artifactId>
+                <version>${rabbit-framework.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
