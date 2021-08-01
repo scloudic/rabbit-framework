@@ -59,7 +59,7 @@
         <esapi.version>2.1.0</esapi.version>
         <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
         <redisson.version>3.15.3</redisson.version>
-        <httpclient.version>4.5.6</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <okhttp3.version>3.14.2</okhttp3.version>
         <jsoup.version>1.12.1</jsoup.version>
         <htmlunit.version>2.35.0</htmlunit.version>
