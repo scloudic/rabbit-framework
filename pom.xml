@@ -501,6 +501,11 @@
             </dependency>
             <dependency>
                 <groupId>com.rabbitframework</groupId>
+                <artifactId>rabbit-web-spring-boot-starter</artifactId>
+                <version>${rabbitframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rabbitframework</groupId>
                 <artifactId>rabbit-security-redisson-cache</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
@@ -513,6 +518,11 @@
                 <groupId>com.rabbitframework</groupId>
                 <artifactId>rabbit-core-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rabbitframework</groupId>
+                <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
+                <version>${rabbitframework.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
