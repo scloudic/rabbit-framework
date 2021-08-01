@@ -508,7 +508,7 @@
             <dependency>
                 <groupId>com.rabbitframework</groupId>
                 <artifactId>rabbit-web-spring-boot-starter</artifactId>
-                <version>${rabbitframework.version}</version>
+                <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.rabbitframework</groupId>
@@ -528,7 +528,7 @@
             <dependency>
                 <groupId>com.rabbitframework</groupId>
                 <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
-                <version>${rabbitframework.version}</version>
+                <version>${rabbit-framework.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
