@@ -26,12 +26,12 @@ public class TestUserServiceImpl implements TestUserService {
         TestUser testUser = new TestUser();
         testUser.setAge(new Date());
         testUser.setTestName("hao");
-        testUser.setId(2);
+        testUser.setId(6);
         testUserMapper.insertByEntity(testUser);
         TestUser testUser2 = new TestUser();
         testUser2.setAge(new Date());
         testUser2.setTestName("hao");
-        testUser2.setId(3);
+        testUser2.setId(7);
         testUserMapper.insertByEntity(testUser2);
         throw new RuntimeException("test");
     }

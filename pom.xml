@@ -112,16 +112,16 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot.version}</version>
                 <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>byte-buddy</artifactId>
-                        <groupId>net.bytebuddy</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>byte-buddy-agent</artifactId>
-                        <groupId>net.bytebuddy</groupId>
-                    </exclusion>
-                </exclusions>
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <artifactId>byte-buddy</artifactId>-->
+<!--                        <groupId>net.bytebuddy</groupId>-->
+<!--                    </exclusion>-->
+<!--                    <exclusion>-->
+<!--                        <artifactId>byte-buddy-agent</artifactId>-->
+<!--                        <groupId>net.bytebuddy</groupId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
