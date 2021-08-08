@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration;
 import java.io.IOException;
 
 @MapperScan("com.rabbitframework.**.test.mapper")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class ApplicationJbatisMain {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationJbatisMain.class, args);
