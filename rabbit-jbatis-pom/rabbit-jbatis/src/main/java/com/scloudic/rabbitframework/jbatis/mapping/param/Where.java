@@ -75,7 +75,7 @@ public class Where {
     /**
      * 根据参数，增加条件集体合
      *
-     * @param criteria
+     * @param criteria criteria
      */
     public void createCriteria(Criteria criteria) {
         oredCriteria.add(criteria);
@@ -84,7 +84,7 @@ public class Where {
     /**
      * 实例化条件类，增加条件集合
      *
-     * @return
+     * @return Criteria
      */
     public Criteria addCreateCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -95,7 +95,7 @@ public class Where {
     /**
      * 限定条件集体合，size==1
      *
-     * @return
+     * @return Criteria
      */
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
@@ -121,7 +121,7 @@ public class Where {
     /**
      * 传入orderBy字段,默认为desc排序
      *
-     * @param orderBy
+     * @param orderBy orderBy
      */
     public void setOrderBy(String orderBy) {
         setOrderBy(orderBy, OrderByType.DESC);
@@ -140,8 +140,8 @@ public class Where {
     /**
      * 传入orderBy字段,如果orderByType为空，默认为desc排序
      *
-     * @param orderBy
-     * @param orderByType
+     * @param orderBy orderBy
+     * @param orderByType orderByType
      */
     public void setOrderBy(String orderBy, OrderByType orderByType) {
         if (orderByType == null) {

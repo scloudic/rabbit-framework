@@ -90,22 +90,16 @@ public class CommonResponseUrl {
     /**
      * 去掉url的首斜线,web在307跳转时不需要首斜线
      *
-     * @param url
-     * @return
+     * @param url url
+     * @return string
      */
     public static String dislodgeFirstSlash(String url) {
         if (StringUtils.isBlank(url)) {
             return url;
         }
         if (url.charAt(0) == '/') {
-            ;
             return url.substring(1);
         }
         return url;
-    }
-
-    public static void main(String[] args) {
-        String a = "/23232/dddd";
-        System.out.println(dislodgeFirstSlash(a));
     }
 }

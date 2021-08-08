@@ -71,8 +71,8 @@ public class DefaultObjectFactory implements ObjectFactory, Serializable {
 	/**
 	 * 是否为集合接口并获取接口类
 	 *
-	 * @param type
-	 * @return
+	 * @param type type
+	 * @return class
 	 */
 	protected Class<?> resolveInterface(Class<?> type) {
 		Class<?> classToCreate;

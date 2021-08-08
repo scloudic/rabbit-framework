@@ -7,7 +7,6 @@ import java.util.Map;
  * 日志信息
  *
  * @author: justin
- * @date: 2017-06-13 16:27
  */
 public class LogInfo {
     public String methodName;

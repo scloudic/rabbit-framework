@@ -7,7 +7,6 @@ import redis.clients.jedis.JedisPool;
  * jdeis缓存池
  *
  * @author: justin
- * @date: 2017-04-06 11:06
  */
 public class RabbitRedisPool extends JedisPool {
 

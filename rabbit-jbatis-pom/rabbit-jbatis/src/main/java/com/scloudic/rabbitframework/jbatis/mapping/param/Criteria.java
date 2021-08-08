@@ -53,61 +53,34 @@ public class Criteria {
         throw new NullPointerException("params value is null");
     }
 
-    /**
-     * 传入数据库字段,生成字段为空的条件语句 如:usr_id is null
-     *
-     * @param fieldName
-     * @return
-     */
+
     public <T> Criteria andIsNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         addCriterion(" and " + fieldName + " is null");
         return this;
     }
 
-    /**
-     * 传入数据库字段,生成字段为空的条件语句 如:usr_id is null
-     *
-     * @param fieldName
-     * @return
-     */
+
     public <T> Criteria orIsNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         addCriterion(" or " + fieldName + " is null");
         return this;
     }
 
-    /**
-     * 传入数据库字段，生成字段不为空的条件语句 如:user_id is not null
-     *
-     * @param fieldName
-     * @return
-     */
+
     public <T> Criteria andIsNotNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         addCriterion(" and " + fieldName + " is not null");
         return this;
     }
 
-    /**
-     * 传入数据库字段，生成字段不为空的条件语句 如:user_id is not null
-     *
-     * @param fieldName
-     * @return
-     */
     public <T> Criteria orIsNotNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         addCriterion(" or " + fieldName + " is not null");
         return this;
     }
 
-    /**
-     * 等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
+
     public <T> Criteria andEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -115,13 +88,7 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 　等　于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
+
     public <T> Criteria orEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -129,13 +96,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 不等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria andNotEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -143,13 +103,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 不等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria orNotEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -157,13 +110,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 大于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria andGreaterThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -171,13 +117,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 大于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria orGreaterThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -185,13 +124,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 大于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria andGreaterThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -199,13 +131,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 大于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria orGreaterThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -213,13 +138,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 小于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria andLessThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -227,13 +145,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 小于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria orLessThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -241,13 +152,7 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 小于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
+
     public <T> Criteria andLessThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -255,13 +160,6 @@ public class Criteria {
         return this;
     }
 
-    /**
-     * 小于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public <T> Criteria orLessThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         if (valueIsNotNullOrEmpty(value))
@@ -357,201 +255,92 @@ public class Criteria {
         return this;
     }
 
-
-    /**
-     * 传入数据库字段,生成字段为空的条件语句 如:usr_id is null
-     *
-     * @param fieldName
-     * @return
-     */
     public Criteria andIsNull(String fieldName) {
         addCriterion(" and " + fieldName + " is null");
         return this;
     }
 
-    /**
-     * 传入数据库字段,生成字段为空的条件语句 如:usr_id is null
-     *
-     * @param fieldName
-     * @return
-     */
     public Criteria orIsNull(String fieldName) {
         addCriterion(" or " + fieldName + " is null");
         return this;
     }
 
-    /**
-     * 传入数据库字段，生成字段不为空的条件语句 如:user_id is not null
-     *
-     * @param fieldName
-     * @return
-     */
     public Criteria andIsNotNull(String fieldName) {
         addCriterion(" and " + fieldName + " is not null");
         return this;
     }
 
-    /**
-     * 传入数据库字段，生成字段不为空的条件语句 如:user_id is not null
-     *
-     * @param fieldName
-     * @return
-     */
     public Criteria orIsNotNull(String fieldName) {
         addCriterion(" or " + fieldName + " is not null");
         return this;
     }
 
-    /**
-     * 等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " =", value);
         return this;
     }
 
-    /**
-     * 　等　于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria orEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " =", value);
         return this;
     }
 
-    /**
-     * 不等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andNotEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " <>", value);
         return this;
     }
 
-    /**
-     * 不等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria orNotEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " <>", value);
         return this;
     }
 
-    /**
-     * 大于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andGreaterThan(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " >", value);
         return this;
     }
 
-    /**
-     * 大于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria orGreaterThan(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " >", value);
         return this;
     }
 
-    /**
-     * 大于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andGreaterThanEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " >=", value);
         return this;
     }
 
-    /**
-     * 大于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria orGreaterThanEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " >=", value);
         return this;
     }
 
-    /**
-     * 小于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andLessThan(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " <", value);
         return this;
     }
 
-    /**
-     * 小于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria orLessThan(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " <", value);
         return this;
     }
 
-    /**
-     * 小于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
     public Criteria andLessThanEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" and " + fieldName + " <=", value);
         return this;
     }
-
-    /**
-     * 小于等于
-     *
-     * @param fieldName
-     * @param value
-     * @return
-     */
+    
     public Criteria orLessThanEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " <=", value);

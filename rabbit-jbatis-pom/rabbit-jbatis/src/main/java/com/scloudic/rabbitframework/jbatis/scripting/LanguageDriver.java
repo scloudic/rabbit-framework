@@ -10,10 +10,10 @@ import com.scloudic.rabbitframework.jbatis.executor.DefaultParameterHandler;
 public interface LanguageDriver {
     /**
      * 创建参数处理类{@link DefaultParameterHandler}
-     * @param mappedStatement
-     * @param parameterObject
-     * @param boundSql
-     * @return
+     * @param mappedStatement mappedStatement
+     * @param parameterObject parameterObject
+     * @param boundSql boundSql
+     * @return ParameterHandler
      */
     ParameterHandler createParameterHandler(MappedStatement mappedStatement,
                                             Object parameterObject, BoundSql boundSql);
@@ -21,9 +21,9 @@ public interface LanguageDriver {
     /**
      * 创建{@link SqlSource}
      *
-     * @param configuration
-     * @param sqlScript
-     * @return
+     * @param configuration configuration
+     * @param sqlScript sqlScript
+     * @return SqlSource
      */
     SqlSource createSqlSource(Configuration configuration, String sqlScript);
 }

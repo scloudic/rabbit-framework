@@ -53,8 +53,8 @@ public class RequestParams {
     /**
      * url+参数转换
      *
-     * @param url
-     * @return
+     * @param url URL地址
+     * @return string
      */
     public String getUrlWithStr(String url) {
         if (url == null)

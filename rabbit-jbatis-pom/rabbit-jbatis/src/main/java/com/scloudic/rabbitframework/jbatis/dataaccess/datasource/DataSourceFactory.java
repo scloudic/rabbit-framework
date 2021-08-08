@@ -10,12 +10,6 @@ import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
  * 数据源工厂类
  */
 public interface DataSourceFactory {
-	/**
-	 * 添加数据源
-	 *
-	 * @param key
-	 * @param dataSourceBean
-	 */
 	void addDataSource(String key, DataSourceBean dataSourceBean);
 
 	DataSource getDataSource(MappedStatement mappedStatement);

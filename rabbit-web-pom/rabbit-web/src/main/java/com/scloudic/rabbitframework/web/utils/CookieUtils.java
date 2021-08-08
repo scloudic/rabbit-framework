@@ -22,7 +22,7 @@ public class CookieUtils {
     /**
      * 添加cookies,默认当前有效,httpOnly为false
      *
-     * @param response
+     * @param response response
      * @param name     名称key
      * @param value    值
      * @param path     路径
@@ -35,7 +35,7 @@ public class CookieUtils {
     /**
      * 添加cookies,默认当前有效
      *
-     * @param response
+     * @param response response
      * @param name     名称key
      * @param value    值
      * @param path     路径

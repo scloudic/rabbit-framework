@@ -17,7 +17,6 @@ import java.util.Set;
  * redis缓存管理实现类 使用redis的切片连接池实现 {@link ShardedJedisPool}
  *
  * @author: justin.liang
- * @date: 2017/1/22 17:57
  */
 public class ShardedJedisPoolCacheImpl implements RedisCache<ShardedJedis> {
     private static final Logger logger = LoggerFactory.getLogger(ShardedJedisPoolCacheImpl.class);
@@ -38,10 +37,6 @@ public class ShardedJedisPoolCacheImpl implements RedisCache<ShardedJedis> {
         return tuples;
     }
 
-    /**
-     * @param key
-     * @return
-     */
     public Set<Tuple> zrangeByScoreWithScores(String key) {
         Set<Tuple> tuples = null;
         ShardedJedis shardedJedis = null;

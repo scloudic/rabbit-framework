@@ -9,9 +9,9 @@ import java.lang.reflect.Method;
 public class SFunctionUtils {
     /**
      * 获取表中字段名称
-     * @param fn
-     * @param <T>
-     * @return
+     * @param fn fn
+     * @param <T> T
+     * @return string
      */
     public static <T> String getFieldName(SFunction<T, ?> fn) {
         try {
@@ -28,9 +28,9 @@ public class SFunctionUtils {
 
     /**
      * 获取model对象属性名称
-     * @param fn
-     * @param <T>
-     * @return
+     * @param fn fn
+     * @param <T> t
+     * @return string
      */
     public static <T> String getFieldPropertyName(SFunction<T, ?> fn) {
         try {

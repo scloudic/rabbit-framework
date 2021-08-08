@@ -1,4 +1,5 @@
 package com.scloudic.rabbitframework.core.utils;
+
 import com.scloudic.rabbitframework.core.exceptions.ReflectionException;
 
 import java.lang.reflect.*;
@@ -9,14 +10,13 @@ import java.util.Map;
  * 反射公共类
  *
  * @author: justin.liang
- * @date: 16/5/14 上午12:38
  */
 public class ReflectUtils {
     /**
      * 获取泛型类
      *
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return class
      */
     public static Class<?> getGenericClass(Class<?> clazz) {
         return getGenericClass(clazz, 0);
@@ -25,9 +25,9 @@ public class ReflectUtils {
     /**
      * 获取指定的下标的泛型类
      *
-     * @param clazz
-     * @param index
-     * @return
+     * @param clazz clazz
+     * @param index index
+     * @return class
      */
     public static Class<?> getGenericClass(Class<?> clazz, int index) {
         return getGenericClass(clazz, null, index);
@@ -62,8 +62,8 @@ public class ReflectUtils {
     /**
      * 泛型参数{@link Type}转换为{@link Class}
      *
-     * @param type
-     * @return
+     * @param type type
+     * @return class
      */
     public static Class<?> getGenericClassByType(Type type) {
         if (type instanceof ParameterizedType) { // 处理泛型类型
@@ -77,11 +77,11 @@ public class ReflectUtils {
 
     /**
      * 获取返回类型
-     * <p/>
+     * <p>
      * 获取泛型中的值
      *
-     * @param method
-     * @return
+     * @param method method
+     * @return clazz
      */
     public static Class<?> getReturnType(Method method) {
         return getReturnType(method, null);
@@ -89,11 +89,12 @@ public class ReflectUtils {
 
     /**
      * 获取返回类型
-     * <p/>
+     * <p>
      * 获取泛型中的值
      *
-     * @param method
-     * @return
+     * @param method method
+     * @param genericClass genericClass
+     * @return  clazz
      */
     public static Class<?> getReturnType(Method method, Class<?> genericClass) {
         Class<?> returnType = method.getReturnType();

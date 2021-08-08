@@ -3,7 +3,7 @@ package com.scloudic.rabbitframework.core.utils;
 public class Base64Utils {
     /**
      * Chunk size per RFC 2045 section 6.8.
-     * <p/>
+     * <p>
      * The character limit does not count the trailing CRLF, but counts all other characters, including any
      * equal signs.
      *
@@ -61,9 +61,9 @@ public class Base64Utils {
     /**
      * Contains the Base64 values <code>0</code> through <code>63</code> accessed by using character encodings as
      * indices.
-     * <p/>
+     * <p>
      * <p>For example, <code>base64Alphabet['+']</code> returns <code>62</code>.</p>
-     * <p/>
+     * <p>
      * <p>The value of undefined encodings is <code>-1</code>.</p>
      */
     private static final byte[] base64Alphabet = new byte[BASELENGTH];
@@ -72,9 +72,9 @@ public class Base64Utils {
      * <p>Contains the Base64 encodings <code>A</code> through <code>Z</code>, followed by <code>a</code> through
      * <code>z</code>, followed by <code>0</code> through <code>9</code>, followed by <code>+</code>, and
      * <code>/</code>.</p>
-     * <p/>
+     * <p>
      * <p>This array is accessed by using character values as indices.</p>
-     * <p/>
+     * <p>
      * <p>For example, <code>lookUpBase64Alphabet[62] </code> returns <code>'+'</code>.</p>
      */
     private static final byte[] lookUpBase64Alphabet = new byte[LOOKUPLENGTH];

@@ -23,11 +23,11 @@ public class CodecUtils {
 	/**
 	 * Converts the specified character array into a byte array using the
 	 * specified character encoding.
-	 * <p/>
+	 * <p>
 	 * This is a convenience method equivalent to calling the
 	 * {@link #toBytes(String, String)} method with a a wrapping String and the
 	 * specified encoding, i.e.
-	 * <p/>
+	 * <p>
 	 * <code>toBytes( new String(chars), encoding );</code>
 	 *
 	 * @param chars
@@ -105,7 +105,7 @@ public class CodecUtils {
 	/**
 	 * Converts the specified byte array to a character array using the
 	 * specified character encoding.
-	 * <p/>
+	 * <p>
 	 * Effectively calls
 	 * <code>{@link #toString(byte[], String) toString(bytes,encoding)}.{@link String#toCharArray() toCharArray()};</code>
 	 *
@@ -143,11 +143,11 @@ public class CodecUtils {
 
 	/**
 	 * Converts the specified Object into a String.
-	 * <p/>
+	 * <p>
 	 * If the argument is a {@code byte[]} or {@code char[]} it will be
 	 * converted to a String using the {@link #PREFERRED_ENCODING}. If a String,
 	 * it will be returned as is.
-	 * <p/>
+	 * <p>
 	 * If the argument is anything other than these three types, it is passed to
 	 * the {@link #objectToString(Object) objectToString} method.
 	 *

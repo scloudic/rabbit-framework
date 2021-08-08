@@ -28,10 +28,6 @@ public class JedisClusterCacheImpl implements RedisCache<JedisCluster> {
         return tuples;
     }
 
-    /**
-     * @param key
-     * @return
-     */
     @Override
     public Set<Tuple> zrangeByScoreWithScores(String key) {
         Set<Tuple> tuples = null;

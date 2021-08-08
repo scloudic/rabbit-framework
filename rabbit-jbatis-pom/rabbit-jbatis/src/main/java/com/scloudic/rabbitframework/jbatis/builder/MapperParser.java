@@ -65,9 +65,7 @@ public class MapperParser {
         sqlAnnotationType.add(Create.class);
     }
 
-    /**
-     * mapper接口注解解析
-     */
+
     public void parse(String catalog) {
         try {
             Class clazz = getGenericMapper(mapperInterface);
@@ -100,11 +98,6 @@ public class MapperParser {
 
     }
 
-    /**
-     * mapper方法解析
-     *
-     * @param method
-     */
     @SuppressWarnings("rawtypes")
     private void parseMapperStatement(Method method) {
         final String mappedStatementId = mapperInterface.getName() + "." + method.getName(); // 声明ID
@@ -217,12 +210,6 @@ public class MapperParser {
         return languageDriver.createSqlSource(configuration, sqlBuilder);
     }
 
-    /**
-     * 获取SQL解析值{@link SQLParser}
-     *
-     * @param method mapper方法
-     * @return
-     */
     private SQLParser getSQLParserByAnnotations(Method method, Class<?> paramType) {
         try {
             String sqlValue = "";
@@ -283,15 +270,7 @@ public class MapperParser {
         return sqlValue;
     }
 
-    /**
-     * 获取mapper方法中参数类型
-     * <p/>
-     * 多个参数时使用
-     * {@link MapperMethod.ParamMap}
-     *
-     * @param method
-     * @return
-     */
+
     private Class<?> getParameterType(Method method) {
         Class<?> parameterType = null;
         for (Class<?> mParameterType : method.getParameterTypes()) {
@@ -311,8 +290,8 @@ public class MapperParser {
      * 获取接口泛型，找出继承{@link BaseMapper}接口,获取对应的泛型。
      * 业务上mapper不允许多级父类，只存在一级多实现
      *
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return Class
      */
     private Class<?> getGenericMapper(Class<?> clazz) {
         Type[] genericInterfaces = clazz.getGenericInterfaces();

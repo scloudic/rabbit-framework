@@ -5,27 +5,37 @@ import javax.servlet.http.HttpServletRequest;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 
 public class WebUtils {
-	/**
-	 * 获取客户端ip地址
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getClientIp(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		if (isUnAvailableIp(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (isUnAvailableIp(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (isUnAvailableIp(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		return ip;
-	}
+    public final String getRemoteAddr(HttpServletRequest request) {
+        String ipAddress = request.getHeader("x-forwarded-for");
+        if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getHeader("Proxy-Client-IP");
+        }
+        if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getHeader("WL-Proxy-Client-IP");
+        }
 
-	private static boolean isUnAvailableIp(String ip) {
-		return (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip));
-	}
+        if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
+            ipAddress = request.getRemoteAddr();
+        }
+
+        //对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+        if (StringUtils.isNotBlank(ipAddress) && ipAddress.length() > 15) { //"***.***.***.***".length() = 15
+            if (ipAddress.indexOf(",") > 0) {
+                ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
+                return ipAddress;
+            } else if (ipAddress.length() == 15) {
+                return ipAddress;
+            }
+        }
+
+        ipAddress = request.getHeader("X-Real-IP");
+        if (StringUtils.isNotEmpty(ipAddress) && !"unKnown".equalsIgnoreCase(ipAddress)) {
+            return ipAddress;
+        }
+        return request.getRemoteAddr();
+    }
+
+    private static boolean isUnAvailableIp(String ip) {
+        return (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip));
+    }
 }

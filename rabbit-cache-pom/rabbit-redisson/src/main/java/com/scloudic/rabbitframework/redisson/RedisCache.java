@@ -49,12 +49,6 @@ public class RedisCache {
 		}
 	}
 
-	/**
-	 * 移除并返回列表 key 的头元素,对应redis命令为：lpop
-	 * 
-	 * @param key
-	 * @return
-	 */
 	public <T> T poll(String key) {
 		try {
 			RQueue<T> queue = redissonClient.getQueue(key);
@@ -113,8 +107,7 @@ public class RedisCache {
 
 	/**
 	 * 阻塞加锁
-	 * 
-	 * @param key
+	 * @param key key
 	 */
 	public void lock(String key) {
 		RLock rLock = redissonClient.getLock(key);
@@ -123,9 +116,8 @@ public class RedisCache {
 
 	/**
 	 * redis加锁，默认10秒
-	 * 
-	 * @param key
-	 * @return
+	 * @param key key
+	 * @return boolean
 	 */
 	public boolean tryLock(String key) {
 		return tryLock(key, LOCK_TIME);
@@ -134,9 +126,9 @@ public class RedisCache {
 	/**
 	 * redis加锁,单位：秒
 	 * 
-	 * @param key
-	 * @param time
-	 * @return
+	 * @param key key
+	 * @param time time
+	 * @return boolean
 	 */
 	public boolean tryLock(String key, long time) {
 		try {

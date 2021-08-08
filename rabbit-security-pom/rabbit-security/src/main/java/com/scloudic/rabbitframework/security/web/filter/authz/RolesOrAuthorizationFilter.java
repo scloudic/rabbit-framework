@@ -13,7 +13,6 @@ import org.apache.shiro.subject.Subject;
  * 实现roles[admin,test]或的关系
  *
  * @author justin
- * @UpdateVersion 3.3.1
  */
 public class RolesOrAuthorizationFilter extends RolesAuthzFilter {
     @Override

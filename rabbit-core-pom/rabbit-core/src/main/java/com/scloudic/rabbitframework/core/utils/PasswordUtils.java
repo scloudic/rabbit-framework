@@ -10,6 +10,8 @@ public class PasswordUtils {
 
 	/**
 	 * 生成含有随机盐的密码
+	 * @param password password
+	 * @return string
 	 */
 	public static String generate(String password) {
 		Random random = new Random();
@@ -32,7 +34,10 @@ public class PasswordUtils {
 	}
 
 	/**
-	 * 校验密码是否正确
+	 *  校验密码是否正确
+	 * @param password 当前密码
+	 * @param md5 加密md5
+	 * @return boolean
 	 */
 	public static boolean verify(String password, String md5) {
 		char[] cs1 = new char[32];

@@ -1,5 +1,5 @@
 package com.scloudic.rabbitframework.core.utils;
-import com.scloudic.rabbitframework.core.springframework.io.UrlResource;
+import org.springframework.core.io.UrlResource;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,9 +49,9 @@ public class ResourceUtils extends MockResource {
 	/**
 	 * 根据URL获取数据并转换为 Properties
 	 * 
-	 * @param url
-	 * @return
-	 * @throws IOException
+	 * @param url url
+	 * @return properties
+	 * @throws IOException IOException
 	 */
 	public static Properties getUrlAsProperties(String url) throws IOException {
 		Properties props = new Properties();
@@ -70,9 +70,9 @@ public class ResourceUtils extends MockResource {
 	/**
 	 * 根据URL获取数据并转换为 InputStream
 	 * 
-	 * @param url
-	 * @return
-	 * @throws IOException
+	 * @param url url
+	 * @return in
+	 * @throws IOException IOException
 	 */
 	public static InputStream getUrlAsInputStream(String url)
 			throws IOException {

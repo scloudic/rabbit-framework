@@ -5,8 +5,8 @@ import java.util.Locale;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 
 /**
+ * 默认数据库Dialect
  * @author: justin.liang
- * @date: 16/5/5 下午9:22
  */
 public enum DefaultDialect {
 	mysql(MySqlDialect.class), oracle(OracleDialect.class);

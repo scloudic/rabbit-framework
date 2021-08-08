@@ -22,21 +22,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
-/**
- * 默认注册spring {@link RequestContextFilter}配置和异常配置{@link ExceptionMapperSupport}
- * 以及xss过虑器{@link XSSFilter}
- * 在web.xml配置servlet或Filter后，init-param中需要加上如下代码：
- *
- * <pre>
- *   &lt;init-param&gt;
- *    &lt;param-name&gt; javax.ws.rs.Application &lt;/param-name&gt;
- *     &lt;param-value&gt; com.scloudic.rabbitframework.web.resources.DefaultApplicationConfig &lt;/param-value&gt;
- *   &lt;/init-param&gt;
- * </pre>
- *
- * @author: justin
- * @date: 2017-07-30 下午11:52
- */
 public class DefaultApplicationConfig extends ApplicationConfig {
     public DefaultApplicationConfig() {
         super();

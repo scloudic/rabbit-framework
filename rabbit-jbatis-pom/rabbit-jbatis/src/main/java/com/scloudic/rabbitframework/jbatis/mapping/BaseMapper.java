@@ -13,14 +13,13 @@ import com.scloudic.rabbitframework.jbatis.mapping.param.Where;
  * mapper基类接口
  *
  * @author: justin
- * @date: 2017-07-16 下午12:50
  */
 public interface BaseMapper<T> {
     /**
      * 插入一条记录
      *
-     * @param entity
-     * @return
+     * @param entity entity
+     * @return int
      */
     @Insert
     Integer insertByEntity(T entity);
@@ -28,8 +27,8 @@ public interface BaseMapper<T> {
     /**
      * 根据主键删除一条记录
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return int
      */
     @Delete("delete from @{T} where @{entityId}=#{id}")
     Integer deleteById(Serializable id);
@@ -38,16 +37,15 @@ public interface BaseMapper<T> {
      * 根据参数条件{@link Where }删除数据
      *
      * @param where {@link Where}
-     * @return
+     * @return int
      */
     @Delete("delete from @{T} where 1=1 ")
     Integer deleteByParams(Where where);
 
     /**
-     * 修改一条记录
-     *
-     * @param entity
-     * @return
+     *  修改一条记录
+     * @param entity 实体
+     * @return int
      */
     @Update
     Integer updateByEntity(T entity);
@@ -55,8 +53,8 @@ public interface BaseMapper<T> {
     /**
      * 根据参数 {@link Where} 修改数据
      *
-     * @param where
-     * @return
+     * @param where where
+     * @return int
      */
     @Update
     Integer updateByParams(Where where);
@@ -64,8 +62,8 @@ public interface BaseMapper<T> {
     /**
      * 根据主键查询对象
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return T
      */
     @Select("select * from @{T} where @{entityId}=#{id}")
     T selectById(Serializable id);
@@ -73,8 +71,8 @@ public interface BaseMapper<T> {
     /**
      * 根据参数获取唯一对象
      *
-     * @param where
-     * @return
+     * @param where where
+     * @return T
      */
     @Select("select ${showColumns} from @{T} where 1=1 ")
     T selectOneByParams(Where where);
@@ -83,7 +81,7 @@ public interface BaseMapper<T> {
      * 根据参数查询数据
      *
      * @param where {@link Where}
-     * @return
+     * @return list
      */
     @Select("select ${showColumns} from @{T} where 1=1 ")
     List<T> selectByParams(Where where);
@@ -92,7 +90,7 @@ public interface BaseMapper<T> {
      * 根据参数获取总数
      *
      * @param where {@link Where}
-     * @return
+     * @return long
      */
     @Select("select count(1) from @{T} where 1=1 ")
     Long selectCountByParams(Where where);
@@ -100,7 +98,7 @@ public interface BaseMapper<T> {
     /**
      * 获取总数
      *
-     * @return
+     * @return long
      */
     @Select("select count(1) from @{T} ")
     Long selectCount();
@@ -108,7 +106,7 @@ public interface BaseMapper<T> {
     /**
      * 查询所有的数据
      *
-     * @return
+     * @return list
      */
     @Select("select * from @{T} ")
     List<T> selectEntityAll();
@@ -118,7 +116,7 @@ public interface BaseMapper<T> {
      *
      * @param where     {@link Where}
      * @param rowBounds {@link RowBounds}
-     * @return
+     * @return list
      */
     @Select("select ${showColumns} from @{T} where 1=1 ")
     List<T> selectPageByParams(Where where, RowBounds rowBounds);
@@ -126,8 +124,8 @@ public interface BaseMapper<T> {
     /**
      * 分页查询数据
      *
-     * @param rowBounds
-     * @return
+     * @param rowBounds rowBounds
+     * @return list
      */
     @Select("select * from @{T} where 1=1 ")
     List<T> selectEntityPage(RowBounds rowBounds);

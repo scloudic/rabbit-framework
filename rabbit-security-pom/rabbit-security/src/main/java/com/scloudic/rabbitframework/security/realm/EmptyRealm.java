@@ -15,8 +15,8 @@ public class EmptyRealm extends SecurityAuthorizingRealm {
     /**
      * 执行权限操作，获取权限信息,在配有缓存时只调用一次
      *
-     * @param securityUser
-     * @return
+     * @param securityUser  securityUser
+     * @return AuthorizationInfo
      */
     @Override
     protected AuthorizationInfo executeGetAuthorizationInfo(SecurityUser securityUser) {
@@ -27,8 +27,8 @@ public class EmptyRealm extends SecurityAuthorizingRealm {
     /**
      * 执行登陆操作，获取登陆信息
      *
-     * @param securityLoginToken
-     * @return
+     * @param securityLoginToken securityLoginToken
+     * @return AuthenticationInfo
      */
     @Override
     protected AuthenticationInfo executeGetAuthenticationInfo(SecurityLoginToken securityLoginToken) {

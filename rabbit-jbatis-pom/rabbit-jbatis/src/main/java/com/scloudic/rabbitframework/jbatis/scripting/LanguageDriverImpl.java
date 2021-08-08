@@ -15,12 +15,12 @@ public class LanguageDriverImpl implements LanguageDriver {
     }
     /**
      * 创建{@link SqlSource}数据源
-     * <p/>
+     * <p>
      * 通过{@link XMLScriptBuilder}创建{@link DynamicSqlSource}
      *
-     * @param configuration
-     * @param sqlScript
-     * @return
+     * @param configuration configuration
+     * @param sqlScript sqlScript
+     * @return  SqlSource
      */
     @Override
     public SqlSource createSqlSource(Configuration configuration, String sqlScript) {

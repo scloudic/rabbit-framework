@@ -73,6 +73,20 @@
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <rabbit-framework.version>3.3.2.RELEASE</rabbit-framework.version>
     </properties>
+    <name>rabbit-framework</name>
+    <description>rabbit-framework</description>
+    <url>https://github.com/scloudic/rabbit-framework.git</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/scloudic/rabbit-framework</url>
+        <connection>https://github.com/scloudic/rabbit-framework.git</connection>
+        <developerConnection>https://github.com/scloudic/rabbit-framework</developerConnection>
+    </scm>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -111,16 +125,16 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot.version}</version>
                 <scope>test</scope>
-<!--                <exclusions>-->
-<!--                    <exclusion>-->
-<!--                        <artifactId>byte-buddy</artifactId>-->
-<!--                        <groupId>net.bytebuddy</groupId>-->
-<!--                    </exclusion>-->
-<!--                    <exclusion>-->
-<!--                        <artifactId>byte-buddy-agent</artifactId>-->
-<!--                        <groupId>net.bytebuddy</groupId>-->
-<!--                    </exclusion>-->
-<!--                </exclusions>-->
+                <!--                <exclusions>-->
+                <!--                    <exclusion>-->
+                <!--                        <artifactId>byte-buddy</artifactId>-->
+                <!--                        <groupId>net.bytebuddy</groupId>-->
+                <!--                    </exclusion>-->
+                <!--                    <exclusion>-->
+                <!--                        <artifactId>byte-buddy-agent</artifactId>-->
+                <!--                        <groupId>net.bytebuddy</groupId>-->
+                <!--                    </exclusion>-->
+                <!--                </exclusions>-->
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -585,9 +599,22 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <phase>verify</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -600,8 +627,11 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <fork>true</fork>
+                        <verbose>true</verbose>
+                        <encoding>UTF-8</encoding>
                         <showDeprecation>true</showDeprecation>
-                        <showWarnings>true</showWarnings>
+                        <showWarnings>false</showWarnings>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -668,12 +698,25 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

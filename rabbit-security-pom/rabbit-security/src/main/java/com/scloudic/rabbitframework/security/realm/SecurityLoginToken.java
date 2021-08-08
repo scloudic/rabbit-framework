@@ -6,7 +6,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  * token对象,继承 {@link UsernamePasswordToken}
  *
  * @author: justin
- * @date: 2019-06-29 10:09
  */
 public class SecurityLoginToken extends UsernamePasswordToken {
     public SecurityLoginToken() {

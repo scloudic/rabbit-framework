@@ -45,8 +45,8 @@ public class NotificationServerManager implements Runnable {
     /**
      * 注册事件类型
      *
-     * @param eventType
-     * @param listenerType
+     * @param eventType eventType
+     * @param listenerType listenerType
      */
     public void registerEventType(Class<? extends NotificationEvent> eventType,
                                   Class<? extends NotificationServerListener> listenerType) {

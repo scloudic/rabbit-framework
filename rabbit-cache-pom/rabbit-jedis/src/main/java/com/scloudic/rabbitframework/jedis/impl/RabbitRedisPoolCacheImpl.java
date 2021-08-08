@@ -17,7 +17,6 @@ import java.util.Set;
  * 非切片连接池方式
  *
  * @author: justin
- * @date: 2017-04-08 10:34
  */
 public class RabbitRedisPoolCacheImpl implements RedisCache<Jedis> {
     private static final Logger logger = LoggerFactory.getLogger(RabbitRedisPoolCacheImpl.class);
@@ -38,10 +37,7 @@ public class RabbitRedisPoolCacheImpl implements RedisCache<Jedis> {
         return tuples;
     }
 
-    /**
-     * @param key
-     * @return
-     */
+
     public Set<Tuple> zrangeByScoreWithScores(String key) {
         Set<Tuple> tuples = null;
         Jedis jedis = null;

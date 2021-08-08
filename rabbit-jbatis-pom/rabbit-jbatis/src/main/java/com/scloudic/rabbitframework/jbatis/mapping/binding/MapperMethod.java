@@ -35,10 +35,10 @@ public class MapperMethod {
     }
 
     /**
-     * mapper方法执行，通过{@link MapperProxy}中调用
-     *
-     * @param args
-     * @return
+     *  mapper方法执行，通过{@link MapperProxy}中调用
+     * @param sqlDataAccess  sqlDataAccess
+     * @param args args
+     * @return obj
      */
     public Object execute(SqlDataAccess sqlDataAccess, Object[] args) {
         Object result = null;
@@ -285,8 +285,8 @@ public class MapperMethod {
         /**
          * 是否有{@link Param}注解
          *
-         * @param method
-         * @return
+         * @param method 方法
+         * @return boolean
          */
         private boolean hasNamedParams(Method method) {
             boolean hasNameParams = false;

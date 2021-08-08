@@ -9,7 +9,7 @@ public interface NotificationServerListener {
 	/**
 	 * 发起通知事件
 	 * 
-	 * @param notificationEvent
+	 * @param notificationEvent notificationEvent
 	 */
 	void onNotification(NotificationEvent notificationEvent);
 }

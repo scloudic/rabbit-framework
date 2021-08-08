@@ -46,25 +46,12 @@ public class SecurityUtils extends org.apache.shiro.SecurityUtils {
         return "";
     }
 
-    /**
-     * 安全登陆,默认不记住我,返回的参数有三种状态具体可以看{@code RabbitSecurityUtils.SecurityStatus}
-     *
-     * @param loginName
-     * @param loginPwd
-     * @return
-     */
+
     public static boolean userLogin(String loginName, String loginPwd) {
         return login(loginName, loginPwd, false);
     }
 
-    /**
-     * 安全登陆方法
-     *
-     * @param loginName    用户名称
-     * @param loginPwd     用户密码
-     * @param isRememberMe 是否记住我
-     * @return
-     */
+
     public static boolean login(String loginName, String loginPwd, boolean isRememberMe) {
         SecurityLoginToken token = new SecurityLoginToken(loginName, loginPwd);
         // 记录该令牌，如果不记录则类似购物车功能不能使用
@@ -78,11 +65,6 @@ public class SecurityUtils extends org.apache.shiro.SecurityUtils {
         return subject.isAuthenticated();
     }
 
-    /**
-     * 获取sessionId
-     *
-     * @return
-     */
     public static String getSessionId() {
         return getSession().getId().toString();
     }

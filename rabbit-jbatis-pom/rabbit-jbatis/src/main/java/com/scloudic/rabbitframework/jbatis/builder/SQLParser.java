@@ -21,7 +21,6 @@ import com.scloudic.rabbitframework.core.utils.StringUtils;
  * sql脚本解析生成
  *
  * @author: justin
- * @date: 2017-07-19 23:48
  */
 public class SQLParser {
 

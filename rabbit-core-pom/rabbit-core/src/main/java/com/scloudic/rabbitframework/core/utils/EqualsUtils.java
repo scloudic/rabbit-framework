@@ -53,12 +53,6 @@ public final class EqualsUtils {
         return Double.doubleToLongBits(aThis) == Double.doubleToLongBits(aThat);
     }
 
-    /**
-     * Possibly-null object field.
-     * 
-     * Includes type-safe enumerations and collections, but does not include
-     * arrays. See class comment.
-     */
     static public boolean areEqual(Object aThis, Object aThat) {
         return aThis == null ? aThat == null : aThis.equals(aThat);
     }

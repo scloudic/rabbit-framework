@@ -10,16 +10,16 @@ import com.scloudic.rabbitframework.core.propertytoken.TokenHandler;
 /**
  * forEach节点
  * 例:
- * <p/>
+ * <p>
  * &lt;foreach collection="listTag" index="index" item="tag" open="("
  * separator="," close=")"&gt;
- * <br/>
+ * <br>
  * #{tag} in n.tags
- * <br/>
+ * <br>
  * &lt;/foreach&gt;
- * <p/>
+ * <p>
  * 看。 foreach 生成的效果是集合 转化为:( ? in n.tags , ? in n.tags )
- * <p/>
+ * <p>
  * foreach元素的属性主要有 item，index，collection，open，separator，close。
  * item表示集合中每一个元素进行迭代时的别名.
  * index指 定一个名字，用于表示在迭代过程中，每次迭代到的位置.

@@ -4,7 +4,6 @@ package com.scloudic.rabbitframework.web.utils;
  * 验证类
  *
  * @author: justin
- * @date: 2017-08-02 上午1:27
  */
 public class FieldError {
     private String fieldName;

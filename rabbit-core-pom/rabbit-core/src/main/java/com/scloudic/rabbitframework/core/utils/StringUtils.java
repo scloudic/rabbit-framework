@@ -16,46 +16,11 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     public static final String SEPARATOR = "_";
     public static final String PREFERRED_ENCODING = "UTF-8";
 
-    /**
-     * Check that the given String is neither <code>null</code> nor of length 0.
-     * Note: Will return <code>true</code> for a String that purely consists of
-     * whitespace.
-     * <p/>
-     * <code>StringUtils.hasLength(null) == false<br/>
-     * StringUtils.hasLength("") == false<br/>
-     * StringUtils.hasLength(" ") == true<br/>
-     * StringUtils.hasLength("Hello") == true</code>
-     * <p/>
-     * Copied from the Spring Framework while retaining all license, copyright
-     * and author information.
-     *
-     * @param str the String to check (may be <code>null</code>)
-     * @return <code>true</code> if the String is not null and has length
-     */
     public static boolean hasLength(String str) {
         return (str != null && str.length() > 0);
     }
 
-    /**
-     * Check whether the given String has actual text. More specifically,
-     * returns <code>true</code> if the string not <code>null</code>, its length
-     * is greater than 0, and it contains at least one non-whitespace character.
-     * <p/>
-     * <code>StringUtils.hasText(null) == false<br/>
-     * StringUtils.hasText("") == false<br/>
-     * StringUtils.hasText(" ") == false<br/>
-     * StringUtils.hasText("12345") == true<br/>
-     * StringUtils.hasText(" 12345 ") == true</code>
-     * <p/>
-     * <p>
-     * Copied from the Spring Framework while retaining all license, copyright
-     * and author information.
-     *
-     * @param str the String to check (may be <code>null</code>)
-     * @return <code>true</code> if the String is not <code>null</code>, its
-     * length is greater than 0, and it does not contain whitespace only
-     * @see Character#isWhitespace
-     */
+
     public static boolean hasText(String str) {
         if (!hasLength(str)) {
             return false;
@@ -69,12 +34,6 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return false;
     }
 
-    /**
-     * 字符串转换整型,如果为空抛出异常
-     *
-     * @param value
-     * @return
-     */
     public static int stringToInt(String value) {
         Integer result = null;
         if (isEmpty(value)) {
@@ -110,12 +69,6 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return Integer.valueOf(value);
     }
 
-    /**
-     * 字符串转换长整型,如果为空抛出异常
-     *
-     * @param value
-     * @return
-     */
     public static long stringToLong(String value) {
         Long result = null;
         if (isEmpty(value)) {
@@ -151,43 +104,21 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return Boolean.parseBoolean(value);
     }
 
-    /**
-     * 去掉字符串空格
-     *
-     * @param str
-     * @return
-     */
     public static String trim(String str) {
         return str != null ? str.trim() : null;
     }
 
-    /**
-     * 去掉空格为空时，转换成null
-     *
-     * @param str
-     * @return
-     */
     public static String trimToNull(String str) {
         String ts = trim(str);
         return isEmpty(ts) ? null : ts;
     }
 
-    /**
-     * 去掉空格为空时，转换成空
-     *
-     * @param str
-     * @return
-     */
+
     public static String trimToEmpty(String str) {
         return str != null ? str.trim() : "";
     }
 
-    /**
-     * 判断Long对象是否为空，为空返回0
-     *
-     * @param value
-     * @return
-     */
+
     public static Long LongToZero(Long value) {
         Long returnValue = value;
         if (returnValue == null) {
@@ -196,12 +127,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return returnValue;
     }
 
-    /**
-     * 判断Integer对象是否为空，为空返回0
-     *
-     * @param value
-     * @return
-     */
+
     public static Integer IntegerToZero(Integer value) {
         Integer returnValue = value;
         if (returnValue == null) {
@@ -210,13 +136,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return returnValue;
     }
 
-    /**
-     * 数组转字符
-     *
-     * @param array
-     * @param separator
-     * @return
-     */
+
     public static String ArrayToString(String[] array, String separator) {
         String str = "";
 
@@ -291,11 +211,11 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     /**
      * 字符串解析转换字符串数组
      *
-     * @param str
-     * @param delimiters
-     * @param trimTokens        //是否去除空
+     * @param str               str
+     * @param delimiters        分割符
+     * @param trimTokens        是否去除空
      * @param ignoreEmptyTokens 是否忽略空
-     * @return
+     * @return array
      */
     public static String[] tokenizeToStringArray(String str, String delimiters, boolean trimTokens,
                                                  boolean ignoreEmptyTokens) {
@@ -373,13 +293,13 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     }
 
     /**
-     * 将带有_,-,@,$,#,' ',/,&分隔符的字符串转换为骆驼拼写法的字符串
-     * <p/>
+     * 分隔符的字符串转换为骆驼拼写法的字符串
+     * <p>
      * 如:hello_world 转换为helloWorld
      *
-     * @param inputString
+     * @param inputString inputString
      * @param firstCharacterUppercase 首字母是否大写
-     * @return
+     * @return string
      */
     public static String toCamelCase(String inputString, boolean firstCharacterUppercase) {
         StringBuilder sb = new StringBuilder();

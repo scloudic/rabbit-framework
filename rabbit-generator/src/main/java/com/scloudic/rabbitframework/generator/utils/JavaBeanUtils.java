@@ -3,17 +3,6 @@ package com.scloudic.rabbitframework.generator.utils;
 import com.scloudic.rabbitframework.generator.mapping.type.FullyQualifiedJavaType;
 
 public class JavaBeanUtils {
-    /**
-     * JavaBeans rules:
-     * <p>
-     * eMail > geteMail() firstName > getFirstName() URL > getURL() XAxis >
-     * getXAxis() a > getA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
-     * assumes that this is not the case. Call getValidPropertyName first.
-     *
-     * @param property
-     * @return the getter method name
-     */
     public static String getGetterMethodName(String property, FullyQualifiedJavaType fullyQualifiedJavaType) {
         StringBuilder sb = new StringBuilder();
 
@@ -32,18 +21,7 @@ public class JavaBeanUtils {
 
         return sb.toString();
     }
-
-    /**
-     * JavaBeans rules:
-     * <p>
-     * eMail > seteMail() firstName > setFirstName() URL > setURL() XAxis >
-     * setXAxis() a > setA() B > invalid - this method assumes that this is not
-     * the case. Call getValidPropertyName first. Yaxis > invalid - this method
-     * assumes that this is not the case. Call getValidPropertyName first.
-     *
-     * @param property
-     * @return the setter method name
-     */
+    
     public static String getSetterMethodName(String property) {
         StringBuilder sb = new StringBuilder();
 

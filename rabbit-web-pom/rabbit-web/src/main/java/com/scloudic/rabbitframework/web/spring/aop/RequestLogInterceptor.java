@@ -24,7 +24,6 @@ import java.util.Map;
  * log日志拦截
  *
  * @author: justin
- * @date: 2017-06-13 12:13
  */
 @Aspect
 public class RequestLogInterceptor {

@@ -4,7 +4,6 @@ package com.scloudic.rabbitframework.core.utils;
  * 状态码
  *
  * @author: justin
- * @date: 2017-07-31 下午10:18
  */
 public enum StatusCode {
     SC_OK(200, "200成功状态"),

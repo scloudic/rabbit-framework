@@ -23,19 +23,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Intercept {
-	/**
-	 * 必须为接口类
-	 *
-	 * @return
-	 */
-	Class<?> interfaceType();
 
-	String method();
+    Class<?> interfaceType();
 
-	/**
-	 * 接口参数,不允许接口类方法有空参数
-	 *
-	 * @return
-	 */
-	Class<?>[] args();
+    String method();
+
+
+    Class<?>[] args();
 }

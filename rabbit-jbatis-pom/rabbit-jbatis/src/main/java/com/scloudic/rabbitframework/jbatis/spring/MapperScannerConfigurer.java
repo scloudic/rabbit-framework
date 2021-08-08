@@ -12,8 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * * Configuration sample:
- * <p>
+ * Configuration sample:
+ *
  *
  * <pre class="code">
  * {@code
@@ -25,54 +25,54 @@ import org.springframework.context.ApplicationContextAware;
  * </pre>
  */
 public class MapperScannerConfigurer
-		implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware {
+        implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware {
 
-	private String basePackages[];
+    private String basePackages[];
 
-	private String rabbitJbatisFactoryBeanName;
+    private String rabbitJbatisFactoryBeanName;
 
-	private ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
-	private BeanNameGenerator nameGenerator;
+    private BeanNameGenerator nameGenerator;
 
-	public MapperScannerConfigurer() {
+    public MapperScannerConfigurer() {
 
-	}
+    }
 
-	public void setBasePackages(String[] basePackages) {
-		this.basePackages = basePackages;
-	}
+    public void setBasePackages(String[] basePackages) {
+        this.basePackages = basePackages;
+    }
 
-	public void setRabbitJbatisFactoryBeanName(String rabbitJbatisFactoryBeanName) {
-		this.rabbitJbatisFactoryBeanName = rabbitJbatisFactoryBeanName;
-	}
+    public void setRabbitJbatisFactoryBeanName(String rabbitJbatisFactoryBeanName) {
+        this.rabbitJbatisFactoryBeanName = rabbitJbatisFactoryBeanName;
+    }
 
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
-	public BeanNameGenerator getNameGenerator() {
-		return nameGenerator;
-	}
+    public BeanNameGenerator getNameGenerator() {
+        return nameGenerator;
+    }
 
-	public void setNameGenerator(BeanNameGenerator nameGenerator) {
-		this.nameGenerator = nameGenerator;
-	}
+    public void setNameGenerator(BeanNameGenerator nameGenerator) {
+        this.nameGenerator = nameGenerator;
+    }
 
-	public void afterPropertiesSet() throws Exception {
-		notNull(this.basePackages, "Property 'basePackages' is required");
-	}
+    public void afterPropertiesSet() throws Exception {
+        notNull(this.basePackages, "Property 'basePackages' is required");
+    }
 
-	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-		// left intentionally blank
-	}
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        // left intentionally blank
+    }
 
-	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-		ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
-		scanner.setRabbitJbatisFactoryBeanName(this.rabbitJbatisFactoryBeanName);
-		scanner.setResourceLoader(this.applicationContext);
-		scanner.setBeanNameGenerator(this.nameGenerator);
-		scanner.registerFilters();
-		scanner.scan(this.basePackages);
-	}
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+        ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+        scanner.setRabbitJbatisFactoryBeanName(this.rabbitJbatisFactoryBeanName);
+        scanner.setResourceLoader(this.applicationContext);
+        scanner.setBeanNameGenerator(this.nameGenerator);
+        scanner.registerFilters();
+        scanner.scan(this.basePackages);
+    }
 }

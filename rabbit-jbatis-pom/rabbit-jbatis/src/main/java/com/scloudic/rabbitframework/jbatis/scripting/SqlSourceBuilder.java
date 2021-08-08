@@ -19,13 +19,13 @@ public class SqlSourceBuilder extends BaseBuilder {
 
     /**
      * 解释传入的sql原脚本生成可执行的sql语句
-     * <p/>
+     * <p>
      * 并返回{@link StaticSqlSource}
      *
-     * @param originalSql
-     * @param parameterType
-     * @param additionalParameters
-     * @return
+     * @param originalSql originalSql
+     * @param parameterType parameterType
+     * @param additionalParameters additionalParameters
+     * @return  SqlSource
      */
     public SqlSource parse(String originalSql, Class<?> parameterType,
                            Map<String, Object> additionalParameters) {

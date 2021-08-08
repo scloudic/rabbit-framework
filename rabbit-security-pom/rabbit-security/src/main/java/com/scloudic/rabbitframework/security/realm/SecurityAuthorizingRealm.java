@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  * 授权realm
  *
  * @author: justin.liang
- * @date: 16/5/20 下午1:52
  */
 public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(SecurityAuthorizingRealm.class);
@@ -50,8 +49,8 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     /**
      * 执行权限操作，获取权限信息,在配有缓存时只调用一次
      *
-     * @param securityUser
-     * @return
+     * @param securityUser securityUser
+     * @return AuthorizationInfo
      */
     protected abstract AuthorizationInfo executeGetAuthorizationInfo(SecurityUser securityUser);
 
@@ -70,8 +69,8 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     /**
      * 执行登陆操作，获取登陆信息
      *
-     * @param securityLoginToken
-     * @return
+     * @param securityLoginToken securityLoginToken
+     * @return AuthenticationInfo
      */
     protected abstract AuthenticationInfo executeGetAuthenticationInfo(SecurityLoginToken securityLoginToken);
 
@@ -118,8 +117,8 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     /**
      * 删除用户信息,仅针对redis的sessionDAO的实现
      *
-     * @param userId
-     * @param keyPrefix
+     * @param userId    userId
+     * @param keyPrefix 前缀
      */
     public void cleanSession(String userId, String keyPrefix) {
         SecurityManager securityManager = SecurityUtils.getSecurityManager();

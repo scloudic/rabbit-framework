@@ -18,7 +18,7 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
 <#list entity.idProperties as idProperties>
     /**
     * This field corresponds to the database column ${entity.tableName}.${idProperties.columnName}
-    * <p/>
+    * <p>
     * description:${idProperties.remarks}
     */
     <#if entity.dialect?contains("oracle") && idProperties.autoincrement==true>
@@ -34,7 +34,7 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
 <#list entity.columnProperties as columnProperties>
     /**
     * This field corresponds to the database column ${entity.tableName}.${columnProperties.columnName}
-    * <p/>
+    * <p>
     * description:${columnProperties.remarks}
     */
     @Column

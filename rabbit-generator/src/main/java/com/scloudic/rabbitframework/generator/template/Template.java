@@ -8,14 +8,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-
+import org.springframework.core.io.Resource;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.scloudic.rabbitframework.generator.exceptions.GeneratorException;
 import com.scloudic.rabbitframework.generator.utils.Constants;
-import com.scloudic.rabbitframework.core.springframework.io.Resource;
 import com.scloudic.rabbitframework.core.utils.ResourceUtils;
 
 import freemarker.cache.StringTemplateLoader;
@@ -23,7 +22,6 @@ import freemarker.template.Configuration;
 
 /**
  * @author: justin.liang
- * @date: 16/4/30 下午11:26
  */
 public class Template {
     private static final Logger logger = LoggerFactory.getLogger(Template.class);

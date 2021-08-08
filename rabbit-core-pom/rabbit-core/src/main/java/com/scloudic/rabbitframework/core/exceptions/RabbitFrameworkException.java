@@ -6,7 +6,6 @@ import com.scloudic.rabbitframework.core.utils.StatusCode;
  * 自定义异常抽象类
  *
  * @author: justin
- * @date: 2017-07-31 下午10:31
  */
 public abstract class RabbitFrameworkException extends RuntimeException {
     protected String description;

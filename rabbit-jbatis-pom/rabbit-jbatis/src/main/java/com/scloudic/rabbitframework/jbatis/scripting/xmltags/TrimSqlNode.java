@@ -1,22 +1,8 @@
 package com.scloudic.rabbitframework.jbatis.scripting.xmltags;
-
 import com.scloudic.rabbitframework.jbatis.builder.Configuration;
 import com.scloudic.rabbitframework.jbatis.scripting.DynamicContext;
 
 import java.util.*;
-
-/**
- * trim节点
- * <p/>
- * 例：
- * &lt;trim prefix=&quot(&quot suffix=&quot)&quot prefixOverrides=&quotand | or&quot suffixOverrides=&quotand | or&quot&gt;
- * &lt;/trim&gt;
- * <p/>
- * prefix:在sql语句添加&quot;(&quot;
- * prefixOverrides:须与prefix属性配合使用，如果sql语句以and或or打头，用prefix属性覆盖
- * suffix:在sql语句尾添加&quot;)&quot;
- * suffixOverrides: 须与suffix属性配合使用，如果sql语句以and或or结尾，用suffix属性覆盖
- */
 public class TrimSqlNode implements SqlNode {
     private Configuration configuration;
     private SqlNode contentSqlNode;

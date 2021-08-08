@@ -44,14 +44,6 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return getSimpleResponse(result, data, isNullToEmpty, true);
     }
 
-    /**
-     * 获取Response返回信息
-     *
-     * @param result
-     * @param data
-     * @param isNullToEmpty 是否空字段值转换
-     * @return
-     */
     public Response getSimpleResponse(boolean result, Object data,
                                       boolean isNullToEmpty, boolean isSkipTransientField) {
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
@@ -81,16 +73,6 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return getResponse(status, message, data, isNullToEmpty, true);
     }
 
-    /**
-     * 获取返回信息
-     *
-     * @param status        返回状态
-     * @param message       返回消息
-     * @param data          接收数据
-     * @param isNullToEmpty 是否空字段值转换
-     * @param isNullToEmpty
-     * @return
-     */
     public Response getResponse(int status, String message, Object data,
                                 boolean isNullToEmpty,
                                 boolean isSkipTransientField) {

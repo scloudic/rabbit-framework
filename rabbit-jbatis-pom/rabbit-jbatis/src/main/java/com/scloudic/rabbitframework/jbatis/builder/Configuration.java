@@ -196,21 +196,12 @@ public class Configuration {
         return parameterHandler;
     }
 
-    /**
-     * mapper是否已加载
-     *
-     * @param mapperResource
-     * @return
-     */
+
     public boolean isMapperLoaded(String mapperResource) {
         return loadedMappers.contains(mapperResource);
     }
 
-    /**
-     * 添加mapper
-     *
-     * @param mapperResource
-     */
+
     public void addLoadedMapper(String mapperResource) {
         loadedMappers.add(mapperResource);
     }

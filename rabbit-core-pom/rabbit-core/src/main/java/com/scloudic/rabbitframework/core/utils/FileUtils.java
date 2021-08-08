@@ -14,10 +14,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 图片压缩转换为输出流
-	 * 
-	 * @param in
-	 * @param scale
-	 * @param os
+	 * @param in in
+	 * @param scale scale
+	 * @return 输出流
 	 */
 	public static OutputStream imageThumbnailToOutStream(InputStream in, float scale) {
 		OutputStream output = null;
@@ -33,9 +32,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	/**
 	 * 图片压缩输入到文件
 	 * 
-	 * @param in
-	 * @param scale
-	 * @param outFile
+	 * @param in in
+	 * @param scale scale
+	 * @param outFile outFile
 	 */
 	public static void imageThumbnailToFile(InputStream in, float scale, File outFile) {
 		try {

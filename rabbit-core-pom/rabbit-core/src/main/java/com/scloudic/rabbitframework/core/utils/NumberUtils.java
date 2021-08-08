@@ -5,8 +5,8 @@ public class NumberUtils {
 	/**
 	 * 如果值为空返回0
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value
+	 * @return 空返回0
 	 */
 	public static long getValueByLong(Long value) {
 		return getValueByLong(value, 0L);
@@ -23,8 +23,8 @@ public class NumberUtils {
 	/**
 	 * 如果为空返回0
 	 * 
-	 * @param value
-	 * @return
+	 * @param value value
+	 * @return 空返回0
 	 */
 	public static int getValueByInteger(Integer value) {
 		return getValueByInteger(value, 0);

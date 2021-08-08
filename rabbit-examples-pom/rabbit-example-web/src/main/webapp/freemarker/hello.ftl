@@ -5,9 +5,9 @@
     </head>
     <body>
         <h1>Welcome ${user}!</h1>
-        <p>items:<br/>
+        <p>items:<br>
             <#list items as item>
-                ${item}<br/>
+                ${item}<br>
             </#list>
     </body>
 </html>

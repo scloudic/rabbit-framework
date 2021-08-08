@@ -21,11 +21,7 @@ public class ResponseUtils {
 	public static Response ok(Object entity,MediaType type) {
 		return Response.ok(entity, type).build();
 	}
-	
-	/**
-	 * 服务器内部500异常
-	 * @return
-	 */
+
 	public static Response serverError() {
 		return Response.serverError().build();
 	}

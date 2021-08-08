@@ -57,7 +57,7 @@ public class XMLConfigBuilder extends BaseBuilder {
 	/**
 	 * xmlconfig解析
 	 *
-	 * @return
+	 * @return Configuration
 	 */
 	public Configuration parse() {
 		if (parsed) {
@@ -83,11 +83,6 @@ public class XMLConfigBuilder extends BaseBuilder {
 		}
 	}
 
-	/**
-	 * properties元素解析
-	 *
-	 * @param pro
-	 */
 	private void propertiesElement(XNode pro) throws Exception {
 		if (pro == null) {
 			return;
@@ -106,12 +101,7 @@ public class XMLConfigBuilder extends BaseBuilder {
 		configuration.setVariables(properties);
 	}
 
-	/**
-	 * plugin元素解析,plugin主要作用是添加拦截器
-	 *
-	 * @param pluginNode
-	 * @throws Exception
-	 */
+
 	private void pluginElement(XNode pluginNode) throws Exception {
 		if (pluginNode == null) {
 			return;

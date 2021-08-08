@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * 订单编码生成类 ,主要采取snowflake生成
- * </p>
+ * <p>
  * 根据{@link GeneratorType}匹配生成id
  */
 public class UIdGeneratorImpl implements UIdGenerator {
@@ -115,15 +115,15 @@ public class UIdGeneratorImpl implements UIdGenerator {
     /**
      * 根据生成参数生成三种不同的ID,
      * GeneratorType说明：
-     * <p/>
+     * <p>
      * SNOWFLAKE： 标准算法，根据当前时间生成,不低于12位数
-     * <p/>
+     * <p>
      * TIMESTAMP:时间戳方法，此算法是17位时间+6位后缀形成,共23位
-     * <p/>
+     * <p>
      * UUIDHASHCODE:UUID的hashCode生成,共18位
      *
-     * @param generatorType
-     * @return
+     * @param generatorType generatorType
+     * @return string
      */
     public synchronized String nextId(GeneratorType generatorType) {
         long timestamp = timeGen();
@@ -230,7 +230,7 @@ public class UIdGeneratorImpl implements UIdGenerator {
     /**
      * 动态获取workId
      *
-     * @param workerNum
+     * @param workerNum workerNum
      */
     public void setWorkerNum(WorkerNum workerNum) {
         this.workerNum = workerNum;

@@ -17,7 +17,7 @@ public class InterceptorChain {
     /**
      * 添加拦截器
      *
-     * @param interceptor
+     * @param interceptor interceptor
      */
     public void addInterceptor(Interceptor interceptor) {
         interceptors.add(interceptor);
@@ -26,7 +26,7 @@ public class InterceptorChain {
     /**
      * 获取所有拦截器，不可修改
      *
-     * @return
+     * @return list
      */
     public List<Interceptor> getInterceptors() {
         return Collections.unmodifiableList(interceptors);

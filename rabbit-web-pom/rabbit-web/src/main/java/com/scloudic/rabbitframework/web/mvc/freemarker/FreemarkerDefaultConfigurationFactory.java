@@ -21,12 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * freemarker初始化工厂类
- * <p/>
+ * freemarker初始化工厂类<p>
  * 3.3.1版本：增加定自义模板加载
  *
  * @author justin
- * @updateVersion 3.3.1
  */
 public class FreemarkerDefaultConfigurationFactory implements FreemarkerConfigurationFactory {
     private static final Logger logger = LoggerFactory.getLogger(FreemarkerDefaultConfigurationFactory.class);

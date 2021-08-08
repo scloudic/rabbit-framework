@@ -7,7 +7,6 @@ import com.scloudic.rabbitframework.core.utils.StatusCode;
  * 登陆失败异常
  *
  * @author: justin
- * @date: 2019-06-29 10:29
  */
 public class LoginFailException extends RabbitFrameworkException {
     private StatusCode status = StatusCode.SC_LOGIN_ERROR;

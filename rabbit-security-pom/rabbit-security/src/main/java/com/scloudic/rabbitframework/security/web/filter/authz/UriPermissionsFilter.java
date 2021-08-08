@@ -15,7 +15,6 @@ import java.io.IOException;
  * 权限过虑器
  *
  * @author: justin
- * @date: 2018-04-21 下午11:46
  */
 public class UriPermissionsFilter extends PermissionsAuthorizationFilter {
     private static final Logger logger = LoggerFactory.getLogger(UriPermissionsFilter.class);

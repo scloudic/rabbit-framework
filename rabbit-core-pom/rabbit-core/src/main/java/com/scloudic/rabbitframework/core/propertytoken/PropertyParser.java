@@ -17,7 +17,7 @@ public class PropertyParser {
 	 *            参数值
 	 * @param variables
 	 *            属性变量
-	 * @return
+	 * @return string
 	 */
 	public static String parseDollar(String expSource, Properties variables) {
 		return parseOther("${", "}", expSource, variables);
@@ -35,7 +35,7 @@ public class PropertyParser {
 	 *            表达式源数据
 	 * @param variables
 	 *            属性变量
-	 * @return
+	 * @return string
 	 */
 	public static String parseOther(String startExp, String endExp,
 			String expSource, Properties variables) {

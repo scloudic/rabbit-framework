@@ -59,7 +59,7 @@ public class DataJsonResponse {
     /**
      * 对象转字符串，空字段自动转换
      *
-     * @return
+     * @return string
      */
     public String toJson() {
         return toJson(true);
@@ -69,7 +69,7 @@ public class DataJsonResponse {
      * 根据参数将对象转换为json字符串
      *
      * @param isNullToEmpty 是否转换空字段值
-     * @return
+     * @return string
      */
     public String toJson(boolean isNullToEmpty) {
         return toJson(isNullToEmpty, true);
@@ -77,9 +77,9 @@ public class DataJsonResponse {
 
     /**
      * 根据参数将对象转换为json字符串
-     *
-     * @param isNullToEmpty 是否转换空字段值
-     * @return
+     * @param isNullToEmpty null 转空
+     * @param isSkipTransientField 跳过
+     * @return string
      */
     public String toJson(boolean isNullToEmpty, boolean isSkipTransientField) {
         if (data != null && !json.containsKey("data")) {

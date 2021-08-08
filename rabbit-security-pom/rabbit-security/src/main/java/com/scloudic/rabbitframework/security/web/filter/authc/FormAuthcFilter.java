@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * 用户登录请求验证过滤器
- * <p/>
+ * <p>
  * 实现{@link FormAuthenticationFilter#redirectToLogin(ServletRequest, ServletResponse)}方法，处理未登录时跳转
  *
  * @author justin.liang

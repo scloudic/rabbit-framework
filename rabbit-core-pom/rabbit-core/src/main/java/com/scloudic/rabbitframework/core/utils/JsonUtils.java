@@ -14,10 +14,10 @@ public class JsonUtils {
     /**
      * 对象转json字符串
      *
-     * @param obj
+     * @param obj obj
      * @param isNullToEmpty        是否null转空
      * @param isSkipTransientField 是否跳过@Transient字段
-     * @return
+     * @return string
      */
     public static String toJson(Object obj, boolean isNullToEmpty, boolean isSkipTransientField) {
         List<SerializerFeature> serializerFeatures = new ArrayList<>();
@@ -42,9 +42,9 @@ public class JsonUtils {
     /**
      * 对象转json字符串,不跳过{@link java.beans.Transient}
      *
-     * @param obj
+     * @param obj obj
      * @param isNullToEmpty 是否null转空
-     * @return
+     * @return string
      */
     public static String toJson(Object obj, boolean isNullToEmpty) {
         return toJson(obj, isNullToEmpty, false);
@@ -53,9 +53,9 @@ public class JsonUtils {
     /**
      * 对象转json字符串,跳过{@link java.beans.Transient}
      *
-     * @param obj
-     * @param isNullToEmpty
-     * @return
+     * @param obj obj
+     * @param isNullToEmpty 空转""
+     * @return string
      */
     public static String toJsonSkipTransient(Object obj, boolean isNullToEmpty) {
         return toJson(obj, isNullToEmpty, true);
@@ -64,8 +64,8 @@ public class JsonUtils {
     /**
      * 对象转json字符串,封装{@link JSON}toJSONString方法
      *
-     * @param obj
-     * @return
+     * @param obj obj
+     * @return string
      */
     public static String toJson(Object obj) {
         return JSON.toJSONString(obj);

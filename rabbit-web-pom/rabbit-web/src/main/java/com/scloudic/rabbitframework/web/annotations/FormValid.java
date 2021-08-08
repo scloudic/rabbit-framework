@@ -10,7 +10,7 @@ public @interface FormValid {
 	/**
 	 * 字段过滤,过滤不要验证的字段
 	 * 
-	 * @return
+	 * @return string
 	 */
 	String[] fieldFilter() default {};
 }
