@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.rabbitframework</groupId>
+		<groupId>com.scloudic</groupId>
 		<artifactId>rabbit-examples-pom</artifactId>
 		<version>3.3.2.RELEASE</version>
 	</parent>
@@ -14,12 +14,12 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.rabbitframework</groupId>
+			<groupId>com.scloudic</groupId>
 			<artifactId>rabbit-web-spring-boot-starter</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.rabbitframework</groupId>
+			<groupId>com.scloudic</groupId>
 			<artifactId>rabbit-security-spring-boot-starter</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
@@ -30,7 +30,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.rabbitframework</groupId>
+			<groupId>com.scloudic</groupId>
 			<artifactId>rabbit-redisson-spring-boot-starter</artifactId>
 		</dependency>
 		<!--<dependency> -->

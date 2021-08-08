@@ -1,1 +1,0 @@
-package com.rabbitframework.web.springboot.configure.test;

@@ -3,7 +3,7 @@
     <!-- 基本配置 -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.rabbitframework</groupId>
+        <groupId>com.scloudic</groupId>
         <artifactId>rabbit-jbatis-pom</artifactId>
         <version>3.3.2.RELEASE</version>
     </parent>
@@ -72,7 +72,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core</artifactId>
         </dependency>
         <dependency>
@@ -80,7 +80,7 @@
             <artifactId>javassist</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core</artifactId>
         </dependency>
     </dependencies>

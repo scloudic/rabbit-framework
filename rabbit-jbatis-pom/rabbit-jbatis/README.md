@@ -12,11 +12,11 @@ dbase说明：
 	</properties>
 	<!-- <plugins> <plugin interceptor=""></plugin> </plugins> -->
 	<!-- <caches>
-		<cache name="defaultCache" class="com.rabbitframework.dbase.cache.impl.EhcacheCache">
+		<cache name="defaultCache" class="com.scloudic.rabbitframework.dbase.cache.impl.EhcacheCache">
 		</cache>
 	</caches> -->
 	<dataAccess>
-		<dataSourceFactory class="com.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
+		<dataSourceFactory class="com.scloudic.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
 		<dataSources>
 			<dataSource name="simple" dialect="mysql"
 				class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -77,13 +77,13 @@ dbase说明：
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
 	</bean>
 
-<bean id="dataSourcebean" class="com.rabbitframework.dbase.dataaccess.DataSourceBean">
+<bean id="dataSourcebean" class="com.scloudic.rabbitframework.dbase.dataaccess.DataSourceBean">
 	<property name="dialect" value="mysql" />
 	<property name="dataSource" ref="dataSource" />
 </bean>
 <bean id="dataSourceFactory"
-	class="com.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
-<bean id="rabbitDbaseFactory" class="com.rabbitframework.jbatis.spring.RabbitDbaseFactoryBean">
+	class="com.scloudic.rabbitframework.dbase.dataaccess.datasource.SimpleDataSourceFactory" />
+<bean id="rabbitDbaseFactory" class="com.scloudic.rabbitframework.jbatis.spring.RabbitDbaseFactoryBean">
 	<!-- <property name="configLocation" value="classpath:jbatis-config.xml"></property> -->
 	<property name="entityPackages" value="com.rabbitfragmework.**.test.model"></property>
 	<property name="mapperPackages" value="com.rabbitfragmework.**.test.mapper"></property>
@@ -95,7 +95,7 @@ dbase说明：
 	</property>
 </bean>
 
-<bean class="com.rabbitframework.dbase.spring.MapperScannerConfigurer">
+<bean class="com.scloudic.rabbitframework.dbase.spring.MapperScannerConfigurer">
 	<!-- <property name="annotationClass" value="org.springframework.stereotype.Repository" 
 		/> -->
 	<property name="basePackage" value="com.rabbitfragmework.**.test.mapper" />

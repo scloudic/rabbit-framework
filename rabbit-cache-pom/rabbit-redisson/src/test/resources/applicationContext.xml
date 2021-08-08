@@ -5,10 +5,10 @@
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-	<bean id="redissonClient" class="com.rabbitframework.redisson.spring.RedissonFactoryBean" destroy-method="destroy">
+	<bean id="redissonClient" class="com.scloudic.rabbitframework.redisson.spring.RedissonFactoryBean" destroy-method="destroy">
 		<property name="configLocation" value="classpath:redisson.yml"></property>
 	</bean>
-	<bean id="redisCache" class="com.rabbitframework.redisson.RedisCache">
+	<bean id="redisCache" class="com.scloudic.rabbitframework.redisson.RedisCache">
 		<property name="redissonClient" ref="redissonClient"></property>
 	</bean>
 </beans>

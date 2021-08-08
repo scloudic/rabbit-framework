@@ -5,12 +5,12 @@
 	</properties>
 	<!-- <plugins> <plugin interceptor=""></plugin> </plugins> -->
 	<!-- <caches>
-		<cache name="defaultCache" class="com.rabbitframework.dbase.cache.impl.EhcacheCache">
+		<cache name="defaultCache" class="com.sclloudic.rabbitframework.dbase.cache.impl.EhcacheCache">
 		</cache>
 	</caches> -->
 	<dataAccess>
 		<dataSourceFactory
-			class="com.rabbitframework.jbatis.dataaccess.datasource.SimpleDataSourceFactory" />
+			class="com.scloudic.rabbitframework.jbatis.dataaccess.datasource.SimpleDataSourceFactory" />
 		<dataSources>
 			<dataSource name="simple" dialect="mysql"
 				class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -30,11 +30,11 @@
 		</dataSources>
 	</dataAccess>
 	<entitys>
-		<entity class="com.rabbitfragmework.jbatis.test.model.TestUser"></entity>
+		<entity class="com.scloudic.rabbitfragmework.jbatis.test.model.TestUser"></entity>
 		<!-- <package name=""></package> -->
 	</entitys>
 	<mappers>
-		<mapper class="com.rabbitfragmework.jbatis.test.mapper.TestUserMapper"></mapper>
+		<mapper class="com.scloudic.rabbitfragmework.jbatis.test.mapper.TestUserMapper"></mapper>
 		<!-- <package name=""></package> -->
 	</mappers>
 </configuration>

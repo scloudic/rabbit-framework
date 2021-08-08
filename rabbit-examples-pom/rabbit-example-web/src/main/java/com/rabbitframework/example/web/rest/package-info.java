@@ -1,1 +1,0 @@
-package com.rabbitframework.example.web.rest;

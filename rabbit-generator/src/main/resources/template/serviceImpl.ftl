@@ -6,7 +6,7 @@ import ${parentPackage}.${serviceSuffix}.${entity.objectName}${serviceSuffix?cap
 </#if>
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.rabbitframework.jbatis.service.IServiceImpl;
+import com.scloudic.rabbitframework.jbatis.service.IServiceImpl;
 @Service
 public class ${entity.objectName}${fileSuffix} extends IServiceImpl<${entity.objectName}${mapperSuffix?cap_first},${entity.objectName}> implements ${entity.objectName}${serviceSuffix?cap_first} {
     @Autowired

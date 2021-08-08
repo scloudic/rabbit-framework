@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.rabbitframework</groupId>
+        <groupId>com.scloudic</groupId>
         <artifactId>rabbit-security-pom</artifactId>
         <version>3.3.2.RELEASE</version>
     </parent>
@@ -10,15 +10,15 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security-redisson-cache</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
@@ -26,7 +26,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.rabbitframework</groupId>
+            <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security-redisson-cache</artifactId>
         </dependency>
         <dependency>

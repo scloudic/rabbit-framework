@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rabbitframework.redisson.springboot.configure.RedissonAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.scloudic.rabbitframework.redisson.springboot.configure.RedissonAutoConfiguration

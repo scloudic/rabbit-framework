@@ -2,8 +2,8 @@
 package ${packageName};
 import ${parentPackage}.${entitySuffix}.${entity.objectName};
 </#if>
-import com.rabbitframework.jbatis.mapping.BaseMapper;
-import com.rabbitframework.jbatis.annontations.Mapper;
+import com.scloudic.rabbitframework.jbatis.mapping.BaseMapper;
+import com.scloudic.rabbitframework.jbatis.annontations.Mapper;
 /**
 * database table ${entity.tableName} mapper interface
 **/

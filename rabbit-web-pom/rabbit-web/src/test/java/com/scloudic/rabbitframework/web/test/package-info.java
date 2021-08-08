@@ -1,0 +1,1 @@
+package com.scloudic.rabbitframework.web.test;

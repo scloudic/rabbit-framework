@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rabbitframework.jbatis.springboot.configure.RabbitJbatisAutoConfiguration,\
-  com.rabbitframework.jbatis.springboot.configure.MapperScannerAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.scloudic.rabbitframework.jbatis.springboot.configure.RabbitJbatisAutoConfiguration,\
+  com.scloudic.rabbitframework.jbatis.springboot.configure.MapperScannerAutoConfiguration

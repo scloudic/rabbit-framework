@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rabbitframework</groupId>
+    <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
     <version>3.3.2.RELEASE</version>
     <packaging>pom</packaging>
@@ -474,63 +474,63 @@
                 <version>${javax.ws.rs-api}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-core</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-security</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-jbatis</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-redisson</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-web</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-generator</artifactId>
                 <version>${rabbit-framework.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-web-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-security-redisson-cache</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-redisson-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-core-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.rabbitframework</groupId>
+                <groupId>com.scloudic</groupId>
                 <artifactId>rabbit-security-spring-boot-starter</artifactId>
                 <version>${rabbit-framework.version}</version>
             </dependency>

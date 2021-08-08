@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.rabbitframework.web.springboot.configure.RabbitWebAutoConfiguration,\
-  com.rabbitframework.web.springboot.configure.RabbitWebFilterAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.scloudic.rabbitframework.web.springboot.configure.RabbitWebAutoConfiguration,\
+  com.scloudic.rabbitframework.web.springboot.configure.RabbitWebFilterAutoConfiguration

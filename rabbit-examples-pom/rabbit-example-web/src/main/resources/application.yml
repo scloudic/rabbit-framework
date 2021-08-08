@@ -7,9 +7,9 @@ spring:
     basename: messages/globalMessages
 rabbit:
   web:
-    rest-packages: com.rabbitframework.example.web.rest
+    rest-packages: com.scloudic.rabbitframework.example.web.rest
     request-log: true
-    template-variable-path: com.rabbitframework.example.template
+    template-variable-path: com.scloudic.rabbitframework.example.template
     freemarker-path: /freemarker
   security:
     cookie:
