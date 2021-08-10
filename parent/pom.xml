@@ -63,7 +63,7 @@
         <xstream.version>1.4.17</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
-        <rabbit-framework.version>3.3.2.RELEASE</rabbit-framework.version>
+        <rabbit-framework.version>3.3.3.RELEASE</rabbit-framework.version>
     </properties>
     <name>parent</name>
     <dependencyManagement>
