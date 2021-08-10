@@ -3,10 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.3.3.RELEASE</version>
+    <version>3.3.2.RELEASE</version>
     <packaging>pom</packaging>
     <modules>
-        <module>parent</module>
         <module>rabbit-core-pom</module>
         <module>rabbit-cache-pom</module>
         <module>rabbit-security-pom</module>
