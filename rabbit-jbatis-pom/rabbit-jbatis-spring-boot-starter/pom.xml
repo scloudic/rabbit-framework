@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-jbatis-pom</artifactId>
-        <version>3.3.2.RELEASE</version>
+        <version>3.3.3.RELEASE</version>
     </parent>
     <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
