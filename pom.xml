@@ -3,9 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.3.2.RELEASE</version>
+    <version>3.3.3.RELEASE</version>
     <packaging>pom</packaging>
     <modules>
+        <module>parent</module>
         <module>rabbit-core-pom</module>
         <module>rabbit-cache-pom</module>
         <module>rabbit-security-pom</module>
@@ -71,7 +72,7 @@
         <xstream.version>1.4.17</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
-        <rabbit-framework.version>3.3.2.RELEASE</rabbit-framework.version>
+        <rabbit-framework.version>3.3.3.RELEASE</rabbit-framework.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -747,6 +748,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

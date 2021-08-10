@@ -6,10 +6,6 @@
         <artifactId>rabbit-framework</artifactId>
         <version>3.3.3.RELEASE</version>
     </parent>
-    <artifactId>rabbit-core-pom</artifactId>
+    <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>rabbit-core</module>
-        <module>rabbit-core-spring-boot-starter</module>
-    </modules>
 </project>
