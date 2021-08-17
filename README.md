@@ -15,6 +15,8 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
 	
 	5、支持创建表、分表分库;
 	
+	6、继承RoutingDataSource类,支持多租户模式 
+	
 
 二、rabbit-security:权限框架,对[shiro_1.7.1](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
 
