@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-security-pom</artifactId>
-        <version>3.3.3.RELEASE</version>
+        <version>3.4.0.RELEASE</version>
     </parent>
     <artifactId>rabbit-security-redisson-cache</artifactId>
     <packaging>jar</packaging>

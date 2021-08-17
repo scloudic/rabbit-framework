@@ -257,6 +257,21 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
         return sb.toString();
     }
 
+    public static String lowercaseFirstChar(String in) {
+        if (in == null || in.length() == 0) {
+            return in;
+        }
+        int length = in.length();
+        StringBuilder sb = new StringBuilder(length);
+
+        sb.append(Character.toLowerCase(in.charAt(0)));
+        if (length > 1) {
+            String remaining = in.substring(1);
+            sb.append(remaining);
+        }
+        return sb.toString();
+    }
+
     /**
      * Returns the specified array as a comma-delimited (',') string.
      *
