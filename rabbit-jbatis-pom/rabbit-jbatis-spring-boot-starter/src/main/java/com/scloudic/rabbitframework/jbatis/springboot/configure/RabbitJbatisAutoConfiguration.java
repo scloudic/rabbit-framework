@@ -79,7 +79,8 @@ public class RabbitJbatisAutoConfiguration {
         String defaultDataSource = dataSourceBeans.getDefaultDataSource();
         DataSource dataSource = (DataSource) applicationContext.getBean(defaultDataSource);
         Map<String, String> dataSourceName = dataSourceBeans.getDataSourceName();
-        String dialect = rabbitJbatisProperties.getDataSources().get(defaultDataSource).getDialect();
+        Map<String, DataSourceProperties> dataSources = rabbitJbatisProperties.getDataSources();
+        String dialect = dataSources.get(defaultDataSource).getDialect();
         if (StringUtils.isBlank(routing)) {
             DataSourceBean dataSourceBean = new DataSourceBean();
             dataSourceBean.setDataSource(dataSource);
@@ -88,10 +89,11 @@ public class RabbitJbatisAutoConfiguration {
             for (Map.Entry<String, String> entry : dataSourceName.entrySet()) {
                 String key = entry.getKey();
                 String beanName = entry.getValue();
+                String dialect1 = dataSources.get(beanName).getDialect();
                 DataSource dataSource1 = (DataSource) applicationContext.getBean(beanName);
                 DataSourceBean dataSourceBean1 = new DataSourceBean();
                 dataSourceBean1.setDataSource(dataSource1);
-                dataSourceBean1.setDialect(dialect);
+                dataSourceBean1.setDialect(dialect1);
                 dataSourceMap.put(key, dataSourceBean1);
             }
         } else {

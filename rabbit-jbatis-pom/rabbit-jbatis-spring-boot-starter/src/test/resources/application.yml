@@ -55,9 +55,9 @@ rabbit:
           filters: stat
     data-source-beans:
       default-data-source: datasource
-      routing-data-source-class: com.scloudic.rabbitframework.jbatis.springboot.test.RoutingDataSourceTest
-      data-source-name:
-        datasource1: datasource2
+      #routing-data-source-class: com.scloudic.rabbitframework.jbatis.springboot.test.RoutingDataSourceTest
+#      data-source-name:
+#        datasource1: datasource2
     data-source-factory-type: simple
     entity-packages: com.scloudic.rabbitframework.**.test.model
     mapper-packages: com.scloudic.rabbitframework.**.test.mapper

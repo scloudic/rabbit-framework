@@ -20,7 +20,7 @@ public class ApplicationJbatisMain {
     }
 
     @Bean
-    public PlatformTransactionManager annotationDrivenTransactionManager(@Qualifier("routingDataSourceTest") DataSource dataSource) {
+    public PlatformTransactionManager annotationDrivenTransactionManager(@Qualifier("datasource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }
