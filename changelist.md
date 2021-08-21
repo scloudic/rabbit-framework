@@ -1,3 +1,7 @@
+3.4.2.RELEASE版本说明：
+1、增加jbatis事务功能，支持atomikos配置,默认使用spring的DataSourceTransactionManager事务.
+2、修改security容器，默认容器为servlet,默认缓存为:memory
+
 3.4.1.RELEASE版本说明：
 1、修复jbatis中dialect获取问题
 

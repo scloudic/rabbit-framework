@@ -17,10 +17,10 @@ public class RabbitSecurityProperties {
     private boolean sessionIdCookieEnabled = true;
     private String tokenName = "Authorization";
     private String sessionDaoKeyPrefix = "rabbit_session";
-    private SessionType sessionType = SessionType.local;
+    private SessionType sessionType = SessionType.servlet;
     private Long cacheSessionExpire = 604800L * 1000;
     private Long otherCacheExpire = 600L * 1000;
-    private CacheType cacheType = CacheType.redis;
+    private CacheType cacheType = CacheType.memory;
     private boolean singleUser = false;
     //是否开启session验证定时任务
     private boolean sessionValidationSchedulerEnabled = false;

@@ -2,7 +2,6 @@ package com.scloudic.rabbitframework.jbatis.springboot.configure;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = RabbitJbatisProperties.RABBIT_JBATIS_PREFIX)
@@ -14,6 +13,7 @@ public class RabbitJbatisProperties {
     private Map<String, String> mapperPackageMap;
     private Map<String, DataSourceProperties> dataSources = new HashMap<String, DataSourceProperties>();
     private DataSourceBeanProperties dataSourceBeans;
+    private TransactionProperties transaction = new TransactionProperties();
 
     public Map<String, DataSourceProperties> getDataSources() {
         return dataSources;
@@ -61,6 +61,14 @@ public class RabbitJbatisProperties {
 
     public void setDataSourceBeans(DataSourceBeanProperties dataSourceBeans) {
         this.dataSourceBeans = dataSourceBeans;
+    }
+
+    public TransactionProperties getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(TransactionProperties transaction) {
+        this.transaction = transaction;
     }
 
     public enum DataSourceFactoryType {

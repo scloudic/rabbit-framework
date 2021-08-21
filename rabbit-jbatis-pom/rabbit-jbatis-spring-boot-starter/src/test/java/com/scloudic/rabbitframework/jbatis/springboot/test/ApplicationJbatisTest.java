@@ -19,8 +19,7 @@ public class ApplicationJbatisTest {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationJbatisTest.class);
     @Autowired
     private TestUserService testUserService;
-
-
+    
     @Test
     public void testSelect() {
         logger.debug("testConfig method load:" + testUserService);

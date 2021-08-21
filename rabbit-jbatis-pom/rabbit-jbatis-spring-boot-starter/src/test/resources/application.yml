@@ -1,7 +1,7 @@
 rabbit:
   jbatis:
     data-sources:
-      datasource:
+      dataSource:
         dialect: mysql
         class-name: com.alibaba.druid.pool.DruidDataSource
         params:
@@ -54,10 +54,14 @@ rabbit:
           #配置监控统计拦截的filters
           filters: stat
     data-source-beans:
-      default-data-source: datasource
+      default-data-source: dataSource
       #routing-data-source-class: com.scloudic.rabbitframework.jbatis.springboot.test.RoutingDataSourceTest
-#      data-source-name:
-#        datasource1: datasource2
+    #      data-source-name:
+    #        datasource1: datasource2
     data-source-factory-type: simple
     entity-packages: com.scloudic.rabbitframework.**.test.model
     mapper-packages: com.scloudic.rabbitframework.**.test.mapper
+    transaction:
+      default-data-source-bean: dataSource
+#      multi-tran:
+#        tx1: datasource2

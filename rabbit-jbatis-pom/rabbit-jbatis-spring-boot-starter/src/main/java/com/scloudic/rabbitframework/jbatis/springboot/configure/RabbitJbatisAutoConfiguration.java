@@ -17,9 +17,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.sql.DataSource;
+import javax.transaction.UserTransaction;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,9 +143,11 @@ public class RabbitJbatisAutoConfiguration {
         try {
             Class<?> dataSource = ClassUtils.classForName(className);
             BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(dataSource);
-            params.forEach((k, v) -> {
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                String k = entry.getKey();
+                Object v = entry.getValue();
                 beanDefinitionBuilder.addPropertyValue(k, v);
-            });
+            }
             BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
             registry.registerBeanDefinition(key, beanDefinition);
         } catch (Exception e) {
@@ -148,4 +155,63 @@ public class RabbitJbatisAutoConfiguration {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    @Bean("transactionManager")
+    @DependsOn("rabbitJbatisFactory")
+    public TransactionManager transactionManager() {
+        TransactionProperties transactionProperties = rabbitJbatisProperties.getTransaction();
+        TransactionProperties.TransactionType transactionType = transactionProperties.getTransactionType();
+        if (transactionType == TransactionProperties.TransactionType.JTAATOMIKOS) {
+            atomikosTransactionManager();
+            atomikosUserTransaction();
+            javax.transaction.TransactionManager atomikosTransactionManager =
+                    (javax.transaction.TransactionManager) applicationContext.getBean("atomikosTransactionManager");
+            UserTransaction atomikosUserTransaction =
+                    (UserTransaction) applicationContext.getBean("atomikosUserTransaction");
+            JtaTransactionManager jtaTransactionManager = new JtaTransactionManager();
+            jtaTransactionManager.setTransactionManager(atomikosTransactionManager);
+            jtaTransactionManager.setUserTransaction(atomikosUserTransaction);
+            jtaTransactionManager.setAllowCustomIsolationLevels(true);
+            return jtaTransactionManager;
+        }
+
+        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
+        DataSource dataSource = (DataSource) applicationContext.getBean(transactionProperties.getDefaultDataSourceBean());
+        dataSourceTransactionManager.setDataSource(dataSource);
+        dataSourceTransactionManager.setDefaultTimeout(transactionProperties.getTimeOut());
+        Map<String, String> multiTran = transactionProperties.getMultiTran();
+        for (Map.Entry<String, String> entry : multiTran.entrySet()) {
+            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
+                    .genericBeanDefinition(DataSourceTransactionManager.class);
+            beanDefinitionBuilder.addPropertyReference("dataSource", entry.getValue());
+            BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+            BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
+            registry.registerBeanDefinition(entry.getKey(), beanDefinition);
+        }
+        return dataSourceTransactionManager;
+    }
+
+    private void atomikosTransactionManager() {
+        String atomikosTransactionManager = "com.atomikos.icatch.jta.UserTransactionManager";
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
+                .genericBeanDefinition(ClassUtils.classForName(atomikosTransactionManager));
+        beanDefinitionBuilder.addPropertyValue("forceShutdown", true);
+        BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+        BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
+        beanDefinition.setInitMethodName("init");
+        beanDefinition.setDestroyMethodName("close");
+        registry.registerBeanDefinition("atomikosTransactionManager", beanDefinition);
+    }
+
+    private void atomikosUserTransaction() {
+        TransactionProperties transactionProperties = rabbitJbatisProperties.getTransaction();
+        String atomikosTransactionManager = "com.atomikos.icatch.jta.UserTransactionManager";
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
+                .genericBeanDefinition(ClassUtils.classForName(atomikosTransactionManager));
+        beanDefinitionBuilder.addPropertyValue("transactionTimeout", transactionProperties.getTimeOut());
+        BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+        BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
+        registry.registerBeanDefinition("atomikosUserTransaction", beanDefinition);
+    }
+
 }

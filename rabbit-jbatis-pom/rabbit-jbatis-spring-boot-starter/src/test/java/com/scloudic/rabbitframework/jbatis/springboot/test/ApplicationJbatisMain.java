@@ -18,9 +18,4 @@ public class ApplicationJbatisMain {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationJbatisMain.class, args);
     }
-
-    @Bean
-    public PlatformTransactionManager annotationDrivenTransactionManager(@Qualifier("datasource") DataSource dataSource) {
-        return new DataSourceTransactionManager(dataSource);
-    }
 }
