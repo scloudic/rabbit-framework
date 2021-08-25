@@ -69,7 +69,7 @@
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
-        <xstream.version>1.4.17</xstream.version>
+        <xstream.version>1.4.18</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <rabbit-framework.version>3.4.2.RELEASE</rabbit-framework.version>
