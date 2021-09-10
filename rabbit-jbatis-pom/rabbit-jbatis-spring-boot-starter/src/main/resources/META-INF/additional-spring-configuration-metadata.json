@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "rabbit.jbatis.transaction.default-data-source-bean",
-      "type": "java.lang.String",
-      "description": "Description for rabbit.jbatis.transaction.default-data-source-bean."
-  }
-] }
