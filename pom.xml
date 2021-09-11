@@ -61,7 +61,7 @@
         <redisson.version>3.15.3</redisson.version>
         <httpclient.version>4.5.13</httpclient.version>
         <okhttp3.version>3.14.2</okhttp3.version>
-        <jsoup.version>1.12.1</jsoup.version>
+        <jsoup.version>1.14.2</jsoup.version>
         <htmlunit.version>2.52.0</htmlunit.version>
         <pinyin4j>2.5.0</pinyin4j>
         <thumbnailator.version>0.4.8</thumbnailator.version>
@@ -69,7 +69,7 @@
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
-        <xstream.version>1.4.17</xstream.version>
+        <xstream.version>1.4.18</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <rabbit-framework.version>3.4.3.RELEASE</rabbit-framework.version>
