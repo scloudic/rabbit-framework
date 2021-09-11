@@ -148,11 +148,12 @@ public class RedisCache {
 
 
     /**
-     * redis加锁,单位：秒
+     * redis加锁,时间为毫秒
      *
-     * @param key  key
-     * @param time time
-     * @return boolean
+     * @param key       加锁Key
+     * @param waitTime  等待时间
+     * @param leaseTime 自动释放时间
+     * @return
      */
     public boolean tryLock(String key, long waitTime, long leaseTime) {
         try {
