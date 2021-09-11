@@ -1,3 +1,7 @@
+3.4.3.RELEASE版本说明：
+    1、修改缓存锁方式及修复bug
+    
+    
 3.4.2.RELEASE版本说明：
 
     1、增加jbatis事务功能，支持atomikos配置,默认使用spring的DataSourceTransactionManager事务.

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-core-pom</artifactId>
-        <version>3.4.2.RELEASE</version>
+        <version>3.4.3.RELEASE</version>
     </parent>
     <artifactId>rabbit-core</artifactId>
     <packaging>jar</packaging>
