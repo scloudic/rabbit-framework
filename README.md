@@ -3,7 +3,7 @@
 一直想着做一款能快速搭建环境、项目中只关注业务部分，避免上述等重复性工作。于是利用业余空闲时间写了一套整合型框架(rabbit-framework)。
 rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、shiro等技术的基础上进行封装而形成的一套项目技术框架，主要划分为以下模块：
 
-一、rabbit-jbatis:数据库框架，通过学习mybatis等相关数据框架构进行改进封装，,主要实现以下功能：
+一、rabbit-jbatis:数据库框架,基于mybatis二次开发,主要实现以下功能：
 
 	1、全sql的注释方式,支持mybatis标签语法；
 	
