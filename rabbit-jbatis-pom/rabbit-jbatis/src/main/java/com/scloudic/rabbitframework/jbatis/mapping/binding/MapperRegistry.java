@@ -37,7 +37,7 @@ public class MapperRegistry {
         }
     }
 
-    public <T> void addMapper(Class<T> mapperInterface, String catalog) {
+    public <T> void addMapper(Class<T> mapperInterface) {
         // 判断是否为接口类
         if (mapperInterface.isInterface()) {
             if (hasMapper(mapperInterface)) {
@@ -50,7 +50,7 @@ public class MapperRegistry {
                         mapperInterface));
                 MapperParser parser = new MapperParser(configuration,
                         mapperInterface);
-                parser.parse(catalog);
+                parser.parse();
                 loadCompleted = true;
             } finally {
                 if (!loadCompleted) {

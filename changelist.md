@@ -1,3 +1,8 @@
+3.4.4.RELEASE版本说明：
+    1、jbatis优化,去除SQLProvider注解
+    2、jbatis增加对单表分页查询返回PageBan对象
+    3、jbatis中Where增加group by 及having
+    4、修复部分BUG
 3.4.3.RELEASE版本说明：
     1、修改缓存锁方式及修复bug
     2、升级jar包

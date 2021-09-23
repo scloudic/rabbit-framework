@@ -36,7 +36,6 @@ public class RabbitJbatisFactoryBean
     private DataSourceFactory dataSourceFactory;
     private Map<String, DataSourceBean> dataSourceMap;
     private Map<String, Cache> cacheMap;
-    private Map<String, String> mapperPackageMap;
     private String entityPackages;
     private String mapperPackages;
     private boolean failFast;
@@ -51,10 +50,6 @@ public class RabbitJbatisFactoryBean
 
     public void setConfigurationProperties(Properties configurationProperties) {
         this.configurationProperties = configurationProperties;
-    }
-
-    public void setMapperPackageMap(Map<String, String> mapperPackageMap) {
-        this.mapperPackageMap = mapperPackageMap;
     }
 
     public void setCacheMap(Map<String, Cache> cacheMap) {
@@ -140,15 +135,7 @@ public class RabbitJbatisFactoryBean
         }
         if (StringUtils.isNotBlank(mapperPackages)) {
             String[] mapperPackageNames = StringUtils.tokenizeToStringArray(mapperPackages);
-            configuration.addMappers(mapperPackageNames, "");
-        }
-        if (mapperPackageMap != null) {
-            for (Map.Entry<String, String> entry : mapperPackageMap.entrySet()) {
-                String catalog = entry.getKey();
-                String mapperPackages = entry.getValue();
-                String[] mapperPackageNames = StringUtils.tokenizeToStringArray(mapperPackages);
-                configuration.addMappers(mapperPackageNames, catalog);
-            }
+            configuration.addMappers(mapperPackageNames);
         }
         configuration.addCaches(cacheMap);
         return rabbitJbatisFactoryBuilder.build(configuration);

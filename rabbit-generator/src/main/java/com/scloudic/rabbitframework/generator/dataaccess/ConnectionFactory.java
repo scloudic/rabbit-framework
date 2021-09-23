@@ -73,7 +73,7 @@ public class ConnectionFactory {
         String driverClass = connectionInformation.getDriverClass();
         Driver driver;
         try {
-            driver = (Driver) ClassUtils.newInstance(driverClass);
+            driver = ClassUtils.newInstance(driverClass);
         } catch (Exception e) {
             throw new RuntimeException("Exception getting JDBC Driver"); //$NON-NLS-1$
         }

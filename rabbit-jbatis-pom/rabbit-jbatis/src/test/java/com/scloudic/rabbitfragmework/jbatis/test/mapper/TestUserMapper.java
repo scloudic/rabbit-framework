@@ -19,7 +19,7 @@ import com.scloudic.rabbitframework.jbatis.mapping.param.Where;
 @Mapper
 public interface TestUserMapper extends BaseMapper<TestUser> {
 
-    @Create("create table test_user (id int primary key auto_increment,test_name varchar(200))")
+    @Create("create table test_user (id int primary key auto_increment,test_name varchar(200),create_time datetime)")
     public int createTestUser();
 
     @Update("update test_user set test_name=#{testName} where id=#{id}")
@@ -43,6 +43,4 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     @Update("update test_user set test_name=#{params.testName} where 1=1 ")
     public int updateTestUserByWhereParam(Where whereParamType);
 
-    @Insert(batch = true)
-    public int bacthInsert(List<TestUser> testUsers);
 }

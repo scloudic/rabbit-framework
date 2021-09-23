@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Insert {
-    String value() default "";
+    String value();
 
     boolean batch() default false;
 }

@@ -3,6 +3,8 @@ package com.scloudic.rabbitframework.jbatis.springboot.configure;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.jbatis.RabbitJbatisFactory;
+import com.scloudic.rabbitframework.jbatis.cache.Cache;
+import com.scloudic.rabbitframework.jbatis.cache.impl.MapCache;
 import com.scloudic.rabbitframework.jbatis.dataaccess.DataSourceBean;
 import com.scloudic.rabbitframework.jbatis.dataaccess.datasource.*;
 import com.scloudic.rabbitframework.jbatis.spring.RabbitJbatisFactoryBean;
@@ -75,6 +77,19 @@ public class RabbitJbatisAutoConfiguration {
     @ConditionalOnMissingBean
     public RabbitJbatisFactory rabbitJbatisFactory() throws Exception {
         RabbitJbatisFactoryBean rabbitJbatisFactoryBean = new RabbitJbatisFactoryBean();
+        Map<String, String> cacheMap = rabbitJbatisProperties.getCacheMap();
+        if (cacheMap != null) {
+            Map<String, Cache> saveCacheMap = new HashMap<>();
+            for (Map.Entry<String, String> entry : cacheMap.entrySet()) {
+                String id = entry.getKey();
+                String name = entry.getValue();
+                Cache cache = (Cache) ClassUtils.newInstance(ClassUtils.classForName(name), id);
+                saveCacheMap.put(id, cache);
+            }
+            if (saveCacheMap.size() > 0) {
+                rabbitJbatisFactoryBean.setCacheMap(saveCacheMap);
+            }
+        }
         rabbitJbatisFactoryBean.setDataSourceFactory(dataSourceFactory());
         rabbitJbatisFactoryBean.setEntityPackages(rabbitJbatisProperties.getEntityPackages());
         rabbitJbatisFactoryBean.setMapperPackages(rabbitJbatisProperties.getMapperPackages());
@@ -175,18 +190,22 @@ public class RabbitJbatisAutoConfiguration {
             return jtaTransactionManager;
         }
 
+        //默认实现默认数据源事务
         DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
         DataSource dataSource = (DataSource) applicationContext.getBean(transactionProperties.getDefaultDataSourceBean());
         dataSourceTransactionManager.setDataSource(dataSource);
         dataSourceTransactionManager.setDefaultTimeout(transactionProperties.getTimeOut());
-        Map<String, String> multiTran = transactionProperties.getMultiTran();
-        for (Map.Entry<String, String> entry : multiTran.entrySet()) {
-            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
-                    .genericBeanDefinition(DataSourceTransactionManager.class);
-            beanDefinitionBuilder.addPropertyReference("dataSource", entry.getValue());
-            BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
-            BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
-            registry.registerBeanDefinition(entry.getKey(), beanDefinition);
+        //多数据源情况下开始多数据源事务注册,具体事务选项由业务决定
+        if (transactionType == TransactionProperties.TransactionType.MULTI) {
+            Map<String, String> multiTran = transactionProperties.getMultiTran();
+            for (Map.Entry<String, String> entry : multiTran.entrySet()) {
+                BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder
+                        .genericBeanDefinition(DataSourceTransactionManager.class);
+                beanDefinitionBuilder.addPropertyReference("dataSource", entry.getValue());
+                BeanDefinitionRegistry registry = (BeanDefinitionRegistry) ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
+                BeanDefinition beanDefinition = beanDefinitionBuilder.getRawBeanDefinition();
+                registry.registerBeanDefinition(entry.getKey(), beanDefinition);
+            }
         }
         return dataSourceTransactionManager;
     }

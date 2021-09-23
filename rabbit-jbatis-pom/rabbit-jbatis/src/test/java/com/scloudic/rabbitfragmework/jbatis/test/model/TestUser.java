@@ -4,6 +4,8 @@ import com.scloudic.rabbitframework.jbatis.annontations.Column;
 import com.scloudic.rabbitframework.jbatis.annontations.ID;
 import com.scloudic.rabbitframework.jbatis.annontations.Table;
 
+import java.util.Date;
+
 @Table
 public class TestUser implements java.io.Serializable {
     private static final long serialVersionUID = 6601565142528523969L;
@@ -12,14 +14,14 @@ public class TestUser implements java.io.Serializable {
     @Column
     private String testName;
     @Column
-    private Integer age;
+    private Date createTime;
 
-    public Integer getAge() {
-        return age;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Long getId() {

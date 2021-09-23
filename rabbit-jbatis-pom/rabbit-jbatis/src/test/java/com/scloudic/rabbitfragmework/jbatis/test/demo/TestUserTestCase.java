@@ -45,7 +45,7 @@ public class TestUserTestCase extends DataAccessTestCase {
         List<TestUser> testUsers = new ArrayList<TestUser>();
         testUsers.add(testUser);
         testUsers.add(testUser1);
-        int result = testMapper.bacthInsert(testUsers);
+        int result = testMapper.batchInsertEntity(testUsers);
         System.out.println(result);
     }
 
@@ -170,7 +170,6 @@ public class TestUserTestCase extends DataAccessTestCase {
         List<Object> list = new ArrayList<Object>();
         list.add(1L);
         paramType.createCriteria().andIn("id", list);
-        paramType.putProperty(TestUser::getAge, 20);
         paramType.putProperty(TestUser::getTestName,"test");
         int a = testMapper.updateByParams(paramType);
         System.out.println("dd:" + a);

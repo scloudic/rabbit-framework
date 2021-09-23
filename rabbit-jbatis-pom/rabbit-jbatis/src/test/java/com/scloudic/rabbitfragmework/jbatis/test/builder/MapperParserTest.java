@@ -1,28 +1,22 @@
 package com.scloudic.rabbitfragmework.jbatis.test.builder;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.regex.Pattern;
-
 import com.scloudic.rabbitfragmework.jbatis.test.mapper.TestUserMapper;
 import com.scloudic.rabbitfragmework.jbatis.test.model.TestUser;
+import com.scloudic.rabbitframework.jbatis.builder.Configuration;
+import com.scloudic.rabbitframework.jbatis.builder.MapperParser;
+import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
+import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
 import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
 import com.scloudic.rabbitframework.jbatis.reflect.SystemMetaObject;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.scloudic.rabbitframework.jbatis.annontations.SQLProvider;
-import com.scloudic.rabbitframework.jbatis.builder.Configuration;
-import com.scloudic.rabbitframework.jbatis.builder.MapperParser;
-import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
-import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
+import java.lang.reflect.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class MapperParserTest {
     private static final Logger logger = LoggerFactory.getLogger(MapperParserTest.class);
@@ -50,7 +44,7 @@ public class MapperParserTest {
     public void testMapperParser() {
         Configuration configuration = new Configuration();
         MapperParser mapperParser = new MapperParser(configuration, TestUserMapper.class);
-        mapperParser.parse("");
+        mapperParser.parse();
         Collection<MappedStatement> mappedStatements = configuration.getMappedStatements();
         logger.debug("mappedStatements.size():" + mappedStatements.size());
         Iterator<MappedStatement> mappedStatementIterator = mappedStatements.iterator();
@@ -58,17 +52,6 @@ public class MapperParserTest {
             MappedStatement mappedStatement = mappedStatementIterator.next();
             logger.debug("id:" + mappedStatement.getId());
         }
-    }
-
-    // @Test
-    public void testMapperSQLProvider() throws Exception {
-        Method method = TestUserMapper.class.getMethod("insertTest", null);
-        SQLProvider sqlProvider = method.getAnnotation(SQLProvider.class);
-        Class<?> typeClazz = sqlProvider.type();
-        String methodName = sqlProvider.method();
-        Method methodAnn = typeClazz.getMethod(methodName, null);
-        String string = (String) methodAnn.invoke(typeClazz.newInstance());
-        logger.debug("value:" + string);
     }
 
     @Test

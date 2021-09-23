@@ -133,20 +133,20 @@ public class ClassUtils {
         return rawType;
     }
 
-    public static Object newInstance(Class<?> clazz) {
+    public static <T> T newInstance(Class<?> clazz) {
         if (clazz == null) {
             String msg = "Class method parameter cannot be null.";
             throw new IllegalArgumentException(msg);
         }
         try {
-            return clazz.newInstance();
+            return (T) clazz.newInstance();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new NewInstanceException("Unable to instantiate class [" + clazz.getName() + "]", e);
         }
     }
 
-    public static Object newInstance(String className) {
+    public static <T> T newInstance(String className) {
         return newInstance(classForName(className));
     }
 

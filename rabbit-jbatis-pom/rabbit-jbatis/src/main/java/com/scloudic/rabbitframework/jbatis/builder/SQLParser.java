@@ -23,7 +23,6 @@ import com.scloudic.rabbitframework.core.utils.StringUtils;
  * @author: justin
  */
 public class SQLParser {
-
     private String sqlValue;
     private SqlCommendType sqlCommendType;
     private Class<?> paramType;
@@ -52,9 +51,12 @@ public class SQLParser {
             } else {
                 this.sqlValue = sqlValueSrc + " " + where + " ";
             }
-            String orderBy = "<if test=\"orderBy != null\" > order by ${orderBy} </if>";
-            String defineCondition = "<if test=\"defCondition\" > ${defineCondition} </if>";
-            this.sqlValue = this.sqlValue + defineCondition + orderBy;
+            StringBuilder sb = new StringBuilder();
+            sb.append("<if test=\"defCondition\" > ${defineCondition} </if>");
+            sb.append("<if test=\"groupBy != null\" > group by ${groupBy} </if>");
+            sb.append("<if test=\"having != null\" > having ${having} </if>");
+            sb.append("<if test=\"orderBy != null\" > order by ${orderBy} </if>");
+            this.sqlValue = this.sqlValue + sb.toString();
         } else if (sqlCommendType == SqlCommendType.UPDATE) {
             getUpdateSql(sqlValueSrc, configuration, genericMapper);
         } else {

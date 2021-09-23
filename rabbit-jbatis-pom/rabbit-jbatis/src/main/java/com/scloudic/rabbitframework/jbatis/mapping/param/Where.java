@@ -1,7 +1,8 @@
 package com.scloudic.rabbitframework.jbatis.mapping.param;
+
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.jbatis.mapping.lambda.SFunction;
 import com.scloudic.rabbitframework.jbatis.mapping.lambda.SFunctionUtils;
-import com.scloudic.rabbitframework.core.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 用于数据库统一条件组成,底层使用该类拼装成sql脚本
+ * 组成数据库sql条件、动态sql
  *
  * @since 3.3
  */
@@ -18,6 +19,8 @@ public class Where {
     protected Map<String, Object> params;
     protected String orderBy = null;
     protected String defineCondition = null;
+    protected String groupBy = null;
+    protected String having = null;
     protected String showColumns = "*";
 
     public Where() {
@@ -116,6 +119,8 @@ public class Where {
         showColumns = "*";
         orderBy = null;
         defineCondition = null;
+        groupBy = null;
+        having = null;
     }
 
     /**
@@ -140,7 +145,7 @@ public class Where {
     /**
      * 传入orderBy字段,如果orderByType为空，默认为desc排序
      *
-     * @param orderBy orderBy
+     * @param orderBy     orderBy
      * @param orderByType orderByType
      */
     public void setOrderBy(String orderBy, OrderByType orderByType) {
@@ -156,7 +161,7 @@ public class Where {
                 break;
         }
     }
-
+    
     public String getOrderBy() {
         return orderBy;
     }
@@ -171,6 +176,22 @@ public class Where {
 
     public static enum OrderByType {
         ASC, DESC;
+    }
+
+    public String getGroupBy() {
+        return groupBy;
+    }
+
+    public void setGroupBy(String groupBy) {
+        this.groupBy = groupBy;
+    }
+
+    public String getHaving() {
+        return having;
+    }
+
+    public void setHaving(String having) {
+        this.having = having;
     }
 
     public String getShowColumns() {

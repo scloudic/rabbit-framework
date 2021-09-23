@@ -2,6 +2,7 @@ package com.scloudic.rabbitframework.jbatis.spring;
 
 import static org.springframework.util.Assert.notNull;
 
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * Configuration sample:
@@ -18,7 +20,7 @@ import org.springframework.context.ApplicationContextAware;
  * <pre class="code">
  * {@code
  *   <bean class="com.scloudic.rabbitframework.jbatis.spring.MapperScannerConfigurer">
- *       <property name="basePackage" value="org.mybatis.spring.sample.mapper" />
+ *       <property name="basePackages" value="org.mybatis.spring.sample.mapper" />
  *       <property name="rabbitJbatisFactoryBeanName" value="rabbitJbatisFactory" />
  *   </bean>
  * }
@@ -27,7 +29,7 @@ import org.springframework.context.ApplicationContextAware;
 public class MapperScannerConfigurer
         implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware {
 
-    private String basePackages[];
+    private String basePackages;
 
     private String rabbitJbatisFactoryBeanName;
 
@@ -39,7 +41,7 @@ public class MapperScannerConfigurer
 
     }
 
-    public void setBasePackages(String[] basePackages) {
+    public void setBasePackages(String basePackages) {
         this.basePackages = basePackages;
     }
 
@@ -73,6 +75,7 @@ public class MapperScannerConfigurer
         scanner.setResourceLoader(this.applicationContext);
         scanner.setBeanNameGenerator(this.nameGenerator);
         scanner.registerFilters();
-        scanner.scan(this.basePackages);
+        String[] packages = StringUtils.tokenizeToStringArray(this.basePackages);
+        scanner.scan(packages);
     }
 }

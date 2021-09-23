@@ -1,8 +1,10 @@
 package com.scloudic.rabbitframework.jbatis.service;
 
+import com.scloudic.rabbitframework.core.utils.PageBean;
 import com.scloudic.rabbitframework.jbatis.mapping.BaseMapper;
 import com.scloudic.rabbitframework.jbatis.mapping.RowBounds;
 import com.scloudic.rabbitframework.jbatis.mapping.param.Where;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +22,18 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         return getBaseMapper().insertByEntity(entity);
     }
 
+
+    /**
+     * 批量插入数据
+     *
+     * @param entity list集合
+     * @return 返回批次数量
+     */
+    @Transactional
+    @Override
+    public int batchInsertEntity(List<T> entity) {
+        return getBaseMapper().batchInsertEntity(entity);
+    }
 
     @Override
     public Integer deleteById(Serializable id) {
@@ -83,9 +97,20 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     public List<T> selectEntityPage(RowBounds rowBounds) {
         return getBaseMapper().selectEntityPage(rowBounds);
     }
-    
+
     @Override
     public T selectOneByParams(Where where) {
         return getBaseMapper().selectOneByParams(where);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public PageBean<T> selectPageBeanByParams(Where where, Long pageNum, Long pageSize) {
+        Long totalCount = getBaseMapper().selectCountByParams(where);
+        PageBean<T> pageBean = new PageBean<T>(pageNum, pageSize, totalCount);
+        List<T> list = getBaseMapper().selectPageByParams(where, new RowBounds(pageBean.getStartPage(), pageBean.getPageSize()));
+
+        pageBean.setDatas(list);
+        return pageBean;
     }
 }

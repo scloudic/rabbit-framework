@@ -15,12 +15,14 @@ import com.scloudic.rabbitframework.jbatis.dataaccess.JdbcTemplateHolder;
 import com.scloudic.rabbitframework.jbatis.dataaccess.SqlDataAccess;
 import com.scloudic.rabbitframework.jbatis.intercept.Interceptor;
 import com.scloudic.rabbitframework.jbatis.intercept.InterceptorChain;
+import com.scloudic.rabbitframework.jbatis.mapping.BaseDefaultMethod;
 import com.scloudic.rabbitframework.jbatis.mapping.BoundSql;
 import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
 import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
 import com.scloudic.rabbitframework.jbatis.scripting.LanguageDriver;
 import com.scloudic.rabbitframework.jbatis.scripting.LanguageDriverImpl;
 import com.scloudic.rabbitframework.jbatis.cache.Cache;
+import com.scloudic.rabbitframework.jbatis.scripting.sql.BaseSQLParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +54,14 @@ public class Configuration {
     private LanguageDriver languageDriver = new LanguageDriverImpl();
     protected final Set<String> loadedMappers = new HashSet<String>();
     protected ObjectFactory objectFactory = new DefaultObjectFactory();
+    protected Map<String, BaseDefaultMethod> baseDefaultMethodMap = new HashMap<>();
+
+    public Configuration() {
+        BaseDefaultMethod[] baseDefaultMethods = BaseDefaultMethod.values();
+        for (BaseDefaultMethod baseDefaultMethod : baseDefaultMethods) {
+            baseDefaultMethodMap.put(baseDefaultMethod.getMethod(), baseDefaultMethod);
+        }
+    }
 
     public void setVariables(Properties variables) {
         this.variables = variables;
@@ -116,27 +126,27 @@ public class Configuration {
 
     public void addEntity(Class<?> entity) {
         Table entityAnnotation = entity.getAnnotation(Table.class);
-        if (null != entityAnnotation) {
-            this.getEntityRegistry().addEntity(entity);
-        } else {
+        if (null == entityAnnotation) {
             logger.warn(entity.getName() + " haven't @Table annotation");
+            return;
         }
+        this.getEntityRegistry().addEntity(entity);
     }
 
-    public void addMappers(String[] packageNames, String catalog) {
+    public void addMappers(String[] packageNames) {
         List<Class<?>> clazzes = ClassUtils.getClassNamePackage(packageNames);
         for (Class<?> clazz : clazzes) {
-            addMapper(clazz, catalog);
+            addMapper(clazz);
         }
     }
 
-    public <T> void addMapper(Class<T> mapperInteface, String catalog) {
-        Mapper mapperAnnotation = mapperInteface.getAnnotation(Mapper.class);
+    public <T> void addMapper(Class<T> mapperInterface) {
+        Mapper mapperAnnotation = mapperInterface.getAnnotation(Mapper.class);
         if (null == mapperAnnotation) {
-            logger.warn(mapperInteface + " haven't @Mapper annotation");
-        } else {
-            getMapperRegistry().addMapper(mapperInteface, catalog);
+            logger.warn(mapperInterface + " haven't @Mapper annotation");
+            return;
         }
+        getMapperRegistry().addMapper(mapperInterface);
     }
 
     public <T> T getMapper(Class<T> mapperInterface, SqlDataAccess sqlDataAccess) {
@@ -210,6 +220,10 @@ public class Configuration {
         return languageDriver;
     }
 
+    public BaseDefaultMethod getBaseDefaultMethodMap(String key) {
+        return baseDefaultMethodMap.get(key);
+    }
+
     protected static class StrictMap<V> extends HashMap<String, V> {
         private static final long serialVersionUID = 3367968086078794771L;
         private String name;
@@ -265,6 +279,7 @@ public class Configuration {
             }
             return value;
         }
+
 
         private String getShortName(String key) {
             final String[] keyparts = key.split("\\.");

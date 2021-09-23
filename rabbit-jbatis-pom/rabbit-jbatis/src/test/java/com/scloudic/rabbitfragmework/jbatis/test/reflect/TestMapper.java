@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface TestMapper extends BaseMapper<TestBean> {
 
-    int batchUpdate(List<TestBean> testBeans);
+    List<TestBean> batchUpdate(List<TestBean> testBeans);
 }

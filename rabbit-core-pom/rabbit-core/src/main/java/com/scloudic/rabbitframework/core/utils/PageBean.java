@@ -12,6 +12,7 @@ public class PageBean<T> {
     public static final long DEFAULT_OFFSET = 1;
     private long pageSize; // 每页显示的数据条数。
     private long totalRecord; // 总的记录条数。查询数据库得到的数据
+    private long pageNum;
     // 需要计算得来
     private long totalPage; // 总页数，通过totalRecord和pageSize计算可以得来
     // 开始索引，也就是我们在数据库中要从第几行数据开始拿，有了startIndex和pageSize，
@@ -21,22 +22,22 @@ public class PageBean<T> {
     private List<T> datas;
 
     public PageBean(Long pageNum, Long pageSize) {
-        long offset = pageNum == null ? DEFAULT_OFFSET : pageNum.longValue();
+        this.pageNum = pageNum == null ? DEFAULT_OFFSET : pageNum.longValue();
         this.pageSize = pageSize == null ? DEFAULT_LIMIT : pageSize.longValue();
-        if (offset <= 0) {
-            offset = 1;
+        if (this.pageNum <= 0) {
+            this.pageNum = 1;
         }
         // 开始索引
-        this.startPage = (offset - 1) * this.pageSize;
+        this.startPage = (this.pageNum - 1) * this.pageSize;
     }
 
     // 通过pageNum，pageSize，totalRecord计算得来tatalPage和startIndex
     // 构造方法中将pageNum，pageSize，totalRecord获得
     public PageBean(Long pageNum, Long pageSize, long totalRecord) {
-        long offset = pageNum == null ? DEFAULT_OFFSET : pageNum.longValue();
+        this.pageNum = pageNum == null ? DEFAULT_OFFSET : pageNum.longValue();
         this.pageSize = pageSize == null ? DEFAULT_LIMIT : pageSize.longValue();
-        if (offset <= 0) {
-            offset = 1;
+        if (this.pageNum <= 0) {
+            this.pageNum = 1;
         }
         this.totalRecord = totalRecord;
         // totalPage 总页数
@@ -48,7 +49,7 @@ public class PageBean<T> {
             this.totalPage = totalRecord / this.pageSize + 1;
         }
         // 开始索引
-        this.startPage = (offset - 1) * this.pageSize;
+        this.startPage = (this.pageNum - 1) * this.pageSize;
     }
 
     public long getPageSize() {
@@ -73,6 +74,14 @@ public class PageBean<T> {
 
     public void setTotalPage(long totalPage) {
         this.totalPage = totalPage;
+    }
+
+    public long getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(long pageNum) {
+        this.pageNum = pageNum;
     }
 
     public long getStartPage() {

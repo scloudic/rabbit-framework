@@ -2,20 +2,19 @@ package com.scloudic.rabbitframework.jbatis.mapping.binding;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
 import com.scloudic.rabbitframework.jbatis.annontations.MapKey;
 import com.scloudic.rabbitframework.jbatis.annontations.Param;
 import com.scloudic.rabbitframework.jbatis.builder.Configuration;
 import com.scloudic.rabbitframework.jbatis.dataaccess.SqlDataAccess;
 import com.scloudic.rabbitframework.jbatis.exceptions.BindingException;
-import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
 import com.scloudic.rabbitframework.jbatis.mapping.RowBounds;
 import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
 
@@ -35,9 +34,10 @@ public class MapperMethod {
     }
 
     /**
-     *  mapper方法执行，通过{@link MapperProxy}中调用
-     * @param sqlDataAccess  sqlDataAccess
-     * @param args args
+     * mapper方法执行，通过{@link MapperProxy}中调用
+     *
+     * @param sqlDataAccess sqlDataAccess
+     * @param args          args
      * @return obj
      */
     public Object execute(SqlDataAccess sqlDataAccess, Object[] args) {
@@ -239,10 +239,11 @@ public class MapperMethod {
         private SortedMap<Integer, String> getParams(Method method,
                                                      boolean hasNamedParameters) {
             final SortedMap<Integer, String> params = new TreeMap<Integer, String>();
-            final Class<?>[] argTypes = method.getParameterTypes();
-
-            for (int i = 0; i < argTypes.length; i++) {
-                if (!RowBounds.class.isAssignableFrom(argTypes[i])) {
+            final Parameter[] parameters = method.getParameters();
+            int parametersSize = parameters.length;
+            for (int i = 0; i < parametersSize; i++) {
+                Parameter parameter = parameters[i];
+                if (!RowBounds.class.isAssignableFrom(parameter.getType())) {
                     String paramName = String.valueOf(params.size());
                     if (hasNamedParameters) {
                         paramName = getParamNameFormAnnotation(method, i,
@@ -300,52 +301,6 @@ public class MapperMethod {
                 }
             }
             return hasNameParams;
-        }
-    }
-
-    private static class SqlCommand {
-        private String name;
-        private SqlCommendType commendType;
-        private boolean batchUpdate = false;
-
-        public SqlCommand(Class<?> mapperInterface, Method method,
-                          Configuration configuration) {
-            String statementName = mapperInterface.getName() + "."
-                    + method.getName();
-            MappedStatement ms = null;
-            if (configuration.hasStatement(statementName)) {
-                ms = configuration.getMappedStatement(statementName);
-            } else if (!mapperInterface.equals(method.getDeclaringClass()
-                    .getName())) {
-                String parentStatementName = method.getDeclaringClass()
-                        .getName() + "." + method.getName();
-                if (configuration.hasStatement(parentStatementName)) {
-                    ms = configuration.getMappedStatement(parentStatementName);
-                }
-            }
-            if (ms == null) {
-                throw new BindingException(
-                        "Invalid bound statement (not found): " + statementName);
-            }
-            name = ms.getId();
-            commendType = ms.getSqlCommendType();
-            batchUpdate = ms.isBatchUpdate();
-            if (commendType == SqlCommendType.UNKNOWN) {
-                throw new BindingException("Unknown execution method for: "
-                        + name);
-            }
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isBatchUpdate() {
-            return batchUpdate;
-        }
-
-        public SqlCommendType getCommendType() {
-            return commendType;
         }
     }
 
