@@ -15,8 +15,10 @@
  */
 package com.scloudic.rabbitframework.web.resources;
 
+import com.alibaba.fastjson.support.jaxrs.FastJsonFeature;
 import com.scloudic.rabbitframework.web.exceptions.ExceptionMapperSupport;
 import com.scloudic.rabbitframework.web.filter.XSSFilter;
+import com.scloudic.rabbitframework.web.json.FastJsonResolver;
 import com.scloudic.rabbitframework.web.mvc.freemarker.FreemarkerMvcFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.mvc.jsp.JspMvcFeature;
@@ -31,6 +33,9 @@ public class DefaultApplicationConfig extends ApplicationConfig {
         register(MultiPartFeature.class);
         register(JspMvcFeature.class);
         register(XSSFilter.class);
+        register(FastJsonResolver.class);
+        register(FastJsonFeature.class);
+
     }
 
 

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -53,6 +54,10 @@ public class RequestLogInterceptor {
                 Parameter parameter = parameters[i];
                 Annotation[] annotations = parameter.getAnnotations();
                 if (annotations.length == 0) {
+                    continue;
+                }
+                Context context = parameter.getAnnotation(Context.class);
+                if (context != null) {
                     continue;
                 }
                 String name = getAnnotationName(parameter, annotations);

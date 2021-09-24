@@ -7,6 +7,8 @@ import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.Map;
  *
  * @author: justin.liang
  */
+@Produces(MediaType.APPLICATION_JSON)
 public abstract class AbstractContextResource extends RabbitContextResource {
     public String getMessage(String messageKey) {
         return ServletContextHelper.getMessage(messageKey);
@@ -31,19 +34,22 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return ServletContextHelper.getMessage(messageKey, request.getLocale());
     }
 
+    @Deprecated
     public Response getSimpleResponse(boolean result) {
         return getSimpleResponse(result, null);
     }
 
+    @Deprecated
     public Response getSimpleResponse(boolean result, Object data) {
         return getSimpleResponse(result, data, true, true);
     }
 
-
+    @Deprecated
     public Response getSimpleResponse(boolean result, Object data, boolean isNullToEmpty) {
         return getSimpleResponse(result, data, isNullToEmpty, true);
     }
 
+    @Deprecated
     public Response getSimpleResponse(boolean result, Object data,
                                       boolean isNullToEmpty, boolean isSkipTransientField) {
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
@@ -60,19 +66,23 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return ResponseUtils.ok(dataJson);
     }
 
+    @Deprecated
     public Response getResponse(int status, String message) {
         return getResponse(status, message, null, true);
     }
 
+    @Deprecated
     public Response getResponse(boolean status, String message, Object data) {
         int statusInt = status ? StatusCode.SC_OK.getValue() : StatusCode.FAIL.getValue();
         return getResponse(statusInt, message, data, true);
     }
 
+    @Deprecated
     public Response getResponse(int status, String message, Object data, boolean isNullToEmpty) {
         return getResponse(status, message, data, isNullToEmpty, true);
     }
 
+    @Deprecated
     public Response getResponse(int status, String message, Object data,
                                 boolean isNullToEmpty,
                                 boolean isSkipTransientField) {
@@ -90,6 +100,34 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         dataJsonResponse.setMessage(message);
         String value = dataJsonResponse.toJson(isNullToEmpty, isSkipTransientField);
         return ResponseUtils.ok(value);
+    }
+
+    public <T> Result<T> success(String message, T data) {
+        return Result.success(message, data);
+    }
+
+    public <T> Result<T> success(T data) {
+        return success(getMessage("success"), data);
+    }
+
+    public <T> Result<T> success() {
+        return success(getMessage("success"), null);
+    }
+
+    public <T> Result<T> failure(StatusCode statusCode, String message, T data) {
+        return Result.failure(statusCode, message, data);
+    }
+
+    public <T> Result<T> failure(StatusCode statusCode, String message) {
+        return failure(statusCode, message, null);
+    }
+
+    public <T> Result<T> failure(String message) {
+        return failure(StatusCode.FAIL, message, null);
+    }
+
+    public <T> Result<T> failure() {
+        return failure(getMessage("fail"));
     }
 
     public String getHeader(HttpServletRequest request, String key) {

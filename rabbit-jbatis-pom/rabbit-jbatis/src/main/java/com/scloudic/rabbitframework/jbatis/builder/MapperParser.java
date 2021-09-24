@@ -8,6 +8,7 @@ import com.scloudic.rabbitframework.jbatis.dataaccess.KeyGenerator;
 import com.scloudic.rabbitframework.jbatis.dataaccess.dialect.Dialect;
 import com.scloudic.rabbitframework.jbatis.exceptions.BuilderException;
 import com.scloudic.rabbitframework.jbatis.mapping.*;
+import com.scloudic.rabbitframework.jbatis.mapping.binding.EntityRegistry;
 import com.scloudic.rabbitframework.jbatis.mapping.binding.MapperMethod;
 import com.scloudic.rabbitframework.jbatis.mapping.rowmapper.RowMapperUtil;
 import com.scloudic.rabbitframework.jbatis.scripting.LanguageDriver;
@@ -145,12 +146,17 @@ public class MapperParser {
             String methodName = method.getName();
             BaseDefaultMethod baseDefaultMethod = configuration.getBaseDefaultMethodMap(methodName);
             if (baseDefaultMethod != null && genericMapper != null) {
-                BaseSQLParser baseSQLParser = ClassUtils.newInstance(baseDefaultMethod.getClazz());
-                baseSQLParser.setSqlScript(baseDefaultMethod.getSql());
-                baseSQLParser.setConfiguration(configuration);
-                baseSQLParser.setGenericClass(genericMapper);
-                baseSQLParser.setParamType(paramType);
-                return baseSQLParser;
+                String paramTypeName = genericMapper.getName();
+                EntityRegistry entityRegistry = configuration.getEntityRegistry();
+                boolean isEntity = entityRegistry.hasEntityMap(paramTypeName);
+                if (isEntity) {
+                    BaseSQLParser baseSQLParser = ClassUtils.newInstance(baseDefaultMethod.getClazz());
+                    baseSQLParser.setSqlScript(baseDefaultMethod.getSql());
+                    baseSQLParser.setConfiguration(configuration);
+                    baseSQLParser.setGenericClass(genericMapper);
+                    baseSQLParser.setParamType(paramType);
+                    return baseSQLParser;
+                }
             }
             Class<? extends Annotation> sqlAnnotationType = getAnnotationType(method);
             if (sqlAnnotationType == null) {

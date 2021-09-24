@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.4.4.RELEASE</version>
+    <version>3.4.5.dev</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -72,7 +72,7 @@
         <xstream.version>1.4.18</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
-        <rabbit-framework.version>3.4.4.RELEASE</rabbit-framework.version>
+        <rabbit-framework.version>3.4.5.dev</rabbit-framework.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -752,6 +752,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
             </plugin>
         </plugins>
     </build>

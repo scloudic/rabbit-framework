@@ -1,7 +1,7 @@
 package com.scloudic.rabbitframework.web;
 
-import com.scloudic.rabbitframework.core.utils.StatusCode;
 import com.scloudic.rabbitframework.core.utils.JsonUtils;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
 
 import java.util.HashMap;
 import java.util.Map;
