@@ -1,11 +1,12 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
-import com.scloudic.rabbitframework.core.utils.JsonUtils;
+import com.scloudic.rabbitframework.core.reflect.MetaClass;
 import com.scloudic.rabbitframework.example.web.biz.TestBiz;
-import com.scloudic.rabbitframework.example.web.rest.ExmAbstractContextResource;
 import com.scloudic.rabbitframework.example.web.rest.Test;
+import com.scloudic.rabbitframework.web.AbstractContextResource;
 import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.annotations.FormValid;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,12 @@ import javax.inject.Singleton;
 import javax.validation.constraints.NotBlank;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
 
 @Component
 @Singleton
 @Path("/test")
-public class TestResource extends ExmAbstractContextResource {
+public class TestResource extends AbstractContextResource {
     private static final Logger logger = LoggerFactory.getLogger(TestResource.class);
     @Autowired
     private TestBiz testBiz;
@@ -53,7 +51,7 @@ public class TestResource extends ExmAbstractContextResource {
     @POST
     @Path("json")
     @FormValid
-    public Result<Test> json(Test test) {
+    public Result<Test> json(@NotBlank Test test) {
         return success(test);
     }
 

@@ -1,6 +1,6 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
-import com.scloudic.rabbitframework.example.web.rest.ExmAbstractContextResource;
+import com.scloudic.rabbitframework.web.AbstractContextResource;
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 @Singleton
 @Path("/freemarker")
-public class FreemarkerResource extends ExmAbstractContextResource {
+public class FreemarkerResource extends AbstractContextResource {
     @GET
     @Path("html")
     @Produces(MediaType.TEXT_HTML)

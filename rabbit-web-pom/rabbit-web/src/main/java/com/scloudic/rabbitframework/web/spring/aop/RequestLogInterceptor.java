@@ -11,6 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @author: justin
  */
 @Aspect
+@Order(1)
 public class RequestLogInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(RequestLogInterceptor.class);
 
@@ -53,16 +55,13 @@ public class RequestLogInterceptor {
             for (int i = 0; i < parameterLength; i++) {
                 Parameter parameter = parameters[i];
                 Annotation[] annotations = parameter.getAnnotations();
-                if (annotations.length == 0) {
-                    continue;
-                }
                 Context context = parameter.getAnnotation(Context.class);
                 if (context != null) {
                     continue;
                 }
                 String name = getAnnotationName(parameter, annotations);
                 if (StringUtils.isBlank(name)) {
-                    continue;
+                    name = parameter.getName();
                 }
                 Object value = args[i];
                 paramsValue.put(name, value);
