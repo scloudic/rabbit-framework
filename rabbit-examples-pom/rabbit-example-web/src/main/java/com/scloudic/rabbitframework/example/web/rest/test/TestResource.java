@@ -45,17 +45,16 @@ public class TestResource extends ExmAbstractContextResource {
 
     @POST
     @Path("postParams")
-    public Object postParams(@FormParam("name") String name) {
-        return getSimpleResponse(true, name);
+    @FormValid
+    public Object postParams(@BeanParam Test test) {
+        return getSimpleResponse(true, test);
     }
 
     @POST
     @Path("json")
-    public Result<List<Test>> json(String name) {
-        List<Test> list = new ArrayList<>();
-        Test test = new Test();
-        list.add(test);
-        return success(list);
+    @FormValid
+    public Result<Test> json(Test test) {
+        return success(test);
     }
 
     @POST

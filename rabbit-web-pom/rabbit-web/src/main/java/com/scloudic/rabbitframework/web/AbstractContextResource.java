@@ -34,22 +34,19 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return ServletContextHelper.getMessage(messageKey, request.getLocale());
     }
 
-    @Deprecated
     public Response getSimpleResponse(boolean result) {
         return getSimpleResponse(result, null);
     }
 
-    @Deprecated
     public Response getSimpleResponse(boolean result, Object data) {
         return getSimpleResponse(result, data, true, true);
     }
 
-    @Deprecated
     public Response getSimpleResponse(boolean result, Object data, boolean isNullToEmpty) {
         return getSimpleResponse(result, data, isNullToEmpty, true);
     }
 
-    @Deprecated
+
     public Response getSimpleResponse(boolean result, Object data,
                                       boolean isNullToEmpty, boolean isSkipTransientField) {
         DataJsonResponse dataJsonResponse = new DataJsonResponse();
@@ -66,23 +63,23 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return ResponseUtils.ok(dataJson);
     }
 
-    @Deprecated
+
     public Response getResponse(int status, String message) {
         return getResponse(status, message, null, true);
     }
 
-    @Deprecated
+
     public Response getResponse(boolean status, String message, Object data) {
         int statusInt = status ? StatusCode.SC_OK.getValue() : StatusCode.FAIL.getValue();
         return getResponse(statusInt, message, data, true);
     }
 
-    @Deprecated
+
     public Response getResponse(int status, String message, Object data, boolean isNullToEmpty) {
         return getResponse(status, message, data, isNullToEmpty, true);
     }
 
-    @Deprecated
+
     public Response getResponse(int status, String message, Object data,
                                 boolean isNullToEmpty,
                                 boolean isSkipTransientField) {

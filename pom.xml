@@ -72,6 +72,7 @@
         <xstream.version>1.4.18</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
+        <javax.el-api.version>3.0.0</javax.el-api.version>
         <rabbit-framework.version>3.4.5.dev</rabbit-framework.version>
     </properties>
     <name>rabbit-framework</name>
@@ -192,6 +193,16 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator-cdi</artifactId>
                 <version>${hibernate.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.redisson</groupId>

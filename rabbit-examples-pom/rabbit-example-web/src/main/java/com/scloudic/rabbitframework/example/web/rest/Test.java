@@ -1,6 +1,13 @@
 package com.scloudic.rabbitframework.example.web.rest;
 
-public class Test {
+import com.scloudic.rabbitframework.web.spring.aop.FormValidBean;
+
+import javax.validation.constraints.NotBlank;
+import javax.ws.rs.FormParam;
+
+public class Test{
+    @NotBlank
+    @FormParam("name")
     private String name;
 
     public String getName() {

@@ -39,8 +39,7 @@ public class Result<T> {
     }
 
     public static <T> Result<T> failure() {
-        return new Result<T>(ServletContextHelper.getMessage("fail"),
-                StatusCode.FAIL.getValue(), null);
+        return failure(ServletContextHelper.getMessage("fail"));
     }
 
     public String getMessage() {
