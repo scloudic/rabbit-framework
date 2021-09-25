@@ -7,9 +7,6 @@ import ${importPackage};
 import com.scloudic.rabbitframework.jbatis.annontations.*;
 import java.io.Serializable;
 
-/**
-* This class corresponds to the database table ${entity.tableName}
-*/
 @Table
 public class ${entity.objectName}${fileSuffix} implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,9 +14,9 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
 
 <#list entity.idProperties as idProperties>
     /**
-    * This field corresponds to the database column ${entity.tableName}.${idProperties.columnName}
-    * <p>
-    * description:${idProperties.remarks}
+    *
+    * ${idProperties.remarks}
+    *
     */
     <#if entity.dialect?contains("oracle") && idProperties.autoincrement==true>
     @ID(keyType = GenerationType.SEQUENCE)
@@ -33,9 +30,9 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
 </#list>
 <#list entity.columnProperties as columnProperties>
     /**
-    * This field corresponds to the database column ${entity.tableName}.${columnProperties.columnName}
-    * <p>
-    * description:${columnProperties.remarks}
+    *
+    * ${columnProperties.remarks}
+    *
     */
     @Column
     private ${columnProperties.javaType.shortName} ${columnProperties.javaProperty};

@@ -96,7 +96,7 @@ public class FormSubmitValidInterceptor {
             result.setStatus(StatusCode.SC_VALID_ERROR.getValue());
             result.setMessage(JsonUtils.toJson(fieldErrors));
             String resultJson = result.toJson();
-            logger.debug("resultJson:" + resultJson);
+            logger.debug("表单验证结果:" + resultJson);
             return ResponseUtils.ok(resultJson);
         }
         return pjp.proceed();

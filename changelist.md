@@ -1,7 +1,7 @@
 3.4.5.RELEASE版本说明:
 
     1、优化web层，添加Result统一返回类。
-    2、默认json返回
+    2、修改json解释，使用FastJson替换默认Jackson
     3、优化日志打印信息
     4、优化验证非空判断
     5、修复部分BUG
