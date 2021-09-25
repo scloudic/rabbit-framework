@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.scloudic</groupId>
 		<artifactId>rabbit-framework</artifactId>
-		<version>3.4.5.dev</version>
+		<version>3.4.5.RELEASE</version>
 <!--		<relativePath>../pom.xml</relativePath>-->
 	</parent>
 	<artifactId>rabbit-examples-pom</artifactId>
