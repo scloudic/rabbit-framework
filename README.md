@@ -18,7 +18,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
 	6、继承RoutingDataSource类,支持多租户模式 
 	
 
-二、rabbit-security:权限框架,对[shiro_1.7.1](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
+二、rabbit-security:权限框架,对[shiro_1.8.0](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
 
     1、支持redis缓存模块。
     2、新增通过url配置权限过滤器
