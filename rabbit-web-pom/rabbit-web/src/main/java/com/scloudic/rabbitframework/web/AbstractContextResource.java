@@ -115,6 +115,10 @@ public abstract class AbstractContextResource extends RabbitContextResource {
         return Result.failure(statusCode, message, data);
     }
 
+    public <T> Result<T> failure(StatusCode statusCode) {
+        return Result.failure(statusCode);
+    }
+
     public <T> Result<T> failure(StatusCode statusCode, String message) {
         return failure(statusCode, message, null);
     }
@@ -125,6 +129,14 @@ public abstract class AbstractContextResource extends RabbitContextResource {
 
     public <T> Result<T> failure() {
         return failure(getMessage("fail"));
+    }
+
+    public static <T> Result<T> failure(int status) {
+        return Result.failure(status);
+    }
+
+    public static <T> Result<T> failure(int status, String message) {
+        return Result.failure(status, message);
     }
 
     public String getHeader(HttpServletRequest request, String key) {

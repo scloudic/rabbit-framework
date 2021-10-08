@@ -9,9 +9,7 @@ public class FastJsonResolver implements ContextResolver<FastJsonConfig> {
     // 用FastJson替换掉默认的Jackson
     public FastJsonConfig getContext(Class<?> type) {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteNullListAsEmpty, SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullBooleanAsFalse, SerializerFeature.SkipTransientField);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue, SerializerFeature.SkipTransientField);
         return fastJsonConfig;
     }
 }

@@ -34,8 +34,25 @@ public class Result<T> {
         return failure(statusCode, message, null);
     }
 
+
+    public static <T> Result<T> failure(int status, String message, T data) {
+        return new Result<T>(message, status, data);
+    }
+
+    public static <T> Result<T> failure(int status, String message) {
+        return failure(status, message, null);
+    }
+
+    public static <T> Result<T> failure(StatusCode statusCode) {
+        return new Result<T>(ServletContextHelper.getMessage("fail"), statusCode.getValue(), null);
+    }
+
     public static <T> Result<T> failure(String message) {
         return new Result<T>(message, StatusCode.FAIL.getValue(), null);
+    }
+
+    public static <T> Result<T> failure(int status) {
+        return new Result<T>(ServletContextHelper.getMessage("fail"), status, null);
     }
 
     public static <T> Result<T> failure() {

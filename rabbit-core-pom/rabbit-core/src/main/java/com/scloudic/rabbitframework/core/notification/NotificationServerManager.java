@@ -1,31 +1,21 @@
 package com.scloudic.rabbitframework.core.notification;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-//@Component
-//@ManagedResource(objectName = NotificationServerManager.MBEAN_NAME, description = "消息通知服务")
 public class NotificationServerManager implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(NotificationServerManager.class);
-    public static final String NULL_SUBSCRIPTION = "NULL";
-    public static final String MBEAN_NAME = "auto:name=NotificationServerManager";
     private final ConcurrentMap<Class<? extends NotificationServerListener>, Class<? extends NotificationEvent>> eventsMap;
     private final BlockingDeque<NotificationEvent> eventQueue;
     private ExecutorService executorService = null;
     private final Set listeners;
     private volatile boolean disposed = false;
-    // private Object lock = new Object();
 
     public NotificationServerManager() {
         eventsMap = new ConcurrentHashMap<Class<? extends NotificationServerListener>, Class<? extends NotificationEvent>>();
@@ -33,7 +23,6 @@ public class NotificationServerManager implements Runnable {
         listeners = new ConcurrentHashSet();
     }
 
-    // @ManagedOperation(description = "启动服务")
     public void start() {
         disposed = false;
         executorService = Executors.newCachedThreadPool();
@@ -45,7 +34,7 @@ public class NotificationServerManager implements Runnable {
     /**
      * 注册事件类型
      *
-     * @param eventType eventType
+     * @param eventType    eventType
      * @param listenerType listenerType
      */
     public void registerEventType(Class<? extends NotificationEvent> eventType,
@@ -85,7 +74,6 @@ public class NotificationServerManager implements Runnable {
         }
     }
 
-    // @ManagedOperation(description = "停止服务")
     public void dispose() {
         this.disposed = true;
         eventsMap.clear();
