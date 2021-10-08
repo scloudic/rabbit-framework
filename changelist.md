@@ -1,3 +1,10 @@
+3.4.6.RELEASE版本说明:
+
+    1、修改web层，Result添加自定义状态参数。
+    2、修改web层json返回解释
+    3、shiro版本升级到1.8.0
+    4、修复部分BUG
+    
 3.4.5.RELEASE版本说明:
 
     1、优化web层，添加Result统一返回类。
