@@ -1,3 +1,7 @@
+3.4.7.RELEASE版本说明:
+
+    1、修改shiro，支持获取容器session
+    
 3.4.6.RELEASE版本说明:
 
     1、修改web层，Result添加自定义状态参数。
