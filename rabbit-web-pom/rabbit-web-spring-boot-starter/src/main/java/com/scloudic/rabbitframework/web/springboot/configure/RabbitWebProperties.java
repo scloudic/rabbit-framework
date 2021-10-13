@@ -14,6 +14,9 @@ public class RabbitWebProperties {
     private String restPackages = "";
     private boolean requestLog = false;
     private Integer filterOrder = 0;
+    private boolean xssFilter = true;
+    private String freemarkerExtensions = "html,ftl";
+
     /**
      * 静态资源过滤正则
      */
@@ -71,6 +74,20 @@ public class RabbitWebProperties {
         this.templateVariablePath = templateVariablePath;
     }
 
+    public boolean isXssFilter() {
+        return xssFilter;
+    }
+
+    public void setXssFilter(boolean xssFilter) {
+        this.xssFilter = xssFilter;
+    }
+    public String getFreemarkerExtensions() {
+        return freemarkerExtensions;
+    }
+
+    public void setFreemarkerExtensions(String freemarkerExtensions) {
+        this.freemarkerExtensions = freemarkerExtensions;
+    }
     public Integer getFilterOrder() {
         return filterOrder;
     }

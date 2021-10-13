@@ -1,16 +1,15 @@
 package com.scloudic.rabbitframework.web.springboot.configure;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.ws.rs.core.Feature;
-import javax.ws.rs.ext.Provider;
-
 import com.scloudic.rabbitframework.core.springboot.configure.RabbitCommonsAutoConfiguration;
+import com.scloudic.rabbitframework.core.utils.ClassUtils;
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.web.AbstractContextResource;
 import com.scloudic.rabbitframework.web.annotations.NoProvider;
+import com.scloudic.rabbitframework.web.filter.XSSFilter;
 import com.scloudic.rabbitframework.web.resources.DefaultApplicationConfig;
+import com.scloudic.rabbitframework.web.spring.aop.FormSubmitValidInterceptor;
+import com.scloudic.rabbitframework.web.spring.aop.RequestLogInterceptor;
+import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -21,20 +20,17 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.scloudic.rabbitframework.web.spring.aop.FormSubmitValidInterceptor;
-import com.scloudic.rabbitframework.web.spring.aop.RequestLogInterceptor;
-import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
-import com.scloudic.rabbitframework.core.utils.ClassUtils;
-import com.scloudic.rabbitframework.core.utils.StringUtils;
+import javax.ws.rs.core.Feature;
+import javax.ws.rs.ext.Provider;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @AutoConfigureAfter(RabbitCommonsAutoConfiguration.class)
-// @AutoConfigureBefore(JerseyAutoConfiguration.class)
 @AutoConfigureBefore(RabbitWebFilterAutoConfiguration.class)
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
-    // private static final Logger logger =
-    // LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
     private static String JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_JSP = "jersey.config.server.mvc.templateBasePath.jsp";
     private static String JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_FREEMARKER = "jersey.config.server.mvc.templateBasePath.freemarker";
     private final RabbitWebProperties rabbitWebProperties;
@@ -48,9 +44,12 @@ public class RabbitWebAutoConfiguration {
     public ResourceConfig resourceConfig() {
         Map<String, Object> properties = new HashMap<String, Object>();
         ResourceConfig resourceConfig = new DefaultApplicationConfig();
+        if (rabbitWebProperties.isXssFilter()) {
+            resourceConfig.register(XSSFilter.class);
+        }
         String templatePathJsp = rabbitWebProperties.getJspPath();
         String templatePathFtl = rabbitWebProperties.getFreemarkerPath();
-        properties.put("jersey.config.server.mvc.templateBasePath.freemarker.extensions", "html,ftl");
+        properties.put("jersey.config.server.mvc.templateBasePath.freemarker.extensions", rabbitWebProperties.getFreemarkerExtensions());
         properties.put("jersey.config.server.mvc.templateBasePath.freemarker.templateVariable", rabbitWebProperties.getTemplateVariablePath());
         properties.put("jersey.config.server.wadl.disableWadl", "true");
         properties.put("jersey.config.servlet.filter.staticContentRegex",

@@ -36,7 +36,6 @@ import java.util.EnumSet;
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableConfigurationProperties(RabbitWebProperties.class)
 @AutoConfigureBefore(DispatcherServletAutoConfiguration.class)
-//使用shiro比shiro慢执行
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 2)
 public class RabbitWebFilterAutoConfiguration implements ServletContextAware {
     private static final Logger logger = LoggerFactory.getLogger(RabbitWebFilterAutoConfiguration.class);
@@ -55,7 +54,6 @@ public class RabbitWebFilterAutoConfiguration implements ServletContextAware {
     @Bean
     @ConditionalOnMissingFilterBean(RequestContextFilter.class)
     public FilterRegistrationBean<RequestContextFilter> requestContextFilter() {
-        logger.debug("WebrequestContextFilter过滤器加载");
         FilterRegistrationBean<RequestContextFilter> registration = new FilterRegistrationBean<RequestContextFilter>();
         registration.setFilter(new RequestContextFilter());
         registration.setOrder(this.rabbitWebProperties.getFilterOrder().intValue() - 1);
@@ -66,7 +64,6 @@ public class RabbitWebFilterAutoConfiguration implements ServletContextAware {
     @Bean
     @ConditionalOnMissingFilterBean(ServletContainer.class)
     public FilterRegistrationBean<ServletContainer> rabbitWebFilterRegistration() {
-        logger.debug("Web过滤器加载");
         FilterRegistrationBean<ServletContainer> registration = new FilterRegistrationBean<>();
         registration.setFilter(new RabbitServletContainer(this.resourceConfig));
         registration.setUrlPatterns(Collections.singletonList("/*"));

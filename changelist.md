@@ -1,6 +1,8 @@
 3.4.7.RELEASE版本说明:
 
     1、修改shiro，支持获取容器session
+    2、web层添加动态属性
+    3、优化修复问题
     
 3.4.6.RELEASE版本说明:
 

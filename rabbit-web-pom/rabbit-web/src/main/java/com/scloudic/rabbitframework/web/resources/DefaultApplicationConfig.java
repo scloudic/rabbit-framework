@@ -32,7 +32,6 @@ public class DefaultApplicationConfig extends ApplicationConfig {
         register(FreemarkerMvcFeature.class);
         register(MultiPartFeature.class);
         register(JspMvcFeature.class);
-        register(XSSFilter.class);
         register(FastJsonResolver.class);
         register(FastJsonFeature.class);
 
