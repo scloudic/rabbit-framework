@@ -6,6 +6,8 @@ spring:
   messages:
     basename: messages/globalMessages
 rabbit:
+  redisson:
+    open-status: false
   web:
     rest-packages: com.scloudic.rabbitframework.example.web.rest
     request-log: true
@@ -17,13 +19,13 @@ rabbit:
       path: /
     sessionIdCookieEnabled: true
     tokenEnabled: true
-      #filter-chain-definitions:
+    #filter-chain-definitions:
     # uriPerms: /freemarker/*
     session-dao-key-prefix: example_session_test
     realm-bean-names:
       - exampleRealm
-#    session-type: local
-#    cache-type: redis
+    session-type: local
+    cache-type: memory
   commons:
     front-black: true
     page404: false

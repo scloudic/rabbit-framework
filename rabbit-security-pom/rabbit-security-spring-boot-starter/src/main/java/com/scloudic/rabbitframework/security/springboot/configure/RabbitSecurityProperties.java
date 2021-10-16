@@ -3,6 +3,7 @@ package com.scloudic.rabbitframework.security.springboot.configure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class RabbitSecurityProperties {
     private boolean singleUser = false;
     //是否开启session验证定时任务
     private boolean sessionValidationSchedulerEnabled = false;
+    private Map<String, FilterProperties> filters = new HashMap<String, FilterProperties>();
     private List<String> realmBeanNames = new ArrayList<String>();
 
     public List<String> getRealmBeanNames() {
@@ -129,6 +131,14 @@ public class RabbitSecurityProperties {
 
     public void setSessionValidationSchedulerEnabled(boolean sessionValidationSchedulerEnabled) {
         this.sessionValidationSchedulerEnabled = sessionValidationSchedulerEnabled;
+    }
+
+    public Map<String, FilterProperties> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(Map<String, FilterProperties> filters) {
+        this.filters = filters;
     }
 
     public boolean isSingleUser() {

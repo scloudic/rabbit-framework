@@ -1,6 +1,12 @@
+3.4.8.RELEASE版本说明:
+
+    1、security中的springboot配置添加自定义过滤(Filter)
+    2、redisson-springboot添加Bean的启用配置
+    
+    
 3.4.7.RELEASE版本说明:
 
-    1、修改shiro，支持获取容器session
+    1、修改security，支持获取容器session
     2、web层添加动态属性
     3、优化修复问题
     
