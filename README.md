@@ -29,7 +29,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
     
    | 配置名称 | 注解名称 | 权限说明|
    | :-----:| :----: |:----: |
-   | uriPerms | UriPermissions | uri地区权限配置 |
+   | uriPerms | UriPermissions | uri权限配置 |
    | rolesOr | 无 | 多角色"或" 关系配置,springboot配置如：rolesOr.login,url |
 
 三、rabbit-web:web-rest框架，集成[jersey2](https://github.com/jersey/jersey)框架,封装相关接口便于快速开发
