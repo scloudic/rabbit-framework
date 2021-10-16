@@ -1,11 +1,8 @@
 rabbit:
   security:
     filter-chain-definitions:
-      /userdetail/**: authc
-      /imMedicalRecord/**: authc
-      /payOrder/**: authc
-      /prescription/**: authc
-      /follow/updateFollow: authc
+      authc: /userdetail/**,/imMedicalRecord/**,/payOrder/**,/prescription/**,/follow/updateFollow
+
     #默认值
     filter-urls: /images/**,/lib/**,/res/**,/static/**
     #默认值

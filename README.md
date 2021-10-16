@@ -24,7 +24,13 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
     2、新增通过url配置权限过滤器
     3、增加权限缓存过期处理。
     4、token机制。
+   
+   新增权限说明
     
+   | 配置名称 | 注解名称 | 权限说明|
+   | :-----:| :----: |:----: |
+   | uriPerms | UriPermissions | uri地区权限配置 |
+   | rolesOr | 无 | 多角色"或" 关系配置,springboot配置如：rolesOr.login,url |
 
 三、rabbit-web:web-rest框架，集成[jersey2](https://github.com/jersey/jersey)框架,封装相关接口便于快速开发
 
