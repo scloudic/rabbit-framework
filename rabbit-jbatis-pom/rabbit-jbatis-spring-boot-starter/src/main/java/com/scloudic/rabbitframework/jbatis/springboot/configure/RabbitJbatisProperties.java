@@ -12,14 +12,14 @@ public class RabbitJbatisProperties {
     private String entityPackages;
     private String mapperPackages;
     private Map<String, String> cacheMap = null;
-    private Map<String, DataSourceProperties> dataSourceBean = new HashMap<String, DataSourceProperties>();
+    private Map<String, DataSourceProperties> dataSourceBeans = new HashMap<String, DataSourceProperties>();
 
-    public Map<String, DataSourceProperties> getDataSourceBean() {
-        return dataSourceBean;
+    public Map<String, DataSourceProperties> getDataSourceBeans() {
+        return dataSourceBeans;
     }
 
-    public void setDataSourceBean(Map<String, DataSourceProperties> dataSourceBean) {
-        this.dataSourceBean = dataSourceBean;
+    public void setDataSourceBeans(Map<String, DataSourceProperties> dataSourceBeans) {
+        this.dataSourceBeans = dataSourceBeans;
     }
 
     public String getEntityPackages() {

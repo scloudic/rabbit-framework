@@ -26,6 +26,6 @@ rabbit:
     data-source-factory-type: simple
     entity-packages: com.scloudic.rabbitframework.**.test.model
     mapper-packages: com.scloudic.rabbitframework.**.test.mapper
-    data-source-bean:
+    data-source-beans:
       default:
         bean-name: dataSource

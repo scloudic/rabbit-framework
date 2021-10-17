@@ -81,7 +81,7 @@ public class RabbitJbatisAutoConfiguration {
         rabbitJbatisFactoryBean.setEntityPackages(rabbitJbatisProperties.getEntityPackages());
         rabbitJbatisFactoryBean.setMapperPackages(rabbitJbatisProperties.getMapperPackages());
         Map<String, DataSourceBean> dataSourceMap = new HashMap<>();
-        Map<String, DataSourceProperties> dataSourcePropertiesMap = rabbitJbatisProperties.getDataSourceBean();
+        Map<String, DataSourceProperties> dataSourcePropertiesMap = rabbitJbatisProperties.getDataSourceBeans();
         for (Map.Entry<String, DataSourceProperties> entry : dataSourcePropertiesMap.entrySet()) {
             DataSourceProperties dataSourceProperties = entry.getValue();
             DataSourceBean dataSourceBean = new DataSourceBean();
