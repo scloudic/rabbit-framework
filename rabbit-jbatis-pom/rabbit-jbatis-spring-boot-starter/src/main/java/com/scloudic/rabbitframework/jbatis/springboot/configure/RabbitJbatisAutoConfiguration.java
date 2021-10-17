@@ -82,13 +82,21 @@ public class RabbitJbatisAutoConfiguration {
         rabbitJbatisFactoryBean.setMapperPackages(rabbitJbatisProperties.getMapperPackages());
         Map<String, DataSourceBean> dataSourceMap = new HashMap<>();
         Map<String, DataSourceProperties> dataSourcePropertiesMap = rabbitJbatisProperties.getDataSourceBeans();
-        for (Map.Entry<String, DataSourceProperties> entry : dataSourcePropertiesMap.entrySet()) {
-            DataSourceProperties dataSourceProperties = entry.getValue();
+        if (dataSourcePropertiesMap.size() > 0) {
+            for (Map.Entry<String, DataSourceProperties> entry : dataSourcePropertiesMap.entrySet()) {
+                DataSourceProperties dataSourceProperties = entry.getValue();
+                DataSourceBean dataSourceBean = new DataSourceBean();
+                DataSource dataSource = (DataSource) applicationContext.getBean(dataSourceProperties.getBeanName());
+                dataSourceBean.setDataSource(dataSource);
+                dataSourceBean.setDialect(dataSourceProperties.getDialect());
+                dataSourceMap.put(entry.getKey(), dataSourceBean);
+            }
+        } else {
             DataSourceBean dataSourceBean = new DataSourceBean();
-            DataSource dataSource = (DataSource) applicationContext.getBean(dataSourceProperties.getBeanName());
+            DataSource dataSource = (DataSource) applicationContext.getBean("dataSource");
             dataSourceBean.setDataSource(dataSource);
-            dataSourceBean.setDialect(dataSourceProperties.getDialect());
-            dataSourceMap.put(entry.getKey(), dataSourceBean);
+            dataSourceBean.setDialect("mysql");
+            dataSourceMap.put("default", dataSourceBean);
         }
         rabbitJbatisFactoryBean.setDataSourceMap(dataSourceMap);
         return rabbitJbatisFactoryBean.getObject();
