@@ -86,6 +86,12 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void insertTestUserRollback() {
+        testUserService.insertTestUserRollback();
+
+    }
+
+    @Test
     public void updateByParams() {
         Where where = new Where();
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getTestName), "where修改2");

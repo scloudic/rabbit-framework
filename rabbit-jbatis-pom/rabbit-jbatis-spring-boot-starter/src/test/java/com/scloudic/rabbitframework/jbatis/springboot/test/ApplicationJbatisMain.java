@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 @MapperScan("com.scloudic.rabbitframework.**.test.mapper")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 public class ApplicationJbatisMain {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(ApplicationJbatisMain.class, args);

@@ -6,6 +6,9 @@ import com.scloudic.rabbitframework.jbatis.springboot.test.model.TestUser;
 import com.scloudic.rabbitframework.jbatis.springboot.test.service.TestUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 @Service
 public class TestUserServiceImpl extends IServiceImpl<TestUserMapper, TestUser> implements TestUserService {
@@ -28,21 +31,21 @@ public class TestUserServiceImpl extends IServiceImpl<TestUserMapper, TestUser> 
 //    }
 
 //
-//    @Transactional
-//    @Override
-//    public void insertTestUserRollback() {
-//        TestUser testUser = new TestUser();
-//        testUser.setAge(new Date());
-//        testUser.setTestName("hao");
-//        testUser.setId(6);
-//        testUserMapper.insertByEntity(testUser);
-//        TestUser testUser2 = new TestUser();
-//        testUser2.setAge(new Date());
-//        testUser2.setTestName("hao");
-//        testUser2.setId(7);
-//        testUserMapper.insertByEntity(testUser2);
-//        throw new RuntimeException("test");
-//    }
+    @Transactional
+    @Override
+    public void insertTestUserRollback() {
+        TestUser testUser = new TestUser();
+        testUser.setCreateTime(new Date());
+        testUser.setTestName("hao");
+        testUser.setId(6);
+        testUserMapper.insertByEntity(testUser);
+        TestUser testUser2 = new TestUser();
+        testUser2.setCreateTime(new Date());
+        testUser2.setTestName("hao");
+        testUser2.setId(7);
+        testUserMapper.insertByEntity(testUser2);
+        throw new RuntimeException("test");
+    }
 //
 //    @Override
 //    public List<TestUser> selectDynamic() {

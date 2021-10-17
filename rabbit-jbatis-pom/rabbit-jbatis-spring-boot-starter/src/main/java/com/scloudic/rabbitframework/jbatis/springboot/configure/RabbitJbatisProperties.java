@@ -12,16 +12,14 @@ public class RabbitJbatisProperties {
     private String entityPackages;
     private String mapperPackages;
     private Map<String, String> cacheMap = null;
-    private Map<String, DataSourceProperties> dataSources = new HashMap<String, DataSourceProperties>();
-    private DataSourceBeanProperties dataSourceBeans;
-    private TransactionProperties transaction = new TransactionProperties();
+    private Map<String, DataSourceProperties> dataSourceBean = new HashMap<String, DataSourceProperties>();
 
-    public Map<String, DataSourceProperties> getDataSources() {
-        return dataSources;
+    public Map<String, DataSourceProperties> getDataSourceBean() {
+        return dataSourceBean;
     }
 
-    public void setDataSources(Map<String, DataSourceProperties> dataSources) {
-        this.dataSources = dataSources;
+    public void setDataSourceBean(Map<String, DataSourceProperties> dataSourceBean) {
+        this.dataSourceBean = dataSourceBean;
     }
 
     public String getEntityPackages() {
@@ -48,28 +46,12 @@ public class RabbitJbatisProperties {
         this.dataSourceFactoryType = dataSourceFactoryType;
     }
 
-    public DataSourceBeanProperties getDataSourceBeans() {
-        return dataSourceBeans;
-    }
-
-    public void setDataSourceBeans(DataSourceBeanProperties dataSourceBeans) {
-        this.dataSourceBeans = dataSourceBeans;
-    }
-
     public Map<String, String> getCacheMap() {
         return cacheMap;
     }
 
     public void setCacheMap(Map<String, String> cacheMap) {
         this.cacheMap = cacheMap;
-    }
-
-    public TransactionProperties getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(TransactionProperties transaction) {
-        this.transaction = transaction;
     }
 
     public enum DataSourceFactoryType {

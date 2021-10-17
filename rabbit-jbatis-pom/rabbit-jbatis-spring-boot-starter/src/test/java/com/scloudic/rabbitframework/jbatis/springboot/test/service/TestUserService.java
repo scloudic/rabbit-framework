@@ -5,4 +5,5 @@ import com.scloudic.rabbitframework.jbatis.springboot.test.model.TestUser;
 
 public interface TestUserService extends IService<TestUser> {
     public void createTable();
+    public void insertTestUserRollback();
 }

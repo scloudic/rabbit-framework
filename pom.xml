@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.4.8.RELEASE</version>
+    <version>3.4.9.RELEASE</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -49,7 +49,7 @@
         <java-uuid-generator.version>3.1.3</java-uuid-generator.version>
         <fastjson.version>1.2.68</fastjson.version>
         <freemarker.version>2.3.29</freemarker.version>
-        <druid.version>1.2.6</druid.version>
+        <druid.version>1.2.8</druid.version>
         <mysql.version>8.0.17</mysql.version>
         <cglib.version>3.2.2</cglib.version>
         <commons-lang3.version>3.4</commons-lang3.version>
@@ -73,7 +73,7 @@
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <javax.el-api.version>3.0.0</javax.el-api.version>
-        <rabbit-framework.version>3.4.8.RELEASE</rabbit-framework.version>
+        <rabbit-framework.version>3.4.9.RELEASE</rabbit-framework.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -275,6 +275,11 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
             <dependency>

@@ -1,3 +1,9 @@
+3.4.9.RELEASE版本说明:
+
+    1、jbatis优化,去掉自定义datasource配置改用springboot的datasource配置。
+    2、升级添加jar包。
+    3、升级此版本,需将jbatis的datasource配置改成springboot的datasource配置
+    
 3.4.8.RELEASE版本说明:
 
     1、security中的springboot配置添加自定义过滤(Filter)
