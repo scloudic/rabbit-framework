@@ -22,6 +22,17 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         return getBaseMapper().insertByEntity(entity);
     }
 
+    /**
+     * 动态表插入
+     *
+     * @param entity          实体
+     * @param tableNameSuffix 动态表后缀
+     * @return
+     */
+    @Override
+    public Integer insertDynamicTable(T entity, String tableNameSuffix) {
+        return getBaseMapper().insertDynamicTable(entity, tableNameSuffix);
+    }
 
     /**
      * 批量插入数据
@@ -40,6 +51,17 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         return getBaseMapper().deleteById(id);
     }
 
+    /**
+     * 根据主键删除动态表记录
+     *
+     * @param id          主键
+     * @param tableSuffix 动态表名后缀
+     * @return
+     */
+    @Override
+    public Integer deleteDynamicTableById(Serializable id, String tableSuffix) {
+        return getBaseMapper().deleteDynamicTableById(id, tableSuffix);
+    }
 
     @Override
     public Integer deleteByParams(Where where) {
@@ -58,12 +80,20 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         return getBaseMapper().updateByParams(where);
     }
 
+    @Override
+    public Integer updateDynamicTable(T entity, String tableSuffix) {
+        return getBaseMapper().updateDynamicTable(entity, tableSuffix);
+    }
 
     @Override
     public T selectById(Serializable id) {
         return getBaseMapper().selectById(id);
     }
 
+    @Override
+    public T selectDynamicTableById(Serializable id, String tableSuffix) {
+        return getBaseMapper().selectDynamicTableById(id, tableSuffix);
+    }
 
     @Override
     public List<T> selectByParams(Where where) {
@@ -83,10 +113,20 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     }
 
     @Override
+    public Long selectDynamicTableCount(String tableSuffix) {
+        return getBaseMapper().selectDynamicTableCount(tableSuffix);
+    }
+
+    @Override
     public List<T> selectEntityAll() {
         return getBaseMapper().selectEntityAll();
     }
 
+
+    @Override
+    public List<T> selectDynamicTableEntityAll(String tableSuffix) {
+        return getBaseMapper().selectDynamicTableEntityAll(tableSuffix);
+    }
 
     @Override
     public List<T> selectPageByParams(Where where, RowBounds rowBounds) {
@@ -101,6 +141,11 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
     @Override
     public T selectOneByParams(Where where) {
         return getBaseMapper().selectOneByParams(where);
+    }
+
+    @Override
+    public List<T> selectDynamicTableEntityPage(RowBounds rowBounds, String tableSuffix) {
+        return getBaseMapper().selectDynamicTableEntityPage(rowBounds, tableSuffix);
     }
 
     @Transactional(readOnly = true)

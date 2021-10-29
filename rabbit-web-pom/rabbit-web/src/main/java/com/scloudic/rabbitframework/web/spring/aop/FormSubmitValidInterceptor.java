@@ -122,14 +122,16 @@ public class FormSubmitValidInterceptor {
             }
             return paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
         }
-
+        boolean isParams = false;
         for (int i = 0; i < annotationsLength; i++) {
             Annotation annotation = annotations[i];
             if (annotation instanceof BeanParam) {
+                isParams = true;
                 name = paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
                 break;
             }
             if (annotation instanceof FormParam) {
+                isParams = true;
                 FormParam formParam = (FormParam) annotation;
                 if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
                     map.put(formParam.value(), notBlank);
@@ -144,6 +146,7 @@ public class FormSubmitValidInterceptor {
                 break;
             }
             if (annotation instanceof QueryParam) {
+                isParams = true;
                 QueryParam queryParam = (QueryParam) annotation;
                 if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
                     map.put(queryParam.value(), notBlank);
@@ -158,6 +161,7 @@ public class FormSubmitValidInterceptor {
                 break;
             }
             if (annotation instanceof FormDataParam) {
+                isParams = true;
                 FormDataParam formDataParam = (FormDataParam) annotation;
                 if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
                     map.put(formDataParam.value(), notBlank);
@@ -173,7 +177,7 @@ public class FormSubmitValidInterceptor {
             }
         }
 
-        if (notBlank != null && (StringUtils.isBlank(name) || map.size() == 0)) {
+        if (!isParams && notBlank != null) {
             if (value != null && StringUtils.isNotBlank(value.toString())) {
                 return null;
             }

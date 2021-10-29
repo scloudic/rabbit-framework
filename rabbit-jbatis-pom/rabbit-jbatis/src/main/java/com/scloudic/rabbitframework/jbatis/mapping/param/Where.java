@@ -22,6 +22,7 @@ public class Where {
     protected String groupBy = null;
     protected String having = null;
     protected String showColumns = "*";
+    protected String tableSuffix = "";
 
     public Where() {
         oredCriteria = new ArrayList<Criteria>();
@@ -121,6 +122,7 @@ public class Where {
         defineCondition = null;
         groupBy = null;
         having = null;
+        tableSuffix = "";
     }
 
     /**
@@ -161,7 +163,7 @@ public class Where {
                 break;
         }
     }
-    
+
     public String getOrderBy() {
         return orderBy;
     }
@@ -200,5 +202,16 @@ public class Where {
 
     public void setShowColumns(String showColumns) {
         this.showColumns = showColumns;
+    }
+
+    public String getTableSuffix() {
+        return tableSuffix;
+    }
+
+    public void setTableSuffix(String tableSuffix) {
+        if (StringUtils.isBlank(tableSuffix)) {
+            tableSuffix = "";
+        }
+        this.tableSuffix = tableSuffix;
     }
 }

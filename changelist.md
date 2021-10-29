@@ -1,3 +1,9 @@
+3.5.0.RELEASE版本说明:
+
+    1、jbatis框架,BaseMapper添加支持动态表名传参的新方法。
+    2、jbatis框架,Where类中添加支持动态表名属性字段。
+    3、优化修复问题
+    
 3.4.9.RELEASE版本说明:
 
     1、jbatis优化,去掉自定义datasource配置改用springboot的datasource配置。

@@ -7,7 +7,7 @@ import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
 
 import java.util.List;
 
-public class UpdateByParams extends BaseSQLParser {
+public class UpdateDynamicTable extends BaseSQLParser {
     @Override
     public String parserSQL() {
         if (genericClass == null) {
@@ -15,8 +15,7 @@ public class UpdateByParams extends BaseSQLParser {
         }
         String paramTypeName = genericClass.getName();
         EntityMap entityMap = getEntityMap(paramTypeName);
-        String sql = getUpdateSqlByWhere(entityMap);
-        return sql + " " + getSearchSql();
+        return getUpdateSql(entityMap);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class UpdateByParams extends BaseSQLParser {
         return SqlCommendType.UPDATE;
     }
 
-    private String getUpdateSqlByWhere(EntityMap entityMap) {
+    private String getUpdateSql(EntityMap entityMap) {
         StringBuilder sbPrefix = new StringBuilder();
         List<EntityProperty> propertyMapping = entityMap.getColumnProperties();
         sbPrefix.append("update ");
@@ -32,15 +31,24 @@ public class UpdateByParams extends BaseSQLParser {
         sbPrefix.append("${tableSuffix}");
         sbPrefix.append(" ");
         sbPrefix.append("<trim prefix=\"set \" suffixOverrides=\",\" >");
+
         for (EntityProperty entityMapping : propertyMapping) {
             String column = entityMapping.getColumn();
             String property = entityMapping.getProperty();
-            sbPrefix.append("<if test=\"params." + property + " != null\" >").append(column).append("=").append("#{params.")
+            sbPrefix.append("<if test=\"entity." + property + " != null\" >").append(column).append("=").append("#{entity.")
                     .append(property).append("}").append(",").append("</if>");
         }
         sbPrefix.append("</trim>");
-        sbPrefix.append(" where 1=1 ");
-
+        sbPrefix.append(" ");
+        sbPrefix.append(" where ");
+        sbPrefix.append("<trim suffix=\" \" suffixOverrides=\"and\" >");
+        List<EntityProperty> idMapping = entityMap.getIdProperties();
+        for (EntityProperty entityMapping : idMapping) {
+            String column = entityMapping.getColumn();
+            String property = entityMapping.getProperty();
+            sbPrefix.append(column).append("=").append("#{entity.").append(property).append("}").append(" and ");
+        }
+        sbPrefix.append("</trim>");
         String updateSqlScript = sbPrefix.toString();
         return updateSqlScript;
     }

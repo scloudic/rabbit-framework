@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 
 public class WebUtils {
-    public final String getRemoteAddr(HttpServletRequest request) {
+    public static final String getRemoteAddr(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");
         if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getHeader("Proxy-Client-IP");

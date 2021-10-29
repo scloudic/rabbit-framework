@@ -100,6 +100,10 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
         try {
             switch (httpStatus) {
                 case HttpServletResponse.SC_NOT_FOUND:
+                    if (request != null) {
+                        String url = request.getRequestURL().toString();
+                        logger.warn("404错误地址：" + url);
+                    }
                     if (!isAsync() && CommonResponseUrl.isPage404()) {
                         response = Response.seeOther(new URI(CommonResponseUrl.
                                 dislodgeFirstSlash(CommonResponseUrl.getSys404ErrorUrl()))).build();

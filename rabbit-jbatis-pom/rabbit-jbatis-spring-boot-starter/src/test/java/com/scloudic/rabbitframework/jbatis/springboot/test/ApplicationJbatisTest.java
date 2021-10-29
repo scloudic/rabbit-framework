@@ -46,6 +46,15 @@ public class ApplicationJbatisTest {
         logger.info("插入获取的Id主键:" + testUser.getId() + ",返回值：" + result);
     }
 
+
+    @Test
+    public void insertDynamicTable() {
+        TestUser testUser = new TestUser();
+        testUser.setCreateTime(new Date());
+        int result = testUserService.insertDynamicTable(testUser, "_2021");
+        logger.info("插入获取的Id主键:" + testUser.getId() + ",返回值：" + result);
+    }
+
     @Test
     public void batchInsertEntity() {
         List<TestUser> tu = new ArrayList<>();
@@ -69,9 +78,16 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void deleteDynamicTableById() {
+        int result = testUserService.deleteDynamicTableById(1, "_2021");
+        logger.info("删除返回的结果：" + result);
+    }
+
+    @Test
     public void deleteByParams() {
         Where where = new Where();
         Criteria criteria = where.createCriteria();
+        where.setTableSuffix("11");
         criteria.andEqual(TestUser::getId, 4);
         int result = testUserService.deleteByParams(where);
         logger.info("删除返回的结果：" + result);
@@ -94,10 +110,11 @@ public class ApplicationJbatisTest {
     @Test
     public void updateByParams() {
         Where where = new Where();
+        //where.setTableSuffix("11");
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getTestName), "where修改2");
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getCreateTime), new Date());
         Criteria criteria = where.createCriteria();
-        criteria.andEqual(TestUser::getId, 2);
+        criteria.andEqual(TestUser::getId, 1);
         int result = testUserService.updateByParams(where);
         logger.info("修改返回的结果：" + result);
     }
@@ -113,8 +130,19 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void selectDynamicTableById() {
+        TestUser testUser = testUserService.selectDynamicTableById(5, "11");
+        if (testUser != null) {
+            logger.info(testUser.getTestName());
+        } else {
+            logger.info("无数据显示");
+        }
+    }
+
+    @Test
     public void selectByParams() {
         Where where = new Where();
+//        where.setTableSuffix("11");
         Criteria criteria = where.createCriteria();
         criteria.andLike(TestUser::getTestName, "%插入%");
         criteria.orEqual(TestUser::getId, 2);
@@ -128,6 +156,7 @@ public class ApplicationJbatisTest {
     @Test
     public void selectCountByParams() {
         Where where = new Where();
+        //where.setTableSuffix("11");
         Criteria criteria = where.createCriteria();
         criteria.andLike(TestUser::getTestName, "%插入%");
         criteria.orEqual(TestUser::getId, 2);
@@ -143,6 +172,13 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void selectDynamicTableCount() {
+        long count = testUserService.selectDynamicTableCount("11");
+        logger.info("总数：" + count);
+    }
+
+
+    @Test
     public void selectEntityAll() {
         List<TestUser> testUsers = testUserService.selectEntityAll();
         for (TestUser testUser : testUsers) {
@@ -151,8 +187,17 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void selectDynamicTableEntityAll() {
+        List<TestUser> testUsers = testUserService.selectDynamicTableEntityAll("11");
+        for (TestUser testUser : testUsers) {
+            logger.info(testUser.getTestName());
+        }
+    }
+
+    @Test
     public void selectPageByParams() {
         Where where = new Where();
+        where.setTableSuffix("11");
         Criteria criteria = where.createCriteria();
         List<Integer> integers = new ArrayList<>();
         integers.add(1);
@@ -174,8 +219,17 @@ public class ApplicationJbatisTest {
     }
 
     @Test
+    public void selectDynamicTableEntityPage() {
+        List<TestUser> testUsers = testUserService.selectDynamicTableEntityPage(new RowBounds(0, 3), "11");
+        for (TestUser testUser : testUsers) {
+            logger.info(testUser.getTestName());
+        }
+    }
+
+    @Test
     public void selectOneByParams() {
         Where where = new Where();
+        where.setTableSuffix("11");
         Criteria criteria = where.createCriteria();
         criteria.andEqual(TestUser::getId, 1);
         TestUser testUser = testUserService.selectOneByParams(where);
@@ -251,6 +305,15 @@ public class ApplicationJbatisTest {
         Criteria criteria = where.createCriteria();
         criteria.andEqual(TestUser::getId, 2);
         testUserMapper.updateTestUserByWhereParam(where);
+    }
+
+
+    @Test
+    public void updateDynamicTable() {
+        TestUser testUser = new TestUser();
+        testUser.setId(1);
+        testUser.setTestName("updateDynamicTable");
+        testUserMapper.updateDynamicTable(testUser, "11");
     }
 
     @Test
