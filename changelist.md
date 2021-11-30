@@ -1,5 +1,11 @@
 3.5.0.RELEASE版本说明:
 
+    1、代码调整优化
+    2、添加日期判断
+    3、jbatis框架,where增加条件参数
+
+3.5.0.RELEASE版本说明:
+
     1、jbatis框架,BaseMapper添加支持动态表名传参的新方法。
     2、jbatis框架,Where类中添加支持动态表名属性字段。
     3、优化修复问题
