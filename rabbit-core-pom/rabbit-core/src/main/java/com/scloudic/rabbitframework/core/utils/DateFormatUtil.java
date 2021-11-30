@@ -294,7 +294,8 @@ public class DateFormatUtil {
     }
 
     /**
-     *  获取下一个月的日期
+     * 获取下一个月的日期
+     *
      * @param date date
      * @return yyyy-MM-dd
      */
@@ -783,5 +784,29 @@ public class DateFormatUtil {
         SimpleDateFormat fa = new SimpleDateFormat("yyyy-MM");
         Date date = new Date();
         return fa.format(date);
+    }
+
+
+    /**
+     * 根据时间断获取相差
+     *
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @return 返回格式：天,时,分,秒
+     */
+    public static String getHourMinSedMs(Date startDate, Date endDate) {
+        long between = 0;
+        try {
+            between = (endDate.getTime() - startDate.getTime());// 得到两者的毫秒数
+        } catch (Exception ex) {
+
+        }
+        long day = between / (24 * 60 * 60 * 1000);
+        long hour = (between / (60 * 60 * 1000) - day * 24);
+        long min = ((between / (60 * 1000)) - day * 24 * 60 - hour * 60);
+        long s = (between / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+        long ms = (between - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000
+                - min * 60 * 1000 - s * 1000);
+        return day + "," + hour + "," + min + "," + s + "," + ms;
     }
 }

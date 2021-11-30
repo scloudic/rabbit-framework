@@ -40,7 +40,7 @@ public class Criteria {
 
     protected boolean valueIsNotNullOrEmpty(Object value) {
         if (value instanceof String) {
-            if (value != null && !"".equals(value.toString().trim())) {
+            if (value != null) {
                 return true;
             }
         } else if (value instanceof List<?>) {
@@ -56,202 +56,173 @@ public class Criteria {
 
     public <T> Criteria andIsNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        addCriterion(" and " + fieldName + " is null");
+        andIsNull(fieldName);
         return this;
     }
 
 
     public <T> Criteria orIsNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        addCriterion(" or " + fieldName + " is null");
+        orIsNull(fieldName);
         return this;
     }
 
 
     public <T> Criteria andIsNotNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        addCriterion(" and " + fieldName + " is not null");
+        andIsNotNull(fieldName);
         return this;
     }
 
     public <T> Criteria orIsNotNull(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        addCriterion(" or " + fieldName + " is not null");
+        orIsNotNull(fieldName);
         return this;
     }
 
 
     public <T> Criteria andEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " =", value);
+        andEqual(fieldName, value);
         return this;
     }
 
 
     public <T> Criteria orEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " =", value);
+        orEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria andNotEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " <>", value);
+        andNotEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria orNotEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " <>", value);
+        orNotEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria andGreaterThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " >", value);
+        andGreaterThan(fieldName, value);
         return this;
     }
 
     public <T> Criteria orGreaterThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " >", value);
+        orGreaterThan(fieldName, value);
         return this;
     }
 
     public <T> Criteria andGreaterThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " >=", value);
+        andGreaterThanEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria orGreaterThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " >=", value);
+        orGreaterThanEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria andLessThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " <", value);
+        andLessThan(fieldName, value);
         return this;
     }
 
     public <T> Criteria orLessThan(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " <", value);
+        orLessThan(fieldName, value);
         return this;
     }
 
-
     public <T> Criteria andLessThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " <=", value);
+        andLessThanEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria orLessThanEqual(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " <=", value);
+        orLessThanEqual(fieldName, value);
         return this;
     }
 
     public <T> Criteria andIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(values))
-            addCriterion(" and " + fieldName + " in", values);
+        andIn(fieldName, values);
         return this;
     }
 
     public <T> Criteria orIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(values))
-            addCriterion(" or " + fieldName + " in", values);
+        orIn(fieldName, values);
         return this;
     }
 
     public <T> Criteria andNotIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(values))
-            addCriterion(" and " + fieldName + " not in", values);
+        andNotIn(fieldName, values);
         return this;
     }
 
     public <T> Criteria orNotIn(SFunction<T, ?> fn, List<?> values) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(values))
-            addCriterion(" or " + fieldName + " not in", values);
+        orNotIn(fieldName, values);
         return this;
     }
 
     public <T> Criteria andBetween(SFunction<T, ?> fn, Object value1, Object value2) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
-            addCriterion(" and " + fieldName + " between", value1, value2);
-        }
+        andBetween(fieldName, value1, value2);
         return this;
     }
 
     public <T> Criteria orBetween(SFunction<T, ?> fn, Object value1, Object value2) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
-            addCriterion(" or " + fieldName + " between", value1, value2);
-        }
+        orBetween(fieldName, value1, value2);
         return this;
     }
 
     public <T> Criteria andNotBetween(SFunction<T, ?> fn, Object value1, Object value2) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
-            addCriterion(" and " + fieldName + " not between", value1, value2);
-        }
-        return (Criteria) this;
+        andNotBetween(fieldName, value1, value2);
+        return this;
     }
 
     public <T> Criteria orNotBetween(SFunction<T, ?> fn, Object value1, Object value2) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
-            addCriterion(" or " + fieldName + " not between", value1, value2);
-        }
-        return (Criteria) this;
+        orNotBetween(fieldName, value1, value2);
+        return this;
     }
 
     public <T> Criteria andDefine(SFunction<T, ?> fn, String condition, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " " + condition + " ", value);
+        andDefine(fieldName, condition, value);
         return this;
     }
 
     public <T> Criteria orDefine(SFunction<T, ?> fn, String condition, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " " + condition + " ", value);
+        orDefine(fieldName, condition, value);
         return this;
     }
 
     public <T> Criteria andLike(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" and " + fieldName + " like ", value);
+        andLike(fieldName, value);
         return this;
     }
 
     public <T> Criteria orLike(SFunction<T, ?> fn, Object value) {
         String fieldName = SFunctionUtils.getFieldName(fn);
-        if (valueIsNotNullOrEmpty(value))
-            addCriterion(" or " + fieldName + " like ", value);
+        orLike(fieldName, value);
         return this;
     }
 
@@ -340,7 +311,7 @@ public class Criteria {
             addCriterion(" and " + fieldName + " <=", value);
         return this;
     }
-    
+
     public Criteria orLessThanEqual(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
             addCriterion(" or " + fieldName + " <=", value);
@@ -389,14 +360,14 @@ public class Criteria {
         if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
             addCriterion(" and " + fieldName + " not between", value1, value2);
         }
-        return (Criteria) this;
+        return this;
     }
 
     public Criteria orNotBetween(String fieldName, Object value1, Object value2) {
         if (valueIsNotNullOrEmpty(value1) && valueIsNotNullOrEmpty(value2)) {
             addCriterion(" or " + fieldName + " not between", value1, value2);
         }
-        return (Criteria) this;
+        return this;
     }
 
     public Criteria andDefine(String fieldName, String condition, Object value) {
@@ -419,6 +390,143 @@ public class Criteria {
 
     public Criteria orLike(String fieldName, Object value) {
         if (valueIsNotNullOrEmpty(value))
+            addCriterion(" or " + fieldName + " like ", value);
+        return this;
+    }
+
+    //加条件
+    public Criteria andEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " =", value);
+        return this;
+    }
+
+    public Criteria orEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " =", value);
+        return this;
+    }
+
+    public Criteria andNotEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " <>", value);
+        return this;
+    }
+
+    public Criteria orNotEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " <>", value);
+        return this;
+    }
+
+    public Criteria andGreaterThan(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " >", value);
+        return this;
+    }
+
+    public Criteria orGreaterThan(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " >", value);
+        return this;
+    }
+
+    public Criteria andGreaterThanEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " >=", value);
+        return this;
+    }
+
+    public Criteria orGreaterThanEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " >=", value);
+        return this;
+    }
+
+    public Criteria andLessThan(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " <", value);
+        return this;
+    }
+
+    public Criteria orLessThan(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " <", value);
+        return this;
+    }
+
+    public Criteria andLessThanEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " <=", value);
+        return this;
+    }
+
+    public Criteria orLessThanEqual(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" or " + fieldName + " <=", value);
+        return this;
+    }
+
+    public Criteria andIn(boolean condition, String fieldName, List<?> values) {
+        if (condition)
+            addCriterion(" and " + fieldName + " in", values);
+        return this;
+    }
+
+    public Criteria orIn(boolean condition, String fieldName, List<?> values) {
+        if (condition)
+            addCriterion(" or " + fieldName + " in", values);
+        return this;
+    }
+
+    public Criteria andNotIn(boolean condition, String fieldName, List<?> values) {
+        if (condition)
+            addCriterion(" and " + fieldName + " not in", values);
+        return this;
+    }
+
+    public Criteria orNotIn(boolean condition, String fieldName, List<?> values) {
+        if (condition)
+            addCriterion(" or " + fieldName + " not in", values);
+        return this;
+    }
+
+    public Criteria andBetween(boolean condition, String fieldName, Object value1, Object value2) {
+        if (condition) {
+            addCriterion(" and " + fieldName + " between", value1, value2);
+        }
+        return this;
+    }
+
+    public Criteria orBetween(boolean condition, String fieldName, Object value1, Object value2) {
+        if (condition) {
+            addCriterion(" or " + fieldName + " between", value1, value2);
+        }
+        return this;
+    }
+
+    public Criteria andNotBetween(boolean condition, String fieldName, Object value1, Object value2) {
+        if (condition) {
+            addCriterion(" and " + fieldName + " not between", value1, value2);
+        }
+        return (Criteria) this;
+    }
+
+    public Criteria orNotBetween(boolean condition, String fieldName, Object value1, Object value2) {
+        if (condition) {
+            addCriterion(" or " + fieldName + " not between", value1, value2);
+        }
+        return (Criteria) this;
+    }
+
+    public Criteria andLike(boolean condition, String fieldName, Object value) {
+        if (condition)
+            addCriterion(" and " + fieldName + " like ", value);
+        return this;
+    }
+
+    public Criteria orLike(boolean condition, String fieldName, Object value) {
+        if (condition)
             addCriterion(" or " + fieldName + " like ", value);
         return this;
     }
