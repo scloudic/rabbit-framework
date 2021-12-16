@@ -1,13 +1,21 @@
 package com.scloudic.rabbitframework.core.httpclient;
 
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import okhttp3.*;
+import org.apache.commons.io.IOUtils;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.FileNameMap;
 import java.net.Proxy;
 import java.net.URLConnection;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -19,99 +27,29 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpClient {
     private static final MediaType MEDIA_TYPE_STREAM = MediaType.parse("application/octet-stream;charset=utf-8");
-    private static final MediaType CONTENT_TYPE_FORM = MediaType
+    public static final MediaType CONTENT_TYPE_FORM = MediaType
             .parse("application/x-www-form-urlencoded;charset=utf-8");
-    private static OkHttpClient okHttpClient;
-    private static HttpClient httpClient = null;
-    private static Object obj = new Object();
+    public static final MediaType CONTENT_TYPE_JSON = MediaType.parse("application/json;charset=utf-8");
+    private OkHttpClient okHttpClient;
     public static int CONNECT_TIME_OUT = 30;
     public static int WRITE_TIME_OUT = 30;
     public static int READ_TIME_OUT = 30;
+    private int connectTimeout = CONNECT_TIME_OUT;
+    private int writeTimeout = WRITE_TIME_OUT;
+    private int redTimeout = READ_TIME_OUT;
 
-    private HttpClient() {
+    public void init() {
+        init(null);
     }
 
-    public static HttpClient getInstance() {
-        if (httpClient == null) {
-            synchronized (obj) {
-                if (httpClient == null) {
-                    httpClient = new HttpClient();
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                            .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                            .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
-                            .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS);
-                    okHttpClient = builder.build();
-                }
-            }
+    public void init(Proxy proxy) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(connectTimeout, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeout, TimeUnit.SECONDS).readTimeout(redTimeout, TimeUnit.SECONDS);
+        if (proxy != null) {
+            builder.proxy(proxy);
         }
-        return httpClient;
-    }
-
-    public static HttpClient getInstance(Proxy proxy) {
-        if (httpClient == null) {
-            synchronized (obj) {
-                if (httpClient == null) {
-                    httpClient = new HttpClient();
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                            .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-                            .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                            .proxy(proxy);
-                    okHttpClient = builder.build();
-                }
-            }
-        }
-        return httpClient;
-    }
-
-    public static HttpClient getInstance(int connectTimeOut, int writeTimeOut, int readTimeOut) {
-        if (httpClient == null) {
-            synchronized (obj) {
-                if (httpClient == null) {
-                    httpClient = new HttpClient();
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                            .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
-                            .writeTimeout(writeTimeOut, TimeUnit.SECONDS).readTimeout(readTimeOut, TimeUnit.SECONDS);
-                    okHttpClient = builder.build();
-                }
-            }
-        }
-        return httpClient;
-    }
-
-    public static HttpClient getInstance(int connectTimeOut, int writeTimeOut, int readTimeOut, Proxy proxy) {
-        if (httpClient == null) {
-            synchronized (obj) {
-                if (httpClient == null) {
-                    httpClient = new HttpClient();
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                            .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
-                            .writeTimeout(writeTimeOut, TimeUnit.SECONDS).readTimeout(readTimeOut, TimeUnit.SECONDS)
-                            .proxy(proxy);
-                    okHttpClient = builder.build();
-                }
-            }
-        }
-        return httpClient;
-    }
-
-    public static HttpClient getInstance(Proxy proxy, SSLSocketFactory sslSocketFactory) {
-        if (httpClient == null) {
-            synchronized (obj) {
-                if (httpClient == null) {
-                    httpClient = new HttpClient();
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(120, TimeUnit.SECONDS)
-                            .writeTimeout(120, TimeUnit.SECONDS).readTimeout(120, TimeUnit.SECONDS);
-                    if (proxy != null) {
-                        builder = builder.proxy(proxy);
-                    }
-                    if (sslSocketFactory != null) {
-                        builder = builder.sslSocketFactory(sslSocketFactory);
-                    }
-                    okHttpClient = builder.build();
-                }
-            }
-        }
-        return httpClient;
+        okHttpClient = builder.build();
     }
 
     public ResponseBody get(String url) {
@@ -141,14 +79,14 @@ public class HttpClient {
     }
 
     public ResponseBody fileUpload(String url, Map<String, List<File>> files, RequestParams params,
-                                                                                Map<String, String> headers) {
+                                   Map<String, String> headers) {
         RequestBody requestBody = buildMultipartFormRequest(files, params);
         return post(url, requestBody, headers);
     }
 
     public ResponseBody post(String url, String bodyStr, Map<String, String> headers, String contentType) {
-        MediaType mediaType = CONTENT_TYPE_FORM;
-        if (contentType != null && !"".equals(contentType)) {
+        MediaType mediaType = CONTENT_TYPE_JSON;
+        if (StringUtils.isNotBlank(contentType)) {
             mediaType = MediaType.parse(contentType);
         }
         RequestBody body = RequestBody.create(mediaType, bodyStr);
@@ -179,38 +117,6 @@ public class HttpClient {
         setHeader(builder, headers);
         return sendRequest(builder.build()).inputStream();
     }
-
-    // public String postSSL(String url, RequestParams params, String certPath,
-    // String certPass) {
-    // okhttp3.Request request = new
-    // okhttp3.Request.Builder().url(url).post(buildPostFormRequest(params)).build();
-    // InputStream inputStream = null;
-    // try {
-    // KeyStore clientStore = KeyStore.getInstance("PKCS12");
-    // inputStream = new FileInputStream(certPath);
-    // char[] passArray = certPass.toCharArray();
-    // clientStore.load(inputStream, passArray);
-    // KeyManagerFactory kmf =
-    // KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-    // kmf.init(clientStore, passArray);
-    // KeyManager[] kms = kmf.getKeyManagers();
-    // SSLContext sslContext = SSLContext.getInstance("TLSv1");
-    // sslContext.init(kms, null, new SecureRandom());
-    // okhttp3.OkHttpClient httpsClient = new
-    // okhttp3.OkHttpClient().newBuilder()
-    // .connectTimeout(10, TimeUnit.SECONDS).writeTimeout(10, TimeUnit.SECONDS)
-    // .readTimeout(30,
-    // TimeUnit.SECONDS).sslSocketFactory(sslContext.getSocketFactory()).build();
-    // okhttp3.Response response = httpsClient.newCall(request).execute();
-    // if (!response.isSuccessful())
-    // throw new RuntimeException("Unexpected code " + response);
-    // return response.body().string();
-    // } catch (Exception e) {
-    // throw new RuntimeException(e);
-    // } finally {
-    // IOUtils.closeQuietly(inputStream);
-    // }
-    // }
 
     /**
      * 文件上传封装 返回{@link RequestBody}
@@ -299,8 +205,37 @@ public class HttpClient {
         }
     }
 
-    public void close() {
-        httpClient = null;
-        okHttpClient = null;
+    public OkHttpClient getOkHttpClient() {
+        return okHttpClient;
+    }
+
+    public int getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public int getWriteTimeout() {
+        return writeTimeout;
+    }
+
+    public void setWriteTimeout(int writeTimeout) {
+        this.writeTimeout = writeTimeout;
+    }
+
+    public int getRedTimeout() {
+        return redTimeout;
+    }
+
+    public void setRedTimeout(int redTimeout) {
+        this.redTimeout = redTimeout;
+    }
+
+    public void cancelAll() {
+        if (okHttpClient != null) {
+            okHttpClient.dispatcher().cancelAll();
+        }
     }
 }
