@@ -20,7 +20,8 @@ public class RabbitWebProperties {
     /**
      * 静态资源过滤正则
      */
-    private String staticContentRegex = "/(((images|css|js|static|jsp|WEB-INF/jsp)/.*)|(favicon.ico))";
+    //private String staticContentRegex = "/(((images|css|js|static|jsp|WEB-INF/jsp)/.*)|(favicon.ico))";
+    private String staticContentRegex = ".*/static/.*";
     /**
      * Init parameters to pass to Jersey through the servlet or filter.
      */

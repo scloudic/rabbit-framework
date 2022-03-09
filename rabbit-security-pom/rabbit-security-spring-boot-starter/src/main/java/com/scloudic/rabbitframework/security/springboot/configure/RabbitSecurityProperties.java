@@ -10,7 +10,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = RabbitSecurityProperties.RABBIT_SECURITY_PREFIX)
 public class RabbitSecurityProperties {
     public static final String RABBIT_SECURITY_PREFIX = "rabbit.security";
-    private String filterUrls = "/(((static|css|img|images|lib|res)/.*)|(favicon.ico))";
+    private String filterUrls;
     private Map<String, String> filterChainDefinitions;
     //如果使用servlet此配置无效
     private CookieProperties cookie = null;

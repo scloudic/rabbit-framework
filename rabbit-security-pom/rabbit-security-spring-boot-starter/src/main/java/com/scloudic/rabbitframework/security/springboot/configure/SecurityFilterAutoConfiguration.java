@@ -84,7 +84,7 @@ public class SecurityFilterAutoConfiguration {
         }
         securityFilterFactoryBean.setUnauthorizedUrl(CommonResponseUrl.getUnauthorizedUrl());
         String filterUrls = rabbitSecurityProperties.getFilterUrls();
-        if (!"no".equalsIgnoreCase(filterUrls)) {
+        if (StringUtils.isNotBlank(filterUrls)) {
             securityFilterFactoryBean.setFilterUrls(rabbitSecurityProperties.getFilterUrls());
         }
         Map<String, String> filterChainDefinitions = rabbitSecurityProperties.getFilterChainDefinitions();
