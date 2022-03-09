@@ -3,6 +3,8 @@ package com.scloudic.rabbitframework.core.httpclient;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import okhttp3.*;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -26,6 +28,8 @@ import java.util.concurrent.TimeUnit;
  * @author justin
  */
 public class HttpClient {
+    private static final Logger logger = LoggerFactory.getLogger(HttpClient.class);
+    private static final String ERROR_MSG_FORMAT = "请求失败,请求地址:%s,状态码:%s，错误信息:%s";
     private static final MediaType MEDIA_TYPE_STREAM = MediaType.parse("application/octet-stream;charset=utf-8");
     public static final MediaType CONTENT_TYPE_FORM = MediaType
             .parse("application/x-www-form-urlencoded;charset=utf-8");
@@ -183,7 +187,10 @@ public class HttpClient {
     }
 
     private void setHeader(Request.Builder builder, Map<String, String> headers) {
-        if (headers != null) {
+        if (headers != null && headers.size() > 0) {
+            if (StringUtils.isNotBlank(headers.get("User-Agent"))) {
+                builder.removeHeader("User-Agent");
+            }
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 builder.addHeader(entry.getKey(), entry.getValue());
             }
@@ -195,10 +202,11 @@ public class HttpClient {
         try {
             response = okHttpClient.newCall(request).execute();
             if (!response.isSuccessful()) {
-                throw new RuntimeException("Unexpected code " + response);
+                int code = response.code();
+                String errorMsg = String.format(ERROR_MSG_FORMAT, response.protocol(), code, response.message());
+                logger.error(errorMsg);
             }
-            ResponseBody responseBody = new ResponseBody();
-            responseBody.setResponse(response);
+            ResponseBody responseBody = new ResponseBody(response);
             return responseBody;
         } catch (Exception e) {
             throw new RuntimeException(e);
