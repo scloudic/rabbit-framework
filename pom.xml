@@ -24,7 +24,7 @@
         <!-- <jetty-maven-plugin.version>9.3.7.v20160115</jetty-maven-plugin.version> -->
         <jetty-maven-plugin.version>9.4.8.v20171121</jetty-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>5.2.12.RELEASE</spring.version>
+        <spring.version>5.3.16</spring.version>
         <jedis.version>3.5.2</jedis.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <jsp-api.version>2.1</jsp-api.version>
@@ -54,7 +54,8 @@
         <cglib.version>3.2.2</cglib.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <reflections.version>0.9.10</reflections.version>
-        <org.apache.poi.version>3.17</org.apache.poi.version>
+        <org.apache.poi.version>5.2.1</org.apache.poi.version>
+        <poi-ooxml-schemas.version>4.1.2</poi-ooxml-schemas.version>
         <ooxml-schemas.version>1.1</ooxml-schemas.version>
         <esapi.version>2.1.0</esapi.version>
         <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
@@ -66,10 +67,10 @@
         <pinyin4j>2.5.0</pinyin4j>
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <snakeyaml>1.27</snakeyaml>
-        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <spring-boot.version>2.6.4</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
-        <xstream.version>1.4.18</xstream.version>
+        <xstream.version>1.4.19</xstream.version>
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <javax.el-api.version>3.0.0</javax.el-api.version>
@@ -244,7 +245,7 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml-schemas</artifactId>
-                <version>${org.apache.poi.version}</version>
+                <version>${poi-ooxml-schemas.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
