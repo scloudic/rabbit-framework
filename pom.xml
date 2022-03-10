@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.5.3.RELEASE</version>
+    <version>3.6.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -29,6 +29,11 @@
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <jsp-api.version>2.1</jsp-api.version>
         <jstl.version>1.2</jstl.version>
+        <log4j-api.version>2.17.1</log4j-api.version>
+        <log4j-slf4j-impl.version>2.17.1</log4j-slf4j-impl.version>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
         <aspectj.version>1.9.4</aspectj.version>
         <ehcache.version>2.6.11</ehcache.version>
         <commons-collections.version>3.2.2</commons-collections.version>
@@ -41,9 +46,6 @@
         <commons-codec.version>1.10</commons-codec.version>
         <commons-logging.version>1.2</commons-logging.version>
         <commons-io.version>2.8.0</commons-io.version>
-        <log4j.version>1.2.17</log4j.version>
-        <slf4j-api.version>1.7.30</slf4j-api.version>
-        <slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
         <com.google.guava.version>30.1.1-jre</com.google.guava.version>
         <ognl.version>3.1.1</ognl.version>
         <java-uuid-generator.version>3.1.3</java-uuid-generator.version>
@@ -74,7 +76,7 @@
         <easyexcel.version>2.2.10</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <javax.el-api.version>3.0.0</javax.el-api.version>
-        <rabbit-framework.version>3.5.3.RELEASE</rabbit-framework.version>
+        <rabbit-framework.version>3.6.0</rabbit-framework.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -92,6 +94,41 @@
     </scm>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-jul</artifactId>
+                <version>${log4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j-log4j12.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j-slf4j-impl.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
@@ -475,21 +512,6 @@
                 <version>${com.google.guava.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j-log4j12.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -576,16 +598,24 @@
     </dependencyManagement>
     <dependencies>
         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jul</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

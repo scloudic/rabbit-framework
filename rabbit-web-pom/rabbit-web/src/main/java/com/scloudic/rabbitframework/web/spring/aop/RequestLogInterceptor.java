@@ -12,6 +12,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -43,7 +46,6 @@ public class RequestLogInterceptor {
             Signature signature = pjp.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
             Method method = methodSignature.getMethod();
-            Path path = method.getAnnotation(Path.class);
             //   Path clazzPath = method.getDeclaringClass().getAnnotation(Path.class);
             String methodName = method.getDeclaringClass() + "." + method.getName();
             Map<String, Object> paramsValue = new HashMap<String, Object>();
@@ -55,10 +57,6 @@ public class RequestLogInterceptor {
             for (int i = 0; i < parameterLength; i++) {
                 Parameter parameter = parameters[i];
                 Annotation[] annotations = parameter.getAnnotations();
-                Context context = parameter.getAnnotation(Context.class);
-                if (context != null) {
-                    continue;
-                }
                 String name = getAnnotationName(parameter, annotations);
                 if (StringUtils.isBlank(name)) {
                     name = parameter.getName();
@@ -90,30 +88,22 @@ public class RequestLogInterceptor {
         String name = null;
         for (int i = 0; i < annotationsLength; i++) {
             Annotation annotation = annotations[i];
-            if (annotation instanceof BeanParam) {
+            if (annotation instanceof RequestBody) {
                 name = parameter.getType().getSimpleName().toLowerCase(Locale.ENGLISH);
                 break;
             }
-            if (annotation instanceof FormParam) {
-                FormParam formParam = (FormParam) annotation;
+            if (annotation instanceof RequestParam) {
+                RequestParam formParam = (RequestParam) annotation;
                 name = formParam.value();
                 break;
             }
-            if (annotation instanceof QueryParam) {
-                QueryParam queryParam = (QueryParam) annotation;
-                name = queryParam.value();
-                break;
-            }
-            if (annotation instanceof PathParam) {
-                PathParam pathParam = (PathParam) annotation;
+
+            if (annotation instanceof PathVariable) {
+                PathVariable pathParam = (PathVariable) annotation;
                 name = pathParam.value();
                 break;
             }
-            if (annotation instanceof FormDataParam) {
-                FormDataParam formDataParam = (FormDataParam) annotation;
-                name = formDataParam.value();
-                break;
-            }
+
         }
         return name;
     }

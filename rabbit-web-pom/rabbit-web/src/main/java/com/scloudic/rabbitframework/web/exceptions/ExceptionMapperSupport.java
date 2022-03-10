@@ -27,7 +27,6 @@ import java.net.URI;
  *
  * @author justin.liang
  */
-@Provider
 public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
     @Context

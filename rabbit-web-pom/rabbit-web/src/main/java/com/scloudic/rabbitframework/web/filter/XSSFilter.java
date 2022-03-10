@@ -38,8 +38,6 @@ import org.slf4j.LoggerFactory;
 import com.scloudic.rabbitframework.web.filter.sensitive.WordFilter;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 
-@Provider
-@PreMatching
 public class XSSFilter implements ContainerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(XSSFilter.class);
 

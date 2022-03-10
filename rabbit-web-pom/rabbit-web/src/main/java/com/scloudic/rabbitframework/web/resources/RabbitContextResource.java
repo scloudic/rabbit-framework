@@ -13,12 +13,19 @@
 package com.scloudic.rabbitframework.web.resources;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.scloudic.rabbitframework.core.utils.StatusCode;
+import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.exceptions.ResourceException;
+import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +34,72 @@ import com.scloudic.rabbitframework.core.utils.StringUtils;
 public abstract class RabbitContextResource {
     private static final Logger logger = LoggerFactory.getLogger(RabbitContextResource.class);
 
+    public String getMessage(String messageKey) {
+        return ServletContextHelper.getMessage(messageKey);
+    }
 
+    public String getMessage(String messageKey, Object... args) {
+        return ServletContextHelper.getMessage(messageKey, args);
+    }
+
+    public String getMessage(HttpServletRequest request, String messageKey) {
+        return ServletContextHelper.getMessage(messageKey, request.getLocale());
+    }
+
+    public <T> Result<T> success(String message, T data) {
+        return Result.success(message, data);
+    }
+
+    public <T> Result<T> success(T data) {
+        return success(getMessage("success"), data);
+    }
+
+    public <T> Result<T> success() {
+        return success(getMessage("success"), null);
+    }
+
+    public <T> Result<T> failure(StatusCode statusCode, String message, T data) {
+        return Result.failure(statusCode, message, data);
+    }
+
+    public <T> Result<T> failure(StatusCode statusCode) {
+        return Result.failure(statusCode);
+    }
+
+    public <T> Result<T> failure(StatusCode statusCode, String message) {
+        return failure(statusCode, message, null);
+    }
+
+    public <T> Result<T> failure(String message) {
+        return failure(StatusCode.FAIL, message, null);
+    }
+
+    public <T> Result<T> failure() {
+        return failure(getMessage("fail"));
+    }
+
+    public static <T> Result<T> failure(int status) {
+        return Result.failure(status);
+    }
+
+    public static <T> Result<T> failure(int status, String message) {
+        return Result.failure(status, message);
+    }
+
+    public String getHeader(HttpServletRequest request, String key) {
+        return request.getHeader(key);
+    }
+
+    public List<Map<String, String>> getHeader(HttpServletRequest request, List<String> keys) {
+        List<Map<String, String>> resultList = new ArrayList<Map<String, String>>();
+        for (String key : keys) {
+            String value = getHeader(request, key);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put(key, value);
+            resultList.add(map);
+        }
+        return resultList;
+    }
     protected String getCurrentUrl(HttpServletRequest request) throws ResourceException {
         String urlBase = request.getRequestURL().toString();
         String urlParameters = request.getQueryString();
@@ -69,9 +141,6 @@ public abstract class RabbitContextResource {
         return request.getSession();
     }
 
-
-
-
     protected final boolean isAsync(HttpServletRequest request) {
         String requestedWith = request.getHeader("x-requested-with");
         if ("XMLHttpRequest".equalsIgnoreCase(requestedWith)) {
@@ -79,28 +148,4 @@ public abstract class RabbitContextResource {
         }
         return false;
     }
-
-    // @Context
-    // protected UriInfo uriInfo;
-    //
-    // @Context
-    // protected Request restRequest;
-    //
-    // @Context
-    // protected SecurityContext securityContext;
-    //
-    // @Context
-    // protected HttpContext httpContext;
-    //
-    // @Context
-    // protected CloseableService closeableService;
-    //
-    // @Context
-    // protected HttpServletRequest request;
-    //
-    // @Context
-    // protected HttpServletResponse response;
-    //
-    // @Context
-    // protected ResourceContext resourceContext;
 }

@@ -1,43 +1,29 @@
 package com.scloudic.rabbitframework.web.spring.aop;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.validation.constraints.NotBlank;
-import javax.ws.rs.BeanParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-
-import com.scloudic.rabbitframework.core.reflect.MetaClass;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
-import com.scloudic.rabbitframework.web.DataJsonResponse;
+import com.scloudic.rabbitframework.core.utils.JsonUtils;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.annotations.FormValid;
 import com.scloudic.rabbitframework.web.utils.FieldError;
-import com.scloudic.rabbitframework.web.utils.ResponseUtils;
 import com.scloudic.rabbitframework.web.utils.ValidationUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.aspectj.weaver.ast.Test;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.scloudic.rabbitframework.core.utils.StatusCode;
-import com.scloudic.rabbitframework.core.utils.JsonUtils;
-import com.scloudic.rabbitframework.core.utils.StringUtils;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import javax.validation.constraints.NotBlank;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 @Aspect
 @Order(2)
@@ -67,10 +53,6 @@ public class FormSubmitValidInterceptor {
         for (int i = 0; i < parameterLength; i++) {
             Parameter parameter = parameters[i];
             Annotation[] annotations = parameter.getAnnotations();
-            Context context = parameter.getAnnotation(Context.class);
-            if (context != null) {
-                continue;
-            }
             String beanName = getAnnotationName(parameter, annotations, paramMap, args[i]);
             if (StringUtils.isNotBlank(beanName)) {
                 beanParams.add(args[i]);
@@ -92,12 +74,9 @@ public class FormSubmitValidInterceptor {
             if (Result.class.isAssignableFrom(returnType)) {
                 return Result.failure(StatusCode.SC_VALID_ERROR, JsonUtils.toJson(fieldErrors));
             }
-            DataJsonResponse result = new DataJsonResponse();
-            result.setStatus(StatusCode.SC_VALID_ERROR.getValue());
-            result.setMessage(JsonUtils.toJson(fieldErrors));
-            String resultJson = result.toJson();
+            String resultJson = JsonUtils.toJson(fieldErrors);
             logger.debug("表单验证结果:" + resultJson);
-            return ResponseUtils.ok(resultJson);
+            return Result.failure(StatusCode.SC_VALID_ERROR.getValue(), resultJson);
         }
         return pjp.proceed();
     }
@@ -125,14 +104,14 @@ public class FormSubmitValidInterceptor {
         boolean isParams = false;
         for (int i = 0; i < annotationsLength; i++) {
             Annotation annotation = annotations[i];
-            if (annotation instanceof BeanParam) {
+            if (annotation instanceof RequestBody) {
                 isParams = true;
                 name = paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
                 break;
             }
-            if (annotation instanceof FormParam) {
+            if (annotation instanceof RequestParam) {
                 isParams = true;
-                FormParam formParam = (FormParam) annotation;
+                RequestParam formParam = (RequestParam) annotation;
                 if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
                     map.put(formParam.value(), notBlank);
                 } else if (notBlank != null && value != null) {
@@ -140,36 +119,6 @@ public class FormSubmitValidInterceptor {
                         List list = (List) value;
                         if (list.size() == 0) {
                             map.put(formParam.value(), notBlank);
-                        }
-                    }
-                }
-                break;
-            }
-            if (annotation instanceof QueryParam) {
-                isParams = true;
-                QueryParam queryParam = (QueryParam) annotation;
-                if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
-                    map.put(queryParam.value(), notBlank);
-                } else if (notBlank != null && value != null) {
-                    if (List.class.isAssignableFrom(value.getClass())) {
-                        List list = (List) value;
-                        if (list.size() == 0) {
-                            map.put(queryParam.value(), notBlank);
-                        }
-                    }
-                }
-                break;
-            }
-            if (annotation instanceof FormDataParam) {
-                isParams = true;
-                FormDataParam formDataParam = (FormDataParam) annotation;
-                if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
-                    map.put(formDataParam.value(), notBlank);
-                } else if (notBlank != null && value != null) {
-                    if (List.class.isAssignableFrom(value.getClass())) {
-                        List list = (List) value;
-                        if (list.size() == 0) {
-                            map.put(formDataParam.value(), notBlank);
                         }
                     }
                 }
