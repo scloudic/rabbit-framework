@@ -1,6 +1,6 @@
 package com.scloudic.rabbitframework.example.template;
 
-import com.scloudic.rabbitframework.web.mvc.freemarker.TemplateDirective;
+import com.scloudic.rabbitframework.web.freemarker.TemplateDirective;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import freemarker.core.Environment;
 import freemarker.template.*;

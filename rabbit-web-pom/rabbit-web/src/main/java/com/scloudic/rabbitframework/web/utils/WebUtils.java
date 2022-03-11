@@ -3,6 +3,8 @@ package com.scloudic.rabbitframework.web.utils;
 import javax.servlet.http.HttpServletRequest;
 
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 public class WebUtils {
     public static final String getRemoteAddr(HttpServletRequest request) {
@@ -37,5 +39,11 @@ public class WebUtils {
 
     private static boolean isUnAvailableIp(String ip) {
         return (StringUtils.isEmpty(ip) || "unknown".equalsIgnoreCase(ip));
+    }
+
+    public static HttpServletRequest getRequest() {
+        HttpServletRequest request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
+                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        return request;
     }
 }

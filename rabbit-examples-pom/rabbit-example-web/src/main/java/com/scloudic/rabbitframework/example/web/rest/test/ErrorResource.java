@@ -1,18 +1,15 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
-import com.scloudic.rabbitframework.web.AbstractContextResource;
+import com.scloudic.rabbitframework.web.AbstractRabbitContextController;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Singleton;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-
-@Component
-@Singleton
-@Path("/")
-public class ErrorResource extends AbstractContextResource {
-    @GET
-    @Path("404")
+@RestController
+@RequestMapping("/")
+public class ErrorResource extends AbstractRabbitContextController {
+    @GetMapping("404")
     public Object to404() {
         return null;
     }

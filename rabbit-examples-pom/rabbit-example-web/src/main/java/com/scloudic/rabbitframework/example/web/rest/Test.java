@@ -1,10 +1,8 @@
 package com.scloudic.rabbitframework.example.web.rest;
 
-import com.scloudic.rabbitframework.web.spring.aop.FormValidBean;
-
 import javax.validation.constraints.NotBlank;
 
-public class Test implements FormValidBean {
+public class Test {
     @NotBlank
     private String name;
 

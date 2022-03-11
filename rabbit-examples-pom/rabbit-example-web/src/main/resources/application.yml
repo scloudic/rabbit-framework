@@ -9,10 +9,10 @@ rabbit:
   redisson:
     open-status: false
   web:
-    rest-packages: com.scloudic.rabbitframework.example.web.rest
-    request-log: true
-    template-variable-path: com.scloudic.rabbitframework.example.template
-    freemarker-path: /freemarker
+    enable-freemarker: true
+    enable-xss-filter: true
+    enable-request-log: true
+    freemarker-variable-path: com.scloudic.rabbitframework.example.template
   security:
     cookie:
       name: example

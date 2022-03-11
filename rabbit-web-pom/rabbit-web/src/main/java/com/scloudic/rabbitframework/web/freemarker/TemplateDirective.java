@@ -1,4 +1,4 @@
-package com.scloudic.rabbitframework.web.mvc.freemarker;
+package com.scloudic.rabbitframework.web.freemarker;
 
 import com.scloudic.rabbitframework.core.exceptions.UnKnowException;
 import freemarker.core.Environment;

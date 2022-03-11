@@ -1,23 +1,22 @@
-package com.scloudic.rabbitframework.web.spring.aop;
+package com.scloudic.rabbitframework.web.aop;
 
 import com.scloudic.rabbitframework.core.utils.JsonUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import com.scloudic.rabbitframework.web.utils.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -35,8 +34,11 @@ import java.util.Map;
 public class RequestLogInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(RequestLogInterceptor.class);
 
-    @Pointcut("@annotation(javax.ws.rs.Path)")
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping) || " +
+            "@annotation(org.springframework.web.bind.annotation.PostMapping) || " +
+            "@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void formAnnotatedMethod() {
+
     }
 
     @Around("formAnnotatedMethod()")
@@ -55,13 +57,19 @@ public class RequestLogInterceptor {
                 parameterLength = parameters.length;
             }
             for (int i = 0; i < parameterLength; i++) {
+                Object value = args[i];
+                if (value instanceof HttpServletResponse) {
+                    continue;
+                }
+                if (value instanceof HttpServletRequest) {
+                    continue;
+                }
                 Parameter parameter = parameters[i];
                 Annotation[] annotations = parameter.getAnnotations();
                 String name = getAnnotationName(parameter, annotations);
                 if (StringUtils.isBlank(name)) {
                     name = parameter.getName();
                 }
-                Object value = args[i];
                 paramsValue.put(name, value);
             }
             LogInfo logInfo = new LogInfo();
@@ -70,11 +78,7 @@ public class RequestLogInterceptor {
             String jsonValue = JsonUtils.toJson(logInfo);
             StringBuilder sb = new StringBuilder();
             sb.append("[REQUEST]=>{");
-            String slash = "";
-            if (StringUtils.isBlank(path.value()) || path.value().charAt(0) != '/') {
-                slash = "/";
-            }
-            sb.append("requestPath:" + slash + path.value() + ",value:" + jsonValue + "}");
+            sb.append("requestPath:" + WebUtils.getRequest().getRequestURI() + ",value:" + jsonValue + "}");
             String result = sb.toString();
             logger.info(result);
         } catch (Exception e) {
@@ -97,7 +101,6 @@ public class RequestLogInterceptor {
                 name = formParam.value();
                 break;
             }
-
             if (annotation instanceof PathVariable) {
                 PathVariable pathParam = (PathVariable) annotation;
                 name = pathParam.value();

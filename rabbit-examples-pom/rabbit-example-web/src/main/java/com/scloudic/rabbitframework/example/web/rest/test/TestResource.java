@@ -1,71 +1,45 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
-import com.scloudic.rabbitframework.core.reflect.MetaClass;
 import com.scloudic.rabbitframework.example.web.biz.TestBiz;
 import com.scloudic.rabbitframework.example.web.rest.Test;
-import com.scloudic.rabbitframework.web.AbstractContextResource;
+import com.scloudic.rabbitframework.web.AbstractRabbitContextController;
 import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.annotations.FormValid;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import javax.inject.Singleton;
 import javax.validation.constraints.NotBlank;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.lang.reflect.Field;
 
-@Component
-@Singleton
-@Path("/test")
-public class TestResource extends AbstractContextResource {
+@RestController
+@RequestMapping("test")
+public class TestResource extends AbstractRabbitContextController {
     private static final Logger logger = LoggerFactory.getLogger(TestResource.class);
     @Autowired
     private TestBiz testBiz;
 
-    @GET
-    @Path("getData")
-    public Object getData() {
+    @GetMapping("getData")
+    public Result getData() {
         logger.debug("getData");
-        return getSimpleResponse(true);
+        return Result.success();
     }
 
-    @GET
-    @Path("getParams")
+    @GetMapping("getParams")
     @FormValid
-    public Object getParams(@NotBlank(message = "{name.null}") @QueryParam("name") String name) {
+    public Result<String> getParams(@NotBlank(message = "{name.null}") @RequestParam("name") String name) {
         String value = testBiz.test(name);
-        return getSimpleResponse(true, value);
+        return Result.success(value);
     }
 
-    @POST
-    @Path("postParams")
+    @PostMapping("postParams")
     @FormValid
-    public Object postParams(@BeanParam Test test) {
-        return getSimpleResponse(true, test);
+    public Result<Test> postParams(@RequestBody Test test) {
+        return Result.success(test);
     }
 
-    @POST
-    @Path("json")
-    @FormValid
-    public Result<Test> json(@NotBlank Test test) {
-        return success(test);
-    }
-
-    @POST
-    @Path("text")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String text() {
-        return "test";
-    }
-
-    @POST
-    @Path("exception")
+    @GetMapping("exception")
     public String exception() {
         throw new NullPointerException("异常");
-
     }
 }

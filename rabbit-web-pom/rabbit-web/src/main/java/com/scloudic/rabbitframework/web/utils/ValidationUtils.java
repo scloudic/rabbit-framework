@@ -1,19 +1,17 @@
 package com.scloudic.rabbitframework.web.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
+import com.scloudic.rabbitframework.web.Result;
+import org.apache.commons.collections.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.groups.Default;
-
-import com.scloudic.rabbitframework.web.DataJsonResponse;
-import org.apache.commons.collections.CollectionUtils;
-
-import com.scloudic.rabbitframework.core.utils.StatusCode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * hibernate验证共公类
@@ -60,11 +58,12 @@ public class ValidationUtils {
         return fieldError;
     }
 
-    public static <T> DataJsonResponse validateProperty(T obj, String propertyName) {
-        DataJsonResponse result = new DataJsonResponse();
+    public static <T> Result validateProperty(T obj, String propertyName) {
+        int status = StatusCode.SC_OK.getValue();
+        String msg = "";
         Set<ConstraintViolation<T>> set = validator.validateProperty(obj, propertyName, Default.class);
         if (CollectionUtils.isNotEmpty(set)) {
-            result.setStatus(StatusCode.SC_VALID_ERROR.getValue());
+            status = StatusCode.SC_VALID_ERROR.getValue();
             StringBuffer errorMsg = new StringBuffer();
             for (ConstraintViolation<T> cv : set) {
                 errorMsg.append("arg:");
@@ -72,9 +71,9 @@ public class ValidationUtils {
                 errorMsg.append("error:");
                 errorMsg.append(cv.getMessage());
             }
-            result.setMessage(errorMsg.toString());
+            msg = errorMsg.toString();
         }
-        return result;
+        return Result.failure(status, msg);
     }
 
 }

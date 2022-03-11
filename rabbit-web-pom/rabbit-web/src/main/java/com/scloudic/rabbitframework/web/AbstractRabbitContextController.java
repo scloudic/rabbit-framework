@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.scloudic.rabbitframework.web.resources;
+package com.scloudic.rabbitframework.web;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -23,16 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.scloudic.rabbitframework.core.utils.StatusCode;
-import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.exceptions.ResourceException;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.scloudic.rabbitframework.core.utils.StringUtils;
-
-public abstract class RabbitContextResource {
-    private static final Logger logger = LoggerFactory.getLogger(RabbitContextResource.class);
+public abstract class AbstractRabbitContextController {
+    private static final Logger logger = LoggerFactory.getLogger(AbstractRabbitContextController.class);
 
     public String getMessage(String messageKey) {
         return ServletContextHelper.getMessage(messageKey);

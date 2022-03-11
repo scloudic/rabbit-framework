@@ -1,84 +1,83 @@
 package com.scloudic.rabbitframework.web.springboot.configure;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.scloudic.rabbitframework.core.springboot.configure.RabbitCommonsAutoConfiguration;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
-import com.scloudic.rabbitframework.web.AbstractContextResource;
-import com.scloudic.rabbitframework.web.annotations.NoProvider;
-import com.scloudic.rabbitframework.web.filter.XSSFilter;
-import com.scloudic.rabbitframework.web.resources.DefaultApplicationConfig;
-import com.scloudic.rabbitframework.web.spring.aop.FormSubmitValidInterceptor;
-import com.scloudic.rabbitframework.web.spring.aop.RequestLogInterceptor;
+import com.scloudic.rabbitframework.web.annotations.TemplateVariable;
+import com.scloudic.rabbitframework.web.aop.FormSubmitValidInterceptor;
+import com.scloudic.rabbitframework.web.aop.RequestLogInterceptor;
+import com.scloudic.rabbitframework.web.exceptions.ResourceException;
+import com.scloudic.rabbitframework.web.filter.xss.XssFilter;
+import com.scloudic.rabbitframework.web.freemarker.ContextPathTag;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.ws.rs.core.Feature;
-import javax.ws.rs.ext.Provider;
-import java.util.HashMap;
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Map;
 
 @Configuration
 @AutoConfigureAfter(RabbitCommonsAutoConfiguration.class)
-@AutoConfigureBefore(RabbitWebFilterAutoConfiguration.class)
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
-    private static String JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_JSP = "jersey.config.server.mvc.templateBasePath.jsp";
-    private static String JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_FREEMARKER = "jersey.config.server.mvc.templateBasePath.freemarker";
+    private static final Logger logger = LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
     private final RabbitWebProperties rabbitWebProperties;
+    private ApplicationContext applicationContext;
+    @Autowired(required = false)
+    private freemarker.template.Configuration configuration;
 
-    public RabbitWebAutoConfiguration(RabbitWebProperties rabbitWebProperties) {
+    public RabbitWebAutoConfiguration(RabbitWebProperties rabbitWebProperties, ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
         this.rabbitWebProperties = rabbitWebProperties;
+        if (rabbitWebProperties.isFreemarkerEnable()) {
+            loadFreemarker();
+        }
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ResourceConfig resourceConfig() {
-        Map<String, Object> properties = new HashMap<String, Object>();
-        ResourceConfig resourceConfig = new DefaultApplicationConfig();
-        if (rabbitWebProperties.isXssFilter()) {
-            resourceConfig.register(XSSFilter.class);
+    private void loadFreemarker() {
+        configuration.setSharedVariable("contextPath", new ContextPathTag());
+        String templateVariablePath = rabbitWebProperties.getFreemarkerVariablePath();
+        if (StringUtils.isBlank(templateVariablePath)) {
+            return;
         }
-        String templatePathJsp = rabbitWebProperties.getJspPath();
-        String templatePathFtl = rabbitWebProperties.getFreemarkerPath();
-        properties.put("jersey.config.server.mvc.templateBasePath.freemarker.extensions", rabbitWebProperties.getFreemarkerExtensions());
-        properties.put("jersey.config.server.mvc.templateBasePath.freemarker.templateVariable", rabbitWebProperties.getTemplateVariablePath());
-        properties.put("jersey.config.server.wadl.disableWadl", "true");
-        properties.put("jersey.config.servlet.filter.staticContentRegex",
-                rabbitWebProperties.getStaticContentRegex());
-        properties.put("jersey.config.server.provider.scanning.recursive", "true");
-        properties.put(ServletProperties.FILTER_CONTEXT_PATH, "/");
-        //properties.put(ServletProperties.QUERY_PARAMS_AS_FORM_PARAMS_DISABLED, "false");
-        properties.put("jersey.config.servlet.filter.forwardOn404", "true");
-        properties.put(JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_JSP, templatePathJsp);
-        properties.put(JERSEY_CONFIG_SERVER_MVC_TEMPLATEBASEPATH_FREEMARKER, templatePathFtl);
-        String packages = rabbitWebProperties.getRestPackages();
-        if (StringUtils.isNotBlank(packages)) {
-            List<Class<?>> classes = ClassUtils.getClassNamePackage(StringUtils.tokenizeToStringArray(packages));
+        try {
+            List<Class<?>> classes = ClassUtils.getClassNamePackage(StringUtils.tokenizeToStringArray(templateVariablePath));
             int classSize = classes.size();
             for (int i = 0; i < classSize; i++) {
                 Class<?> clazz = classes.get(i);
-                NoProvider noProvider = clazz.getAnnotation(NoProvider.class);
-                if (noProvider != null) {
+                TemplateVariable templateVariable = clazz.getAnnotation(TemplateVariable.class);
+                if (templateVariable == null) {
                     continue;
                 }
-                Provider provider = clazz.getAnnotation(Provider.class);
-                if (provider != null || AbstractContextResource.class.isAssignableFrom(clazz)
-                        || Feature.class.isAssignableFrom(clazz)) {
-                    resourceConfig.register(clazz);
+                String name = templateVariable.value();
+                Object object = null;
+                try {
+                    object = applicationContext.getBean(clazz);
+                } catch (Exception e) {
+                    //忽略此处错误
                 }
+                if (object == null) {
+                    object = ClassUtils.newInstance(clazz);
+                }
+                configuration.setSharedVariable(name, object);
             }
+        } catch (Exception e) {
+            logger.error("load freemarker template variable error", e);
         }
-        resourceConfig.addProperties(properties);
-        return resourceConfig;
     }
 
     @Bean
@@ -90,7 +89,8 @@ public class RabbitWebAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "request-log", havingValue = "true")
+    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "request-log-enable",
+            havingValue = "true", matchIfMissing = true)
     public RequestLogInterceptor logInterceptor() {
         RequestLogInterceptor logInterceptor = new RequestLogInterceptor();
         return logInterceptor;
@@ -101,5 +101,35 @@ public class RabbitWebAutoConfiguration {
     public ServletContextHelper servletContextHelper() {
         ServletContextHelper servletContextHelper = new ServletContextHelper();
         return servletContextHelper;
+    }
+
+    @Bean
+    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "xss-filter-enable",
+            havingValue = "true", matchIfMissing = true)
+    public FilterRegistrationBean<Filter> xssFilterRegistration() {
+        logger.debug("xss过滤器加载");
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
+        registration.setDispatcherTypes(DispatcherType.REQUEST);
+        registration.setFilter(new XssFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("xssFilter");
+        registration.setOrder(Integer.MAX_VALUE);
+        return registration;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        FastJsonConfig config = new FastJsonConfig();
+        config.setCharset(Charset.forName("UTF-8"));
+        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullNumberAsZero,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteNullBooleanAsFalse,
+                SerializerFeature.SkipTransientField);
+        converter.setFastJsonConfig(config);
+        return converter;
     }
 }

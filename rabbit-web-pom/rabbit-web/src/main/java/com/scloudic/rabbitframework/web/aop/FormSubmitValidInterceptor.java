@@ -1,4 +1,4 @@
-package com.scloudic.rabbitframework.web.spring.aop;
+package com.scloudic.rabbitframework.web.aop;
 
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 import com.scloudic.rabbitframework.core.utils.JsonUtils;
@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.validation.constraints.NotBlank;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -88,33 +89,27 @@ public class FormSubmitValidInterceptor {
         Class<?> paramType = parameter.getType();
         String name = null;
         NotBlank notBlank = parameter.getAnnotation(NotBlank.class);
-        if (FormValidBean.class.isAssignableFrom(paramType)) {
-            if (notBlank != null && value == null) {
-                Field[] fields = paramType.getDeclaredFields();
-                for (Field field : fields) {
-                    if (!field.isAccessible()) {
-                        field.setAccessible(true);
-                    }
-                    map.put(field.getName(), notBlank);
-                }
-                return null;
-            }
-            return paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
-        }
-        boolean isParams = false;
         for (int i = 0; i < annotationsLength; i++) {
             Annotation annotation = annotations[i];
             if (annotation instanceof RequestBody) {
-                isParams = true;
-                name = paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
+                if (ClassUtils.isPrimitiveType(paramType) || String.class == paramType) {
+                    if (StringUtils.isNotBlank(value.toString())) {
+                        break;
+                    }
+                    map.put(parameter.getName(), notBlank);
+                } else {
+                    name = paramType.getSimpleName().toLowerCase(Locale.ENGLISH);
+                }
+                break;
+            }
+            if (notBlank == null) {
                 break;
             }
             if (annotation instanceof RequestParam) {
-                isParams = true;
                 RequestParam formParam = (RequestParam) annotation;
-                if (notBlank != null && (value == null || StringUtils.isBlank(value.toString()))) {
+                if ((value == null || StringUtils.isBlank(value.toString()))) {
                     map.put(formParam.value(), notBlank);
-                } else if (notBlank != null && value != null) {
+                } else if (value != null) {
                     if (List.class.isAssignableFrom(value.getClass())) {
                         List list = (List) value;
                         if (list.size() == 0) {
@@ -123,15 +118,6 @@ public class FormSubmitValidInterceptor {
                     }
                 }
                 break;
-            }
-        }
-
-        if (!isParams && notBlank != null) {
-            if (value != null && StringUtils.isNotBlank(value.toString())) {
-                return null;
-            }
-            if (ClassUtils.isPrimitiveType(paramType) || String.class == paramType) {
-                map.put(parameter.getName(), notBlank);
             }
         }
         return name;

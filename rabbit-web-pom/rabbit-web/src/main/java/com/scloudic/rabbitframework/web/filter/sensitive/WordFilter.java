@@ -125,7 +125,6 @@ public class WordFilter {
                     couldMark = true;
                     markNum = 0;
                 }
-                // 继续匹配（日你/日你妹），以长的优先
                 // 你-3 妹-4 夫-5
                 k = i;
                 cpcurrc = currc; // 当前字符的拷贝

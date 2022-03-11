@@ -1,4 +1,4 @@
-package com.scloudic.rabbitframework.web.spring.aop;
+package com.scloudic.rabbitframework.web.aop;
 
 import java.util.HashMap;
 import java.util.Map;
