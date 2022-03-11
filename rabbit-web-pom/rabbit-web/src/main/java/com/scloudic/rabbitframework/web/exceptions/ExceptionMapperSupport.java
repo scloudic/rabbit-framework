@@ -10,9 +10,7 @@ import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import com.scloudic.rabbitframework.web.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.HandlerMethod;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,31 +24,28 @@ import javax.servlet.http.HttpServletResponse;
 public class ExceptionMapperSupport {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionMapperSupport.class);
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(RabbitFrameworkException.class)
     @ResponseBody
-    public Result exceptionHandler(HttpServletResponse response,
-                                   Exception e, HandlerMethod handlerMethod) {
+    public Result rabbitFrameworkException(RabbitFrameworkException e,
+                                           HandlerMethod handlerMethod,
+                                           HttpServletResponse response) {
+        logger.error("异常信息：{}, {}", e.getMessage(), e);
+        logger.error("异常类：{}, {}", handlerMethod.getBean().getClass());
+        String message = ServletContextHelper.getMessage(e.getMessage());
+        return getResponseByStatus(e.getStatus(), message, response);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Result exceptionHandler(Exception e, HandlerMethod handlerMethod) {
         logger.error("异常信息：{}, {}", e.getMessage(), e);
         logger.error("异常类：{}, {}", handlerMethod.getBean().getClass()
                 , handlerMethod.getMethod().getName());
-        RabbitFrameworkException currException = null;
-        if (e instanceof RabbitFrameworkException) {
-            currException = (RabbitFrameworkException) e;
-        } else {
-            Throwable throwable = e.getCause();
-            if (throwable != null && (throwable instanceof RabbitFrameworkException)) {
-                currException = (RabbitFrameworkException) e.getCause();
-            } else {
-                currException = new UnKnowException(ServletContextHelper.getMessage("unknow.fail"), e);
-            }
-        }
-        String message = ServletContextHelper.getMessage(currException.getMessage());
-        return getResponseByStatus(currException.getStatus(), message, response);
+        return Result.failure(StatusCode.SC_INTERNAL_SERVER_ERROR.getValue(), e.getMessage());
     }
 
     public Result getResponseByStatus(StatusCode statusCode, String message, HttpServletResponse response) {
         Result result = Result.failure(statusCode.getValue(), message);
-        ;
         try {
             switch (statusCode) {
                 case SC_INTERNAL_SERVER_ERROR:
@@ -75,14 +70,6 @@ public class ExceptionMapperSupport {
     public Result getResponseByStatus(int httpStatus, String message, HttpServletResponse response) {
         try {
             switch (httpStatus) {
-                case HttpServletResponse.SC_NOT_FOUND:
-                    String url = WebUtils.getRequest().getRequestURL().toString();
-                    logger.warn("404错误地址：" + url);
-                    if (!isAsync() && CommonResponseUrl.isPage404()) {
-                        response.sendRedirect(CommonResponseUrl.
-                                dislodgeFirstSlash(CommonResponseUrl.getSys404ErrorUrl()));
-                    }
-                    break;
                 case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
                     if (!isAsync()) {
                         response.sendRedirect(CommonResponseUrl.
@@ -112,14 +99,6 @@ public class ExceptionMapperSupport {
             logger.warn(e.getMessage(), e);
         }
         return Result.failure(httpStatus, message);
-    }
-
-    private String getMessage(int status, String message) {
-        if (StringUtils.isNotBlank(message)) {
-            return message;
-        }
-        message = ServletContextHelper.getMessage(status + ".error");
-        return message;
     }
 
     private boolean isAsync() {

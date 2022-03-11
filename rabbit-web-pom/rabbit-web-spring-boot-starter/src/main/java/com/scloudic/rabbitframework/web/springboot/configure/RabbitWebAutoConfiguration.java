@@ -9,9 +9,11 @@ import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.web.annotations.TemplateVariable;
 import com.scloudic.rabbitframework.web.aop.FormSubmitValidInterceptor;
 import com.scloudic.rabbitframework.web.aop.RequestLogInterceptor;
+import com.scloudic.rabbitframework.web.exceptions.ExceptionMapperSupport;
 import com.scloudic.rabbitframework.web.exceptions.ResourceException;
 import com.scloudic.rabbitframework.web.filter.xss.XssFilter;
 import com.scloudic.rabbitframework.web.freemarker.ContextPathTag;
+import com.scloudic.rabbitframework.web.springboot.RabbitErrorController;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -131,5 +134,19 @@ public class RabbitWebAutoConfiguration {
                 SerializerFeature.SkipTransientField);
         converter.setFastJsonConfig(config);
         return converter;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ExceptionMapperSupport exceptionMapperSupport() {
+        ExceptionMapperSupport exceptionMapperSupport = new ExceptionMapperSupport();
+        return exceptionMapperSupport;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RabbitErrorController rabbitErrorController(ServerProperties serverProperties) {
+        RabbitErrorController exceptionMapperSupport = new RabbitErrorController(serverProperties);
+        return exceptionMapperSupport;
     }
 }

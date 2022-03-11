@@ -1,5 +1,6 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
+import com.scloudic.rabbitframework.core.exceptions.ServiceException;
 import com.scloudic.rabbitframework.example.web.biz.TestBiz;
 import com.scloudic.rabbitframework.example.web.rest.Test;
 import com.scloudic.rabbitframework.web.AbstractRabbitContextController;
@@ -27,7 +28,8 @@ public class TestResource extends AbstractRabbitContextController {
 
     @GetMapping("getParams")
     @FormValid
-    public Result<String> getParams(@NotBlank(message = "{name.null}") @RequestParam("name") String name) {
+    public Result<String> getParams(@NotBlank(message = "{name.null}")
+                                    @RequestParam("name") String name) {
         String value = testBiz.test(name);
         return Result.success(value);
     }
@@ -41,5 +43,10 @@ public class TestResource extends AbstractRabbitContextController {
     @GetMapping("exception")
     public String exception() {
         throw new NullPointerException("异常");
+    }
+
+    @GetMapping("myexception")
+    public String myexception() {
+        throw new ServiceException("异常");
     }
 }

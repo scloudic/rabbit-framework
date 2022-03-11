@@ -8,20 +8,18 @@ package com.scloudic.rabbitframework.core.utils;
 public class CommonResponseUrl {
     //是否前后端分离
     private static boolean frontBlack = true;
-    //是否404跳转,默认false以免没有404接口或界面
-    private static boolean page404 = false;
     //登录界面跳转地址 401
-    private static String loginUrl = "/toLogin";
+    private static String loginUrl = "";
     //权限跳转地址 407
-    private static String unauthorizedUrl = "/unauthorized";
+    private static String unauthorizedUrl = "";
     //系统异常,500错误
-    private static String sys500ErrorUrl = "/500";
+    private static String sys500ErrorUrl = "";
     //404错误跳转地址
-    private static String sys404ErrorUrl = "/404";
+    private static String sys404ErrorUrl = "";
     //405错误跳转地址
-    private static String sys405ErrorUrl = "/405";
+    private static String sys405ErrorUrl = "";
 
-    private static String otherError = "/otherError";
+    private static String otherError = "";
 
     public static boolean isFrontBlack() {
         return frontBlack;
@@ -78,15 +76,6 @@ public class CommonResponseUrl {
     public void setOtherError(String otherError) {
         CommonResponseUrl.otherError = otherError;
     }
-
-    public static boolean isPage404() {
-        return CommonResponseUrl.page404;
-    }
-
-    public void setPage404(boolean page404) {
-        CommonResponseUrl.page404 = page404;
-    }
-
     /**
      * 去掉url的首斜线,web在307跳转时不需要首斜线
      *

@@ -32,7 +32,6 @@ public class RabbitCommonsAutoConfiguration {
         commonResponseUrl.setSys405ErrorUrl(rabbitCommonsProperties.getSys405ErrorUrl());
         commonResponseUrl.setSys500ErrorUrl(rabbitCommonsProperties.getSys500ErrorUrl());
         commonResponseUrl.setUnauthorizedUrl(rabbitCommonsProperties.getUnauthorizedUrl());
-        commonResponseUrl.setPage404(rabbitCommonsProperties.isPage404());
         return commonResponseUrl;
     }
 

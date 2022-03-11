@@ -12,20 +12,18 @@ public class RabbitCommonsProperties {
     public static final String RABBIT_COMMONS_PREFIX = "rabbit.commons";
     //是否前后端分离
     private boolean frontBlack = true;
-    //是否404跳转,默认false以免没有404接口或界面
-    private boolean page404 = false;
     //登录界面跳转地址 401
-    private String loginUrl = "/toLogin";
+    private String loginUrl = "";
     //权限跳转地址 407
-    private String unauthorizedUrl = "/unauthorized";
+    private String unauthorizedUrl = "";
     //系统异常,500错误
-    private String sys500ErrorUrl = "/500";
+    private String sys500ErrorUrl = "";
     //404错误跳转地址
-    private String sys404ErrorUrl = "/404";
+    private String sys404ErrorUrl = "";
     //405错误跳转地址
-    private String sys405ErrorUrl = "/405";
+    private String sys405ErrorUrl = "";
 
-    private String otherError = "/otherError";
+    private String otherError = "";
 
     public boolean isFrontBlack() {
         return frontBlack;
@@ -83,11 +81,4 @@ public class RabbitCommonsProperties {
         this.otherError = otherError;
     }
 
-    public boolean isPage404() {
-        return page404;
-    }
-
-    public void setPage404(boolean page404) {
-        this.page404 = page404;
-    }
 }
