@@ -18,7 +18,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
 	6、继承RoutingDataSource类,支持多租户模式 
 	
 
-二、rabbit-security:权限框架,对[shiro_1.8.0](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
+二、rabbit-security:权限框架,对[shiro_1._8_.0](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
 
     1、支持redis缓存模块。
     2、新增通过url配置权限过滤器
@@ -32,7 +32,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、
    | uriPerms | UriPermissions | uri权限配置 |
    | rolesOr | 无 | 多角色"或" 关系配置,springboot配置如：rolesOr.login,url |
 
-三、rabbit-web:web-rest框架,依赖于springmvc,封装相关接口便于快速开发。
+三、rabbit-web:web-rest框架,依赖于springmvc,封装相关接口便于快速开发。支持freemarker配置
 
 四、rabbit-generator:代码生成器模块,代码生成器通过使用配置和freemarker模板来完成,核心代码将数据库中的表结构转换为实体对象。根据配置信息将实体对象传入模板中,最终生成代码文件。目前默认模板在template/目录中，模板也可以自定义,其模板格式可以查看示例。
 
