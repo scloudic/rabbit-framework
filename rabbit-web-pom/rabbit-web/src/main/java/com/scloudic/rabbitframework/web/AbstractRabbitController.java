@@ -28,8 +28,8 @@ import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractRabbitContextController {
-    private static final Logger logger = LoggerFactory.getLogger(AbstractRabbitContextController.class);
+public abstract class AbstractRabbitController {
+    private static final Logger logger = LoggerFactory.getLogger(AbstractRabbitController.class);
 
     public String getMessage(String messageKey) {
         return ServletContextHelper.getMessage(messageKey);

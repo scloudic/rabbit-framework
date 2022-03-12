@@ -1,7 +1,7 @@
 package com.scloudic.rabbitframework.example.web.rest.test;
 
 import com.scloudic.rabbitframework.security.authz.annotation.UserAuthentication;
-import com.scloudic.rabbitframework.web.AbstractRabbitContextController;
+import com.scloudic.rabbitframework.web.AbstractRabbitController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("freemarker")
-public class FreemarkerResource extends AbstractRabbitContextController {
+public class FreemarkerResource extends AbstractRabbitController {
     @RequestMapping(path = "html", method = {RequestMethod.GET})
     @UserAuthentication
     public ModelAndView freemarkerHtml(HttpServletRequest request) {

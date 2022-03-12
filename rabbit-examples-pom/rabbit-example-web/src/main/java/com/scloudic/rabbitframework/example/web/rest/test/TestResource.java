@@ -3,7 +3,7 @@ package com.scloudic.rabbitframework.example.web.rest.test;
 import com.scloudic.rabbitframework.core.exceptions.ServiceException;
 import com.scloudic.rabbitframework.example.web.biz.TestBiz;
 import com.scloudic.rabbitframework.example.web.rest.Test;
-import com.scloudic.rabbitframework.web.AbstractRabbitContextController;
+import com.scloudic.rabbitframework.web.AbstractRabbitController;
 import com.scloudic.rabbitframework.web.Result;
 import com.scloudic.rabbitframework.web.annotations.FormValid;
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("test")
-public class TestResource extends AbstractRabbitContextController {
+public class TestResource extends AbstractRabbitController {
     private static final Logger logger = LoggerFactory.getLogger(TestResource.class);
     @Autowired
     private TestBiz testBiz;
