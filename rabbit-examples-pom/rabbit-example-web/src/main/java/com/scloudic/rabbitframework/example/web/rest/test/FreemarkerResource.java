@@ -17,7 +17,7 @@ import java.util.Map;
 @RequestMapping("freemarker")
 public class FreemarkerResource extends AbstractRabbitController {
     @RequestMapping(path = "html", method = {RequestMethod.GET})
-    @UserAuthentication
+//    @UserAuthentication
     public ModelAndView freemarkerHtml(HttpServletRequest request) {
         return getFreemarker("/hello", request);
     }

@@ -27,14 +27,18 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@AutoConfigureAfter(RabbitCommonsAutoConfiguration.class)
+@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class,name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
@@ -127,8 +131,8 @@ public class RabbitWebAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter(List<HttpMessageConverter<?>> converters) {
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
         config.setCharset(Charset.forName("UTF-8"));
         config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,
@@ -137,8 +141,16 @@ public class RabbitWebAutoConfiguration {
                 SerializerFeature.WriteNullStringAsEmpty,
                 SerializerFeature.WriteNullBooleanAsFalse,
                 SerializerFeature.SkipTransientField);
-        converter.setFastJsonConfig(config);
-        return converter;
+        fastJsonHttpMessageConverter.setFastJsonConfig(config);
+        converters.clear();
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.APPLICATION_JSON);
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(list);
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
+        stringHttpMessageConverter.setSupportedMediaTypes(list);
+        converters.add(stringHttpMessageConverter);
+        converters.add(fastJsonHttpMessageConverter);
+        return fastJsonHttpMessageConverter;
     }
 
     @Bean
