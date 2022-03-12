@@ -8,8 +8,11 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 
 /**
@@ -25,15 +28,19 @@ public class UriPermissionsAnnotationHandler extends AuthzAnnotationHandler {
     @Override
     public void assertAuthorized(Annotation a, MethodInvocation mi) throws AuthorizationException {
         Object[] objects = mi.getArguments();
-        ServletRequest request = null;
-        for (Object object : objects) {
-            if (object instanceof ServletRequest) {
-                request = (ServletRequest) object;
-                break;
+        HttpServletRequest request = null;
+        request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
+                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        if (request == null) {
+            for (Object object : objects) {
+                if (object instanceof HttpServletRequest) {
+                    request = (HttpServletRequest) object;
+                    break;
+                }
             }
         }
         if (request == null) {
-            logger.warn("request is null");
+            logger.error("uri权限制获取request失败");
             throw new AuthorizationException("request is null");
         }
         String requestUri = getPathWithinApplication(request);
