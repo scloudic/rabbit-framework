@@ -46,6 +46,11 @@ public class RabbitWebAutoConfiguration {
     public RabbitWebAutoConfiguration(RabbitWebProperties rabbitWebProperties, ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
         this.rabbitWebProperties = rabbitWebProperties;
+
+    }
+
+    @Bean
+    public void initFreemarkerTemplate() {
         if (rabbitWebProperties.isFreemarkerEnable()) {
             loadFreemarker();
         }

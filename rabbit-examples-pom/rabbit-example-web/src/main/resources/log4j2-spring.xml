@@ -56,7 +56,7 @@
             <appender-ref ref="RollingFile"/>
             <AppenderRef ref="RollingFileError"/>
         </AsyncLogger>
-        <AsyncLogger name="org.springframework" level="info" additivity="false">
+        <AsyncLogger name="org.springframework" level="debug" additivity="false">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFile"/>
             <AppenderRef ref="RollingFileError"/>

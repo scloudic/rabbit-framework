@@ -669,8 +669,6 @@
                             <exclude>**/package-info.class</exclude>
                             <exclude>**/*.txt</exclude>
                             <exclude>**/*.md</exclude>
-                            <exclude>**/log4j.properties</exclude>
-                            <exclude>**/log4j2-spring.xml</exclude>
                         </excludes>
                     </configuration>
                 </plugin>

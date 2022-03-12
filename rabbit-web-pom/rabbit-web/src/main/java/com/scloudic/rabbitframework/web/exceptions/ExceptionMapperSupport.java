@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.HandlerMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -28,19 +29,23 @@ public class ExceptionMapperSupport {
     @ResponseBody
     public Result rabbitFrameworkException(RabbitFrameworkException e,
                                            HandlerMethod handlerMethod,
-                                           HttpServletResponse response) {
-        logger.error("异常信息：{}, {}", e.getMessage(), e);
-        logger.error("异常类：{}, {}", handlerMethod.getBean().getClass());
+                                           HttpServletResponse response,
+                                           HttpServletRequest request) {
+        logger.error("异常信息：" + e.getMessage(), e);
+        logger.error("异常类：{}", handlerMethod.getBean().getClass());
+        logger.error("异常请求地址：{}", request.getRequestURL());
         String message = ServletContextHelper.getMessage(e.getMessage());
         return getResponseByStatus(e.getStatus(), message, response);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Result exceptionHandler(Exception e, HandlerMethod handlerMethod) {
-        logger.error("异常信息：{}, {}", e.getMessage(), e);
-        logger.error("异常类：{}, {}", handlerMethod.getBean().getClass()
+    public Result exceptionHandler(Exception e, HandlerMethod handlerMethod,
+                                   HttpServletRequest request) {
+        logger.error("异常信息：" + e.getMessage(), e);
+        logger.error("异常类：{}", handlerMethod.getBean().getClass()
                 , handlerMethod.getMethod().getName());
+        logger.error("异常请求地址：{}", request.getRequestURL());
         return Result.failure(StatusCode.SC_INTERNAL_SERVER_ERROR.getValue(), e.getMessage());
     }
 

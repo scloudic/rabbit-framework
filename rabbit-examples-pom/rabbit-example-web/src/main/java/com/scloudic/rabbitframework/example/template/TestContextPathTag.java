@@ -1,16 +1,18 @@
 package com.scloudic.rabbitframework.example.template;
 
+import com.scloudic.rabbitframework.web.annotations.TemplateVariable;
 import com.scloudic.rabbitframework.web.freemarker.TemplateDirective;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import freemarker.core.Environment;
 import freemarker.template.*;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
-//@Component
-//@TemplateVariable("contextPath")
+@Component
+@TemplateVariable("contextPathExample")
 public class TestContextPathTag extends TemplateDirective {
 
     @Override
