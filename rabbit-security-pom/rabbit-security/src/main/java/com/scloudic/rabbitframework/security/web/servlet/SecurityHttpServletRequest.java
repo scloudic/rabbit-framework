@@ -19,5 +19,7 @@ public class SecurityHttpServletRequest extends ShiroHttpServletRequest {
         return wrapped.getSession();
     }
 
-
+    public HttpServletRequest getOrgRequest() {
+        return wrapped;
+    }
 }

@@ -3,10 +3,17 @@ package com.scloudic.rabbitframework.web.utils;
 import javax.servlet.http.HttpServletRequest;
 
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import com.scloudic.rabbitframework.web.filter.xss.XssHttpServletRequestWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import java.lang.reflect.Method;
+
 public class WebUtils {
+    private static Logger logger = LoggerFactory.getLogger(WebUtils.class);
+
     public static final String getRemoteAddr(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");
         if (StringUtils.isBlank(ipAddress) || "unknown".equalsIgnoreCase(ipAddress)) {
@@ -44,6 +51,25 @@ public class WebUtils {
     public static HttpServletRequest getRequest() {
         HttpServletRequest request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
                 .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        return request;
+    }
+
+    public static HttpServletRequest getOrigRequest(HttpServletRequest request) {
+        if (request == null) {
+            request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
+                    .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        }
+        if (request instanceof XssHttpServletRequestWrapper) {
+            request = XssHttpServletRequestWrapper.getOrgRequest(request);
+        }
+        try {
+            if (request.getClass().getName().equals("com.scloudic.rabbitframework.security.web.servlet.SecurityHttpServletRequest")) {
+                Method method = request.getClass().getMethod("getOrgRequest");
+                request = (HttpServletRequest) method.invoke(request);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return request;
     }
 }
