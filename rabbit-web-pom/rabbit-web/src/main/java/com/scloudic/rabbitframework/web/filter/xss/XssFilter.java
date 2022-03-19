@@ -8,6 +8,7 @@ import java.util.List;
 
 public class XssFilter implements Filter {
     private List<String> excludeXssUri = new ArrayList<>();
+    private boolean jsonFilter = false;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
@@ -18,7 +19,12 @@ public class XssFilter implements Filter {
         XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper(
                 (HttpServletRequest) request);
         xssRequest.setExcludeXssUri(excludeXssUri);
+        xssRequest.setJsonFilter(jsonFilter);
         chain.doFilter(xssRequest, response);
+    }
+    
+    public void setJsonFilter(boolean jsonFilter) {
+        this.jsonFilter = jsonFilter;
     }
 
     public void setExcludeXssUri(List<String> excludeXssUri) {

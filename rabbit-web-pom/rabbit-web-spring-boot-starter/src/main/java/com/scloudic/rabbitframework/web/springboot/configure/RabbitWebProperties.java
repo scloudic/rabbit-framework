@@ -15,6 +15,7 @@ public class RabbitWebProperties {
     private boolean freemarkerEnable = false;
     private String freemarkerVariablePath = "";
     private List<String> excludeXssUri = new ArrayList<>();
+    private boolean jsonXssFilterEnable = false;
 
     public List<String> getExcludeXssUri() {
         return excludeXssUri;
@@ -54,5 +55,13 @@ public class RabbitWebProperties {
 
     public void setFreemarkerVariablePath(String freemarkerVariablePath) {
         this.freemarkerVariablePath = freemarkerVariablePath;
+    }
+
+    public boolean isJsonXssFilterEnable() {
+        return jsonXssFilterEnable;
+    }
+
+    public void setJsonXssFilterEnable(boolean jsonXssFilterEnable) {
+        this.jsonXssFilterEnable = jsonXssFilterEnable;
     }
 }

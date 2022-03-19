@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +26,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     public static final String INCLUDE_PATH_INFO_ATTRIBUTE = "javax.servlet.include.path_info";
     HttpServletRequest orgRequest;
     private List<String> excludeXssUri = new ArrayList<>();
+    private boolean jsonFilter = false;
 
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
@@ -47,7 +47,12 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         }
 
         //xss过滤
-        json = xssEncode(json);
+        if (jsonFilter) {
+            json = xssEncode(json);
+        } else {
+            json = WordFilter.doFilter(json);
+        }
+
         final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
         return new ServletInputStream() {
             @Override
@@ -188,8 +193,8 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         return request;
     }
 
-    public List<String> getExcludeXssUri() {
-        return excludeXssUri;
+    public void setJsonFilter(boolean jsonFilter) {
+        this.jsonFilter = jsonFilter;
     }
 
     public void setExcludeXssUri(List<String> excludeXssUri) {

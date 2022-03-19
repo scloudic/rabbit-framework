@@ -11,9 +11,8 @@ import java.util.regex.Pattern;
 public class XssFilterTest {
     @Test
     public void esapiTest() {
-        String a = "ate";
         Map<String, String> map = new HashMap<>();
-        map.put("test", a);
+        map.put("test", "{\"微信公众号\":\"weiXinMp\",\"微信小程序\":\"weiXinMini\"}");
         String value = ESAPI.encoder().canonicalize(JsonUtils.toJsonSkipTransient(map, true));
         // 避免script 标签
         Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);

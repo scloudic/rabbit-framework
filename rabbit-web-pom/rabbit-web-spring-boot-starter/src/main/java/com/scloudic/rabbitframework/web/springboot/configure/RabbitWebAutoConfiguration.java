@@ -122,6 +122,7 @@ public class RabbitWebAutoConfiguration {
         logger.debug("xss过滤器加载");
         XssFilter xssFilter = new XssFilter();
         xssFilter.setExcludeXssUri(this.rabbitWebProperties.getExcludeXssUri());
+        xssFilter.setJsonFilter(rabbitWebProperties.isJsonXssFilterEnable());
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         registration.setFilter(xssFilter);
