@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     private static final Logger logger = LoggerFactory.getLogger(XssHttpServletRequestWrapper.class);
+    public static final String INCLUDE_SERVLET_PATH_ATTRIBUTE = "javax.servlet.include.servlet_path";
+    public static final String INCLUDE_PATH_INFO_ATTRIBUTE = "javax.servlet.include.path_info";
     HttpServletRequest orgRequest;
     private List<String> excludeXssUri = new ArrayList<>();
 
@@ -118,7 +120,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     private String xssEncode(String input) {
         input = WordFilter.doFilter(input);
         if (excludeXssUri != null && excludeXssUri.size() > 0) {
-            String url = orgRequest.getRequestURI();
+            String url = getPathWithinApplication(orgRequest);
             if (excludeXssUri.contains(url)) {
                 return input;
             }
@@ -192,5 +194,31 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     public void setExcludeXssUri(List<String> excludeXssUri) {
         this.excludeXssUri = excludeXssUri;
+    }
+
+    public static String getPathWithinApplication(HttpServletRequest request) {
+        return removeSemicolon(getServletPath(request) + getPathInfo(request));
+    }
+
+    private static String getServletPath(HttpServletRequest request) {
+        String servletPath = (String) request.getAttribute(INCLUDE_SERVLET_PATH_ATTRIBUTE);
+        return servletPath != null ? servletPath : valueOrEmpty(request.getServletPath());
+    }
+
+    private static String getPathInfo(HttpServletRequest request) {
+        String pathInfo = (String) request.getAttribute(INCLUDE_PATH_INFO_ATTRIBUTE);
+        return pathInfo != null ? pathInfo : valueOrEmpty(request.getPathInfo());
+    }
+
+    private static String valueOrEmpty(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input;
+    }
+
+    private static String removeSemicolon(String uri) {
+        int semicolonIndex = uri.indexOf(';');
+        return (semicolonIndex != -1 ? uri.substring(0, semicolonIndex) : uri);
     }
 }
