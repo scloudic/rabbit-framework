@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -76,9 +77,17 @@ public class RequestLogInterceptor {
             logInfo.setMethodName(methodName);
             logInfo.setValue(paramsValue);
             String jsonValue = JsonUtils.toJson(logInfo);
+            HttpServletRequest request = WebUtils.getRequest();
+            Enumeration<String> enumeration = request.getHeaderNames();
+            Map<String, String> headerMap = new HashMap<>();
+            while (enumeration.hasMoreElements()) {
+                String name = enumeration.nextElement();
+                headerMap.put(name, request.getHeader(name));
+            }
             StringBuilder sb = new StringBuilder();
             sb.append("[REQUEST]=>{");
-            sb.append("requestPath:" + WebUtils.getRequest().getRequestURI() + ",value:" + jsonValue + "}");
+            sb.append("header:" + JsonUtils.toJson(headerMap));
+            sb.append(",requestPath:" + request.getRequestURI() + ",value:" + jsonValue + "}");
             String result = sb.toString();
             logger.info(result);
         } catch (Exception e) {

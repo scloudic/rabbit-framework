@@ -116,7 +116,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String xssEncode(String input) {
-        logger.debug("xss过滤");
         input = WordFilter.doFilter(input);
         if (excludeXssUri != null && excludeXssUri.size() > 0) {
             String url = orgRequest.getRequestURI();
