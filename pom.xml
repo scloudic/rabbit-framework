@@ -58,7 +58,7 @@
         <org.apache.poi.version>5.2.0</org.apache.poi.version>
         <poi-ooxml-schemas.version>4.1.2</poi-ooxml-schemas.version>
         <ooxml-schemas.version>1.1</ooxml-schemas.version>
-        <esapi.version>2.1.0</esapi.version>
+        <esapi.version>2.2.3.1</esapi.version>
         <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
         <redisson.version>3.15.3</redisson.version>
         <httpclient.version>4.5.13</httpclient.version>
