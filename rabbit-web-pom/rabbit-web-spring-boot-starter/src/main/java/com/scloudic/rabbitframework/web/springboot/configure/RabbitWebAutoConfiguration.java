@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class,name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
+@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class, name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
@@ -120,9 +120,11 @@ public class RabbitWebAutoConfiguration {
             havingValue = "true", matchIfMissing = true)
     public FilterRegistrationBean<Filter> xssFilterRegistration() {
         logger.debug("xss过滤器加载");
+        XssFilter xssFilter = new XssFilter();
+        xssFilter.setExcludeXssUri(this.rabbitWebProperties.getExcludeXssUri());
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
+        registration.setFilter(xssFilter);
         registration.addUrlPatterns("/*");
         registration.setName("xssFilter");
         registration.setOrder(Integer.MAX_VALUE);

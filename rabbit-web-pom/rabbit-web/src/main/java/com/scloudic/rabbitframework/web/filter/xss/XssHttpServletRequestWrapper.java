@@ -3,6 +3,9 @@ package com.scloudic.rabbitframework.web.filter.xss;
 import com.scloudic.rabbitframework.web.filter.sensitive.WordFilter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.owasp.esapi.ESAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -12,12 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
+    private static final Logger logger = LoggerFactory.getLogger(XssHttpServletRequestWrapper.class);
     HttpServletRequest orgRequest;
-    private final static HTMLFilter htmlFilter = new HTMLFilter();
+    private List<String> excludeXssUri = new ArrayList<>();
 
     public XssHttpServletRequestWrapper(HttpServletRequest request) {
         super(request);
@@ -109,8 +116,58 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String xssEncode(String input) {
+        logger.debug("xss过滤");
         input = WordFilter.doFilter(input);
-        return htmlFilter.filter(input);
+        if (excludeXssUri != null && excludeXssUri.size() > 0) {
+            String url = orgRequest.getRequestURI();
+            if (excludeXssUri.contains(url)) {
+                return input;
+            }
+        }
+        String value = ESAPI.encoder().canonicalize(input);
+        // 避免script标签
+        Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免src形式的表达式
+        scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 删除单个的 </script> 标签
+        scriptPattern = Pattern.compile("</script>", Pattern.CASE_INSENSITIVE);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 删除单个的<script ...> 标签
+        scriptPattern = Pattern.compile("<script(.*?)>",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免 eval(...) 形式表达式
+        scriptPattern = Pattern.compile("eval\\((.*?)\\)",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免 expression(...) 表达式
+        scriptPattern = Pattern.compile("expression\\((.*?)\\)",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免 javascript: 表达式
+        scriptPattern = Pattern.compile("javascript:", Pattern.CASE_INSENSITIVE);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免 vbscript:表达式
+        scriptPattern = Pattern.compile("vbscript:", Pattern.CASE_INSENSITIVE);
+        value = scriptPattern.matcher(value).replaceAll("");
+        // 避免 onload= 表达式
+        scriptPattern = Pattern.compile("onload(.*?)=",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        //移除特殊标签
+        value = value.replaceAll("<", "&lt;").replaceAll(">",
+                "&gt;");
+        // 避免 onXX= 表达式
+        scriptPattern = Pattern.compile("on.*(.*?)=",
+                Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+        value = scriptPattern.matcher(value).replaceAll("");
+        return value;
     }
 
     /**
@@ -127,8 +184,14 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         if (request instanceof XssHttpServletRequestWrapper) {
             return ((XssHttpServletRequestWrapper) request).getOrgRequest();
         }
-
         return request;
     }
 
+    public List<String> getExcludeXssUri() {
+        return excludeXssUri;
+    }
+
+    public void setExcludeXssUri(List<String> excludeXssUri) {
+        this.excludeXssUri = excludeXssUri;
+    }
 }

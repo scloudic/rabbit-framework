@@ -51,16 +51,7 @@
     <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
-        <AsyncLogger name="com.scloudic.rabbitframework" level="debug" additivity="false">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFile"/>
-        </AsyncLogger>
-        <AsyncLogger name="org.springframework" level="info" additivity="false">
-            <appender-ref ref="Console"/>
-            <appender-ref ref="RollingFile"/>
-            <AppenderRef ref="RollingFileError"/>
-        </AsyncLogger>
-        <AsyncRoot level="info" includeLocation="true">
+        <AsyncRoot level="debug" includeLocation="true">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="RollingFileError"/>

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-public class DateFormatUtil {
+public class DateUtils {
     private static final long dayTime = 24 * 60 * 60 * 1000;
     //java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss:ssss");
 
@@ -49,7 +49,7 @@ public class DateFormatUtil {
      */
     public static String getCurrDataTime() {
         Date now = new Date();
-        String s = dateToStr(now, "yyyy-MM-dd HH:mm:ss");
+        String s = formatDate(now, "yyyy-MM-dd HH:mm:ss");
         return s;
     }
 
@@ -69,7 +69,7 @@ public class DateFormatUtil {
      * @param format 转换格式，如：yyyy-MM-dd
      * @return string
      */
-    public static String dateToStr(Date date, String format) {
+    public static String formatDate(Date date, String format) {
         SimpleDateFormat outFormat = new SimpleDateFormat(format);
         String s = outFormat.format(date);
         return s;
@@ -82,7 +82,7 @@ public class DateFormatUtil {
      * @return string
      */
     public static String formatDate(Date date) {
-        return dateToStr(date, "yyyy-MM-dd");
+        return formatDate(date, "yyyy-MM-dd");
     }
 
     /**
@@ -92,7 +92,7 @@ public class DateFormatUtil {
      * @return string
      */
     public static String formatDateTime(Date date) {
-        return dateToStr(date, "yyyy-MM-dd HH:mm:ss");
+        return formatDate(date, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**
@@ -102,7 +102,7 @@ public class DateFormatUtil {
      * @return string
      */
     public static String formatDate2(Date myDate) {
-        return dateToStr(myDate, "yyyy/MM/dd");
+        return formatDate(myDate, "yyyy/MM/dd");
     }
 
     /**
@@ -112,7 +112,7 @@ public class DateFormatUtil {
      * @return string
      */
     public static String formatDate4(Date myDate) {
-        return dateToStr(myDate, "yyyyMMdd");
+        return formatDate(myDate, "yyyyMMdd");
     }
 
     public static int getYear() {
