@@ -32,12 +32,32 @@ public class RabbitErrorController extends BasicErrorController {
     public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> originalMsgMap = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.TEXT_HTML));
         logger.error("html请求发生错误,错误消息：" + JsonUtils.toJson(originalMsgMap));
-        String url = CommonResponseUrl.getSys404ErrorUrl();
+
+        String url = "";
+        HttpStatus status = getStatus(request);
+        int statusCode = status.value();
+        switch (statusCode) {
+            case 500:
+                url = CommonResponseUrl.getSys500ErrorUrl();
+                break;
+            case 405:
+                url = CommonResponseUrl.getSys405ErrorUrl();
+                break;
+            case 401:
+                url = CommonResponseUrl.getLoginUrl();
+                break;
+            case 407:
+                url = CommonResponseUrl.getUnauthorizedUrl();
+                break;
+            case 404:
+                url = CommonResponseUrl.getSys404ErrorUrl();
+                break;
+        }
         if (StringUtils.isBlank(url)) {
             return super.errorHtml(request, response);
         }
-        HttpStatus status = getStatus(request);
-        response.setStatus(status.value());
+
+        response.setStatus(statusCode);
         Map<String, Object> model = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.TEXT_HTML));
         return new ModelAndView(url, model);
     }
