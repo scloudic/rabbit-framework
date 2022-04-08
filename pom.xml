@@ -68,7 +68,7 @@
         <pinyin4j>2.5.0</pinyin4j>
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <snakeyaml>1.27</snakeyaml>
-        <spring-boot.version>2.6.4</spring-boot.version>
+        <spring-boot.version>2.6.6</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
         <xstream.version>1.4.19</xstream.version>
