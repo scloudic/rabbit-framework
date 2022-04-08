@@ -119,7 +119,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     }
 
 
-    public static Long LongToZero(Long value) {
+    public static Long longToZero(Long value) {
         Long returnValue = value;
         if (returnValue == null) {
             return 0L;
@@ -128,7 +128,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     }
 
 
-    public static Integer IntegerToZero(Integer value) {
+    public static Integer integerToZero(Integer value) {
         Integer returnValue = value;
         if (returnValue == null) {
             return 0;
@@ -137,7 +137,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
     }
 
 
-    public static String ArrayToString(String[] array, String separator) {
+    public static String arrayToString(String[] array, String separator) {
         String str = "";
 
         if (array != null && array.length > 0) {
