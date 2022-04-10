@@ -78,7 +78,7 @@
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <rabbit-framework.version>3.6.3</rabbit-framework.version>
         <disruptor.version>3.4.4</disruptor.version>
-        <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
+        <fasterxmljackson.version>2.13.2.1</fasterxmljackson.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
