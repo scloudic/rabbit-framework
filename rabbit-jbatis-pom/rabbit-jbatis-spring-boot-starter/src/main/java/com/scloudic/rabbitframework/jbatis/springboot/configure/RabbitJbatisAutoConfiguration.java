@@ -1,6 +1,8 @@
 package com.scloudic.rabbitframework.jbatis.springboot.configure;
 
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
+import com.scloudic.rabbitframework.core.utils.CollectionUtils;
+import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.jbatis.RabbitJbatisFactory;
 import com.scloudic.rabbitframework.jbatis.cache.Cache;
 import com.scloudic.rabbitframework.jbatis.dataaccess.DataSourceBean;
@@ -18,7 +20,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -78,8 +82,17 @@ public class RabbitJbatisAutoConfiguration {
             }
         }
         rabbitJbatisFactoryBean.setDataSourceFactory(dataSourceFactory());
-        rabbitJbatisFactoryBean.setEntityPackages(rabbitJbatisProperties.getEntityPackages());
-        rabbitJbatisFactoryBean.setMapperPackages(rabbitJbatisProperties.getMapperPackages());
+        List<String> entityPackages = rabbitJbatisProperties.getEntityPackages();
+        if (!CollectionUtils.isEmpty(entityPackages)) {
+            String[] entityArr = new String[entityPackages.size()];
+            rabbitJbatisFactoryBean.setEntityPackages(StringUtils.arrayToString(entityPackages.toArray(entityArr), ","));
+        }
+
+        List<String> mapperPackages = rabbitJbatisProperties.getMapperPackages();
+        if (!CollectionUtils.isEmpty(mapperPackages)) {
+            String[] mapperArr = new String[mapperPackages.size()];
+            rabbitJbatisFactoryBean.setMapperPackages(StringUtils.arrayToString(mapperPackages.toArray(mapperArr), ","));
+        }
         Map<String, DataSourceBean> dataSourceMap = new HashMap<>();
         Map<String, DataSourceProperties> dataSourcePropertiesMap = rabbitJbatisProperties.getDataSourceBeans();
         if (dataSourcePropertiesMap.size() > 0) {

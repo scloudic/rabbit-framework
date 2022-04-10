@@ -141,21 +141,21 @@ public class Where {
         setOrderBy(fieldName, OrderByType.DESC);
     }
 
-    public void setOrderByDesc(String orderBy) {
+    public void orderByDesc(String orderBy) {
         setOrderBy(orderBy, OrderByType.DESC);
     }
 
-    public <T> void setOrderByDesc(SFunction<T, ?> fn) {
+    public <T> void orderByDesc(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         setOrderBy(fieldName, OrderByType.DESC);
     }
 
-    public <T> void setOrderByAsc(SFunction<T, ?> fn) {
+    public <T> void orderByAsc(SFunction<T, ?> fn) {
         String fieldName = SFunctionUtils.getFieldName(fn);
         setOrderBy(fieldName, OrderByType.ASC);
     }
 
-    public void setOrderByAsc(String orderBy) {
+    public void orderByAsc(String orderBy) {
         setOrderBy(orderBy, OrderByType.ASC);
     }
 
@@ -171,8 +171,7 @@ public class Where {
      * @param orderBy     orderBy
      * @param orderByType orderByType
      */
-    @Deprecated
-    public void setOrderBy(String orderBy, OrderByType orderByType) {
+    private void setOrderBy(String orderBy, OrderByType orderByType) {
         if (orderByType == null) {
             orderByType = OrderByType.DESC;
         }
