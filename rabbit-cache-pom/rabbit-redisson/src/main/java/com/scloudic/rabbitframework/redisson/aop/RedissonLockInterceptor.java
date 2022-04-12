@@ -42,6 +42,7 @@ public class RedissonLockInterceptor {
             LockValue lockValue = parameter.getAnnotation(LockValue.class);
             if (lockValue != null) {
                 value = args[i].toString();
+                break;
             }
         }
         String key = redisLock.key();
