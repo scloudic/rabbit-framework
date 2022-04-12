@@ -1,5 +1,6 @@
 package com.scloudic.rabbitframework.redisson.springboot.configure;
 
+import com.scloudic.rabbitframework.redisson.aop.RedissonLockInterceptor;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,5 +55,14 @@ public class RedissonAutoConfiguration {
         RedisCache redisCache = new RedisCache();
         redisCache.setRedissonClient(redissonClient);
         return redisCache;
+    }
+
+    @Bean
+    @DependsOn("redisCache")
+    @ConditionalOnMissingBean
+    public RedissonLockInterceptor redissonLockInterceptor(RedisCache redisCache) {
+        RedissonLockInterceptor redissonLockInterceptor = new RedissonLockInterceptor();
+        redissonLockInterceptor.setRedisCache(redisCache);
+        return redissonLockInterceptor;
     }
 }

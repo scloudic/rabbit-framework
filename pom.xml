@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.6.3</version>
+    <version>3.6.4</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -76,7 +76,7 @@
         <easyexcel.version>3.0.5</easyexcel.version>
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <javax.el-api.version>3.0.0</javax.el-api.version>
-        <rabbit-framework.version>3.6.3</rabbit-framework.version>
+        <rabbit-framework.version>3.6.4</rabbit-framework.version>
         <disruptor.version>3.4.4</disruptor.version>
         <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
     </properties>
