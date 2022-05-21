@@ -1,0 +1,40 @@
+server:
+  servlet:
+    context-path: /webExample
+spring:
+  #全局加载配置
+  messages:
+    basename: messages/globalMessages
+  freemarker:
+    allow-request-override: false
+    allow-session-override: false
+    cache: false
+    suffix: .html
+    request-context-attribute: request
+    template-loader-path:
+      - classpath:/freemarker/
+rabbit:
+  redisson:
+    open-status: false
+  web:
+    freemarker-enable: true
+    enable-freemarker: true
+    enable-xss-filter: true
+    enable-request-log: true
+    freemarker-variable-path: com.scloudic.rabbitframework.example.template
+  security:
+    cookie:
+      name: example
+      path: /
+    sessionIdCookieEnabled: true
+    tokenEnabled: true
+    #filter-chain-definitions:
+    uriPerms: /freemarker/*
+    session-dao-key-prefix: example_session_test
+    realm-bean-names:
+      - exampleRealm
+    session-type: local
+    cache-type: memory
+  commons:
+    front-black: true
+    page404: false

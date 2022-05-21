@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.scloudic.rabbitframework.security.springboot.configure.SecurityBeanAutoConfiguration,\
+  com.scloudic.rabbitframework.security.springboot.configure.SecurityRedisCacheAutoConfiguration,\
+  com.scloudic.rabbitframework.security.springboot.configure.SecurityWebAutoConfiguration,\
+  com.scloudic.rabbitframework.security.springboot.configure.SecurityAnnotationProcessorAutoConfiguration,\
+  com.scloudic.rabbitframework.security.springboot.configure.SecurityFilterAutoConfiguration

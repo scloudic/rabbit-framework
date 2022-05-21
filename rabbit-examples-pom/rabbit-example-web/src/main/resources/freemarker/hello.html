@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>html freemarker模板</title>
+<!--        <link rel="shortcut icon" href="favicon.ico"/>-->
+    </head>
+    <body>
+        <h1>Welcome ${user}!</h1>
+        <p>
+            items:<br> <#list items as item> ${item}<br></#list>
+        <@contextPath>
+
+        </@contextPath>
+    ${basePath}
+    </body>
+</html>
