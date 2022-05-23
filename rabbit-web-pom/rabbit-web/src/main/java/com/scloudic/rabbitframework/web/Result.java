@@ -26,13 +26,16 @@ public class Result<T> {
         return success(ServletContextHelper.getMessage("success"), null);
     }
 
-    public static <T> Result<T> failure(StatusCode statusCode, T data) {
-        return new Result<T>(statusCode.getMsg(), statusCode.getValue(), data);
+    public static <T> Result<T> failure(StatusCode statusCode, String message) {
+        return new Result<T>(message, statusCode.getValue(), null);
     }
-
 
     public static <T> Result<T> failure(int status, String message, T data) {
         return new Result<T>(message, status, data);
+    }
+
+    public static <T> Result<T> failure(StatusCode statusCode, String message, T data) {
+        return failure(statusCode.getValue(), message, data);
     }
 
     public static <T> Result<T> failure(int status, String message) {

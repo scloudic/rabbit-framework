@@ -54,9 +54,6 @@ public abstract class AbstractRabbitController {
         return success(getMessage("success"), null);
     }
 
-    public <T> Result<T> failure(StatusCode statusCode, T data) {
-        return Result.failure(statusCode, data);
-    }
 
     public <T> Result<T> failure(StatusCode statusCode) {
         return Result.failure(statusCode);
@@ -76,6 +73,10 @@ public abstract class AbstractRabbitController {
 
     public static <T> Result<T> failure(int status, String message) {
         return Result.failure(status, message);
+    }
+
+    public static <T> Result<T> failure(StatusCode statusCode, String message) {
+        return Result.failure(statusCode.getValue(), message);
     }
 
     public String getHeader(HttpServletRequest request, String key) {
