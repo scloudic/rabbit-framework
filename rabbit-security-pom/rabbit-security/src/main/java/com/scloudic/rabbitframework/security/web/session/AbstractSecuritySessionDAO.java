@@ -47,7 +47,7 @@ public abstract class AbstractSecuritySessionDAO extends AbstractSessionDAO {
 
     @Override
     protected Serializable generateSessionId(Session session) {
-        return UUIDUtils.getTimeUUID36();
+        return UUIDUtils.getTimeUUID32();
     }
 
     public abstract void doSave(Session session) throws UnknownSessionException;
