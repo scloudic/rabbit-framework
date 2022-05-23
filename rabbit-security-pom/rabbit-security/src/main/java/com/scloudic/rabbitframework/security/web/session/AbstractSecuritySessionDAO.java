@@ -2,6 +2,7 @@ package com.scloudic.rabbitframework.security.web.session;
 
 import java.io.Serializable;
 
+import com.scloudic.rabbitframework.core.utils.UUIDUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
@@ -42,6 +43,11 @@ public abstract class AbstractSecuritySessionDAO extends AbstractSessionDAO {
         logger.debug("RedisSessionDAO:doCreate=>" + sessionId);
         doSave(session);
         return sessionId;
+    }
+
+    @Override
+    protected Serializable generateSessionId(Session session) {
+        return UUIDUtils.getTimeUUID36();
     }
 
     public abstract void doSave(Session session) throws UnknownSessionException;

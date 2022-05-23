@@ -21,7 +21,7 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
     public static final String ACTIVE_SESSION_CACHE_NAME = "security-activeSessionCache";
     private CacheManager cacheManager;
     private String keyPrefix = "session:";
-    private boolean singleUser = true;
+    private boolean singleUser = false;
     private RedisCache<String, Session> activeSessions = null;
 
     @Override
