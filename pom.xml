@@ -79,6 +79,7 @@
         <rabbit-framework.version>3.6.4</rabbit-framework.version>
         <disruptor.version>3.4.4</disruptor.version>
         <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
+        <httpcore.version>4.4.15</httpcore.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -656,6 +657,11 @@
                 <groupId>com.fasterxml.jackson.dataformat</groupId>
                 <artifactId>jackson-dataformat-yaml</artifactId>
                 <version>${fasterxmljackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
