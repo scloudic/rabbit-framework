@@ -9,7 +9,7 @@
     <artifactId>rabbit-redisson</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <de.ruedigermoeller.fst.version>3.0.3</de.ruedigermoeller.fst.version>
+        <de.ruedigermoeller.fst.version>2.57</de.ruedigermoeller.fst.version>
     </properties>
     <dependencies>
         <dependency>
