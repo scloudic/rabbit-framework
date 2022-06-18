@@ -17,6 +17,8 @@ public enum StatusCode {
     SC_UNAUTHORIZED(401, "授权错误,请与管理员联系"),
     SC_PROXY_AUTHENTICATION_REQUIRED(407, "用户名或密码错误!"),
     SC_INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
+    TYPE_ERROR(6, "类型转换错误"),
+    REFLECTION_ERROR(7, "类引用错误"),
     ;
     private int value;
     private String msg;

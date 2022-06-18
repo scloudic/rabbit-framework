@@ -1,21 +1,30 @@
 package com.scloudic.rabbitframework.core.exceptions;
 
-public class TypeException extends RuntimeException {
-	private static final long serialVersionUID = -2957142805761525164L;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
 
-	public TypeException() {
-		super();
-	}
+public class TypeException extends RabbitFrameworkException {
+    private static final long serialVersionUID = -2957142805761525164L;
 
-	public TypeException(String message) {
-		super(message);
-	}
+    private StatusCode status = StatusCode.TYPE_ERROR;
 
-	public TypeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public TypeException() {
+        super();
+    }
 
-	public TypeException(Throwable cause) {
-		super(cause);
-	}
+    public TypeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public TypeException(String message) {
+        super(message);
+    }
+
+    public TypeException(Throwable cause) {
+        super(cause);
+    }
+
+    @Override
+    public StatusCode getStatus() {
+        return status;
+    }
 }

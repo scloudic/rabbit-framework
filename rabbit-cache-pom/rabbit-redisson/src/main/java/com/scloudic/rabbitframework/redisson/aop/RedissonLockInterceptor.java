@@ -7,6 +7,7 @@ import com.scloudic.rabbitframework.core.reflect.MetaObject;
 import com.scloudic.rabbitframework.core.reflect.MetaObjectUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.redisson.RedisCache;
+import com.scloudic.rabbitframework.redisson.RedisException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -57,7 +58,12 @@ public class RedissonLockInterceptor {
         if (StringUtils.isNotBlank(value)) {
             key = key + ":" + value;
         }
-        boolean isSuccess = redisCache.tryLock(key, redisLock.seconds());
+        boolean isSuccess = false;
+        if (redisLock.leaseTime() != -1) {
+            isSuccess = redisCache.tryLock(key, redisLock.waitTime(), redisLock.leaseTime());
+        } else {
+            isSuccess = redisCache.tryLock(key, redisLock.waitTime());
+        }
         if (isSuccess) {
             logger.debug("redissonLock加锁成功");
             try {
@@ -66,11 +72,13 @@ public class RedissonLockInterceptor {
                 throw e;
             } finally {
                 logger.debug("redissonLock锁释放");
-                redisCache.unLock(key);
+                if (isSuccess) {
+                    redisCache.unLock(key);
+                }
             }
         } else {
             logger.warn("redissonLock获了加锁失败");
-            throw new BizException(redisLock.exceptionMsg());
+            throw new RedisException(redisLock.exceptionMsg());
         }
     }
 

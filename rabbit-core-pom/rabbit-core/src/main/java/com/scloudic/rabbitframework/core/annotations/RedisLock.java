@@ -9,7 +9,9 @@ import java.lang.annotation.*;
 public @interface RedisLock {
     String key();
 
-    long seconds() default 10L;
+    long waitTime() default 10L;
+
+    long leaseTime() default -1L;
 
     String exceptionMsg() default "lock.fail";
 

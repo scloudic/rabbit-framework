@@ -1,21 +1,27 @@
 package com.scloudic.rabbitframework.core.exceptions;
 
-public class ReflectionException extends RuntimeException {
-	private static final long serialVersionUID = 427684446635174629L;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
 
-	public ReflectionException() {
-		super();
-	}
+public class ReflectionException extends RabbitFrameworkException {
+    private static final long serialVersionUID = 427684446635174629L;
+    private StatusCode status = StatusCode.REFLECTION_ERROR;
+    public ReflectionException() {
+        super();
+    }
+    public ReflectionException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public ReflectionException(String message) {
-		super(message);
-	}
+    public ReflectionException(String message) {
+        super(message);
+    }
 
-	public ReflectionException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public ReflectionException(Throwable cause) {
+        super(cause);
+    }
 
-	public ReflectionException(Throwable cause) {
-		super(cause);
-	}
+    @Override
+    public StatusCode getStatus() {
+        return status;
+    }
 }

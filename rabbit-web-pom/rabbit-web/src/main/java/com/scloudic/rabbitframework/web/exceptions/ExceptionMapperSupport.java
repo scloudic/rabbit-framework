@@ -34,7 +34,11 @@ public class ExceptionMapperSupport {
         logger.error("异常信息：" + e.getMessage(), e);
         logger.error("异常类：{}", handlerMethod.getBean().getClass());
         logger.error("异常请求地址：{}", request.getRequestURL());
-        String message = ServletContextHelper.getMessage(e.getMessage());
+        String msg = e.getDescription();
+        if (StringUtils.isBlank(msg)) {
+            msg = e.getMessage();
+        }
+        String message = ServletContextHelper.getMessage(msg);
         return getResponseByStatus(e.getStatus(), message, response);
     }
 
