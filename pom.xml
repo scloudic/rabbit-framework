@@ -16,11 +16,12 @@
     </modules>
     <properties>
         <java.version>1.8</java.version>
-        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-        <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
-        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <!-- <jetty-maven-plugin.version>9.3.7.v20160115</jetty-maven-plugin.version> -->
         <jetty-maven-plugin.version>9.4.8.v20171121</jetty-maven-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,7 +34,7 @@
         <log4j-slf4j-impl.version>2.17.1</log4j-slf4j-impl.version>
         <slf4j-api.version>1.7.30</slf4j-api.version>
         <slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
-        <aspectj.version>1.9.4</aspectj.version>
+        <aspectj.version>1.9.9.1</aspectj.version>
         <ehcache.version>2.6.11</ehcache.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <commons-collections4.version>4.4</commons-collections4.version>
@@ -61,7 +62,7 @@
         <ooxml-schemas.version>1.1</ooxml-schemas.version>
         <esapi.version>2.2.3.1</esapi.version>
         <hibernate.validator.version>6.0.17.Final</hibernate.validator.version>
-        <redisson.version>3.17.0</redisson.version>
+        <redisson.version>3.17.4</redisson.version>
         <httpclient.version>4.5.13</httpclient.version>
         <okhttp3.version>3.14.2</okhttp3.version>
         <jsoup.version>1.14.3</jsoup.version>
@@ -80,6 +81,7 @@
         <disruptor.version>3.4.4</disruptor.version>
         <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
         <httpcore.version>4.4.15</httpcore.version>
+        <objenesis.version>3.2</objenesis.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -663,6 +665,11 @@
                 <artifactId>httpcore</artifactId>
                 <version>${httpcore.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>${objenesis.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -735,7 +742,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.9.1</version>
+                    <version>${maven-javadoc-plugin.version}</version>
                     <executions>
                         <execution>
                             <phase>package</phase>
@@ -767,9 +774,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven-install-plugin.version}</version>
-                    <configuration>
-                        <createChecksum>true</createChecksum>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -877,10 +881,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-gpg-plugin</artifactId>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
     <distributionManagement>

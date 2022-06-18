@@ -9,7 +9,7 @@
     <artifactId>rabbit-redisson</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <de.ruedigermoeller.fst.version>2.57</de.ruedigermoeller.fst.version>
+        <de.ruedigermoeller.fst.version>3.0.3</de.ruedigermoeller.fst.version>
     </properties>
     <dependencies>
         <dependency>
@@ -54,6 +54,16 @@
             <groupId>de.ruedigermoeller</groupId>
             <artifactId>fst</artifactId>
             <version>${de.ruedigermoeller.fst.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.objenesis</groupId>
+                    <artifactId>objenesis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.javassist</groupId>
