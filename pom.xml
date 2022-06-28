@@ -82,6 +82,7 @@
         <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
         <httpcore.version>4.4.15</httpcore.version>
         <objenesis.version>3.2</objenesis.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -669,6 +670,11 @@
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
