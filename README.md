@@ -1,7 +1,7 @@
 ### rabbit-framework 介绍
 我们大部分软件开发都是基于ssm整合框架搭建项目，而大部分非业务代码基本上都从各种项目中迁移、复制、各jar版本也经常出现冲突等情况，
 一直想着做一款能快速搭建环境、项目中只关注业务部分，避免上述等重复性工作。于是利用业余空闲时间写了一套整合型框架(rabbit-framework)。
-rabbit-framework框架通过使用开源框架springBoot、redisson、jersey2、shiro等技术的基础上进行封装而形成的一套项目技术框架，主要划分为以下模块：
+rabbit-framework框架通过使用开源框架springBoot、redisson、shiro等技术的基础上进行封装而形成的一套项目技术框架，主要划分为以下模块：
 
 一、rabbit-jbatis:数据库框架,基于mybatis二次开发,主要实现以下功能：
 
