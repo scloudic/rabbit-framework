@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
     <properties>
         <cas-client-core.version>3.2.2</cas-client-core.version>
-        <shiro.version>1.8.0</shiro.version>
+        <shiro.version>1.9.1</shiro.version>
     </properties>
     <modules>
         <module>rabbit-security</module>
