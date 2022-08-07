@@ -19,7 +19,7 @@ public abstract class AbstractSecuritySessionDAO extends AbstractSessionDAO {
     public void update(Session session) throws UnknownSessionException {
         PrincipalCollection existingPrincipals = (PrincipalCollection) session
                 .getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        if (existingPrincipals == null || CollectionUtils.isEmpty(existingPrincipals)) {
+        if (existingPrincipals == null || existingPrincipals.isEmpty()) {
             Serializable sessionId = session.getId();
             logger.error("PrincipalCollection is null,update sessionId is " + sessionId);
             return;

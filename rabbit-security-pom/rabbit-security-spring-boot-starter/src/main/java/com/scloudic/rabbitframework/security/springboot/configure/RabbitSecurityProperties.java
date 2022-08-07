@@ -19,7 +19,9 @@ public class RabbitSecurityProperties {
     private String tokenName = "Authorization";
     private String sessionDaoKeyPrefix = "rabbit_session";
     private SessionType sessionType = SessionType.servlet;
+    //单位：毫秒
     private Long cacheSessionExpire = 604800L * 1000;
+    //单位：毫秒
     private Long otherCacheExpire = 600L * 1000;
     private CacheType cacheType = CacheType.memory;
     private boolean singleUser = false;

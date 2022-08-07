@@ -4,6 +4,7 @@ import com.scloudic.rabbitframework.security.cache.redisson.RedisSessionDAO;
 import com.scloudic.rabbitframework.security.mgt.SubjectDAOImpl;
 import com.scloudic.rabbitframework.security.realm.EmptyRealm;
 import com.scloudic.rabbitframework.security.realm.SecurityAuthorizingRealm;
+import com.scloudic.rabbitframework.security.spring.SessionCacheManager;
 import com.scloudic.rabbitframework.security.web.mgt.SimpleWebSecurityManager;
 import com.scloudic.rabbitframework.security.web.servlet.SecurityWebCookie;
 import com.scloudic.rabbitframework.security.web.session.SecurityWebSessionManager;
@@ -148,5 +149,11 @@ public class SecurityWebAutoConfiguration {
         return simpleWebSecurityManager;
     }
 
-
+    @Bean("sessionCacheManager")
+    @ConditionalOnMissingBean
+    protected SessionCacheManager sessionCacheManager(SessionDAO sessionDAO) {
+        SessionCacheManager sessionCacheManager = new SessionCacheManager();
+        sessionCacheManager.setSessionDAO(sessionDAO);
+        return sessionCacheManager;
+    }
 }

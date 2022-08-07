@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.scloudic.rabbitframework.security.cache.SecurityCache;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.util.CollectionUtils;
@@ -19,11 +20,12 @@ import org.slf4j.LoggerFactory;
  * @param <K>
  * @param <V>
  */
-public class RedisCache<K, V> implements Cache<K, V> {
+public class RedisCache<K, V> implements SecurityCache<K, V> {
     private static final Logger logger = LoggerFactory.getLogger(RedisCache.class);
     private RedisManager cache;
     public String keyPrefix = "security_cache:";
-    private long expire = 0L;
+    //过期时间：毫秒
+    private long expireTime = 3600L * 1000;
 
     /**
      * 通过一个JedisManager实例构造RedisCache
@@ -37,7 +39,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
     public RedisCache(RedisManager cache, long expire) {
         this(cache);
-        this.expire = expire;
+        this.expireTime = expire;
     }
 
     /**
@@ -75,7 +77,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
     public V put(K key, V value) throws CacheException {
         logger.debug("redis put key [" + key + "]");
         try {
-            cache.set(getKey(key), SerializeUtils.serialize(value), expire);
+            cache.set(getKey(key), SerializeUtils.serialize(value), expireTime);
             return value;
         } catch (Throwable t) {
             throw new CacheException(t);
@@ -161,11 +163,8 @@ public class RedisCache<K, V> implements Cache<K, V> {
         }
     }
 
-    public long getExpire() {
-        return expire;
-    }
-
-    public void setExpire(long expire) {
-        this.expire = expire;
+    @Override
+    public long getExpireTime() {
+        return expireTime;
     }
 }

@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-cache-pom</artifactId>
-        <version>3.6.5</version>
+        <version>3.6.6</version>
     </parent>
     <artifactId>rabbit-jedis</artifactId>
     <packaging>jar</packaging>

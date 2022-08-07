@@ -3,59 +3,45 @@ package com.scloudic.rabbitframework.core.notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.*;
 
 public class NotificationServerManager implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(NotificationServerManager.class);
-    private final ConcurrentMap<Class<? extends NotificationServerListener>, Class<? extends NotificationEvent>> eventsMap;
+    private final ConcurrentMap<Class<? extends NotificationEvent>, Listener> eventsMap;
     private final BlockingDeque<NotificationEvent> eventQueue;
     private ExecutorService executorService = null;
-    private final Set listeners;
     private volatile boolean disposed = false;
 
     public NotificationServerManager() {
-        eventsMap = new ConcurrentHashMap<Class<? extends NotificationServerListener>, Class<? extends NotificationEvent>>();
+        eventsMap = new ConcurrentHashMap<Class<? extends NotificationEvent>, Listener>();
         eventQueue = new LinkedBlockingDeque<NotificationEvent>();
-        listeners = new ConcurrentHashSet();
     }
 
     public void start() {
         disposed = false;
         executorService = Executors.newCachedThreadPool();
         executorService.execute(this);
-        // new Thread(this).start();
         logger.info("启动消息通知服务");
     }
 
     /**
-     * 注册事件类型
+     * 注册监听事件
      *
-     * @param eventType    eventType
-     * @param listenerType listenerType
+     * @param eventType
+     * @param listener
      */
-    public void registerEventType(Class<? extends NotificationEvent> eventType,
-                                  Class<? extends NotificationServerListener> listenerType) {
-        eventsMap.putIfAbsent(listenerType, eventType);
+    public void registerListener(Class<? extends NotificationEvent> eventType,
+                                 NotificationServerListener listener) {
+        Listener l = new Listener(listener, eventType);
+        eventsMap.putIfAbsent(eventType, l);
     }
 
-    public void registerListener(NotificationServerListener listener) {
-        registerListener(listener, null);
-    }
 
-    public void registerListener(NotificationServerListener listener, String subscription) {
-        listeners.add(new Listener(listener, subscription));
-    }
-
-    public void unregisterListener(NotificationServerListener listener) {
-        for (Iterator iterator = listeners.iterator(); iterator.hasNext(); ) {
-            Listener l = (Listener) iterator.next();
-            if (l.getListenerObject().equals(listener)) {
-                listeners.remove(l);
-            }
+    public void unregisterListener(Class<? extends NotificationEvent> eventType) {
+        try {
+            eventsMap.remove(eventType);
+        } catch (Exception e) {
+            logger.warn(e.getMessage(), e);
         }
     }
 
@@ -78,22 +64,19 @@ public class NotificationServerManager implements Runnable {
         this.disposed = true;
         eventsMap.clear();
         eventQueue.clear();
-        listeners.clear();
         if (executorService != null) {
             executorService.shutdown();
         }
         logger.info("停止消息通知服务");
     }
 
-    protected void notifyListeners(NotificationEvent notificationEvent) {
+    public void notifyListeners(NotificationEvent notificationEvent) {
         if (disposed) {
             return;
         }
-        for (Iterator iterator = listeners.iterator(); iterator.hasNext(); ) {
-            Listener listener = (Listener) iterator.next();
-            if (listener.matches(notificationEvent)) {
-                listener.getListenerObject().onNotification(notificationEvent);
-            }
+        Listener listener = eventsMap.get(notificationEvent.getClass());
+        if (listener != null && listener.matches(notificationEvent)) {
+            listener.getListenerObject().onNotification(notificationEvent);
         }
     }
 
@@ -117,43 +100,25 @@ public class NotificationServerManager implements Runnable {
     }
 
     public class Listener {
-        private static final String NULL_SUBSCRIPTION = "NULL";
         private final NotificationServerListener listener;
-        private final List notificationClazz;
-        private final String subscription;
+        private Class<? extends NotificationEvent> eventType;
 
-        public Listener(NotificationServerListener listener, String subscription) {
+        public Listener(NotificationServerListener listener,
+                        Class<? extends NotificationEvent> eventType) {
             this.listener = listener;
-            this.subscription = subscription == null ? NULL_SUBSCRIPTION : subscription;
-            notificationClazz = new ArrayList();
-            for (Iterator iterator = eventsMap.keySet().iterator(); iterator.hasNext(); ) {
-                Class clazz = (Class) iterator.next();
-                if (clazz.isAssignableFrom(listener.getClass())) {
-                    notificationClazz.add(eventsMap.get(clazz));
-                }
-            }
+            this.eventType = eventType;
         }
 
         public NotificationServerListener getListenerObject() {
             return listener;
         }
 
-        public List getNotificationClazz() {
-            return notificationClazz;
-        }
-
-        public String getSubscription() {
-            return subscription;
+        public Class<? extends NotificationEvent> getEventType() {
+            return eventType;
         }
 
         public boolean matches(NotificationEvent notificationEvent) {
-            for (Iterator iterator = notificationClazz.iterator(); iterator.hasNext(); ) {
-                Class notificationClass = (Class) iterator.next();
-                if (notificationClass.isAssignableFrom(notificationEvent.getClass())) {
-                    return true;
-                }
-            }
-            return false;
+            return eventType.isAssignableFrom(notificationEvent.getClass());
         }
     }
 }
