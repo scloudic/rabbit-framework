@@ -5,7 +5,6 @@ import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.security.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
-import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
