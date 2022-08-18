@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.6.6</version>
+    <version>3.6.7</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -16,7 +16,7 @@
     </modules>
     <properties>
         <java.version>1.8</java.version>
-        <rabbit-framework.version>3.6.6</rabbit-framework.version>
+        <rabbit-framework.version>3.6.7</rabbit-framework.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
@@ -54,7 +54,7 @@
         <fastjson.version>1.2.83_noneautotype</fastjson.version>
         <freemarker.version>2.3.29</freemarker.version>
         <druid.version>1.2.8</druid.version>
-        <mysql.version>8.0.17</mysql.version>
+        <mysql.version>8.0.30</mysql.version>
         <cglib.version>3.2.2</cglib.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <reflections.version>0.9.10</reflections.version>
@@ -71,7 +71,7 @@
         <pinyin4j>2.5.0</pinyin4j>
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <snakeyaml>1.27</snakeyaml>
-        <spring-boot.version>2.6.6</spring-boot.version>
+        <spring-boot.version>2.7.3</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
         <xstream.version>1.4.19</xstream.version>
@@ -171,6 +171,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-tomcat</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>

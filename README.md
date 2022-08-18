@@ -52,62 +52,62 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、shiro等�
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-core</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-jbatis</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-redisson</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-web</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-generator</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
        <scope>provided</scope>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-web-spring-boot-starter</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security-redisson-cache</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-redisson-spring-boot-starter</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-core-spring-boot-starter</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security-spring-boot-starter</artifactId>
-       <version>3.6.6</version>
+       <version>3.6.7</version>
    </dependency>
 ````

@@ -15,6 +15,7 @@ import java.util.Map;
  * @since 3.3
  */
 public class Where {
+    private static String SQL_PATTERN = "[a-zA-Z0-9_\\ \\,\\.]+";
     protected List<Criteria> oredCriteria;
     protected Map<String, Object> params;
     protected String orderBy = null;
@@ -125,20 +126,42 @@ public class Where {
         tableSuffix = "";
     }
 
-    /**
-     * 传入orderBy字段,默认为desc排序
-     *
-     * @param orderBy orderBy
-     */
-    @Deprecated
-    public void setOrderBy(String orderBy) {
-        setOrderBy(orderBy, OrderByType.DESC);
+
+    public <T> void order(boolean condition, SFunction<T, ?> fn, boolean isAsc) {
+        if (!condition) {
+            return;
+        }
+        if (isAsc) {
+            orderByAsc(fn);
+        } else {
+            orderByDesc(fn);
+        }
     }
 
-    @Deprecated
-    public <T> void setOrderBy(SFunction<T, ?> fn) {
-        String fieldName = SFunctionUtils.getFieldName(fn);
-        setOrderBy(fieldName, OrderByType.DESC);
+    public void order(boolean condition, String orderBy, boolean isAsc) {
+        if (!condition) {
+            return;
+        }
+        if (isAsc) {
+            orderByAsc(orderBy);
+        } else {
+            orderByDesc(orderBy);
+        }
+    }
+
+    public void orderByDesc(boolean condition, String orderBy) {
+        if (!condition) {
+            return;
+        }
+        orderByDesc(orderBy);
+    }
+
+
+    public void orderByAsc(boolean condition, String orderBy) {
+        if (!condition) {
+            return;
+        }
+        orderByAsc(orderBy);
     }
 
     public void orderByDesc(String orderBy) {
@@ -159,12 +182,6 @@ public class Where {
         setOrderBy(orderBy, OrderByType.ASC);
     }
 
-    @Deprecated
-    public <T> void setOrderBy(SFunction<T, ?> fn, OrderByType orderByType) {
-        String fieldName = SFunctionUtils.getFieldName(fn);
-        setOrderBy(fieldName, orderByType);
-    }
-
     /**
      * 传入orderBy字段,如果orderByType为空，默认为desc排序
      *
@@ -172,6 +189,12 @@ public class Where {
      * @param orderByType orderByType
      */
     private void setOrderBy(String orderBy, OrderByType orderByType) {
+        if (StringUtils.isBlank(orderBy)) {
+            return;
+        }
+        if (!orderBy.matches(SQL_PATTERN)) {
+            return;
+        }
         if (orderByType == null) {
             orderByType = OrderByType.DESC;
         }
