@@ -19,7 +19,7 @@ public class PageBean<T> {
     // 就知道了limit语句的两个数据，就能获得每页需要显示的数据了
     private long startPage;
     // 将每页要显示的数据放在list集合中
-    private List<T> datas;
+    private List<T> data;
 
     public PageBean(Long pageNum, Long pageSize) {
         this.pageNum = pageNum == null ? DEFAULT_OFFSET : pageNum.longValue();
@@ -66,6 +66,14 @@ public class PageBean<T> {
 
     public void setTotalRecord(long totalRecord) {
         this.totalRecord = totalRecord;
+        // totalPage 总页数
+        if (totalRecord % this.pageSize == 0) {
+            // 说明整除，正好每页显示pageSize条数据，没有多余一页要显示少于pageSize条数据的
+            this.totalPage = totalRecord / this.pageSize;
+        } else {
+            // 不整除，就要在加一页，来显示多余的数据。
+            this.totalPage = totalRecord / this.pageSize + 1;
+        }
     }
 
     public long getTotalPage() {
@@ -87,13 +95,12 @@ public class PageBean<T> {
     public long getStartPage() {
         return startPage;
     }
-
-    public List<T> getDatas() {
-        return datas;
+    
+    public List<T> getData() {
+        return data;
     }
 
-    public void setDatas(List<T> datas) {
-        this.datas = datas;
+    public void setData(List<T> data) {
+        this.data = data;
     }
-
 }

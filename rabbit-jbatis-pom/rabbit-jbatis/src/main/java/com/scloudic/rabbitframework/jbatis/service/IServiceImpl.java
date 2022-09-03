@@ -154,8 +154,7 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         Long totalCount = getBaseMapper().selectCountByParams(where);
         PageBean<T> pageBean = new PageBean<T>(pageNum, pageSize, totalCount);
         List<T> list = getBaseMapper().selectPageByParams(where, new RowBounds(pageBean.getStartPage(), pageBean.getPageSize()));
-
-        pageBean.setDatas(list);
+        pageBean.setData(list);
         return pageBean;
     }
 }

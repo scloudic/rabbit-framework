@@ -70,9 +70,9 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
         session.setTimeout(cache.getExpireTime());
         cache.put(getKey(session.getId()), session);
         //同时以用户主键保存session信息以便于后期删除
-        PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-        if (principalCollection != null && !principalCollection.isEmpty()) {
-            if (singleUser) {
+        if (isSingleUser()) {
+            PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+            if (principalCollection != null && !principalCollection.isEmpty()) {
                 SecurityUser securityUser = (SecurityUser) principalCollection.getPrimaryPrincipal();
                 String userId = securityUser.getUserId();
                 Session userSession = getSessionByUserId(getKey(userId));

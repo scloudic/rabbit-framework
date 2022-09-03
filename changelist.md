@@ -1,7 +1,12 @@
+3.6.8 版本说明： 
+
+    1、代码优化
+
 3.6.7 版本说明：
 
     1、优化jbatis
     2、jar包升级,spring-boot升级到2.7.3
+
 3.6.6 版本说明：
 
     1、security优化缓存,添加SessionCacheManager管理
