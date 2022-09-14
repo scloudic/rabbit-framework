@@ -72,9 +72,7 @@ public class RedissonLockInterceptor {
                 throw e;
             } finally {
                 logger.debug("redissonLock锁释放");
-                if (isSuccess) {
-                    redisCache.unLock(key);
-                }
+                redisCache.unLock(key);
             }
         } else {
             logger.warn("redissonLock获了加锁失败");

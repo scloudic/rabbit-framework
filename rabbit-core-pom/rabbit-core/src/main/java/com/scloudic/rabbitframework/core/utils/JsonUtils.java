@@ -2,11 +2,13 @@ package com.scloudic.rabbitframework.core.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.scloudic.rabbitframework.core.exceptions.DataParseException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public class JsonUtils {
     /**
      * 对象转json字符串
      *
-     * @param obj obj
+     * @param obj                  obj
      * @param isNullToEmpty        是否null转空
      * @param isSkipTransientField 是否跳过@Transient字段
      * @return string
@@ -42,7 +44,7 @@ public class JsonUtils {
     /**
      * 对象转json字符串,不跳过{@link java.beans.Transient}
      *
-     * @param obj obj
+     * @param obj           obj
      * @param isNullToEmpty 是否null转空
      * @return string
      */
@@ -53,7 +55,7 @@ public class JsonUtils {
     /**
      * 对象转json字符串,跳过{@link java.beans.Transient}
      *
-     * @param obj obj
+     * @param obj           obj
      * @param isNullToEmpty 空转""
      * @return string
      */
@@ -81,7 +83,7 @@ public class JsonUtils {
 
     public static <T> T getObject(String jsonString, Class<T> cls) {
         try {
-            return JSON.parseObject(jsonString, cls);
+            return JSON.parseObject(jsonString, cls, Feature.OrderedField);
         } catch (Exception e) {
             throw new DataParseException(e);
         }
@@ -103,7 +105,7 @@ public class JsonUtils {
         List<Map<String, String>> list;
         try {
             list = JSON.parseObject(jsonString, new TypeReference<List<Map<String, String>>>() {
-            });
+            }, Feature.OrderedField);
         } catch (Exception e) {
             throw new DataParseException(e);
         }
@@ -117,7 +119,7 @@ public class JsonUtils {
         List<Map<Long, String>> list;
         try {
             list = JSON.parseObject(jsonString, new TypeReference<List<Map<Long, String>>>() {
-            });
+            }, Feature.OrderedField);
         } catch (Exception e) {
             throw new DataParseException(e);
         }

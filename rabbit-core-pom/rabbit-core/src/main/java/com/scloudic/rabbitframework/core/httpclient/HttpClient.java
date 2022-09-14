@@ -88,6 +88,10 @@ public class HttpClient {
         return post(url, requestBody, headers);
     }
 
+    public ResponseBody post(String url, String bodyStr, Map<String, String> headers) {
+        return post(url, bodyStr, headers, null);
+    }
+
     public ResponseBody post(String url, String bodyStr, Map<String, String> headers, String contentType) {
         MediaType mediaType = CONTENT_TYPE_JSON;
         if (StringUtils.isNotBlank(contentType)) {
@@ -95,10 +99,6 @@ public class HttpClient {
         }
         RequestBody body = RequestBody.create(mediaType, bodyStr);
         return post(url, body, headers);
-    }
-
-    public ResponseBody post(String url, String bodyStr, Map<String, String> headers) {
-        return post(url, bodyStr, headers, null);
     }
 
     public ResponseBody post(String url, RequestBody requestBody, Map<String, String> headers) {
@@ -188,9 +188,6 @@ public class HttpClient {
 
     private void setHeader(Request.Builder builder, Map<String, String> headers) {
         if (headers != null && headers.size() > 0) {
-            if (StringUtils.isNotBlank(headers.get("User-Agent"))) {
-                builder.removeHeader("User-Agent");
-            }
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 builder.addHeader(entry.getKey(), entry.getValue());
             }
@@ -211,6 +208,39 @@ public class HttpClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ResponseBody put(String url, String bodyStr, Map<String, String> headers) {
+        MediaType mediaType = CONTENT_TYPE_JSON;
+        RequestBody body = RequestBody.create(mediaType, bodyStr);
+        return put(url, body, headers);
+    }
+
+    public ResponseBody put(String url, RequestBody requestBody, Map<String, String> headers) {
+        Request.Builder builder = new Request.Builder().url(url);
+        builder.put(requestBody);
+        setHeader(builder, headers);
+        return sendRequest(builder.build());
+    }
+
+    public ResponseBody del(String url, Map<String, String> headers) {
+        Request.Builder builder = new Request.Builder().url(url);
+        builder.delete();
+        setHeader(builder, headers);
+        return sendRequest(builder.build());
+    }
+
+    public ResponseBody del(String url, String bodyStr, Map<String, String> headers) {
+        MediaType mediaType = CONTENT_TYPE_JSON;
+        RequestBody body = RequestBody.create(mediaType, bodyStr);
+        return del(url, body, headers);
+    }
+
+    public ResponseBody del(String url, RequestBody requestBody, Map<String, String> headers) {
+        Request.Builder builder = new Request.Builder().url(url);
+        builder.delete(requestBody);
+        setHeader(builder, headers);
+        return sendRequest(builder.build());
     }
 
     public OkHttpClient getOkHttpClient() {

@@ -55,4 +55,24 @@ public class HttpClientUtils {
     public InputStream fileDownload(String url, RequestParams params, boolean isGet, Map<String, String> headers) {
         return httpClient.fileDownload(url, params, isGet, headers);
     }
+
+    public ResponseBody put(String url, String bodyStr, Map<String, String> headers) {
+        return httpClient.put(url, bodyStr, headers);
+    }
+
+    public ResponseBody put(String url, RequestBody requestBody, Map<String, String> headers) {
+        return httpClient.put(url, requestBody, headers);
+    }
+
+    public ResponseBody del(String url, Map<String, String> headers) {
+        return httpClient.del(url, headers);
+    }
+
+    public ResponseBody del(String url, String bodyStr, Map<String, String> headers) {
+        return httpClient.del(url, bodyStr, headers);
+    }
+
+    public ResponseBody del(String url, RequestBody requestBody, Map<String, String> headers) {
+        return httpClient.del(url, requestBody, headers);
+    }
 }

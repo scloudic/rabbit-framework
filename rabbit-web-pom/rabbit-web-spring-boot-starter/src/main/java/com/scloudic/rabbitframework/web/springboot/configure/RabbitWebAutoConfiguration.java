@@ -1,5 +1,6 @@
 package com.scloudic.rabbitframework.web.springboot.configure;
 
+import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -133,8 +134,10 @@ public class RabbitWebAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "fastjson-enable",
+            havingValue = "true", matchIfMissing = true)
     public FastJsonHttpMessageConverter fastJsonHttpMessageConverter(List<HttpMessageConverter<?>> converters) {
+        logger.debug("启用fastJson转换");
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
         config.setCharset(Charset.forName("UTF-8"));
@@ -145,6 +148,7 @@ public class RabbitWebAutoConfiguration {
                 SerializerFeature.WriteNullBooleanAsFalse,
                 SerializerFeature.SkipTransientField);
         fastJsonHttpMessageConverter.setFastJsonConfig(config);
+        config.setFeatures(Feature.OrderedField);
         converters.clear();
         List<MediaType> list = new ArrayList<>();
         list.add(MediaType.APPLICATION_JSON);

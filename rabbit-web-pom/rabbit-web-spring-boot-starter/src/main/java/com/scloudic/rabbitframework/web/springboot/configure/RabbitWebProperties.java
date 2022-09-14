@@ -12,6 +12,7 @@ public class RabbitWebProperties {
     public static final String RABBIT_WEB_PREFIX = "rabbit.web";
     private boolean requestLogEnable = true;
     private boolean xssFilterEnable = true;
+    private boolean fastjsonEnable = true;
     private boolean freemarkerEnable = false;
     private String freemarkerVariablePath = "";
     private List<String> excludeXssUri = new ArrayList<>();
@@ -39,6 +40,14 @@ public class RabbitWebProperties {
 
     public void setXssFilterEnable(boolean xssFilterEnable) {
         this.xssFilterEnable = xssFilterEnable;
+    }
+
+    public boolean isFastjsonEnable() {
+        return fastjsonEnable;
+    }
+
+    public void setFastjsonEnable(boolean fastjsonEnable) {
+        this.fastjsonEnable = fastjsonEnable;
     }
 
     public boolean isFreemarkerEnable() {

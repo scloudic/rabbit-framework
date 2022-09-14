@@ -230,9 +230,4 @@ public abstract class MockResource {
         }
         return classNames;
     }
-
-    public static void main(String[] args) throws IOException {
-        List<String> list = getClassNames("classpath*:com/rabbitframework/**/codec/*.class");
-        System.out.println(list.size());
-    }
 }
