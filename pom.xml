@@ -79,7 +79,7 @@
         <javax.ws.rs-api>2.1</javax.ws.rs-api>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <disruptor.version>3.4.4</disruptor.version>
-        <fasterxmljackson.version>2.13.2</fasterxmljackson.version>
+        <fasterxmljackson.version>2.13.4.1</fasterxmljackson.version>
         <httpcore.version>4.4.15</httpcore.version>
         <objenesis.version>3.2</objenesis.version>
         <lombok.version>1.18.24</lombok.version>
