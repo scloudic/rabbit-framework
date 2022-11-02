@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-examples-pom</artifactId>
-        <version>3.6.9</version>
+        <version>3.7.0</version>
     </parent>
     <artifactId>rabbit-example-web</artifactId>
     <!--此处如果使用用外部tomcat服务器 应为war -->
