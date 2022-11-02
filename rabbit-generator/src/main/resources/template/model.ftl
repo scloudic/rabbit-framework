@@ -6,12 +6,14 @@ import ${importPackage};
 </#list>
 import com.scloudic.rabbitframework.jbatis.annontations.*;
 import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table
+@Getter
+@Setter
 public class ${entity.objectName}${fileSuffix} implements Serializable {
 	private static final long serialVersionUID = 1L;
-    public static final String FIELDS = " <#list entity.idProperties as idProperties><#if idProperties_index!=0>,</#if>${idProperties.columnName}</#list><#list entity.columnProperties as columnProperties><#if columnProperties.columnName?contains("active_status")==false && columnProperties.columnName?contains("del_status")==false>,${columnProperties.columnName}</#if></#list> ";
-
 <#list entity.idProperties as idProperties>
     /**
     *
@@ -38,27 +40,15 @@ public class ${entity.objectName}${fileSuffix} implements Serializable {
     private ${columnProperties.javaType.shortName} ${columnProperties.javaProperty};
 
 </#list>
-<#list entity.idProperties as mIdProperties>
-    public void ${mIdProperties.setterMethodName}(${mIdProperties.javaType.shortName} ${mIdProperties.javaProperty}) {
-        this.${mIdProperties.javaProperty} = ${mIdProperties.javaProperty};
-    }
-
-    public ${mIdProperties.javaType.shortName} ${mIdProperties.getterMethodName}() {
-        return ${mIdProperties.javaProperty};
-    }
-
-</#list>
 <#list entity.columnProperties as mColumnProperties>
+    <#if mColumnProperties.javaProperty?contains("delStatus")>
     public void ${mColumnProperties.setterMethodName}(${mColumnProperties.javaType.shortName} ${mColumnProperties.javaProperty}) {
         this.${mColumnProperties.javaProperty} = ${mColumnProperties.javaProperty};
     }
-
-    <#if mColumnProperties.javaProperty?contains("delStatus")>
     @Transient
-    </#if>
     public ${mColumnProperties.javaType.shortName} ${mColumnProperties.getterMethodName}() {
         return ${mColumnProperties.javaProperty};
     }
-
+    </#if>
 </#list>
 }
