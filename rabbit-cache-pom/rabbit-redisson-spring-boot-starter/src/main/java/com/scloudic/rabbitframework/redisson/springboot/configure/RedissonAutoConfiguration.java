@@ -60,6 +60,8 @@ public class RedissonAutoConfiguration {
     @Bean
     @DependsOn("redisCache")
     @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = RabbitRedissonProperties.RABBIT_REDISSON_PREFIX, name = "open-status",
+            havingValue = "true", matchIfMissing = true)
     public RedissonLockInterceptor redissonLockInterceptor(RedisCache redisCache) {
         RedissonLockInterceptor redissonLockInterceptor = new RedissonLockInterceptor();
         redissonLockInterceptor.setRedisCache(redisCache);
