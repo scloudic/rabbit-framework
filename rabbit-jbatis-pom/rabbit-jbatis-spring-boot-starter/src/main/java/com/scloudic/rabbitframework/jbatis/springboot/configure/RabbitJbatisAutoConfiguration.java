@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@EnableTransactionManagement(proxyTargetClass = true)
 @EnableConfigurationProperties(RabbitJbatisProperties.class)
 @AutoConfigureAfter(DataSourceAutoConfiguration.class)
 public class RabbitJbatisAutoConfiguration {

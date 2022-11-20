@@ -50,7 +50,8 @@ public class ExceptionMapperSupport {
         logger.error("异常类：{}", handlerMethod.getBean().getClass()
                 , handlerMethod.getMethod().getName());
         logger.error("异常请求地址：{}", request.getRequestURL());
-        return Result.failure(StatusCode.SC_INTERNAL_SERVER_ERROR.getValue(), e.getMessage());
+        String message = ServletContextHelper.getMessage("exception.error");
+        return Result.failure(StatusCode.SC_INTERNAL_SERVER_ERROR.getValue(), message);
     }
 
     public Result getResponseByStatus(StatusCode statusCode, String message, HttpServletResponse response) {
