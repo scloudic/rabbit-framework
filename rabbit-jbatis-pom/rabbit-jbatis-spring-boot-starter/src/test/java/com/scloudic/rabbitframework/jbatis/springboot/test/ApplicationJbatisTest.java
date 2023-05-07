@@ -110,7 +110,6 @@ public class ApplicationJbatisTest {
     @Test
     public void updateByParams() {
         Where where = new Where();
-        //where.setTableSuffix("11");
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getTestName), "where修改2");
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getCreateTime), new Date());
         Criteria criteria = where.createCriteria();

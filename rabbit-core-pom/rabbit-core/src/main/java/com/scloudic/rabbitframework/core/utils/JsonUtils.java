@@ -3,12 +3,13 @@ package com.scloudic.rabbitframework.core.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.parser.ParseContext;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeFilter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.scloudic.rabbitframework.core.exceptions.DataParseException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,7 +90,16 @@ public class JsonUtils {
         }
     }
 
-    public static <T> List<T> getListObject(String jsonString, Class<T> cls) {
+    public static <K, T> Map<K, T> getMap(String jsonString) {
+        try {
+            return JSON.parseObject(jsonString, new TypeReference<Map<K, T>>() {
+            });
+        } catch (Exception e) {
+            throw new DataParseException(e);
+        }
+    }
+
+    public static <T> List<T> getList(String jsonString, Class<T> cls) {
         try {
             List<T> resultData = JSON.parseArray(jsonString, cls);
             if (resultData == null) {
@@ -101,30 +111,16 @@ public class JsonUtils {
         }
     }
 
-    public static List<Map<String, String>> getKeyStringMap(String jsonString) {
-        List<Map<String, String>> list;
+    public static <K, T> List<Map<K, T>> getListMap(String jsonString) {
+        List<Map<K, T>> list;
         try {
-            list = JSON.parseObject(jsonString, new TypeReference<List<Map<String, String>>>() {
+            list = JSON.parseObject(jsonString, new TypeReference<List<Map<K, T>>>() {
             }, Feature.OrderedField);
         } catch (Exception e) {
             throw new DataParseException(e);
         }
         if (list == null) {
-            list = new ArrayList<Map<String, String>>();
-        }
-        return list;
-    }
-
-    public static List<Map<Long, String>> getKeyLongMap(String jsonString) {
-        List<Map<Long, String>> list;
-        try {
-            list = JSON.parseObject(jsonString, new TypeReference<List<Map<Long, String>>>() {
-            }, Feature.OrderedField);
-        } catch (Exception e) {
-            throw new DataParseException(e);
-        }
-        if (list == null) {
-            list = new ArrayList<Map<Long, String>>();
+            list = new ArrayList<Map<K, T>>();
         }
         return list;
     }
