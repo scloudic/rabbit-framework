@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.scloudic</groupId>
     <artifactId>rabbit-framework</artifactId>
-    <version>3.7.3</version>
+    <version>3.7.4</version>
     <packaging>pom</packaging>
     <modules>
         <module>parent</module>
@@ -16,7 +16,7 @@
     </modules>
     <properties>
         <java.version>1.8</java.version>
-        <rabbit-framework.version>3.7.3</rabbit-framework.version>
+        <rabbit-framework.version>3.7.4</rabbit-framework.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>

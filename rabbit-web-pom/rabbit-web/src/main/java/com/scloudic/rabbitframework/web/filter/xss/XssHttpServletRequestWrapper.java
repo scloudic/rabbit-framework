@@ -1,13 +1,11 @@
 package com.scloudic.rabbitframework.web.filter.xss;
 
-import com.scloudic.rabbitframework.web.filter.sensitive.WordFilter;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.owasp.esapi.ESAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +19,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
-    private static final Logger logger = LoggerFactory.getLogger(XssHttpServletRequestWrapper.class);
     public static final String INCLUDE_SERVLET_PATH_ATTRIBUTE = "javax.servlet.include.servlet_path";
     public static final String INCLUDE_PATH_INFO_ATTRIBUTE = "javax.servlet.include.path_info";
     HttpServletRequest orgRequest;
@@ -49,10 +46,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         //xss过滤
         if (jsonFilter) {
             json = xssEncode(json);
-        } else {
-            json = WordFilter.doFilter(json);
         }
-
         final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
         return new ServletInputStream() {
             @Override
@@ -123,7 +117,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     private String xssEncode(String input) {
-        input = WordFilter.doFilter(input);
         if (excludeXssUri != null && excludeXssUri.size() > 0) {
             String url = getPathWithinApplication(orgRequest);
             if (excludeXssUri.contains(url)) {
