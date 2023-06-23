@@ -114,7 +114,7 @@ public class ApplicationJbatisTest {
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getTestName), "where修改2");
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getCreateTime), new Date());
         Criteria criteria = where.createCriteria();
-        criteria.andEqual(TestUser::getId, 1);
+        criteria.andEqual(TestUser::getId, 14);
         int result = testUserService.updateByParams(where);
         logger.info("修改返回的结果：" + result);
     }
@@ -197,11 +197,11 @@ public class ApplicationJbatisTest {
     @Test
     public void selectPageByParams() {
         Where where = new Where();
-        where.setTableSuffix("11");
+//        where.setTableSuffix("11");
         Criteria criteria = where.createCriteria();
         List<Integer> integers = new ArrayList<>();
         integers.add(1);
-        integers.add(2);
+        integers.add(13);
         integers.add(6);
         criteria.andIn(TestUser::getId, integers);
         List<TestUser> testUsers = testUserService.selectPageByParams(where, new RowBounds(0, 3));
@@ -244,7 +244,7 @@ public class ApplicationJbatisTest {
     public void selectPageBeanByParams() {
         Where where = new Where();
         Criteria criteria = where.createCriteria();
-        criteria.andEqual(TestUser::getId, 1);
+        criteria.andEqual(TestUser::getId, 13);
         PageBean<TestUser> testUserPageBean = testUserService.selectPageBeanByParams(where, 0L, 10L);
         logger.info("数据结果：" + JSON.toJSONString(testUserPageBean));
     }
@@ -282,7 +282,7 @@ public class ApplicationJbatisTest {
     public void selectTestUserWhere() {
         Where where = new Where();
         Criteria criteria = where.createCriteria();
-        criteria.andEqual("id", 1);
+        criteria.andEqual("id", 13);
         List<User> users = testUserMapper.selectTestUserWhere(where);
         for (User testUser : users) {
             logger.info(testUser.getTestName());
@@ -303,7 +303,7 @@ public class ApplicationJbatisTest {
         Where where = new Where();
         where.put(SFunctionUtils.getFieldPropertyName(TestUser::getTestName), "where修改2");
         Criteria criteria = where.createCriteria();
-        criteria.andEqual(TestUser::getId, 2);
+        criteria.andEqual(TestUser::getId, 13);
         testUserMapper.updateTestUserByWhereParam(where);
     }
 
@@ -333,10 +333,13 @@ public class ApplicationJbatisTest {
 
     @Test
     public void selectUserListTest() {
-//        Where where = new Where();
-//        Criteria criteria = where.createCriteria();
-//        criteria.andEqual(TestUser::getId, 2);
-        List<TestUser> users = testUserMapper.selectUserList("select * from test_user");
+        //  List<TestUser> users = testUserService.selectSQL("select * from test_user");
+//        List<TestUser> users = testUserService.selectPageSQL("select * from test_user",new RowBounds(0,10));
+        Where where = new Where();
+        Criteria criteria = where.createCriteria();
+        criteria.andEqual(TestUser::getId, 13);
+        // List<TestUser> users = testUserService.selectWhereSQL("select * from test_user where 1=1", where);
+        List<TestUser> users = testUserService.selectWherePageSQL("select * from test_user", where, new RowBounds());
         for (TestUser testUser : users) {
             logger.info(testUser.getTestName());
         }

@@ -23,9 +23,12 @@ import com.scloudic.rabbitframework.core.xmlparser.XPathParser;
  */
 public class XMLScriptBuilder extends BaseBuilder {
     private XNode rootScriptNode;
+    private String wherePrefix = "where";
+    private String sqlS;
 
     public XMLScriptBuilder(Configuration configuration, String sqlScript) {
         super(configuration);
+        this.sqlS = sqlScript;
         XPathParser xPathParser = new XPathParser(sqlScript, null);
         rootScriptNode = xPathParser.evalNode("/script");
     }
@@ -49,6 +52,9 @@ public class XMLScriptBuilder extends BaseBuilder {
             if (nodeType == Node.CDATA_SECTION_NODE
                     || nodeType == Node.TEXT_NODE) {
                 String data = child.getStringBody("");
+                if (data.toLowerCase().contains("where")) {
+                    wherePrefix = "and";
+                }
                 contents.add(new TextSqlNode(data));
             } else if (nodeType == Node.ELEMENT_NODE) {
                 String nodeName = childNode.getNodeName();
@@ -100,7 +106,7 @@ public class XMLScriptBuilder extends BaseBuilder {
         public void handleNode(XNode nodeToHandler, List<SqlNode> targetContents) {
             List<SqlNode> contents = parseDynamicTags(nodeToHandler);
             MixedSqlNode mixedSqlNode = new MixedSqlNode(contents);
-            WhereSqlNode whereSqlNode = new WhereSqlNode(configuration, mixedSqlNode);
+            WhereSqlNode whereSqlNode = new WhereSqlNode(configuration, mixedSqlNode, wherePrefix);
             targetContents.add(whereSqlNode);
         }
     }

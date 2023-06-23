@@ -33,14 +33,14 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     @Select("select * from test_user")
     public List<User> selectTestUserByPage(RowBounds rowBounds);
 
-    @Select("select * from test_user where 1=1 ")
+    @Select("select * from test_user")
     public List<User> selectTestUserWhere(Where where);
 
     @Update("update test_user set test_name=#{testName} where id in "
             + "<foreach collection=\"ids\" item=\"listItem\" open=\"(\" close=\")\" separator=\",\" >#{listItem}</foreach>")
     public int updateTestUserByParamType(@Param("testName") String testName, @Param("ids") Object obj);
 
-    @Update("update test_user set test_name=#{params.testName} where 1=1 ")
+    @Update("update test_user set test_name=#{params.testName}")
     public int updateTestUserByWhereParam(Where whereParamType);
 
     @Delete("delete from test_user where id=#{id}")
@@ -48,4 +48,6 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
 
     @Delete("delete from test_user where 1=1 ")
     public int delTestUserWhere(Where where);
+
+
 }
