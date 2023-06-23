@@ -1,22 +1,19 @@
 package com.scloudic.rabbitframework.jbatis.mapping.binding;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
 import com.scloudic.rabbitframework.jbatis.annontations.MapKey;
 import com.scloudic.rabbitframework.jbatis.annontations.Param;
+import com.scloudic.rabbitframework.jbatis.annontations.SQL;
 import com.scloudic.rabbitframework.jbatis.builder.Configuration;
 import com.scloudic.rabbitframework.jbatis.dataaccess.SqlDataAccess;
 import com.scloudic.rabbitframework.jbatis.exceptions.BindingException;
 import com.scloudic.rabbitframework.jbatis.mapping.RowBounds;
 import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
+import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.*;
 
 /**
  * mapper类中方法的具体执行类
@@ -42,6 +39,7 @@ public class MapperMethod {
      */
     public Object execute(SqlDataAccess sqlDataAccess, Object[] args) {
         Object result = null;
+        String sql = methodSignature.getSQL(args);
         SqlCommendType type = sqlCommand.getCommendType();
         if (SqlCommendType.INSERT == type) {
             Object param = methodSignature.convertArgsToSqlCommandParam(args);
@@ -49,31 +47,27 @@ public class MapperMethod {
                 if (!List.class.isAssignableFrom(param.getClass())) {
                     throw new IllegalArgumentException(param.getClass() + " is not assignable to " + List.class);
                 }
-                result = rowCountResult(sqlDataAccess.batchUpdate(sqlCommand.getName(),
-                        (List<Object>) param));
+                result = rowCountResult(sqlDataAccess.batchUpdate(sql, sqlCommand.getName(), (List<Object>) param));
             } else {
-                result = rowCountResult(sqlDataAccess.insert(sqlCommand.getName(),
-                        param));
+                result = rowCountResult(sqlDataAccess.insert(sql, sqlCommand.getName(), param));
             }
         } else if (SqlCommendType.UPDATE == type) {
             Object param = methodSignature.convertArgsToSqlCommandParam(args);
-            result = rowCountResult(sqlDataAccess.update(sqlCommand.getName(),
-                    param));
+            result = rowCountResult(sqlDataAccess.update(sql, sqlCommand.getName(), param));
         } else if (SqlCommendType.DELETE == type) {
             Object param = methodSignature.convertArgsToSqlCommandParam(args);
-            result = rowCountResult(sqlDataAccess.delete(sqlCommand.getName(),
-                    param));
+            result = rowCountResult(sqlDataAccess.delete(sql, sqlCommand.getName(), param));
         } else if (SqlCommendType.CREATE == type) {
-            result = rowCountResult(sqlDataAccess.create(sqlCommand.getName()));
+            result = rowCountResult(sqlDataAccess.create(sql, sqlCommand.getName()));
         } else if (SqlCommendType.SELECT == type) {
             if (methodSignature.isReturnsMany()) {
-                result = executeForMany(sqlDataAccess, args);
+                result = executeForMany(sqlDataAccess, args, sql);
             } else if (methodSignature.returnsMap()) {
-                result = executeForMap(sqlDataAccess, args);
+                result = executeForMap(sqlDataAccess, args, sql);
             } else {
                 Object param = methodSignature
                         .convertArgsToSqlCommandParam(args);
-                result = sqlDataAccess.selectOne(sqlCommand.getName(), param);
+                result = sqlDataAccess.selectOne(sqlCommand.getName(), param, sql);
             }
         } else {
             throw new BindingException("Unknown execution method for: "
@@ -82,15 +76,14 @@ public class MapperMethod {
         return result;
     }
 
-    private <E> Object executeForMany(SqlDataAccess sqlDataAccess, Object[] args) {
+    private <E> Object executeForMany(SqlDataAccess sqlDataAccess, Object[] args, String sql) {
         List<E> result = null;
         Object param = methodSignature.convertArgsToSqlCommandParam(args);
         if (methodSignature.hasRowBounds()) {
             RowBounds rowBounds = methodSignature.extractRowBounds(args);
-            result = sqlDataAccess.<E>selectList(sqlCommand.getName(), param,
-                    rowBounds);
+            result = sqlDataAccess.selectList(sqlCommand.getName(), param, rowBounds, sql);
         } else {
-            result = sqlDataAccess.<E>selectList(sqlCommand.getName(), param);
+            result = sqlDataAccess.selectList(sqlCommand.getName(), param, sql);
         }
         if (!methodSignature.getReturnType()
                 .isAssignableFrom(result.getClass())) {
@@ -105,16 +98,16 @@ public class MapperMethod {
     }
 
     private <K, V> Map<K, V> executeForMap(SqlDataAccess sqlDataAccess,
-                                           Object[] args) {
+                                           Object[] args, String sql) {
         Map<K, V> result;
         Object param = methodSignature.convertArgsToSqlCommandParam(args);
         if (methodSignature.hasRowBounds()) {
             RowBounds rowBounds = methodSignature.extractRowBounds(args);
             result = sqlDataAccess.<K, V>selectMap(sqlCommand.getName(),
-                    param, methodSignature.getMapKey(), rowBounds);
+                    param, methodSignature.getMapKey(), rowBounds, sql);
         } else {
             result = sqlDataAccess.<K, V>selectMap(sqlCommand.getName(),
-                    param, methodSignature.getMapKey());
+                    param, methodSignature.getMapKey(), sql);
         }
         return result;
     }
@@ -166,6 +159,7 @@ public class MapperMethod {
         private final SortedMap<Integer, String> params;
         private final String mapKey;
         private final boolean returnsMap;
+        private final Integer sqlIndex;
 
         public MethodSignature(Configuration configuration, Method method) {
             returnType = method.getReturnType();
@@ -176,9 +170,11 @@ public class MapperMethod {
             this.returnsMap = Map.class
                     .isAssignableFrom(method.getReturnType());
             hasNamedParameters = hasNamedParams(method);
+            sqlIndex = getSQLIndex(method);
             rowBoundsIndex = getUniqueParamIndex(method, RowBounds.class);
             params = Collections.unmodifiableSortedMap(getParams(method,
                     hasNamedParameters));
+
         }
 
         private String getMapKey(Method method) {
@@ -232,6 +228,14 @@ public class MapperMethod {
             return (rowBoundsIndex != null);
         }
 
+        public boolean hasDynamicSql() {
+            return (sqlIndex != null);
+        }
+
+        public String getSQL(Object[] args) {
+            return (hasDynamicSql() ? (String) args[sqlIndex] : "");
+        }
+
         public RowBounds extractRowBounds(Object[] args) {
             return (hasRowBounds() ? (RowBounds) args[rowBoundsIndex] : null);
         }
@@ -243,27 +247,24 @@ public class MapperMethod {
             int parametersSize = parameters.length;
             for (int i = 0; i < parametersSize; i++) {
                 Parameter parameter = parameters[i];
-                if (!RowBounds.class.isAssignableFrom(parameter.getType())) {
-                    String paramName = String.valueOf(params.size());
-                    if (hasNamedParameters) {
-                        paramName = getParamNameFormAnnotation(method, i,
-                                paramName);
-                    }
-                    params.put(i, paramName);
+                SQL selectSQL = parameter.getAnnotation(SQL.class);
+                if (selectSQL != null) {
+                    continue;
                 }
+                if (RowBounds.class.isAssignableFrom(parameter.getType())) {
+                    continue;
+                }
+                String paramName = String.valueOf(params.size());
+                if (hasNamedParameters) {
+                    Param param = parameter.getAnnotation(Param.class);
+                    if (param != null) {
+                        paramName = param.value();
+                    }
+                }
+                params.put(i, paramName);
+
             }
             return params;
-        }
-
-        private String getParamNameFormAnnotation(Method method, int i,
-                                                  String paramName) {
-            final Object[] paramAnnos = method.getParameterAnnotations()[i];
-            for (Object paramAnno : paramAnnos) {
-                if (paramAnno instanceof Param) {
-                    paramName = ((Param) paramAnno).value();
-                }
-            }
-            return paramName;
         }
 
         private Integer getUniqueParamIndex(Method method, Class<?> paramType) {
@@ -291,16 +292,30 @@ public class MapperMethod {
          */
         private boolean hasNamedParams(Method method) {
             boolean hasNameParams = false;
-            final Object[][] paramAnnos = method.getParameterAnnotations();
-            for (Object[] paramAnno : paramAnnos) {
-                for (Object aParamAnno : paramAnno) {
-                    if (aParamAnno instanceof Param) {
-                        hasNameParams = true;
-                        break;
-                    }
+            Parameter[] parameters = method.getParameters();
+            for (Parameter parameter : parameters) {
+                Param param = parameter.getAnnotation(Param.class);
+                if (param != null) {
+                    hasNameParams = true;
+                    break;
                 }
             }
             return hasNameParams;
+        }
+
+        private Integer getSQLIndex(Method method) {
+            Integer hasSQL = null;
+            Parameter[] parameters = method.getParameters();
+            int parameterLength = parameters.length;
+            for (int i = 0; i < parameterLength; i++) {
+                Parameter parameter = parameters[i];
+                SQL param = parameter.getAnnotation(SQL.class);
+                if (param != null) {
+                    hasSQL = i;
+                    break;
+                }
+            }
+            return hasSQL;
         }
     }
 

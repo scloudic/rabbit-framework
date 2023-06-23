@@ -35,13 +35,13 @@ public class DefaultSqlDataAccess implements SqlDataAccess {
     }
 
     @Override
-    public <T> T selectOne(String statement) {
-        return selectOne(statement, null);
+    public <T> T selectOne(String statement, String dynamicSQL) {
+        return selectOne(statement, null, dynamicSQL);
     }
 
     @Override
-    public <T> T selectOne(String statement, Object parameter) {
-        List<T> list = selectList(statement, parameter);
+    public <T> T selectOne(String statement, Object parameter, String dynamicSQL) {
+        List<T> list = selectList(statement, parameter, dynamicSQL);
         if (list.size() == 1) {
             return list.get(0);
         } else if (list.size() > 1) {
@@ -53,23 +53,23 @@ public class DefaultSqlDataAccess implements SqlDataAccess {
     }
 
     @Override
-    public <E> List<E> selectList(String statement) {
-        return selectList(statement, null);
+    public <E> List<E> selectList(String statement, String dynamicSQL) {
+        return selectList(statement, null, dynamicSQL);
     }
 
     @Override
-    public <E> List<E> selectList(String statement, Object parameter) {
-        return selectList(statement, parameter, null);
+    public <E> List<E> selectList(String statement, Object parameter, String dynamicSQL) {
+        return selectList(statement, parameter, null, dynamicSQL);
     }
 
     @Override
     public <E> List<E> selectList(String statement, Object parameter,
-                                  RowBounds rowBounds) {
+                                  RowBounds rowBounds, String dynamicSQL) {
         try {
             MappedStatement ms = configuration.getMappedStatement(statement);
             Object obj = wrapCollection(parameter);
             Executor executor = configuration.newExecutor(ms.getCache());
-            return executor.query(ms, obj, rowBounds);
+            return executor.query(ms, obj, rowBounds, dynamicSQL);
         } catch (Exception e) {
             throw new PersistenceException("Error querying database.  Cause: "
                     + e, e);
@@ -77,19 +77,19 @@ public class DefaultSqlDataAccess implements SqlDataAccess {
 
     }
 
-    public <K, V> Map<K, V> selectMap(String statement, String mapKey) {
-        return this.selectMap(statement, null, mapKey, null);
+    public <K, V> Map<K, V> selectMap(String statement, String mapKey, String dynamicSQL) {
+        return this.selectMap(statement, null, mapKey, null, dynamicSQL);
     }
 
     public <K, V> Map<K, V> selectMap(String statement, Object parameter,
-                                      String mapKey) {
-        return this.selectMap(statement, parameter, mapKey, null);
+                                      String mapKey, String dynamicSQL) {
+        return this.selectMap(statement, parameter, mapKey, null, dynamicSQL);
     }
 
     @SuppressWarnings("unchecked")
     public <K, V> Map<K, V> selectMap(String statement, Object parameter,
-                                      String mapKey, RowBounds rowBounds) {
-        final List<?> list = selectList(statement, parameter, rowBounds);
+                                      String mapKey, RowBounds rowBounds, String dynamicSQL) {
+        final List<?> list = selectList(statement, parameter, rowBounds, dynamicSQL);
         if (list == null || list.size() == 0) {
             return new HashMap<K, V>();
         }
@@ -108,41 +108,41 @@ public class DefaultSqlDataAccess implements SqlDataAccess {
     }
 
     @Override
-    public int insert(String statement) {
-        return insert(statement, null);
+    public int insert(String dynamicSQL, String statement) {
+        return insert(dynamicSQL, statement, null);
     }
 
     @Override
-    public int insert(String statement, Object parameter) {
-        return update(statement, parameter);
+    public int insert(String dynamicSQL, String statement, Object parameter) {
+        return update(dynamicSQL, statement, parameter);
     }
 
     @Override
-    public int delete(String statement) {
-        return delete(statement, null);
+    public int delete(String dynamicSQL, String statement) {
+        return delete(dynamicSQL, statement, null);
     }
 
     @Override
-    public int delete(String statement, Object parameter) {
-        return update(statement, parameter);
+    public int delete(String dynamicSQL, String statement, Object parameter) {
+        return update(dynamicSQL, statement, parameter);
     }
 
     @Override
-    public int create(String statement) {
-        return update(statement);
+    public int create(String dynamicSQL, String statement) {
+        return update(dynamicSQL, statement);
     }
 
     @Override
-    public int update(String statement) {
-        return update(statement, null);
+    public int update(String dynamicSQL, String statement) {
+        return update(dynamicSQL, statement, null);
     }
 
     @Override
-    public int update(String statement, Object parameter) {
+    public int update(String dynamicSQL, String statement, Object parameter) {
         try {
             MappedStatement ms = configuration.getMappedStatement(statement);
             Executor executor = configuration.newExecutor(ms.getCache());
-            return executor.update(ms, wrapCollection(parameter));
+            return executor.update(ms, wrapCollection(parameter),dynamicSQL);
         } catch (Exception e) {
             throw new PersistenceException("Error updating database.  Cause: "
                     + e, e);
@@ -150,11 +150,11 @@ public class DefaultSqlDataAccess implements SqlDataAccess {
     }
 
     @Override
-    public int batchUpdate(String statement, List<Object> parameter) {
+    public int batchUpdate(String dynamicSQL, String statement, List<Object> parameter) {
         try {
             MappedStatement ms = configuration.getMappedStatement(statement);
             Executor executor = configuration.newExecutor(ms.getCache());
-            return executor.batchUpdate(ms, parameter);
+            return executor.batchUpdate(ms, parameter,dynamicSQL);
         } catch (Exception e) {
             throw new PersistenceException("Error updating database.  Cause: "
                     + e, e);

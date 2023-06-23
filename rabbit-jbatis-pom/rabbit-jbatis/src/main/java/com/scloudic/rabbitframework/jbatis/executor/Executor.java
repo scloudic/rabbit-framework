@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface Executor {
 
-    int update(MappedStatement ms, Object parameter);
+    int update(MappedStatement ms, Object parameter,String dynamicSQL);
 
-    int batchUpdate(MappedStatement ms, List<Object> parameter);
+    int batchUpdate(MappedStatement ms, List<Object> parameter,String dynamicSQL);
 
-    <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds);
+    <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds,String dynamicSQL);
 }

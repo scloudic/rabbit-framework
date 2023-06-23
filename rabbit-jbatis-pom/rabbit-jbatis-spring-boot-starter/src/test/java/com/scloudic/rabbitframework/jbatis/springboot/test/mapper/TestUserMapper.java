@@ -17,6 +17,8 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     public int createTestUser();
 
 
+    public List<TestUser> selectUserList(@SQL String sql);
+
     @Update("update test_user set test_name=#{testName} where id=#{id}")
     public int updateTest(@Param("id") long id, @Param("testName") String testName);
 

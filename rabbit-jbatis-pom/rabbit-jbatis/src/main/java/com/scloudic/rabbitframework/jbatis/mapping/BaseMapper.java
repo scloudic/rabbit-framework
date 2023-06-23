@@ -1,6 +1,7 @@
 package com.scloudic.rabbitframework.jbatis.mapping;
 
 import com.scloudic.rabbitframework.jbatis.annontations.Param;
+import com.scloudic.rabbitframework.jbatis.annontations.SQL;
 import com.scloudic.rabbitframework.jbatis.mapping.param.Where;
 
 import java.io.Serializable;
@@ -184,4 +185,40 @@ public interface BaseMapper<T> {
      * @return list
      */
     List<T> selectDynamicTableEntityPage(RowBounds rowBounds, @Param("tableSuffix") String tableSuffix);
+
+    /**
+     * 动态SQL查询
+     *
+     * @param sql SQL语句
+     * @return list
+     */
+    List<T> selectSQL(@SQL String sql);
+
+    /**
+     * 动态SQL分页查询
+     *
+     * @param sql       SQL语句
+     * @param rowBounds {@link RowBounds}
+     * @return list
+     */
+    List<T> selectPageSQL(@SQL String sql, RowBounds rowBounds);
+
+    /**
+     * 动态SQL分页条件查询
+     *
+     * @param sql       SQL语句
+     * @param where     {@link Where}
+     * @param rowBounds {@link RowBounds}
+     * @return list
+     */
+    List<T> selectWherePageSQL(@SQL String sql, Where where, RowBounds rowBounds);
+
+    /**
+     * 动态SQL分页查询
+     *
+     * @param sql   SQL语句
+     * @param where {@link Where}
+     * @return list
+     */
+    List<T> selectWhereSQL(@SQL String sql, Where where);
 }

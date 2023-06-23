@@ -14,9 +14,9 @@ public class CacheExecutor implements Executor {
     }
 
     @Override
-    public int update(MappedStatement ms, Object parameter) {
+    public int update(MappedStatement ms, Object parameter, String dynamicSQL) {
         int result = 0;
-        result = delegate.update(ms, parameter);
+        result = delegate.update(ms, parameter, dynamicSQL);
         Cache cache = ms.getCache();
         if (cache != null) {
             String[] keys = ms.getCacheKey();
@@ -28,9 +28,9 @@ public class CacheExecutor implements Executor {
     }
 
     @Override
-    public int batchUpdate(MappedStatement ms, List<Object> parameter) {
+    public int batchUpdate(MappedStatement ms, List<Object> parameter, String dynamicSQL) {
         int result = 0;
-        result = delegate.batchUpdate(ms, parameter);
+        result = delegate.batchUpdate(ms, parameter, dynamicSQL);
         Cache cache = ms.getCache();
         if (cache != null) {
             String[] keys = ms.getCacheKey();
@@ -43,7 +43,7 @@ public class CacheExecutor implements Executor {
 
     @Override
     public <E> List<E> query(MappedStatement ms, Object parameter,
-                             RowBounds rowBounds) {
+                             RowBounds rowBounds, String dynamicSQL) {
         List<E> result = null;
         Cache cache = ms.getCache();
         String[] keys = ms.getCacheKey();
@@ -53,7 +53,7 @@ public class CacheExecutor implements Executor {
             }
         }
         if (result == null) {
-            result = delegate.query(ms, parameter, rowBounds);
+            result = delegate.query(ms, parameter, rowBounds, dynamicSQL);
             if (result != null && result.size() > 0 && cache != null) {
                 if (keys != null && keys.length > 0) {
                     cache.putObject(keys[0], result);

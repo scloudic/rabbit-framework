@@ -33,10 +33,6 @@ public class SqlCommand {
         name = ms.getId();
         commendType = ms.getSqlCommendType();
         batchUpdate = ms.isBatchUpdate();
-        if (commendType == SqlCommendType.UNKNOWN) {
-            throw new BindingException("Unknown execution method for: "
-                    + name);
-        }
     }
 
     public String getName() {

@@ -42,6 +42,7 @@ public class ApplicationJbatisTest {
     public void insertByEntity() {
         TestUser testUser = new TestUser();
         testUser.setCreateTime(new Date());
+        testUser.setTestName("ddd");
         int result = testUserService.insertByEntity(testUser);
         logger.info("插入获取的Id主键:" + testUser.getId() + ",返回值：" + result);
     }
@@ -330,5 +331,15 @@ public class ApplicationJbatisTest {
         logger.info("删除返回的结果：" + result);
     }
 
+    @Test
+    public void selectUserListTest() {
+//        Where where = new Where();
+//        Criteria criteria = where.createCriteria();
+//        criteria.andEqual(TestUser::getId, 2);
+        List<TestUser> users = testUserMapper.selectUserList("select * from test_user");
+        for (TestUser testUser : users) {
+            logger.info(testUser.getTestName());
+        }
+    }
 }
 

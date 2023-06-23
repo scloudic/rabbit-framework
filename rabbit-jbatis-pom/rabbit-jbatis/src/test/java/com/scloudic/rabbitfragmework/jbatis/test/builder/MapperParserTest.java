@@ -5,7 +5,6 @@ import com.scloudic.rabbitfragmework.jbatis.test.model.TestUser;
 import com.scloudic.rabbitframework.jbatis.builder.Configuration;
 import com.scloudic.rabbitframework.jbatis.builder.MapperParser;
 import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
-import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
 import com.scloudic.rabbitframework.jbatis.reflect.MetaObject;
 import com.scloudic.rabbitframework.jbatis.reflect.SystemMetaObject;
 import org.junit.Test;
@@ -97,20 +96,6 @@ public class MapperParserTest {
             }
         }
         return returnType;
-    }
-
-    private SqlCommendType getSQLCommendType(String sqlValue) {
-        SqlCommendType sqlCommendType = SqlCommendType.UNKNOWN;
-        for (int i = 0; i < SELECT_PATTERNS.length; i++) {
-            if (SELECT_PATTERNS[i].matcher(sqlValue).find()) {
-                sqlCommendType = SqlCommendType.SELECT;
-                break;
-            }
-        }
-        if (sqlCommendType == SqlCommendType.UNKNOWN) {
-            sqlCommendType = SqlCommendType.INSERT;
-        }
-        return sqlCommendType;
     }
 
     private static Pattern[] SELECT_PATTERNS = new Pattern[]{

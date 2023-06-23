@@ -79,4 +79,41 @@ public interface IService<T> {
     T selectOneByParams(Where where);
 
     PageBean<T> selectPageBeanByParams(Where where, Long pageNum, Long pageSize);
+
+
+    /**
+     * 动态SQL查询
+     *
+     * @param sql SQL语句
+     * @return list
+     */
+    List<T> selectSQL(String sql);
+
+    /**
+     * 动态SQL分页查询
+     *
+     * @param sql       SQL语句
+     * @param rowBounds {@link RowBounds}
+     * @return list
+     */
+    List<T> selectPageSQL(String sql, RowBounds rowBounds);
+
+    /**
+     * 动态SQL分页条件查询
+     *
+     * @param sql       SQL语句
+     * @param where     {@link Where}
+     * @param rowBounds {@link RowBounds}
+     * @return list
+     */
+    List<T> selectWherePageSQL(String sql, Where where, RowBounds rowBounds);
+
+    /**
+     * 动态SQL分页查询
+     *
+     * @param sql   SQL语句
+     * @param where {@link Where}
+     * @return list
+     */
+    List<T> selectWhereSQL(String sql, Where where);
 }

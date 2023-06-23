@@ -21,7 +21,7 @@ public class StaticSqlSource implements SqlSource {
         this.configuration = configuration;
     }
 
-    public BoundSql getBoundSql(Object parameterObject, RowBounds rowBounds) {
+    public BoundSql getBoundSql(Object parameterObject, RowBounds rowBounds,String dynamicSQL) {
         return new BoundSql(configuration, sql, parameterMappings,
                 parameterObject);
     }

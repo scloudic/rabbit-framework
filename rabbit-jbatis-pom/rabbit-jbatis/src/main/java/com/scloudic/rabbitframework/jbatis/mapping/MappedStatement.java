@@ -65,8 +65,8 @@ public class MappedStatement {
         return catalog;
     }
 
-    public BoundSql getBoundSql(Object parameterObject, RowBounds rowBounds) {
-        BoundSql boundSql = sqlSource.getBoundSql(parameterObject, rowBounds);
+    public BoundSql getBoundSql(Object parameterObject, RowBounds rowBounds, String dynamicSQL) {
+        BoundSql boundSql = sqlSource.getBoundSql(parameterObject, rowBounds, dynamicSQL);
         return boundSql;
     }
 

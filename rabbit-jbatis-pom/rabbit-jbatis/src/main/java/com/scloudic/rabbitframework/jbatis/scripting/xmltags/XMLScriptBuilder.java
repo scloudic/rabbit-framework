@@ -8,7 +8,7 @@ import java.util.Map;
 import com.scloudic.rabbitframework.jbatis.builder.BaseBuilder;
 import com.scloudic.rabbitframework.jbatis.builder.Configuration;
 import com.scloudic.rabbitframework.jbatis.exceptions.BuilderException;
-import com.scloudic.rabbitframework.jbatis.scripting.DynamicSqlSource;
+import com.scloudic.rabbitframework.jbatis.scripting.DynamicNodeSqlSource;
 import com.scloudic.rabbitframework.jbatis.scripting.SqlSource;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -19,7 +19,7 @@ import com.scloudic.rabbitframework.core.xmlparser.XPathParser;
 /**
  * SQL脚本动态生成
  * 生成{@link SqlSource}
- * 实现{@link DynamicSqlSource}
+ * 实现{@link DynamicNodeSqlSource}
  */
 public class XMLScriptBuilder extends BaseBuilder {
     private XNode rootScriptNode;
@@ -33,7 +33,7 @@ public class XMLScriptBuilder extends BaseBuilder {
     public SqlSource parse() {
         List<SqlNode> sqlNodes = parseDynamicTags(rootScriptNode);
         MixedSqlNode rootSqlNode = new MixedSqlNode(sqlNodes);
-        SqlSource sqlSource = new DynamicSqlSource(configuration, rootSqlNode);
+        SqlSource sqlSource = new DynamicNodeSqlSource(configuration, rootSqlNode);
         return sqlSource;
     }
 

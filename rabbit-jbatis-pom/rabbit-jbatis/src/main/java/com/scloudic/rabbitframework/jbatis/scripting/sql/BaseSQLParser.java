@@ -16,6 +16,7 @@ public abstract class BaseSQLParser {
     protected Class<?> genericClass;
     protected Class<?> paramType;
     protected boolean batchUpdate = false;
+    protected boolean isDynamicSql = false;
 
     /**
      * 获取where查询xml脚本
@@ -77,7 +78,15 @@ public abstract class BaseSQLParser {
     public void setParamType(Class<?> paramType) {
         this.paramType = paramType;
     }
-    
+
+    public boolean isDynamicSql() {
+        return isDynamicSql;
+    }
+
+    public void setDynamicSql(boolean dynamicSql) {
+        isDynamicSql = dynamicSql;
+    }
+
     public RowMapper rowMapper() {
         return null;
     }

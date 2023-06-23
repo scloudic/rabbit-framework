@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -99,7 +100,7 @@ public class MapperParser {
 
         boolean isPage = isPage(method, sqlCommendType);
         String resultSql = getSql(sqlParser, isPage, mappedStatementId, sqlCommendType);
-        SqlSource sqlSource = getSqlSource(resultSql, languageDriver);
+        SqlSource sqlSource = getSqlSource(resultSql, languageDriver, sqlParser);
         assistant.addMappedStatement(mappedStatementId, sqlCommendType, cache, cacheKey, sqlSource, languageDriver,
                 keyGenerators, rowMapper, sqlParser.isBatchUpdate());
     }
@@ -134,11 +135,12 @@ public class MapperParser {
         return pageFlag;
     }
 
-    private SqlSource getSqlSource(String sqlValue, LanguageDriver languageDriver) {
+    private SqlSource getSqlSource(String sqlValue, LanguageDriver languageDriver,
+                                   BaseSQLParser sqlParser) {
         String sqlBuilder = "<script>" +
                 sqlValue +
                 "</script>";
-        return languageDriver.createSqlSource(configuration, sqlBuilder);
+        return languageDriver.createSqlSource(configuration, sqlBuilder, sqlParser);
     }
 
     private BaseSQLParser getBaseSQLParser(Method method, Class<?> paramType) {
@@ -155,17 +157,36 @@ public class MapperParser {
                     baseSQLParser.setConfiguration(configuration);
                     baseSQLParser.setGenericClass(genericMapper);
                     baseSQLParser.setParamType(paramType);
+                    baseSQLParser.setDynamicSql(baseDefaultMethod.isDynamicSql());
                     return baseSQLParser;
                 }
             }
             Class<? extends Annotation> sqlAnnotationType = getAnnotationType(method);
-            if (sqlAnnotationType == null) {
+            BaseSQLParser baseSQLParser = null;
+            String sqlValue = null;
+            SqlCommendType sqlCommendType = null;
+            boolean isBatch = false;
+            boolean isDynamicSql = false;
+            if (sqlAnnotationType != null) {
+                sqlCommendType = SqlCommendType.valueOf(sqlAnnotationType.getSimpleName().toUpperCase(Locale.ENGLISH));
+                Annotation sqlAnnotation = method.getAnnotation(sqlAnnotationType);
+                sqlValue = (String) sqlAnnotation.getClass().getMethod("value").invoke(sqlAnnotation);
+                if (sqlCommendType == SqlCommendType.INSERT) {
+                    Insert insert = method.getAnnotation(Insert.class);
+                    isBatch = insert.batch();
+                }
+            }
+            if (sqlCommendType == null) {
+                SQL dynamicSql = getDynamicSql(method);
+                if (dynamicSql != null) {
+                    sqlCommendType = dynamicSql.value();
+                    sqlValue = "%s";
+                    isDynamicSql = true;
+                }
+            }
+            if (sqlCommendType == null) {
                 return null;
             }
-            SqlCommendType sqlCommendType = SqlCommendType.valueOf(sqlAnnotationType.getSimpleName().toUpperCase(Locale.ENGLISH));
-            Annotation sqlAnnotation = method.getAnnotation(sqlAnnotationType);
-            String sqlValue = (String) sqlAnnotation.getClass().getMethod("value").invoke(sqlAnnotation);
-            BaseSQLParser baseSQLParser = null;
             switch (sqlCommendType) {
                 case SELECT:
                     baseSQLParser = new CustomerSelect();
@@ -174,8 +195,7 @@ public class MapperParser {
                     baseSQLParser = new CustomerUpdate();
                     break;
                 case INSERT:
-                    Insert insert = method.getAnnotation(Insert.class);
-                    if (insert.batch()) {
+                    if (isBatch) {
                         baseSQLParser = new CustomerBatchInsert();
                     } else {
                         baseSQLParser = new CustomerInsert();
@@ -188,15 +208,18 @@ public class MapperParser {
                     baseSQLParser = new CustomerCreate();
                     break;
             }
-            if (baseSQLParser != null) {
-                baseSQLParser.setSqlScript(sqlValue);
-                baseSQLParser.setConfiguration(configuration);
-                baseSQLParser.setGenericClass(null);
-                baseSQLParser.setParamType(paramType);
+
+            if (baseSQLParser == null) {
+                return null;
             }
+            baseSQLParser.setDynamicSql(isDynamicSql);
+            baseSQLParser.setSqlScript(sqlValue);
+            baseSQLParser.setConfiguration(configuration);
+            baseSQLParser.setGenericClass(null);
+            baseSQLParser.setParamType(paramType);
             return baseSQLParser;
         } catch (Exception e) {
-            throw new BuilderException("Could not find value method on SQL annontation. Cause: " + e, e);
+            throw new BuilderException("Could not find value method on SQL Annotation. Cause: " + e, e);
         }
     }
 
@@ -210,9 +233,26 @@ public class MapperParser {
         return null;
     }
 
+    private SQL getDynamicSql(Method method) {
+        SQL dynamicSql = null;
+        for (Parameter parameter : method.getParameters()) {
+            SQL sql = parameter.getAnnotation(SQL.class);
+            if (sql != null) {
+                dynamicSql = sql;
+                break;
+            }
+        }
+        return dynamicSql;
+    }
+
     private Class<?> getParameterType(Method method) {
         Class<?> parameterType = null;
-        for (Class<?> mParameterType : method.getParameterTypes()) {
+        for (Parameter parameter : method.getParameters()) {
+            SQL selectSQL = parameter.getAnnotation(SQL.class);
+            if (selectSQL != null) {
+                continue;
+            }
+            Class<?> mParameterType = parameter.getType();
             if (RowBounds.class.isAssignableFrom(mParameterType)) {
                 continue;
             }

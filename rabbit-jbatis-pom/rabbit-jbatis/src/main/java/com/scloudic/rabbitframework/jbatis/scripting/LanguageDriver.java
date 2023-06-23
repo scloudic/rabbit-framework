@@ -5,14 +5,16 @@ import com.scloudic.rabbitframework.jbatis.executor.ParameterHandler;
 import com.scloudic.rabbitframework.jbatis.mapping.BoundSql;
 import com.scloudic.rabbitframework.jbatis.mapping.MappedStatement;
 import com.scloudic.rabbitframework.jbatis.executor.DefaultParameterHandler;
+import com.scloudic.rabbitframework.jbatis.scripting.sql.BaseSQLParser;
 
 
 public interface LanguageDriver {
     /**
      * 创建参数处理类{@link DefaultParameterHandler}
+     *
      * @param mappedStatement mappedStatement
      * @param parameterObject parameterObject
-     * @param boundSql boundSql
+     * @param boundSql        boundSql
      * @return ParameterHandler
      */
     ParameterHandler createParameterHandler(MappedStatement mappedStatement,
@@ -22,8 +24,8 @@ public interface LanguageDriver {
      * 创建{@link SqlSource}
      *
      * @param configuration configuration
-     * @param sqlScript sqlScript
+     * @param sqlScript     sqlScript
      * @return SqlSource
      */
-    SqlSource createSqlSource(Configuration configuration, String sqlScript);
+    SqlSource createSqlSource(Configuration configuration, String sqlScript, BaseSQLParser sqlParser);
 }

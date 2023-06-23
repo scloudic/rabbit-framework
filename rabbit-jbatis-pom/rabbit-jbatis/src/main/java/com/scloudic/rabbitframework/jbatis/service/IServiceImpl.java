@@ -157,4 +157,24 @@ public abstract class IServiceImpl<M extends BaseMapper<T>, T> implements IServi
         pageBean.setData(list);
         return pageBean;
     }
+
+    @Override
+    public List<T> selectSQL(String sql) {
+        return getBaseMapper().selectSQL(sql);
+    }
+
+    @Override
+    public List<T> selectPageSQL(String sql, RowBounds rowBounds) {
+        return getBaseMapper().selectPageSQL(sql, rowBounds);
+    }
+
+    @Override
+    public List<T> selectWherePageSQL(String sql, Where where, RowBounds rowBounds) {
+        return getBaseMapper().selectWherePageSQL(sql, where, rowBounds);
+    }
+
+    @Override
+    public List<T> selectWhereSQL(String sql, Where where) {
+        return getBaseMapper().selectWhereSQL(sql, where);
+    }
 }
