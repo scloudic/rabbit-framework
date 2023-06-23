@@ -3,6 +3,7 @@ package com.scloudic.rabbitframework.jbatis.springboot.test.mapper;
 import com.scloudic.rabbitframework.jbatis.annontations.*;
 import com.scloudic.rabbitframework.jbatis.mapping.BaseMapper;
 import com.scloudic.rabbitframework.jbatis.mapping.RowBounds;
+import com.scloudic.rabbitframework.jbatis.mapping.SqlCommendType;
 import com.scloudic.rabbitframework.jbatis.mapping.param.Where;
 import com.scloudic.rabbitframework.jbatis.springboot.test.model.TestUser;
 import com.scloudic.rabbitframework.jbatis.springboot.test.model.User;
@@ -17,7 +18,7 @@ public interface TestUserMapper extends BaseMapper<TestUser> {
     public int createTestUser();
 
 
-    public List<TestUser> selectUserList(@SQL String sql);
+    public List<TestUser> selectUserList(@SQL(SqlCommendType.SELECT) String sql);
 
     @Update("update test_user set test_name=#{testName} where id=#{id}")
     public int updateTest(@Param("id") long id, @Param("testName") String testName);

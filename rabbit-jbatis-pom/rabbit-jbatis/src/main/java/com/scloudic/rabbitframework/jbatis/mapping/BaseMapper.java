@@ -192,7 +192,7 @@ public interface BaseMapper<T> {
      * @param sql SQL语句
      * @return list
      */
-    List<T> selectSQL(@SQL String sql);
+    List<T> selectSQL(@SQL(SqlCommendType.SELECT) String sql);
 
     /**
      * 动态SQL分页查询
@@ -201,7 +201,7 @@ public interface BaseMapper<T> {
      * @param rowBounds {@link RowBounds}
      * @return list
      */
-    List<T> selectPageSQL(@SQL String sql, RowBounds rowBounds);
+    List<T> selectPageSQL(@SQL(SqlCommendType.SELECT) String sql, RowBounds rowBounds);
 
     /**
      * 动态SQL分页条件查询
@@ -211,7 +211,7 @@ public interface BaseMapper<T> {
      * @param rowBounds {@link RowBounds}
      * @return list
      */
-    List<T> selectWherePageSQL(@SQL String sql, Where where, RowBounds rowBounds);
+    List<T> selectWherePageSQL(@SQL(SqlCommendType.SELECT) String sql, Where where, RowBounds rowBounds);
 
     /**
      * 动态SQL分页查询
@@ -220,5 +220,5 @@ public interface BaseMapper<T> {
      * @param where {@link Where}
      * @return list
      */
-    List<T> selectWhereSQL(@SQL String sql, Where where);
+    List<T> selectWhereSQL(@SQL(SqlCommendType.SELECT) String sql, Where where);
 }

@@ -19,5 +19,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 public @interface SQL {
-    SqlCommendType value() default SqlCommendType.SELECT;
+    SqlCommendType value();
 }
