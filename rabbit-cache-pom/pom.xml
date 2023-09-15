@@ -4,12 +4,11 @@
 	<parent>
 		<groupId>com.scloudic</groupId>
 		<artifactId>rabbit-framework</artifactId>
-		<version>3.7.5</version>
+		<version>3.7.6</version>
 	</parent>
 	<artifactId>rabbit-cache-pom</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>rabbit-jedis</module>
 		<module>rabbit-redisson</module>
 		<module>rabbit-redisson-spring-boot-starter</module>
 	</modules>

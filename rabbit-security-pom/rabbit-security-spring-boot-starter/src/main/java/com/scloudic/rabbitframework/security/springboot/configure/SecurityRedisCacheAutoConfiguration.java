@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(RabbitSecurityProperties.class)
-@AutoConfigureAfter(name = "com.scloudic.rabbitframework.redisson.springboot.configure.RedissonAutoConfiguration")
+@AutoConfigureAfter(name = "com.scloudic.rabbitframework.redisson.springboot.configure.RabbitRedissonAutoConfiguration")
 public class SecurityRedisCacheAutoConfiguration {
     private final RabbitSecurityProperties rabbitSecurityProperties;
     @Autowired(required = false)

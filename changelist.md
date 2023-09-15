@@ -1,3 +1,7 @@
+3.7.6 版本说明：
+
+    1、弃用rabbit-jedis
+    2、引入redisson-start
 3.7.5 版本说明：
 
     1、jbatis添加动态SQL传参
