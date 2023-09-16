@@ -1,13 +1,12 @@
 package com.scloudic.rabbitframework.redisson.aop;
 
-import com.scloudic.rabbitframework.core.annotations.LockValue;
-import com.scloudic.rabbitframework.core.annotations.RedisLock;
-import com.scloudic.rabbitframework.core.exceptions.BizException;
+import com.scloudic.rabbitframework.redisson.annotations.LockValue;
+import com.scloudic.rabbitframework.redisson.annotations.RedisLock;
 import com.scloudic.rabbitframework.core.reflect.MetaObject;
 import com.scloudic.rabbitframework.core.reflect.MetaObjectUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.redisson.RedisCache;
-import com.scloudic.rabbitframework.redisson.RedisException;
+import com.scloudic.rabbitframework.redisson.RedissonLockLockException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,7 +23,7 @@ import java.lang.reflect.Parameter;
 @Order(2147483600)
 public class RedissonLockInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(RedissonLockInterceptor.class);
-    private static final String pointCupExpression = "execution(@com.scloudic.rabbitframework.core.annotations.RedisLock * *(..))";
+    private static final String pointCupExpression = "execution(@com.scloudic.rabbitframework.redisson.annotations.RedisLock * *(..))";
     private RedisCache redisCache;
 
     @Pointcut(pointCupExpression)
@@ -76,7 +75,7 @@ public class RedissonLockInterceptor {
             }
         } else {
             logger.warn("redissonLock获了加锁失败");
-            throw new RedisException(redisLock.exceptionMsg());
+            throw new RedissonLockLockException(redisLock.exceptionMsg());
         }
     }
 

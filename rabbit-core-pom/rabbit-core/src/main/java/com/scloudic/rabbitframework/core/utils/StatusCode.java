@@ -19,6 +19,7 @@ public enum StatusCode {
     SC_INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
     TYPE_ERROR(6, "类型转换错误"),
     REFLECTION_ERROR(7, "类引用错误"),
+    REDIS_LOCK_ERROR(8, "加锁失败"),
     ;
     private int value;
     private String msg;

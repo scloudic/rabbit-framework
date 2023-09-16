@@ -1,4 +1,4 @@
-package com.scloudic.rabbitframework.core.annotations;
+package com.scloudic.rabbitframework.redisson.annotations;
 
 import java.lang.annotation.*;
 
