@@ -35,12 +35,12 @@ public class MultiDataSourceFactory implements DataSourceFactory {
 	@Override
 	public DataSource getDataSource(MappedStatement mappedStatement) {
 		String catalog = mappedStatement.getCatalog();
+		if (StringUtils.isBlank(catalog)) {
+			return defaultDataSource.getDataSource();
+		}
 		DataSourceBean dataSource = dataSources.get(catalog);
 		if (dataSource != null) {
 			return dataSource.getDataSource();
-		}
-		if (StringUtils.isBlank(catalog)) {
-			return defaultDataSource.getDataSource();
 		}
 		return null;
 	}
