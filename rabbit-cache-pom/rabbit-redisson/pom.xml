@@ -4,12 +4,13 @@
     <parent>
         <groupId>com.scloudic</groupId>
         <artifactId>rabbit-cache-pom</artifactId>
-        <version>3.7.7</version>
+        <version>3.7.8</version>
     </parent>
     <artifactId>rabbit-redisson</artifactId>
     <packaging>jar</packaging>
     <properties>
         <de.ruedigermoeller.fst.version>2.57</de.ruedigermoeller.fst.version>
+        <fasterxmljackson.version>2.15.1</fasterxmljackson.version>
     </properties>
     <dependencies>
         <dependency>
@@ -27,18 +28,22 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+            <version>${fasterxmljackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+            <version>${fasterxmljackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>${fasterxmljackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${fasterxmljackson.version}</version>
         </dependency>
         <dependency>
             <groupId>org.redisson</groupId>

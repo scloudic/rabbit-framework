@@ -18,7 +18,7 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、shiro等�
 	6、继承RoutingDataSource类,支持多租户模式 
 	
 
-二、rabbit-security:权限框架,对[shiro_1._9_.1](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
+二、rabbit-security:权限框架,对[shiro_1._11_.0](https://github.com/apache/shiro/)进行扩展封装,主要扩展项如下：
 
     1、支持redis缓存模块。
     2、新增通过url配置权限过滤器
@@ -52,62 +52,62 @@ rabbit-framework框架通过使用开源框架springBoot、redisson、shiro等�
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-core</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-jbatis</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-redisson</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-web</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-generator</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
        <scope>provided</scope>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-web-spring-boot-starter</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security-redisson-cache</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-redisson-spring-boot-starter</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-core-spring-boot-starter</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
    <dependency>
        <groupId>com.scloudic</groupId>
        <artifactId>rabbit-security-spring-boot-starter</artifactId>
-       <version>3.7.7</version>
+       <version>3.7.8</version>
    </dependency>
 ````
