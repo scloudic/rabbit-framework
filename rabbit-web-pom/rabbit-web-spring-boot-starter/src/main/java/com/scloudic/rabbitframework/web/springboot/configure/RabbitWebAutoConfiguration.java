@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -39,8 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class,
-        name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
+@AutoConfigureAfter({RabbitCommonsAutoConfiguration.class, FreeMarkerAutoConfiguration.class})
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
