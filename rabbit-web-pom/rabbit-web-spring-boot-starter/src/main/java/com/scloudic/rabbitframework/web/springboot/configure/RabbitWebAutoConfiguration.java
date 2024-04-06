@@ -32,6 +32,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -81,10 +82,9 @@ public class RabbitWebAutoConfiguration {
                 }
                 String name = templateVariable.value();
                 Object object = null;
-                try {
+                Component component = clazz.getAnnotation(Component.class);
+                if (component != null) {
                     object = applicationContext.getBean(clazz);
-                } catch (Exception e) {
-                    //忽略此处错误
                 }
                 if (object == null) {
                     object = ClassUtils.newInstance(clazz);
