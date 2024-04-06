@@ -56,8 +56,7 @@ public class WebUtils {
 
     public static HttpServletRequest getOrigRequest(HttpServletRequest request) {
         if (request == null) {
-            request = (HttpServletRequest) RequestContextHolder.currentRequestAttributes()
-                    .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+            request = getRequest();
         }
         if (request instanceof XssHttpServletRequestWrapper) {
             request = XssHttpServletRequestWrapper.getOrgRequest(request);

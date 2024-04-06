@@ -1,8 +1,7 @@
 package com.scloudic.rabbitframework.security.web.filter;
 
-import com.scloudic.rabbitframework.core.utils.CommonResponseUrl;
-import com.scloudic.rabbitframework.core.utils.StatusCode;
 import com.scloudic.rabbitframework.core.utils.JsonUtils;
+import com.scloudic.rabbitframework.core.utils.StatusCode;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +24,10 @@ public class RedirectUtils {
     private static Logger logger = LoggerFactory.getLogger(RedirectUtils.class);
 
     public static void redirect(ServletRequest request, ServletResponse response,
-                                String loginUrl, StatusCode statusCode) throws IOException {
+                                String loginUrl, StatusCode statusCode, boolean separate) throws IOException {
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);
         httpServletResponse.setContentType("text/json; charset=utf-8");
-        if (!isAsync(request)) {
+        if (!isAsync(request,separate)) {
             WebUtils.issueRedirect(request, response, loginUrl);
         } else {
             PrintWriter printWriter = null;
@@ -53,9 +52,9 @@ public class RedirectUtils {
     }
 
 
-    private static boolean isAsync(ServletRequest request) {
+    private static boolean isAsync(ServletRequest request, boolean separate) {
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
-        if (CommonResponseUrl.isFrontBlack()) {
+        if (separate) {
             return true;
         }
         String requestedWith = httpServletRequest.getHeader("x-requested-with");

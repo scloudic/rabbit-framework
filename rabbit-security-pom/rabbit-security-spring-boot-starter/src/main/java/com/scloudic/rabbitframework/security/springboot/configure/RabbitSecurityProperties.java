@@ -12,6 +12,7 @@ public class RabbitSecurityProperties {
     public static final String RABBIT_SECURITY_PREFIX = "rabbit.security";
     private String filterUrls = "/(((static|css|img|images|lib|res)/.*)|(favicon.ico))";
     private Map<String, String> filterChainDefinitions;
+    private String successUrl;
     //如果使用servlet此配置无效
     private CookieProperties cookie = null;
     private boolean tokenEnabled = true;
@@ -149,6 +150,14 @@ public class RabbitSecurityProperties {
 
     public void setSingleUser(boolean singleUser) {
         this.singleUser = singleUser;
+    }
+
+    public String getSuccessUrl() {
+        return successUrl;
+    }
+
+    public void setSuccessUrl(String successUrl) {
+        this.successUrl = successUrl;
     }
 
     /**

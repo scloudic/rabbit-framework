@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(RabbitCommonsProperties.class)
 public class RabbitCommonsAutoConfiguration {
-    private final RabbitCommonsProperties rabbitCommonsProperties;
+    private RabbitCommonsProperties rabbitCommonsProperties;
 
     public RabbitCommonsAutoConfiguration(RabbitCommonsProperties rabbitCommonsProperties) {
         this.rabbitCommonsProperties = rabbitCommonsProperties;

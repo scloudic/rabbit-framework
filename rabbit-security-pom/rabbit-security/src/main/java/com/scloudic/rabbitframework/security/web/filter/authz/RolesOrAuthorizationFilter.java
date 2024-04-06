@@ -6,6 +6,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import com.scloudic.rabbitframework.core.utils.StatusCode;
+import com.scloudic.rabbitframework.security.web.filter.RabbitSecurityFilter;
 import com.scloudic.rabbitframework.security.web.filter.RedirectUtils;
 import org.apache.shiro.subject.Subject;
 
@@ -14,7 +15,9 @@ import org.apache.shiro.subject.Subject;
  *
  * @author justin
  */
-public class RolesOrAuthorizationFilter extends RolesAuthzFilter {
+public class RolesOrAuthorizationFilter extends RolesAuthzFilter implements RabbitSecurityFilter {
+    private boolean frontEndSeparate = true;
+
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
             throws IOException {
@@ -36,12 +39,17 @@ public class RolesOrAuthorizationFilter extends RolesAuthzFilter {
         Subject subject = getSubject(request, response);
         if (subject.getPrincipal() == null) {
             String loginUrl = getLoginUrl();
-            RedirectUtils.redirect(request, response, loginUrl, StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED);
+            RedirectUtils.redirect(request, response, loginUrl, StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED, frontEndSeparate);
         } else {
             String unauthorizedUrl = getUnauthorizedUrl();
-            RedirectUtils.redirect(request, response, unauthorizedUrl, StatusCode.SC_UNAUTHORIZED);
+            RedirectUtils.redirect(request, response, unauthorizedUrl, StatusCode.SC_UNAUTHORIZED, frontEndSeparate);
         }
         return false;
+    }
+
+    @Override
+    public void setFrontEndSeparate(boolean frontEndSeparate) {
+        this.frontEndSeparate = frontEndSeparate;
     }
 
 }

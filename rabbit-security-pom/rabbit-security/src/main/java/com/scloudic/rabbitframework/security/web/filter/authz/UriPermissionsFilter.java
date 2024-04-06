@@ -1,6 +1,7 @@
 package com.scloudic.rabbitframework.security.web.filter.authz;
 
 import com.scloudic.rabbitframework.core.utils.StatusCode;
+import com.scloudic.rabbitframework.security.web.filter.RabbitSecurityFilter;
 import com.scloudic.rabbitframework.security.web.filter.RedirectUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
@@ -16,8 +17,9 @@ import java.io.IOException;
  *
  * @author: justin
  */
-public class UriPermissionsFilter extends PermissionsAuthorizationFilter {
+public class UriPermissionsFilter extends PermissionsAuthorizationFilter implements RabbitSecurityFilter {
     private static final Logger logger = LoggerFactory.getLogger(UriPermissionsFilter.class);
+    private boolean frontEndSeparate = true;
 
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
@@ -35,11 +37,16 @@ public class UriPermissionsFilter extends PermissionsAuthorizationFilter {
         Subject subject = getSubject(request, response);
         if (subject.getPrincipal() == null) {
             String loginUrl = getLoginUrl();
-            RedirectUtils.redirect(request, response, loginUrl, StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED);
+            RedirectUtils.redirect(request, response, loginUrl, StatusCode.SC_PROXY_AUTHENTICATION_REQUIRED,frontEndSeparate);
         } else {
             String unauthorizedUrl = getUnauthorizedUrl();
-            RedirectUtils.redirect(request, response, unauthorizedUrl, StatusCode.SC_UNAUTHORIZED);
+            RedirectUtils.redirect(request, response, unauthorizedUrl, StatusCode.SC_UNAUTHORIZED,frontEndSeparate);
         }
         return false;
+    }
+
+    @Override
+    public void setFrontEndSeparate(boolean frontEndSeparate) {
+        this.frontEndSeparate = frontEndSeparate;
     }
 }

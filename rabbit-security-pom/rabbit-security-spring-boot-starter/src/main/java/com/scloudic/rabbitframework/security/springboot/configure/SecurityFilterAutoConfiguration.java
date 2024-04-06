@@ -3,8 +3,8 @@ package com.scloudic.rabbitframework.security.springboot.configure;
 import com.scloudic.rabbitframework.core.springboot.configure.RabbitCommonsAutoConfiguration;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 import com.scloudic.rabbitframework.core.utils.CommonResponseUrl;
-import com.scloudic.rabbitframework.security.spring.web.SecurityFilterFactoryBean;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import com.scloudic.rabbitframework.security.spring.web.SecurityFilterFactoryBean;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.slf4j.Logger;
@@ -38,8 +38,11 @@ public class SecurityFilterAutoConfiguration {
     protected SecurityManager securityManager;
 
     private ApplicationContext applicationContext;
+    @Autowired
+    private CommonResponseUrl commonResponseUrl;
 
-    public SecurityFilterAutoConfiguration(ApplicationContext applicationContext, RabbitSecurityProperties rabbitSecurityProperties) {
+    public SecurityFilterAutoConfiguration(ApplicationContext applicationContext,
+                                           RabbitSecurityProperties rabbitSecurityProperties) {
         this.applicationContext = applicationContext;
         this.rabbitSecurityProperties = rabbitSecurityProperties;
     }
@@ -58,7 +61,9 @@ public class SecurityFilterAutoConfiguration {
     protected SecurityFilterFactoryBean rabbitSecurityFilterFactoryBean() throws Exception {
         SecurityFilterFactoryBean securityFilterFactoryBean = new SecurityFilterFactoryBean();
         securityFilterFactoryBean.setSecurityManager(securityManager);
-        securityFilterFactoryBean.setLoginUrl(CommonResponseUrl.getLoginUrl());
+        securityFilterFactoryBean.setLoginUrl(commonResponseUrl.getLoginUrl());
+        boolean frontEndSeparate = commonResponseUrl.isFrontBlack();
+        securityFilterFactoryBean.setFrontEndSeparate(frontEndSeparate);
         Map<String, Filter> filterMap = new HashMap<>();
         Map<String, FilterProperties> filterPropertiesMap = rabbitSecurityProperties.getFilters();
         for (Map.Entry<String, FilterProperties> entry : filterPropertiesMap.entrySet()) {
@@ -82,7 +87,8 @@ public class SecurityFilterAutoConfiguration {
         if (filterMap.size() > 0) {
             securityFilterFactoryBean.setFilters(filterMap);
         }
-        securityFilterFactoryBean.setUnauthorizedUrl(CommonResponseUrl.getUnauthorizedUrl());
+        securityFilterFactoryBean.setUnauthorizedUrl(commonResponseUrl.getUnauthorizedUrl());
+        securityFilterFactoryBean.setSuccessUrl(rabbitSecurityProperties.getSuccessUrl());
         String filterUrls = rabbitSecurityProperties.getFilterUrls();
         if (StringUtils.isNotBlank(filterUrls)) {
             securityFilterFactoryBean.setFilterUrls(rabbitSecurityProperties.getFilterUrls());

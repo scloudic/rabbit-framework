@@ -11,18 +11,17 @@ import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
-@Controller
+//@Controller
 public class RabbitErrorController extends BasicErrorController {
     private static final Logger logger = LoggerFactory.getLogger(RabbitErrorController.class);
+    private CommonResponseUrl commonResponseUrl;
 
     public RabbitErrorController(ServerProperties serverProperties) {
         super(new DefaultErrorAttributes(), serverProperties.getError());
@@ -36,19 +35,22 @@ public class RabbitErrorController extends BasicErrorController {
         HttpStatus status = getStatus(request);
         switch (status) {
             case INTERNAL_SERVER_ERROR:
-                url = CommonResponseUrl.getSys500ErrorUrl();
+                url = commonResponseUrl.getSys500ErrorUrl();
                 break;
             case METHOD_NOT_ALLOWED:
-                url = CommonResponseUrl.getSys405ErrorUrl();
+                url = commonResponseUrl.getSys405ErrorUrl();
                 break;
             case UNAUTHORIZED:
-                url = CommonResponseUrl.getLoginUrl();
+                url = commonResponseUrl.getUnauthorizedUrl();
                 break;
             case PROXY_AUTHENTICATION_REQUIRED:
-                url = CommonResponseUrl.getUnauthorizedUrl();
+                url = commonResponseUrl.getLoginUrl();
                 break;
             case NOT_FOUND:
-                url = CommonResponseUrl.getSys404ErrorUrl();
+                url = commonResponseUrl.getSys404ErrorUrl();
+                break;
+            default:
+                url = commonResponseUrl.getOtherError();
                 break;
         }
         if (StringUtils.isBlank(url)) {
@@ -72,5 +74,9 @@ public class RabbitErrorController extends BasicErrorController {
         map.put("status", status.value());
         map.put("message", joiner.toString());
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    public void setCommonResponseUrl(CommonResponseUrl commonResponseUrl) {
+        this.commonResponseUrl = commonResponseUrl;
     }
 }

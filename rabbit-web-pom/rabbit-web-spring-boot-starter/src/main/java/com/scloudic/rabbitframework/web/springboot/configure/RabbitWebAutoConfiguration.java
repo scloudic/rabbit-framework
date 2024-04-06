@@ -6,12 +6,12 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.scloudic.rabbitframework.core.springboot.configure.RabbitCommonsAutoConfiguration;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
+import com.scloudic.rabbitframework.core.utils.CommonResponseUrl;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.web.annotations.TemplateVariable;
 import com.scloudic.rabbitframework.web.aop.FormSubmitValidInterceptor;
 import com.scloudic.rabbitframework.web.aop.RequestLogInterceptor;
 import com.scloudic.rabbitframework.web.exceptions.ExceptionMapperSupport;
-import com.scloudic.rabbitframework.web.exceptions.ResourceException;
 import com.scloudic.rabbitframework.web.filter.xss.XssFilter;
 import com.scloudic.rabbitframework.web.freemarker.ContextPathTag;
 import com.scloudic.rabbitframework.web.springboot.RabbitErrorController;
@@ -39,7 +39,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class, name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
+@AutoConfigureAfter(value = RabbitCommonsAutoConfiguration.class,
+        name = "org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration")
 @EnableConfigurationProperties(RabbitWebProperties.class)
 public class RabbitWebAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(RabbitWebAutoConfiguration.class);
@@ -47,6 +48,8 @@ public class RabbitWebAutoConfiguration {
     private ApplicationContext applicationContext;
     @Autowired(required = false)
     private freemarker.template.Configuration configuration;
+    @Autowired
+    private CommonResponseUrl commonResponseUrl;
 
     public RabbitWebAutoConfiguration(RabbitWebProperties rabbitWebProperties, ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -164,6 +167,13 @@ public class RabbitWebAutoConfiguration {
     @ConditionalOnMissingBean
     public ExceptionMapperSupport exceptionMapperSupport() {
         ExceptionMapperSupport exceptionMapperSupport = new ExceptionMapperSupport();
+        exceptionMapperSupport.setFrontBlack(commonResponseUrl.isFrontBlack());
+        exceptionMapperSupport.setLoginUrl(commonResponseUrl.getLoginUrl());
+        exceptionMapperSupport.setOtherError(commonResponseUrl.getOtherError());
+        exceptionMapperSupport.setSys404ErrorUrl(commonResponseUrl.getSys404ErrorUrl());
+        exceptionMapperSupport.setSys405ErrorUrl(commonResponseUrl.getSys405ErrorUrl());
+        exceptionMapperSupport.setSys500ErrorUrl(commonResponseUrl.getSys500ErrorUrl());
+        exceptionMapperSupport.setUnauthorizedUrl(commonResponseUrl.getUnauthorizedUrl());
         return exceptionMapperSupport;
     }
 
@@ -171,6 +181,7 @@ public class RabbitWebAutoConfiguration {
     @ConditionalOnMissingBean
     public RabbitErrorController rabbitErrorController(ServerProperties serverProperties) {
         RabbitErrorController exceptionMapperSupport = new RabbitErrorController(serverProperties);
+        exceptionMapperSupport.setCommonResponseUrl(commonResponseUrl);
         return exceptionMapperSupport;
     }
 }

@@ -18,6 +18,7 @@
  */
 package com.scloudic.rabbitframework.security.spring.web;
 
+import com.scloudic.rabbitframework.security.web.filter.RabbitSecurityFilter;
 import com.scloudic.rabbitframework.security.web.filter.mgt.SecurityFilterChainManager;
 import com.scloudic.rabbitframework.security.web.servlet.AbstractSecurityFilter;
 import org.apache.shiro.config.Ini;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor {
 
     private static transient final Logger log = LoggerFactory.getLogger(SecurityFilterFactoryBean.class);
@@ -63,6 +65,7 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
     private String loginUrl;
     private String successUrl;
     private String unauthorizedUrl;
+    private boolean frontEndSeparate = true;
     private String filterUrls;
     private AbstractSecurityFilter instance;
 
@@ -312,14 +315,6 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
     }
 
     protected FilterChainManager createFilterChainManager() {
-
-//        DefaultFilterChainManager manager = new DefaultFilterChainManager();
-//        Map<String, Filter> defaultFilters = manager.getFilters();
-//        //apply global settings if necessary:
-//        for (Filter filter : defaultFilters.values()) {
-//            applyGlobalPropertiesIfNecessary(filter);
-//        }
-
         //添加security过虑
         SecurityFilterChainManager manager = new SecurityFilterChainManager();
         Map<String, Filter> securityFilters = manager.getFilters();
@@ -422,6 +417,14 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
         }
     }
 
+    private void applyFrontEndSeparateIfNecessary(Filter filter) {
+        if (filter instanceof RabbitSecurityFilter) {
+            RabbitSecurityFilter rsFilter = (RabbitSecurityFilter) filter;
+            rsFilter.setFrontEndSeparate(isFrontEndSeparate());
+        }
+    }
+
+
     private void applySuccessUrlIfNecessary(Filter filter) {
         String successUrl = getSuccessUrl();
         if (StringUtils.hasText(successUrl) && (filter instanceof AuthenticationFilter)) {
@@ -450,6 +453,7 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
         applyLoginUrlIfNecessary(filter);
         applySuccessUrlIfNecessary(filter);
         applyUnauthorizedUrlIfNecessary(filter);
+        applyFrontEndSeparateIfNecessary(filter);
     }
 
     /**
@@ -508,5 +512,13 @@ public class SecurityFilterFactoryBean implements FactoryBean, BeanPostProcessor
                 setFilterChainResolver(resolver);
             }
         }
+    }
+
+    public boolean isFrontEndSeparate() {
+        return frontEndSeparate;
+    }
+
+    public void setFrontEndSeparate(boolean frontEndSeparate) {
+        this.frontEndSeparate = frontEndSeparate;
     }
 }
