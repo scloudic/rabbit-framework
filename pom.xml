@@ -63,6 +63,7 @@
         <fasterxmljackson.version>2.15.1</fasterxmljackson.version>
         <slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
         <log4j-api.version>2.17.2</log4j-api.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
     </properties>
     <name>rabbit-framework</name>
     <description>rabbit-framework</description>
@@ -91,6 +92,11 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${log4j-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
