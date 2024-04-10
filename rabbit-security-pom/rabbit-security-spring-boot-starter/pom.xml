@@ -12,14 +12,17 @@
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security-redisson-cache</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core-spring-boot-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

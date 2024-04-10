@@ -25,6 +25,7 @@
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

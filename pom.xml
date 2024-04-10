@@ -504,67 +504,6 @@
                 <version>${okhttp3.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-security</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-jbatis</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-redisson</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-generator</artifactId>
-                <version>${project.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-web-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-security-redisson-cache</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-redisson-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-core-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-jbatis-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.scloudic</groupId>
-                <artifactId>rabbit-security-spring-boot-starter</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>

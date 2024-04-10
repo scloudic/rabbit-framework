@@ -12,6 +12,7 @@
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-jbatis</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

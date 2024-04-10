@@ -12,10 +12,12 @@
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-security</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-redisson</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

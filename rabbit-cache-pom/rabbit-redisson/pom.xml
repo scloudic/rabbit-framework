@@ -10,12 +10,12 @@
     <packaging>jar</packaging>
     <properties>
         <de.ruedigermoeller.fst.version>2.57</de.ruedigermoeller.fst.version>
-
     </properties>
     <dependencies>
         <dependency>
             <groupId>com.scloudic</groupId>
             <artifactId>rabbit-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
