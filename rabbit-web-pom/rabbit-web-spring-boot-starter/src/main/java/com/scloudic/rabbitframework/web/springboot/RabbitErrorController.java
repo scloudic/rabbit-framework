@@ -5,6 +5,7 @@ import com.scloudic.rabbitframework.core.utils.JsonUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
@@ -25,6 +26,7 @@ import java.util.StringJoiner;
 @RequestMapping("${server.error.path:${error.path:/error}}")
 public class RabbitErrorController extends BasicErrorController {
     private static final Logger logger = LoggerFactory.getLogger(RabbitErrorController.class);
+    @Autowired
     private CommonResponseUrl commonResponseUrl;
 
     public RabbitErrorController(ServerProperties serverProperties) {

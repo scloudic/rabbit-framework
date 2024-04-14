@@ -10,7 +10,6 @@ import com.scloudic.rabbitframework.web.aop.RequestLogInterceptor;
 import com.scloudic.rabbitframework.web.exceptions.ExceptionMapperSupport;
 import com.scloudic.rabbitframework.web.filter.xss.XssFilter;
 import com.scloudic.rabbitframework.web.freemarker.ContextPathTag;
-import com.scloudic.rabbitframework.web.springboot.RabbitErrorController;
 import com.scloudic.rabbitframework.web.utils.ServletContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,6 @@ import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -138,14 +136,6 @@ public class RabbitWebAutoConfiguration {
         exceptionMapperSupport.setSys405ErrorUrl(commonResponseUrl.getSys405ErrorUrl());
         exceptionMapperSupport.setSys500ErrorUrl(commonResponseUrl.getSys500ErrorUrl());
         exceptionMapperSupport.setUnauthorizedUrl(commonResponseUrl.getUnauthorizedUrl());
-        return exceptionMapperSupport;
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RabbitErrorController rabbitErrorController(ServerProperties serverProperties) {
-        RabbitErrorController exceptionMapperSupport = new RabbitErrorController(serverProperties);
-        exceptionMapperSupport.setCommonResponseUrl(commonResponseUrl);
         return exceptionMapperSupport;
     }
 }
