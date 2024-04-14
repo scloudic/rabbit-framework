@@ -22,7 +22,7 @@
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
-        <spring.version>5.3.27</spring.version>
+        <spring.version>5.3.34</spring.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <jsp-api.version>2.1</jsp-api.version>
         <jstl.version>1.2</jstl.version>
@@ -54,7 +54,7 @@
         <okhttp3.version>3.14.2</okhttp3.version>
         <pinyin4j>2.5.0</pinyin4j>
         <thumbnailator.version>0.4.8</thumbnailator.version>
-        <spring-boot.version>2.7.11</spring-boot.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
         <jaxb-api.version>2.3.1</jaxb-api.version>
         <javassist.version>3.25.0-GA</javassist.version>
         <easyexcel.version>3.0.5</easyexcel.version>
@@ -622,6 +622,11 @@
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <skipTests>true</skipTests>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
