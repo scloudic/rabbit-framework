@@ -1,9 +1,5 @@
 package com.scloudic.rabbitframework.web.springboot.configure;
 
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.scloudic.rabbitframework.core.springboot.configure.RabbitCommonsAutoConfiguration;
 import com.scloudic.rabbitframework.core.utils.ClassUtils;
 import com.scloudic.rabbitframework.core.utils.CommonResponseUrl;
@@ -29,15 +25,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -134,33 +125,6 @@ public class RabbitWebAutoConfiguration {
         registration.setName("xssFilter");
         registration.setOrder(Integer.MAX_VALUE);
         return registration;
-    }
-
-    @Bean
-    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "fastjson-enable",
-            havingValue = "true", matchIfMissing = true)
-    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter(List<HttpMessageConverter<?>> converters) {
-        logger.debug("启用fastJson转换");
-        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-        FastJsonConfig config = new FastJsonConfig();
-        config.setCharset(Charset.forName("UTF-8"));
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,
-                SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullBooleanAsFalse,
-                SerializerFeature.SkipTransientField);
-        fastJsonHttpMessageConverter.setFastJsonConfig(config);
-        config.setFeatures(Feature.OrderedField);
-        converters.clear();
-        List<MediaType> list = new ArrayList<>();
-        list.add(MediaType.APPLICATION_JSON);
-        fastJsonHttpMessageConverter.setSupportedMediaTypes(list);
-        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter();
-        stringHttpMessageConverter.setSupportedMediaTypes(list);
-        converters.add(stringHttpMessageConverter);
-        converters.add(fastJsonHttpMessageConverter);
-        return fastJsonHttpMessageConverter;
     }
 
     @Bean
