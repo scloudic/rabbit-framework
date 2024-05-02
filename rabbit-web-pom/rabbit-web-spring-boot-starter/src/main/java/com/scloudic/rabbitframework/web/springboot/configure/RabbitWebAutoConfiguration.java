@@ -112,7 +112,7 @@ public class RabbitWebAutoConfiguration {
     @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "xss-filter-enable",
             havingValue = "true", matchIfMissing = true)
     public FilterRegistrationBean<Filter> xssFilterRegistration() {
-        logger.debug("xss过滤器加载");
+        logger.info("xss filter loading...");
         XssFilter xssFilter = new XssFilter();
         xssFilter.setExcludeXssUri(this.rabbitWebProperties.getExcludeXssUri());
         xssFilter.setJsonFilter(rabbitWebProperties.isJsonXssFilterEnable());
@@ -127,6 +127,8 @@ public class RabbitWebAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnProperty(prefix = RabbitWebProperties.RABBIT_WEB_PREFIX, name = "exception-enable",
+            havingValue = "true", matchIfMissing = true)
     public ExceptionMapperSupport exceptionMapperSupport() {
         ExceptionMapperSupport exceptionMapperSupport = new ExceptionMapperSupport();
         exceptionMapperSupport.setFrontBlack(commonResponseUrl.isFrontBlack());

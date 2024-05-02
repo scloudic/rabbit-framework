@@ -11,6 +11,7 @@ import java.util.Map;
 public class RabbitWebProperties {
     public static final String RABBIT_WEB_PREFIX = "rabbit.web";
     private boolean requestLogEnable = true;
+    private boolean exceptionEnable = true;
     private boolean xssFilterEnable = true;
     private boolean freemarkerEnable = false;
     private String freemarkerVariablePath = "";
@@ -55,6 +56,14 @@ public class RabbitWebProperties {
 
     public void setFreemarkerVariablePath(String freemarkerVariablePath) {
         this.freemarkerVariablePath = freemarkerVariablePath;
+    }
+
+    public boolean isExceptionEnable() {
+        return exceptionEnable;
+    }
+
+    public void setExceptionEnable(boolean exceptionEnable) {
+        this.exceptionEnable = exceptionEnable;
     }
 
     public boolean isJsonXssFilterEnable() {

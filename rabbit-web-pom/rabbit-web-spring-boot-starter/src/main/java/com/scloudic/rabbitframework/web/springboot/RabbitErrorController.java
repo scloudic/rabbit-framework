@@ -36,7 +36,7 @@ public class RabbitErrorController extends BasicErrorController {
     @Override
     public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> originalMsgMap = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.TEXT_HTML));
-        logger.error("html请求发生错误,错误消息：" + JsonUtils.toJson(originalMsgMap));
+        logger.error("html request page error:" + JsonUtils.toJson(originalMsgMap));
         String url = "";
         HttpStatus status = getStatus(request);
         switch (status) {
@@ -70,9 +70,12 @@ public class RabbitErrorController extends BasicErrorController {
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         HttpStatus status = getStatus(request);
+        if (status == HttpStatus.NO_CONTENT) {
+            return new ResponseEntity(status);
+        }
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> originalMsgMap = getErrorAttributes(request, getErrorAttributeOptions(request, MediaType.ALL));
-        logger.error("请求发生错误,错误消息：" + JsonUtils.toJson(originalMsgMap));
+        logger.error("request page error:" + JsonUtils.toJson(originalMsgMap));
         String path = (String) originalMsgMap.get("path");
         String error = (String) originalMsgMap.get("error");
         StringJoiner joiner = new StringJoiner(",", "", "");
@@ -80,9 +83,5 @@ public class RabbitErrorController extends BasicErrorController {
         map.put("status", status.value());
         map.put("message", joiner.toString());
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-    }
-
-    public void setCommonResponseUrl(CommonResponseUrl commonResponseUrl) {
-        this.commonResponseUrl = commonResponseUrl;
     }
 }
