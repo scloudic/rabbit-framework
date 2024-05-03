@@ -2,6 +2,7 @@ package com.scloudic.rabbitframework.web.aop;
 
 import com.scloudic.rabbitframework.core.utils.JsonUtils;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import com.scloudic.rabbitframework.web.annotations.IgnoreRequestLog;
 import com.scloudic.rabbitframework.web.utils.WebUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -49,6 +50,10 @@ public class RequestLogInterceptor {
             Signature signature = pjp.getSignature();
             MethodSignature methodSignature = (MethodSignature) signature;
             Method method = methodSignature.getMethod();
+            IgnoreRequestLog ignoreRequestLog = method.getAnnotation(IgnoreRequestLog.class);
+            if (ignoreRequestLog != null) {
+                return pjp.proceed();
+            }
             //   Path clazzPath = method.getDeclaringClass().getAnnotation(Path.class);
             String methodName = method.getDeclaringClass() + "." + method.getName();
             Map<String, Object> paramsValue = new HashMap<String, Object>();
