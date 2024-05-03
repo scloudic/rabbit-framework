@@ -59,7 +59,7 @@ public class SessionCacheManager {
         Map<String, String> param = new HashMap<String, String>();
         param.put(key, value);
         if (userDef != null) {
-            param.putAll(JsonUtils.getObject(userDef.toString(), Map.class));
+            param.putAll(JsonUtils.getMap(userDef.toString()));
         }
         session.setAttribute(DEF_SESSION_KEY, JsonUtils.toJson(param));
         sessionDAO.update(session);

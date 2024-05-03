@@ -1,10 +1,8 @@
 package com.scloudic.rabbitframework.security.cache.redisson;
 
-import java.io.Serializable;
-import java.util.Collection;
-
-import com.scloudic.rabbitframework.security.SecurityUser;
 import com.scloudic.rabbitframework.core.utils.StringUtils;
+import com.scloudic.rabbitframework.security.SecurityUser;
+import com.scloudic.rabbitframework.security.web.session.AbstractSecuritySessionDAO;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.CacheManagerAware;
 import org.apache.shiro.session.Session;
@@ -14,7 +12,8 @@ import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.scloudic.rabbitframework.security.web.session.AbstractSecuritySessionDAO;
+import java.io.Serializable;
+import java.util.Collection;
 
 public class RedisSessionDAO extends AbstractSecuritySessionDAO implements CacheManagerAware {
     private static Logger logger = LoggerFactory.getLogger(RedisSessionDAO.class);
@@ -69,7 +68,6 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
         }
         session.setTimeout(cache.getExpireTime());
         cache.put(getKey(session.getId()), session);
-        //同时以用户主键保存session信息以便于后期删除
         if (isSingleUser()) {
             PrincipalCollection principalCollection = (PrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
             if (principalCollection != null && !principalCollection.isEmpty()) {
@@ -134,15 +132,11 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
      * @throws UnknownSessionException
      */
     @Override
-    public void doDelete(String userId, String keyPrefix) throws UnknownSessionException {
+    public void doDelete(String userId) throws UnknownSessionException {
         if (!isSingleUser()) {
             logger.warn("没有多用户存储数据");
         }
         logger.debug("执行清除用户session操作");
-        if (keyPrefix == null) {
-            keyPrefix = "";
-        }
-        keyPrefix = keyPrefix + ":";
         if (StringUtils.isBlank(userId)) {
             logger.error("user id  is null");
             return;
@@ -152,13 +146,13 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
             logger.warn("获取当前缓存为空!");
             return;
         }
-        Session session = getSessionByUserId(keyPrefix + userId);
+        Session session = getSessionByUserId(getKey(userId));
         if (session == null) {
             logger.warn("获取缓存session为空,该用户可能已清除");
             return;
         }
-        cache.remove(keyPrefix + userId);
-        cache.remove(keyPrefix + session.getId());
+        cache.remove(getKey(userId));
+        cache.remove(getKey(session.getId()));
     }
 
     private RedisCache<String, Session> getActiveSessionsCacheLazy() {

@@ -13,8 +13,8 @@ public class ExcelExportTest {
     @org.junit.Test
     public void simpleReadExcelSync() throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(new File("/Users/liangjy/test.xlsx"));
-        List<Test> tests = ExcelUtils.simpleReadExcelSync(fileInputStream, Test.class, null);
-        for (Test test : tests) {
+        List<TestBean> tests = ExcelUtils.simpleReadExcelSync(fileInputStream, TestBean.class, null);
+        for (TestBean test : tests) {
             System.out.println(test.getName() + "," + test.getContent());
         }
     }
@@ -23,7 +23,7 @@ public class ExcelExportTest {
     public void simpleReadExcel() throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(new
                 File("/Users/liangjy/test.xlsx"));
-        ExcelUtils.simpleReadExcel(fileInputStream, Test.class,
+        ExcelUtils.simpleReadExcel(fileInputStream, TestBean.class,
                 new ExcelListenerTest(), null, null);
     }
 
@@ -31,12 +31,12 @@ public class ExcelExportTest {
     public void export() throws FileNotFoundException {
         FileOutputStream fileOutputStream = new FileOutputStream(new
                 File("/Users/liangjy/testExport.xlsx"));
-        ExcelUtils.writeExcel(fileOutputStream, Test.class, "测试", data());
+        ExcelUtils.writeExcel(fileOutputStream, TestBean.class, "测试", data());
     }
 
     protected List<?> data() {
-        List<Test> rowList = new ArrayList<>();
-        Test test = new Test();
+        List<TestBean> rowList = new ArrayList<>();
+        TestBean test = new TestBean();
         test.setContent("导出内容");
         test.setName("导出名称");
         rowList.add(test);

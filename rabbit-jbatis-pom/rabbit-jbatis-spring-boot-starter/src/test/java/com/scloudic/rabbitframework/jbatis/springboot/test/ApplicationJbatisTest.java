@@ -1,6 +1,5 @@
 package com.scloudic.rabbitframework.jbatis.springboot.test;
-
-import com.alibaba.fastjson.JSON;
+import com.scloudic.rabbitframework.core.utils.JsonUtils;
 import com.scloudic.rabbitframework.core.utils.PageBean;
 import com.scloudic.rabbitframework.jbatis.mapping.RowBounds;
 import com.scloudic.rabbitframework.jbatis.mapping.lambda.SFunctionUtils;
@@ -246,7 +245,7 @@ public class ApplicationJbatisTest {
         Criteria criteria = where.createCriteria();
         criteria.andEqual(TestUser::getId, 13);
         PageBean<TestUser> testUserPageBean = testUserService.selectPageBeanByParams(where, 0L, 10L);
-        logger.info("数据结果：" + JSON.toJSONString(testUserPageBean));
+        logger.info("数据结果：" + JsonUtils.toJson(testUserPageBean));
     }
 
     @Test

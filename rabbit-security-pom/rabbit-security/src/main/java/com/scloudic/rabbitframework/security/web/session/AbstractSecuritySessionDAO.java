@@ -54,6 +54,6 @@ public abstract class AbstractSecuritySessionDAO extends AbstractSessionDAO {
 
     public abstract void doUpdate(Session session) throws UnknownSessionException;
 
-    public abstract void doDelete(String userId, String keyPrefix) throws UnknownSessionException;
+    public abstract void doDelete(String userId) throws UnknownSessionException;
 
 }

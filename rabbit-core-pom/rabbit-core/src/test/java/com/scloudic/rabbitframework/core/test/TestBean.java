@@ -2,7 +2,7 @@ package com.scloudic.rabbitframework.core.test;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 
-public class Test {
+public class TestBean {
     @ExcelProperty(value = "name", index = 0)
     private String name;
     @ExcelProperty(value = "content", index = 1)

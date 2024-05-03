@@ -13,7 +13,7 @@ public class XssFilterTest {
     public void esapiTest() {
         Map<String, String> map = new HashMap<>();
         map.put("test", "{\"微信公众号\":\"weiXinMp\",\"微信小程序\":\"weiXinMini\"}");
-        String value = ESAPI.encoder().canonicalize(JsonUtils.toJsonSkipTransient(map, true));
+        String value = ESAPI.encoder().canonicalize(JsonUtils.toJson(map));
         // 避免script 标签
         Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);
         value = scriptPattern.matcher(value).replaceAll("");

@@ -1,87 +1,61 @@
 package com.scloudic.rabbitframework.core.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
-import com.alibaba.fastjson.parser.Feature;
-import com.alibaba.fastjson.serializer.SerializeFilter;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scloudic.rabbitframework.core.exceptions.DataParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 public class JsonUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
+    private static ObjectMapper objectMapper = new ObjectMapper();
+    static {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
     /**
      * 对象转json字符串
-     *
-     * @param obj                  obj
-     * @param isNullToEmpty        是否null转空
-     * @param isSkipTransientField 是否跳过@Transient字段
-     * @return string
-     */
-    public static String toJson(Object obj, boolean isNullToEmpty, boolean isSkipTransientField) {
-        List<SerializerFeature> serializerFeatures = new ArrayList<>();
-        if (isNullToEmpty) {
-            serializerFeatures.add(SerializerFeature.WriteMapNullValue);
-            serializerFeatures.add(SerializerFeature.WriteNullNumberAsZero);
-            serializerFeatures.add(SerializerFeature.WriteNullListAsEmpty);
-            serializerFeatures.add(SerializerFeature.WriteNullStringAsEmpty);
-            serializerFeatures.add(SerializerFeature.WriteNullBooleanAsFalse);
-        }
-        if (isSkipTransientField) {
-            serializerFeatures.add(SerializerFeature.SkipTransientField);
-        }
-        int size = serializerFeatures.size();
-        if (size > 0) {
-            SerializerFeature[] sf = new SerializerFeature[size];
-            return toJson(obj, serializerFeatures.toArray(sf));
-        }
-        return toJson(obj);
-    }
-
-    /**
-     * 对象转json字符串,不跳过{@link java.beans.Transient}
-     *
-     * @param obj           obj
-     * @param isNullToEmpty 是否null转空
-     * @return string
-     */
-    public static String toJson(Object obj, boolean isNullToEmpty) {
-        return toJson(obj, isNullToEmpty, false);
-    }
-
-    /**
-     * 对象转json字符串,跳过{@link java.beans.Transient}
-     *
-     * @param obj           obj
-     * @param isNullToEmpty 空转""
-     * @return string
-     */
-    public static String toJsonSkipTransient(Object obj, boolean isNullToEmpty) {
-        return toJson(obj, isNullToEmpty, true);
-    }
-
-    /**
-     * 对象转json字符串,封装{@link JSON}toJSONString方法
      *
      * @param obj obj
      * @return string
      */
     public static String toJson(Object obj) {
-        return JSON.toJSONString(obj);
-    }
-
-    public static String toJson(Object obj, SerializerFeature... features) {
-        return JSON.toJSONString(obj, features);
-    }
-
-    public static String toJson(Object obj, SerializeFilter filter, SerializerFeature... features) {
-        return JSON.toJSONString(obj, filter, features);
+        if (obj == null) {
+            return null;
+        }
+        String resultValue = null;
+        try {
+            resultValue = objectMapper.writeValueAsString(obj);
+        } catch (Exception e) {
+            logger.error("json转换异常:" + e.getMessage(), e);
+            new DataParseException(e);
+        }
+        return resultValue;
     }
 
     public static <T> T getObject(String jsonString, Class<T> cls) {
         try {
-            return JSON.parseObject(jsonString, cls, Feature.OrderedField);
+            if (StringUtils.isBlank(jsonString)) {
+                return null;
+            }
+            return objectMapper.readValue(jsonString, cls);
+        } catch (Exception e) {
+            throw new DataParseException(e);
+        }
+    }
+
+
+    public static <T> T getObject(String jsonString, TypeReference<T> cls) {
+        try {
+            if (StringUtils.isBlank(jsonString)) {
+                return null;
+            }
+            return objectMapper.readValue(jsonString, cls);
         } catch (Exception e) {
             throw new DataParseException(e);
         }
@@ -89,7 +63,7 @@ public class JsonUtils {
 
     public static <K, T> Map<K, T> getMap(String jsonString) {
         try {
-            return JSON.parseObject(jsonString, new TypeReference<Map<K, T>>() {
+            return getObject(jsonString, new TypeReference<Map<K, T>>() {
             });
         } catch (Exception e) {
             throw new DataParseException(e);
@@ -97,12 +71,12 @@ public class JsonUtils {
     }
 
     public static <T> List<T> getList(String jsonString, Class<T> cls) {
+        if (StringUtils.isBlank(jsonString)) {
+            return new ArrayList<T>();
+        }
         try {
-            List<T> resultData = JSON.parseArray(jsonString, cls);
-            if (resultData == null) {
-                resultData = new ArrayList<T>();
-            }
-            return resultData;
+            return objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructParametricType(List.class, cls));
         } catch (Exception e) {
             throw new DataParseException(e);
         }
@@ -110,9 +84,12 @@ public class JsonUtils {
 
     public static <K, T> List<Map<K, T>> getListMap(String jsonString) {
         List<Map<K, T>> list;
+        if (StringUtils.isBlank(jsonString)) {
+            return new ArrayList<Map<K, T>>();
+        }
         try {
-            list = JSON.parseObject(jsonString, new TypeReference<List<Map<K, T>>>() {
-            }, Feature.OrderedField);
+            list = getObject(jsonString, new TypeReference<List<Map<K, T>>>() {
+            });
         } catch (Exception e) {
             throw new DataParseException(e);
         }

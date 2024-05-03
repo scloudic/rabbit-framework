@@ -117,23 +117,21 @@ public abstract class SecurityAuthorizingRealm extends AuthorizingRealm {
     /**
      * 删除用户信息,仅针对redis的sessionDAO的实现
      *
-     * @param userId    userId
-     * @param keyPrefix 前缀
+     * @param userId userId
      */
-    public void cleanSession(String userId, String keyPrefix) {
+    public void cleanSession(String userId) {
         SecurityManager securityManager = SecurityUtils.getSecurityManager();
         if (securityManager instanceof SimpleWebSecurityManager) {
             SimpleWebSecurityManager manager = (SimpleWebSecurityManager) securityManager;
             SessionManager sessionManager = manager.getSessionManager();
-            if (securityManager instanceof DefaultSessionManager) {
+            if (sessionManager instanceof DefaultSessionManager) {
                 DefaultSessionManager defaultSessionManager = (DefaultSessionManager) sessionManager;
                 SessionDAO sessionDAO = defaultSessionManager.getSessionDAO();
                 if (sessionDAO instanceof AbstractSecuritySessionDAO) {
                     AbstractSecuritySessionDAO abstractSecuritySessionDAO = (AbstractSecuritySessionDAO) sessionDAO;
-                    abstractSecuritySessionDAO.doDelete(userId, keyPrefix);
+                    abstractSecuritySessionDAO.doDelete(userId);
                 }
             }
-
         }
     }
 
