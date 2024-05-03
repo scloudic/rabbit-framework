@@ -134,21 +134,22 @@ public class RedisSessionDAO extends AbstractSecuritySessionDAO implements Cache
     @Override
     public void doDelete(String userId) throws UnknownSessionException {
         if (!isSingleUser()) {
-            logger.warn("没有多用户存储数据");
+            logger.warn("singleUser is not start....");
+            return;
         }
-        logger.debug("执行清除用户session操作");
+        logger.debug("clean user session....");
         if (StringUtils.isBlank(userId)) {
-            logger.error("user id  is null");
+            logger.warn("userId is null...");
             return;
         }
         RedisCache<String, Session> cache = getActiveSessionsCacheLazy();
         if (cache == null) {
-            logger.warn("获取当前缓存为空!");
+            logger.warn("get cache is null....");
             return;
         }
         Session session = getSessionByUserId(getKey(userId));
         if (session == null) {
-            logger.warn("获取缓存session为空,该用户可能已清除");
+            logger.warn("get user session is null....");
             return;
         }
         cache.remove(getKey(userId));
