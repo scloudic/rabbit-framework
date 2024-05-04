@@ -1,3 +1,9 @@
+3.7.8 版本说明：
+    
+    1、去除parent依赖关系
+    2、放弃使用fastjson统一使用jackson
+    3、core优化
+
 3.7.7 版本说明：
 
     1、弃用rabbit-jedis
