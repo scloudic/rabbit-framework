@@ -137,7 +137,7 @@ public class SecurityFilterAutoConfiguration {
     @Bean(name = "filterSecurityFilterRegistrationBean")
     @ConditionalOnMissingBean
     protected FilterRegistrationBean<Filter> filterSecurityFilterRegistrationBean() throws Exception {
-        logger.debug("security filter loading....");
+        logger.info("security filter loading....");
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<Filter>();
         filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST, DispatcherType.FORWARD,
                 DispatcherType.INCLUDE, DispatcherType.ERROR);
