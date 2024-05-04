@@ -46,29 +46,29 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
         //xss过滤
         if (jsonFilter) {
             json = xssEncode(json);
+            final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
+            return new ServletInputStream() {
+                @Override
+                public boolean isFinished() {
+                    return true;
+                }
+
+                @Override
+                public boolean isReady() {
+                    return true;
+                }
+
+                @Override
+                public void setReadListener(ReadListener readListener) {
+                }
+
+                @Override
+                public int read() throws IOException {
+                    return bis.read();
+                }
+            };
         }
-        final ByteArrayInputStream bis = new ByteArrayInputStream(json.getBytes("utf-8"));
-        return new ServletInputStream() {
-            @Override
-            public boolean isFinished() {
-                return true;
-            }
-
-            @Override
-            public boolean isReady() {
-                return true;
-            }
-
-            @Override
-            public void setReadListener(ReadListener readListener) {
-
-            }
-
-            @Override
-            public int read() throws IOException {
-                return bis.read();
-            }
-        };
+        return super.getInputStream();
     }
 
     @Override
