@@ -1,7 +1,5 @@
 package com.scloudic.rabbitframework.web.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.scloudic.rabbitframework.core.utils.StringUtils;
 import com.scloudic.rabbitframework.web.filter.xss.XssHttpServletRequestWrapper;
 import org.slf4j.Logger;
@@ -9,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 public class WebUtils {
@@ -59,15 +58,17 @@ public class WebUtils {
             request = getRequest();
         }
         if (request instanceof XssHttpServletRequestWrapper) {
-            request = XssHttpServletRequestWrapper.getOrgRequest(request);
+            request = ((XssHttpServletRequestWrapper) request).getOrgRequest();
         }
-        try {
-            if (request.getClass().getName().equals("com.scloudic.rabbitframework.security.web.servlet.SecurityHttpServletRequest")) {
-                Method method = request.getClass().getMethod("getOrgRequest");
-                request = (HttpServletRequest) method.invoke(request);
+        if (request == null) {
+            try {
+                if (request.getClass().getName().equals("com.scloudic.rabbitframework.security.web.servlet.SecurityHttpServletRequest")) {
+                    Method method = request.getClass().getMethod("getOrgRequest");
+                    request = (HttpServletRequest) method.invoke(request);
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
         }
         return request;
     }
